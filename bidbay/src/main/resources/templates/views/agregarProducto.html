@@ -12,26 +12,26 @@
 
 <body class="bg-blue-500 text-white text-center">
     <h1 th:text="${titulo}" class="text-3xl mb-10 mt-5"></h1>
-    <form th:action="@{/producto/agregar}" th:object="${producto}" method="post" class="flex flex-col justify-center">
+    <form th:action="@{/producto/agregar}" th:object="${producto}" method="post" class="flex flex-col justify-center text-black">
         <table class="w-64 m-auto mb-10">
             <tr>
-                <td>Nombre:</td>
+                <td class="text-white">Nombre:</td>
                 <td><input type="text" th:field="*{nombre}" /></td>
             </tr>
             <tr>
-                <td>Descripcion:</td>
+                <td class="text-white">Descripcion:</td>
                 <td><input type="text" th:field="*{descripcion}" /></td>
             </tr>
             <tr>
-                <td>Precio:</td>
+                <td class="text-white">Precio:</td>
                 <td><input type="text" th:field="*{precio}" /></td>
             </tr>
             <tr>
-                <td>Stock:</td>
+                <td class="text-white">Stock:</td>
                 <td><input type="text" th:field="*{stock}" /></td>
             </tr>
         </table>
-        <input type="submit" value="Crear Producto" class=" hover:bg-sky-400 p-5 m-auto rounded-full border border-sky-400 m-5 text-xl bg-sky-600"/>
+        <input type="submit" value="Crear Producto" class=" hover:bg-sky-400 p-5 m-auto rounded-full border border-sky-400 m-5 text-xl bg-sky-600 text-white"/>
         <input type="hidden" th:field="*{id}" />
     </form>
 </body>

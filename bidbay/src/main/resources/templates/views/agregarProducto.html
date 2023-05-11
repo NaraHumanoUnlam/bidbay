@@ -6,12 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${titulo}"></title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <h1 th:text="${titulo}"></h1>
-    <form th:action="@{/producto/agregar}" th:object="${producto}" method="post">
-        <table>
+<body class="bg-blue-500 text-white text-center">
+    <h1 th:text="${titulo}" class="text-3xl mb-10 mt-5"></h1>
+    <form th:action="@{/producto/agregar}" th:object="${producto}" method="post" class="flex flex-col justify-center">
+        <table class="w-64 m-auto mb-10">
             <tr>
                 <td>Nombre:</td>
                 <td><input type="text" th:field="*{nombre}" /></td>
@@ -28,10 +30,8 @@
                 <td>Stock:</td>
                 <td><input type="text" th:field="*{stock}" /></td>
             </tr>
-            <tr>
-                <td><input type="submit" value="Crear Producto" /></td>
-            </tr>
         </table>
+        <input type="submit" value="Crear Producto" class=" hover:bg-sky-400 p-5 m-auto rounded-full border border-sky-400 m-5 text-xl bg-sky-600"/>
         <input type="hidden" th:field="*{id}" />
     </form>
 </body>

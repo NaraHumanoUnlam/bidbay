@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${titulo}"></title>
+</head>
+
+<body>
+    <h1 th:text="${titulo}"></h1>
+    <form th:action="@{/usuario/agregar}" th:object="${usuario}" method="post">
+        <table>
+            <tr>
+                <td>usuario:</td>
+                <td><input type="text" th:field="*{nick}" /></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" th:field="*{password}" /></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="text" th:field="*{email}" /></td>
+            </tr>
+            <tr>
+                <td>Nombre:</td>
+                <td><input type="text" th:field="*{nombre}" /></td>
+            </tr>
+            <tr>
+                <td>Apellido:</td>
+                <td><input type="text" th:field="*{apellido}" /></td>
+            </tr>
+            <tr>
+                <td>Direccion:</td>
+                <td><input type="text" th:field="*{direccion}" /></td>
+            </tr>
+        
+            <tr>
+                <td>Telefono:</td>
+                <td><input type="text" th:field="*{telefono}" /></td>
+            </tr>
+            
+            <tr>
+                <td><input type="submit" value="Crear Usuario" /></td>
+            </tr>
+        </table>
+        <input type="hidden" th:field="*{id}" />
+    </form>
+</body>
+
+</html>

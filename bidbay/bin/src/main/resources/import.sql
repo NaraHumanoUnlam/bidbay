@@ -1,0 +1,1 @@
+INSERT INTO productos (id, nombre, descripcion, precio, stock) VALUES ('1', 'Remera', 'Tremenda remera', 1000.0, 1);

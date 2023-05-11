@@ -6,14 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${titulo}"></title>
+   
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+     <link rel="stylesheet" href="../css/login.css">
 </head>
 
-<body>
-    <h1 th:text="${titulo}"></h1>
-    <form th:action="@{/usuario/agregar}" th:object="${usuario}" method="post">
-        <table>
+<body class="text-white text-center text-3xl flex flex-col justify-center items-center justify-items-center">
+    <h1 th:text="${titulo}" class="mb-5 mt-5"></h1>
+    
+    <form th:action="@{/usuario/agregar}" th:object="${usuario}" method="post" class="bg-gray-400 p-5 rounded border border-blue-500 drop-shadow-sm drop-shadow-sm m-auto">
+    <img alt="logo" src="../img/logo-bidbay.png" class="m-auto bg-white mb-10">
+        <table class="p-5 m-auto">
             <tr>
-                <td>usuario:</td>
+                <td>Usuario:</td>
                 <td><input type="text" th:field="*{nick}" /></td>
             </tr>
             <tr>
@@ -41,11 +47,8 @@
                 <td>Telefono:</td>
                 <td><input type="text" th:field="*{telefono}" /></td>
             </tr>
-            
-            <tr>
-                <td><input type="submit" value="Crear Usuario" /></td>
-            </tr>
         </table>
+        <input type="submit" value="Crear Usuario" class=" hover:bg-sky-400 p-5 m-auto rounded-full border border-sky-400 m-5 text-xl bg-sky-600" />
         <input type="hidden" th:field="*{id}" />
     </form>
 </body>

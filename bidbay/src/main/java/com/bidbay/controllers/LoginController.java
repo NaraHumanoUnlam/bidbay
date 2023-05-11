@@ -38,7 +38,7 @@ class LoginController {
 	@RequestMapping(value = "usuario/agregar", method = RequestMethod.POST)
 	public String guardar(@Valid Usuario usuario, BindingResult result, Model model) {
 	    if (result.hasErrors()) {
-	        model.addAttribute("titulo", "Registro Producto");
+	        model.addAttribute("titulo", "Registro Usuario");
 	        return "views/register";
 	    }
 

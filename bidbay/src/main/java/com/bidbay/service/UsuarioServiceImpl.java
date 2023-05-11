@@ -23,16 +23,17 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	public void save(Usuario usuario) {
 		usuarioDao.save(usuario);
 	}
-/*
+	
 	@Override
-	public Usuario validarLogin(String nick, String password) {
-		List<Usuario> usuarios = (List<Usuario>)usuarioDao.findAll();
+	public Usuario validarUsuario(String nick, String password) {
+		List<Usuario> usuarios = (List<Usuario>) usuarioDao.findAll();
 		// agregar usuarios a la lista
 		for (Usuario usuario : usuarios) {
 		    if (usuario.getNick().equals(nick) && usuario.getPassword().equals(password))
 		    	return usuario;
 		}
 		return null;
-	}*/
+	}
+
 
 }

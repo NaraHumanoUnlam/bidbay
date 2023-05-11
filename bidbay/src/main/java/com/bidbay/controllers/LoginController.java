@@ -17,15 +17,34 @@ import jakarta.validation.Valid;
 
 @Controller
 class LoginController {
-	@Autowired
+@Autowired
 	private IUsuarioService usuarioService;
-	
+
 	@RequestMapping(value="login", method = RequestMethod.GET)
+	public String loguear(Model model) {
+		return "views/login";
+	}
+	
+	@RequestMapping(value="usuarios", method = RequestMethod.GET)
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Listado de usuarios");
 		model.addAttribute("usuarios", usuarioService.findAll());
 		return "views/usuariosView";
 	}
+	
+	
+	@RequestMapping(value="login", method = RequestMethod.POST)
+	public String validarLogin(@RequestParam("nick") String nick, @RequestParam("password") String password, Model model) {
+	    Usuario usuarioBuscado = usuarioService.validarUsuario(nick, password);
+	    if (usuarioBuscado == null) {
+	        model.addAttribute("error", "Usuario y/o contraseña inválidos.");
+	        return "views/login";
+	    } else {
+	    	 model.addAttribute("logueo", "Usuario validado OK.");
+	        return "index";
+	    }
+	}
+
 	
 	@RequestMapping(value="usuario/agregar", method = RequestMethod.GET)
 	public String crear(Map <String, Object> model) {
@@ -39,7 +58,7 @@ class LoginController {
 	public String guardar(@Valid Usuario usuario, BindingResult result, Model model) {
 	    if (result.hasErrors()) {
 	        model.addAttribute("titulo", "Registro Usuario");
-	        return "views/register";
+	        return "views/login";
 	    }
 
 	    try {

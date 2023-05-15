@@ -63,12 +63,20 @@ public class ProductoController {
         if (id > 0) {
             p = productoService.findOne(id);
         } else {
-            return "redirect/movies";
+            return "views/productoForm";
         }
         model.put("producto", p);
         model.put("titulo", "Editar Producto");
         model.put("botonSubmit", "Editar");
         return "views/productoForm";
     }
+	
+	  @RequestMapping(value = "/delete/{id}")
+	    public String eliminar(@PathVariable(value = "id") Long id) {
+	        if (id > 0) {
+	        	productoService.delete(id);
+	        }
+		    return "redirect:/producto/listar";
+	    }
 	
 }

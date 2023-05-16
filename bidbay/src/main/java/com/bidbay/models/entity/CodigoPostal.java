@@ -5,7 +5,6 @@ public class CodigoPostal {
 	private String localidad;
 	private String provincia;
 	
-	
 	public CodigoPostal(Integer id, String localidad, String provincia) {
 		this.id = id;
 		this.localidad = localidad;

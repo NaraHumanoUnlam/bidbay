@@ -10,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -30,11 +31,14 @@ public class Publicacion implements Serializable, Comparable<Publicacion> {
 
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	//@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotNull
 	private Date createAt;
-
+	
+	
+	//fijate en esto juli!!
 	@OneToOne
+	@JoinColumn(name = "productos", referencedColumnName = "id")
 	private Producto producto;
 
 	private Usuario usuario; // Nullable x ahora
@@ -96,4 +100,7 @@ public class Publicacion implements Serializable, Comparable<Publicacion> {
 		}
 	}
 
+	public Long getId() {
+		return id;
+	}
 }

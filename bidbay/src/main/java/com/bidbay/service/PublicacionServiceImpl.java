@@ -2,6 +2,8 @@ package com.bidbay.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -10,6 +12,7 @@ import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Publicacion;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class PublicacionServiceImpl implements IPublicacionService{
 	
     @Autowired

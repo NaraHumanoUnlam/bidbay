@@ -13,7 +13,6 @@ public interface IPublicacionService {
     public Publicacion findByProductoId(Long id);
 
     public List <Publicacion> ordenarPorPrecio(String orden); 
-    public List <Publicacion> ordenarPorFecha(Date desde, Date hasta); 
-	
+    public List <Publicacion> ordenarPorFecha(Date desde, Date hasta);
 	
 }

@@ -1,5 +1,7 @@
 package com.bidbay.models.entity;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +14,8 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "carrito")
-public class Carrito {
+public class Carrito implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -24,28 +27,22 @@ public class Carrito {
 	
 	@NotNull
 	@OneToOne
-	@JoinColumn(name = "publicaciones", referencedColumnName = "id")
-	private Publicacion publicacion;
+	@JoinColumn(name = "productos", referencedColumnName = "id")
+	private Producto producto;
 	
 	@NotNull
 	private Integer cantidadProductos;
 	
-	public Carrito(Long idUsuario, Publicacion publicacion, Integer cantidadProductos) {
+	public Carrito(Long idUsuario, Producto producto, Integer cantidadProductos) {
 		super();
 		this.idUsuario = idUsuario;
-		this.publicacion = publicacion;
+		this.producto = producto;
 		this.cantidadProductos = cantidadProductos;
 	}
 
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
-
-
-	public @NotNull Publicacion getPublicacion() {
-		return publicacion;
-	}
-
 
 	public Integer getCantidadProductos() {
 		return cantidadProductos;
@@ -54,6 +51,15 @@ public class Carrito {
 	public void setCantidadProductos(Integer cantidadProductos) {
 		this.cantidadProductos = cantidadProductos;
 	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+	
 	
 	
 }

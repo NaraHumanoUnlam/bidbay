@@ -9,5 +9,13 @@ public interface IProductoService {
 	  public void save(Producto producto);
 	  public Producto findOne(Long id);
       public void delete(Long id);
+      
+      public List <Producto> findByName(String name);
+      public List <Producto> findByPrecioMin(Double precio);
+      public List <Producto> findByPrecioMax(Double precio);
+      public List <Producto> orderList(String orden);
+      
+      public List <Producto> findByCategoria(String categia);
+
 
 }

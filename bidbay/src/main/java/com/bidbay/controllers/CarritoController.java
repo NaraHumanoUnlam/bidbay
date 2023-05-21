@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bidbay.models.entity.Carrito;
-import com.bidbay.models.entity.Publicacion;
+import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICarritoService;
-import com.bidbay.service.IPublicacionService;
-
+import com.bidbay.service.IProductoService;
 
 @Controller
-//@SessionAttributes("carrito")
+@SessionAttributes("carrito")
 @RequestMapping("/carrito")
 public class CarritoController {
 	
@@ -27,18 +26,18 @@ public class CarritoController {
 	private ICarritoService carritoService;
 	
 	@Autowired
-	private IPublicacionService publicacionService;
+	private IProductoService productoService; 
 	
-	@RequestMapping(value="", method = RequestMethod.GET)
+	@RequestMapping(value="/listar", method = RequestMethod.GET)
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Listado de carrito");
 		model.addAttribute("carrito", carritoService.findAll());
 		return "views/carritoView";
 	}
 	
-	@RequestMapping(value = "/carrito/{id}")
+	@RequestMapping(value = "/form/{id}")
     public String agregar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-		Publicacion p = publicacionService.findOne(id);
+		Producto p = productoService.findOne(id);
 		
         Carrito c = new Carrito(null, p, 1);
         carritoService.save(c);

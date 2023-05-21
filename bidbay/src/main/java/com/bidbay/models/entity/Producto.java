@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="productos")
-public class Producto implements Serializable{
+public class Producto implements Serializable, Comparable<Producto> {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -25,8 +25,16 @@ public class Producto implements Serializable{
 	
 	@NotEmpty
 	private String descripcion;
+	
+	// private Long numeroIdentificadorParaUsuario;
 
 	// private Object imagenes;
+	
+	//@ManyToOne
+	// private Categoria categoria
+	
+	//@OneToMany
+	// Private Usuario usuario
     
 	@NotNull
 	private Double precio;
@@ -78,7 +86,10 @@ public class Producto implements Serializable{
 		this.stock = stock;
 	}
 	
-	
+    @Override
+    public int compareTo(Producto p) {
+        return nombre.compareTo(p.getNombre());
+    }
 	
 
 }

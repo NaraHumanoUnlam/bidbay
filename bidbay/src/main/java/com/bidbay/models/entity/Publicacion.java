@@ -27,61 +27,42 @@ public class Publicacion implements Serializable, Comparable<Publicacion> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private Integer numeroDePublicacion;
+	private Integer numero;
 
-	@Column(name = "create_at")
-	@Temporal(TemporalType.DATE)
-	//@DateTimeFormat(pattern = "dd/MM/yyyy")
-	@NotNull
-	private Date createAt;
-	
-	
-	//fijate en esto juli!!
 	@OneToOne
 	@JoinColumn(name = "productos", referencedColumnName = "id")
 	private Producto producto;
+	
+	public void setNumero(Integer numeroDePublicacion) {
+		this.numero = numeroDePublicacion;
+	}
 
-	private Usuario usuario; // Nullable x ahora
-
-	public Integer getNumeroDePublicacion() {
-		return numeroDePublicacion;
+	public Integer getNumero() {
+		return numero;
 	}
 
 	public Publicacion() {
 		super();
 	}
 
-	public Publicacion(Integer numeroDePublicacion, @NotNull Date createAt, Producto producto) {
+	public Publicacion(Integer numeroDePublicacion, Producto producto) {
 		super();
-		this.numeroDePublicacion = numeroDePublicacion;
-		this.createAt = createAt;
+		this.numero = numeroDePublicacion;
 		this.producto = producto;
 	}
 
-	public Publicacion(Long id, Integer numeroDePublicacion, @NotNull Date createAt, Producto producto) {
+	public Publicacion(Long id, Integer numeroDePublicacion, Producto producto) {
 		super();
 		this.id = id;
-		this.numeroDePublicacion = numeroDePublicacion;
-		this.createAt = createAt;
+		this.numero = numeroDePublicacion;
 		this.producto = producto;
 	}
 
-	public void setNumeroDePublicacion(Integer numeroDePublicacion) {
-		this.numeroDePublicacion = numeroDePublicacion;
-	}
-
-	public Date getCreateAt() {
-		return createAt;
-	}
-
-	public void setCreateAt(Date createAt) {
-		this.createAt = createAt;
-	}
 
 	public Producto getProducto() {
 		return producto;
 	}
-
+ 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}

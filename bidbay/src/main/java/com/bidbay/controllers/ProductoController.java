@@ -58,7 +58,6 @@ public class ProductoController {
 	
 	@RequestMapping(value = "/form/{id}")
     public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
-
         Producto p = null;
         if (id > 0) {
             p = productoService.findOne(id);

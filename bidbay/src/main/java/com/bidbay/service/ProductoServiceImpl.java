@@ -43,26 +43,21 @@ public class ProductoServiceImpl implements IProductoService {
     @Override
     @Transactional(readOnly = true)
     public List<Producto> findByName(String name) {
-        List<Producto> pelicularEncontradas = new ArrayList<>();
+        List<Producto> productosEncontrados = new ArrayList<>();
         for (Producto p : findAll()) {
-            if (p.getNombre().equals(name)) {
-                pelicularEncontradas.add(p);
+            if (p.getNombre().toLowerCase().contains(name.toLowerCase())) {
+            	productosEncontrados.add(p);
             }
         }
-        return pelicularEncontradas;
+        return productosEncontrados;
     }
 
 	@Override
-	public List<Producto> findByPrecioMin(Double precio) {
+	public List<Producto> findByPrecio(Integer minimo, Integer maximo) {
+		// se castea a double
 		return null;
 	}
 
-	@Override
-	public List<Producto> findByPrecioMax(Double precio) {
-		return null;
-	}
-
-	
 	@Override
 	public List<Producto> orderList(String orden) {
 		List<Producto> listaOrdenada;

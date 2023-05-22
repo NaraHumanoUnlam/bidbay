@@ -2,11 +2,14 @@ package com.bidbay.models.entity;
 
 import java.io.Serializable;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -28,8 +31,6 @@ public class Producto implements Serializable, Comparable<Producto> {
 	
 	// private Long numeroIdentificadorParaUsuario;
 
-	// private Object imagenes;
-	
 	//@ManyToOne
 	// private Categoria categoria
 	
@@ -90,6 +91,6 @@ public class Producto implements Serializable, Comparable<Producto> {
     public int compareTo(Producto p) {
         return nombre.compareTo(p.getNombre());
     }
-	
+
 
 }

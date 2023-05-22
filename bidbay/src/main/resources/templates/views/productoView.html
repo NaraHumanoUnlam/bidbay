@@ -6,8 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title th:text="${titulo}"></title>
-	<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-	<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="text-center text-blue-600 bg-gray-300">
@@ -43,6 +41,68 @@
 		</tbody>
 	</table>
 	<p th:text="${mensaje}" th:if="${mensaje}"></p>
+<body>
+	<h1 th:text="${titulo}"></h1>
+	<div class="container">
+		<form th:action="@{/producto/listar}">
+			<div>
+				<input name="search" type="text" placeholder="Buscar">
+				<input type="submit" value="Buscar">
+			</div>
+		</form>
+
+		<div>
+			<p th:if="${inputValue != null}" th:text="'Resultado de buscar: ' + ${inputValue}"></p>
+			<a th:if="${inputValue != null}" th:text="Volver" th:href="@{/producto/listar}"></a>
+		</div>
+
+
+	</div>
+
+	<div>
+		<div>
+			<div>
+				<p>
+					<a th:href="@{/producto/form}">Agregar Producto</a>
+				</p>
+			</div>
+			<div>
+				<h4>Ordenar: </h4>
+				<div>
+					<a class="btn btn-secondary text-light"
+						th:href="@{/producto/listar?order=asc}"><b>Ascendente</b></a>
+					<a class="btn btn-secondary text-light"
+						th:href="@{/producto/listar?order=desc}"><b>Descendente</b></a>
+					<a class="btn btn-secondary text-light" th:href="@{/producto/listar}"><b>Default</b> </a>
+				</div>
+			</div>
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nombre</th>
+					<th>Descripcion</th>
+					<th>Precio</th>
+					<th>Stock</th>
+					<th>Editar</th>
+					<th>Eliminar</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="producto: ${productos}">
+					<td th:text="${producto.id}"></td>
+					<td th:text="${producto.nombre}"></td>
+					<td th:text="${producto.descripcion}"></td>
+					<td th:text="${producto.precio}"></td>
+					<td th:text="${producto.stock}"></td>
+					<td><a th:href="@{/producto/form/} + ${producto.id}">Link</a></td>
+					<td><a th:href="@{/producto/delete/} + ${producto.id}"
+							onclick="return confirm('¿Estás seguro que querés eliminar esta Producto?')">Eliminar</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 </body>
 
 </html>

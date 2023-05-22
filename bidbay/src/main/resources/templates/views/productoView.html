@@ -25,6 +25,7 @@
 				<th>Stock</th>
 				<th>Editar</th>
 				<th>Eliminar</th>
+				<th>Agregar al carrito</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -37,9 +38,11 @@
 				<td><a th:href="@{/producto/form/} + ${producto.id}">Link</a></td>
 				<td><a th:href="@{/producto/delete/} + ${producto.id}"
 						onclick="return confirm('¿Estás seguro que querés eliminar esta Pelicula?')">Eliminar</a></td>
+				<td><a th:href="@{/carrito/form/{id}(id=${producto.id})}">Agregar</a></td>
 			</tr>
 		</tbody>
 	</table>
+	<p th:text="${mensaje}" th:if="${mensaje}"></p>
 </body>
 
 </html>

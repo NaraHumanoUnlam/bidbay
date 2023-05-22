@@ -22,6 +22,7 @@ public class Carrito implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idItem;
 	
+
 	//@NotNull
 	private Long idUsuario;
 	
@@ -39,6 +40,8 @@ public class Carrito implements Serializable{
 		this.producto = producto;
 		this.cantidadProductos = cantidadProductos;
 	}
+	
+	public Carrito() {}
 
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -55,11 +58,23 @@ public class Carrito implements Serializable{
 	public Producto getProducto() {
 		return producto;
 	}
+	
+	public Long getIdItem() {
+		return idItem;
+	}
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
-	
-	
+
+	public Object getStock() {
+		// TODO Auto-generated method stub
+		return this.cantidadProductos;
+	}
+
+	public void setStock(Object stock) {
+		// TODO Auto-generated method stub
+		this.cantidadProductos = (@NotNull Integer) stock;
+	}
 	
 }

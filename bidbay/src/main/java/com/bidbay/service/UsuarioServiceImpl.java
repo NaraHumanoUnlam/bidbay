@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.models.dao.IUsuarioDao;
 
@@ -30,6 +29,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		// agregar usuarios a la lista
 		for (Usuario usuario : usuarios) {
 		    if (usuario.getNick().equals(nick) && usuario.getPassword().equals(password))
+		    	return usuario;
+		}
+		return null;
+	}
+
+	public Usuario findByUsername(String nick) {
+		List<Usuario> usuarios = (List<Usuario>) usuarioDao.findAll();
+		for (Usuario usuario : usuarios) {
+		    if (usuario.getNick().equals(nick))
 		    	return usuario;
 		}
 		return null;

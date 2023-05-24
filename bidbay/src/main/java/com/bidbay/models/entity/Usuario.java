@@ -1,6 +1,7 @@
 package com.bidbay.models.entity;
 import java.io.Serializable;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +33,8 @@ public class Usuario implements Serializable{
 		private String direccion;
 		@NotEmpty
 		private String telefono;
+		@NotEmpty
+		private Rol rol;
 		
 		public Usuario() {
 			super();
@@ -105,6 +108,8 @@ public class Usuario implements Serializable{
 		public static long getSerialversionuid() {
 			return serialVersionUID;
 		}
+
+		
 		
 
 

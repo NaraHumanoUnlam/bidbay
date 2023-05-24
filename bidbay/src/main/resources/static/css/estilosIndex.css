@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+
+.productos-container{
+	display: grid;
+	grid-template-columns: auto auto auto;
+}

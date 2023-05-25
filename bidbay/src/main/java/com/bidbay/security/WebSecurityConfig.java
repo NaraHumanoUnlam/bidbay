@@ -56,6 +56,14 @@ public class WebSecurityConfig {
 	    	                .build();
 	    	        manager.createUser(userNew);
 			}
+	        
+	        UserDetails userAdmin =
+	        		 org.springframework.security.core.userdetails.User.withDefaultPasswordEncoder()
+						.username("admin")
+						.password("admin")
+						.roles("ADMIN")
+						.build();
+	    	      manager.createUser(userAdmin);
 	    	      
 	    	        return manager;
 	    }
@@ -65,4 +73,6 @@ public class WebSecurityConfig {
 	        // Utiliza un codificador de contraseñas seguro
 	        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	    }
+	    
+	   
 }

@@ -50,6 +50,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return null;
 	}
 	
+	public Usuario findByemail(String email) {
+		List<Usuario> usuarios = (List<Usuario>) usuarioDao.findAll();
+		for (Usuario usuario : usuarios) {
+		    if (usuario.getEmail().equals(email))
+		    	return usuario;
+		}
+		return null;
+	}
 	
 
 }

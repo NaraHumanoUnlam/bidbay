@@ -61,6 +61,11 @@ class LoginController {
 	        model.addAttribute("titulo", "Registro Usuario");
 	        return "views/login";
 	    }
+	    if (usuarioService.findByUsername(usuario.getNick())!=null || usuarioService.findByemail(usuario.getEmail())!=null) {
+	    	model.addAttribute("titulo", "Registro Usuario");
+	    	model.addAttribute("error","El usuario y/o email ya existe registrado.");
+	    	return "views/register";
+	    }
 
 	    try {
 	        usuarioService.save(usuario);

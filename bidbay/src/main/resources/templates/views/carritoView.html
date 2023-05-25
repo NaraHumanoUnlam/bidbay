@@ -11,7 +11,7 @@
 </head>
 <body class="text-center text-white">
     <h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-    <table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12">
+    <table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
         <thea>
             <tr>
                 <th>Producto</th>
@@ -37,6 +37,7 @@
             </tr>
         </tbody>
     </table>
+    <a th:href="@{/compra}" class="text-black text-2xl bg-green-200 p-2 mt-10">Comprar</a>
     <p th:text="${mensajeExito}" class="text-green-500" th:if="${mensajeExito}"></p>
 	<p th:text="${mensajeError}" class="text-red-500" th:if="${mensajeError}"></p>
     <!--<a th:href="@{carrito/agregar}" class=" hover:bg-sky-400 p-5 m-auto rounded-full border border-sky-400 m-5 text-xl bg-sky-600 mb-10">Checkout</a>

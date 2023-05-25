@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.bidbay.models.dao.IUsuarioDao;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.UsuarioServiceImpl;
 
@@ -21,7 +22,7 @@ import com.bidbay.service.UsuarioServiceImpl;
 @EnableWebSecurity
 public class WebSecurityConfig {
 	 @Autowired  
-     private UsuarioServiceImpl usuarioS;
+     private IUsuarioDao usuarioDao;
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
@@ -44,7 +45,7 @@ public class WebSecurityConfig {
 	        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
 	       
 	        		
-	        List<Usuario> usuarios = usuarioS.findAll();
+	        List<Usuario> usuarios = (List<Usuario>) usuarioDao.findAll();
 	        
 	        for (Usuario usuario : usuarios) {
 	         
@@ -56,7 +57,6 @@ public class WebSecurityConfig {
 	    	        manager.createUser(userNew);
 			}
 	    	      
-	    	        
 	    	        return manager;
 	    }
 		    

@@ -9,11 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.IUsuarioService;
@@ -37,10 +33,10 @@ class LoginController {
 		return "views/usuariosView";
 	}
 	
-	
 	@RequestMapping(value="login", method = RequestMethod.POST)
-	public String validarLogin(@RequestParam("nick") String nick, @RequestParam("password") String password, Model model) {
+	public String validarLogin(@RequestParam("username") String nick, @RequestParam("password") String password, Model model) {
 	    Usuario usuarioBuscado = usuarioService.validarUsuario(nick, password);
+	   
 	    if (usuarioBuscado == null) {
 	        model.addAttribute("error", "Usuario y/o contraseña inválidos.");
 	        return "views/login";

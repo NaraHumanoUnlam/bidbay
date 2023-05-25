@@ -20,7 +20,7 @@ import com.bidbay.service.ICarritoService;
 import com.bidbay.service.IProductoService;
 
 @Controller
-@SessionAttributes("carrito")
+//@SessionAttributes("carrito")
 @RequestMapping("/carrito")
 public class CarritoController {
 	

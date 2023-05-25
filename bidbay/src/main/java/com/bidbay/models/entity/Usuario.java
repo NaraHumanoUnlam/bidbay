@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name="usuarios")
@@ -33,12 +32,10 @@ public class Usuario implements Serializable{
 		private String direccion;
 		@NotEmpty
 		private String telefono;
-		@NotEmpty
-		private Rol rol;
 		
+
 		public Usuario() {
 			super();
-			// TODO Auto-generated constructor stub
 		}
 
 		public Long getId() {

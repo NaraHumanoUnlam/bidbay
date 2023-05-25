@@ -90,5 +90,26 @@ public class ProductoController {
 		}
 		return "redirect:/producto/listar";
 	}
+	
+	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
+	public String buscar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
+			@RequestParam("search") @Nullable String search, Model model) {
+		model.addAttribute("titulo", "Busqueda de Productos");
+		model.addAttribute("productos", productoService.findAll());
+		if (search != null) {
+			List<Producto> productosEncontrados = new ArrayList<>();
+			productosEncontrados.addAll(productoService.findByName(search.toString()));
+			model.addAttribute("productos", productosEncontrados);
+			model.addAttribute("inputValue", search);
+		} else {
+			if (order != null) {
+				model.addAttribute("productos", productoService.orderList(order));
+			}
+		}
+		return "views/productoSearhView";
+	}
+	
+	
+	
 
 }

@@ -13,6 +13,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 		registry.addViewController("/carrito").setViewName("carritoView");
 		registry.addViewController("/login").setViewName("login");
 		registry.addViewController("/usuario/agregar").setViewName("register");
+		registry.addViewController("/producto/listar").setViewName("productoView");
 	}
 
 }

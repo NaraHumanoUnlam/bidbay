@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Metodo de Pago</title>
+</head>
+<body>
+
+<form action="/Pagar" method="POST">
+  <div>
+    <label for="mail">Mail de Cliente:</label>
+    <input type="text" id="mailCliente" name="mailCliente">
+  </div>
+  <div>
+    <label for="documentoCliente">Documento de Cliente:</label>
+    <input type="text" id="documentoCliente" name="documentoCliente" required>
+  </div>
+  
+  <div>
+    <label for="numeroTarjeta">Número de Tarjeta:</label>
+    <input type="text" id="numeroTarjeta" name="numeroTarjeta" pattern="[0-9]{16}" inputmode="numeric" required>
+  </div>
+  <div>
+    <label for="vencimientoTarjeta">Vencimiento de Tarjeta:</label>
+    <input type="text" id="vencimientoTarjeta" name="vencimientoTarjeta" required>
+  </div>
+  <div>
+    <label for="titularTarjeta">Nombre del Titular de la Tarjeta:</label>
+    <input type="text" id="titularTarjeta" name="titularTarjeta" required>
+  </div>
+  <div>
+    <label for="cvc">CVC:</label>
+    <input type="text" id="cvc" name="cvc" pattern="[0-9]{3}" inputmode="numeric"  required>
+  </div>
+  <button type="submit" id="Pagar" >Realizar Pago</button>
+</form>
+
+</body>
+</html>

@@ -78,10 +78,10 @@
 </header>
 	<main class="w-full flex h-full justify-center m-auto">
 		<section
-			class="rounded flex flex-row w-full h-1/4 justify-around items-center pt-20">
+			class="rounded flex w-full h-1/4 justify-around items-center pt-20">
 			<div>
 				<div
-					class="text-center border border-solid border-gray-500 flex flex-col items-center justify-center justify-items-center">
+					class="grid grid-cols-3 text-center border border-solid border-gray-500 flex flex-col items-center justify-center justify-items-center">
 					<div th:each="producto: ${productos}"
 						class="mb-10">
 						<img src="../../img/imagen-test.png" alt="${producto.nombre}" class="w-1/2 h-1/2 m-auto mt-2">

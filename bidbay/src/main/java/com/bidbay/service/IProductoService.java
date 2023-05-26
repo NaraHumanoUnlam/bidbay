@@ -11,10 +11,10 @@ public interface IProductoService {
       public void delete(Long id);
       
       public List <Producto> findByName(String name);
-      public List <Producto> findByPrecio(Integer minimo, Integer maximo);
       public List <Producto> orderList(String orden);
       
       public List <Producto> findByCategoria(String categia);
+      public List<Producto> orderFiltredList(String orden, List<Producto> list);
 
 
 }

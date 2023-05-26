@@ -96,15 +96,17 @@ public class ProductoController {
 			@RequestParam("search") @Nullable String search, Model model) {
 		model.addAttribute("titulo", "Busqueda de Productos");
 		model.addAttribute("productos", productoService.findAll());
-		if (search != null) {
+		model.addAttribute("inputValue", search);
+		if (search != null && order == null) {
 			List<Producto> productosEncontrados = new ArrayList<>();
 			productosEncontrados.addAll(productoService.findByName(search.toString()));
 			model.addAttribute("productos", productosEncontrados);
-			model.addAttribute("inputValue", search);
-		} else {
-			if (order != null) {
-				model.addAttribute("productos", productoService.orderList(order));
-			}
+		} else if( order != null && search == null){
+			model.addAttribute("productos", productoService.orderList(order));
+		} if (search != null && order != null) {
+			List<Producto> productosEncontrados = new ArrayList<>();
+			productosEncontrados.addAll(productoService.findByName(search.toString()));
+			model.addAttribute("productos", productoService.orderFiltredList(order, productosEncontrados));
 		}
 		return "views/productoSearhView";
 	}

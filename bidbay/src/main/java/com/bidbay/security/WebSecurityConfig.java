@@ -24,41 +24,21 @@ import com.bidbay.models.entity.Usuario;
 public class WebSecurityConfig {
 	 @Autowired  
      private IUsuarioDao usuarioDao;
-	 
+	
 	@SuppressWarnings("deprecation")
 	@Bean
-	public SecurityFilterChain  configure(HttpSecurity http) throws Exception  {
-
-		 http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); 
-		http
-		.csrf().disable()
-        .authorizeRequests()
-       .requestMatchers( "/productos/form/{productId}").hasRole("ADMIN") // Admin should be able to delete
-       .requestMatchers( "/productos/delete/{productId}").hasRole("ADMIN") // Admin should be able to update
-        .requestMatchers("/productos/form").hasAnyRole("ADMIN", "MODERATOR") // Admin and Supervisor should be able to add product.
-        .requestMatchers("/productos/listar").hasAnyRole("ADMIN", "MODERATOR", "USER") // All three users should be able to get all products.
-        .requestMatchers(HttpMethod.GET,"/productos/buscar").hasAnyRole("ADMIN", "MODERATOR", "USER")// All three users should be able to get a product by id.
-        .requestMatchers("/").hasAnyRole("USER") 
-        .anyRequest()
-        .authenticated()
-        .and()
-        .httpBasic();
-		return http.build();
-	}
-
-	
-	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/home").permitAll()
+				.requestMatchers("/", "/home","/img/**", "/usuario/agregar").permitAll()
+				.requestMatchers( "/producto/listar").hasRole("ADMIN")
 				.anyRequest().authenticated()
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
 				.permitAll()
-			)
-			.logout((logout) -> logout.permitAll());
+			);
 
 		return http.build();
 	}
@@ -80,11 +60,9 @@ public class WebSecurityConfig {
 	    	        manager.createUser(userNew);
 			}
 	        
-	        @SuppressWarnings("deprecation")
 			UserDetails userAdmin =
-	        		 org.springframework.security.core.userdetails.User.withDefaultPasswordEncoder()
-						.username("admin")
-						.password("admin")
+	        		 org.springframework.security.core.userdetails.User.withUsername("admin")
+						.password(passwordEncoder().encode("admin"))
 						.roles("ADMIN")
 						.build();
 	    	      manager.createUser(userAdmin);

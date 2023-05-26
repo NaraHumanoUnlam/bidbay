@@ -38,7 +38,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		    if (usuario.getNick().equals(nick) && usuario.getPassword().equals(password))
 		    	return usuario;
 		}
-		return new Usuario();
+		return null;
 	}
 
 	public Usuario findByUsername(String nick) {

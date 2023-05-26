@@ -44,7 +44,7 @@ public class CarritoController {
         Carrito c = new Carrito(null, p, 1);
         carritoService.save(c);
         redirectAttributes.addFlashAttribute("mensaje", "Producto agregado correctamente al carrito");
-        return "redirect:/producto/buscar";
+        return "redirect:/carrito/listar";
     }
 	
 	@RequestMapping(value = "/editar/{id}", method = RequestMethod.POST)

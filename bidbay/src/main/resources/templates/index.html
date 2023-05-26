@@ -1,9 +1,12 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.tailwindcss.com"></script>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${titulo}"></title>
+	<script src="https://cdn.tailwindcss.com"></script>
 
 
 <link
@@ -36,12 +39,13 @@
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-
-<!-- <link rel="stylesheet" href="../static/css/estilosIndex.css"> -->
-
+<link rel="stylesheet" href="../../css/estilosIndex.css">
 </head>
 
-<body>
+
+
+<body class="bg-gray-100">
+<header>
 	<nav class="navbar navbar-dark bg-dark">
 		<div class="h-full w-full flex justify-between items-center">
 			<a th:href="@{/}"><img alt="logo" src="../img/logo-bidbay.png" class="bg-white ml-10"></a> 
@@ -71,24 +75,25 @@
 			</div>
 		</div>
 	</nav>
-
-	<main class="w-full flex h-full bg-gray-100 justify-center m-auto">
-
+</header>
+	<main class="w-full flex h-full justify-center m-auto">
 		<section
-			class="rounded border border-black m-0 flex flex-row w-full h-1/4 justify-around items-center pt-20">
-			<table>
-				<tbody
-					class="h-full w-full items-center justify-center mb-14 text-center mr-20 productos-container">
-					<tr th:each="producto: ${productos}"
-						class="flex flex-col mb-10 mr-20">
-						<td th:text="${producto.nombre}"></td>
-						<td th:text="${producto.descripcion}" class="mb-10"></td>
-						<td><a th:href="@{/carrito/form/{id}(id=${producto.id})}"
+			class="rounded flex flex-row w-full h-1/4 justify-around items-center pt-20">
+			<div>
+				<div
+					class="text-center border border-solid border-gray-500 flex flex-col items-center justify-center justify-items-center">
+					<div th:each="producto: ${productos}"
+						class="mb-10">
+						<img src="../../img/imagen-test.png" alt="${producto.nombre}" class="w-1/2 h-1/2 m-auto mt-2">
+						<p th:text="${producto.nombre}" class="text-4xl mb-2"></p>
+						<p th:text="${producto.descripcion}" class="mb-2"></p>
+						<p th:text="${producto.precio}" class="mb-2"></p>
+						<a th:href="@{/carrito/form/{id}(id=${producto.id})}"
 							class="bg-blue-400 p-2 m-5 text-white hover:bg-blue-600 rounded">Agregar
-								al carrito</a></td>
-					</tr>
-				</tbody>
-			</table>
+								al carrito</a>
+					</div>
+				</div>
+			</div>
 		</section>
 	</main>
 	<footer class="bg-gray-400 text-gray-100 text-center">(c)

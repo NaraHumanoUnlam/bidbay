@@ -5,35 +5,64 @@
 <title>Metodo de Pago</title>
 </head>
 <body>
+<h1 th:text="${titulo}" class="text-3xl mb-10 mt-5"></h1>
 
-<form action="/Pagar" method="POST">
+<form th:action="@{/compra/pago/form}" th:object="${pago}" method="POST">
   <div>
-    <label for="mail">Mail de Cliente:</label>
-    <input type="text" id="mailCliente" name="mailCliente">
+    <label for="mailCliente">Mail de Cliente:</label>
+    <input type="text" id="mailCliente" th:field="*{mailCliente}">
   </div>
   <div>
     <label for="documentoCliente">Documento de Cliente:</label>
-    <input type="text" id="documentoCliente" name="documentoCliente" required>
+    <input type="text" id="documentoCliente" th:field="*{DNI}"required>
   </div>
   
   <div>
     <label for="numeroTarjeta">Número de Tarjeta:</label>
-    <input type="text" id="numeroTarjeta" name="numeroTarjeta" pattern="[0-9]{16}" inputmode="numeric" required>
+    <input type="text" id="numeroTarjeta" th:field="*{numeroTarjeta}" pattern="[0-9]{16}" inputmode="numeric" required>
   </div>
   <div>
-    <label for="vencimientoTarjeta">Vencimiento de Tarjeta:</label>
-    <input type="text" id="vencimientoTarjeta" name="vencimientoTarjeta" required>
+  
+    <label for="mes">Vencimiento de Tarjeta:</label>
+    <select id="mes" th:field="*{mes}" required>
+        <option value="">Mes</option>
+        <option value="01">Enero</option>
+        <option value="02">Febrero</option>
+        <option value="03">Marzo</option>
+        <option value="04">Abril</option>
+        <option value="05">Mayo</option>
+        <option value="06">Junio</option>
+        <option value="07">Julio</option>
+        <option value="08">Agosto</option>
+        <option value="09">Septiembre</option>
+        <option value="10">Octubre</option>
+        <option value="11">Noviembre</option>
+        <option value="12">Diciembre</option>
+    </select>
+    <select id="anio" th:field="*{anio}" required>
+            <option value="">Año</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+     </select> 
   </div>
   <div>
     <label for="titularTarjeta">Nombre del Titular de la Tarjeta:</label>
-    <input type="text" id="titularTarjeta" name="titularTarjeta" required>
+    <input type="text" id="titularTarjeta" th:field="*{titularTarjeta}" required>
   </div>
   <div>
     <label for="cvc">CVC:</label>
-    <input type="text" id="cvc" name="cvc" pattern="[0-9]{3}" inputmode="numeric"  required>
+    <input type="text" id="cvc" th:field="*{cvc}" pattern="[0-9]{3}" inputmode="numeric"  required>
   </div>
   <button type="submit" id="Pagar" >Realizar Pago</button>
 </form>
 
+	<label>Monto a pagar: ACA TENGO Q PONER EL PRECIO x CANTIDAD</label>
+	
+	<h2 th:text="${error}"></h2>
+			<div th:if="${param.error}"></div>
 </body>
 </html>

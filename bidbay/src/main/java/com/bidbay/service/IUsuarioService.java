@@ -9,4 +9,5 @@ public interface IUsuarioService {
 	public void save(Usuario usuario);
 	public Usuario validarUsuario(String nick, String password);
 	public Usuario findByUsername(String nick);
+	public Usuario findByemail(String email);
 }

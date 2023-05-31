@@ -31,5 +31,5 @@ build/
 !**/src/test/**/build/
 
 ### VS Code  y properties###
-.vscode/
-.properties
+*.vscode/
+*.properties

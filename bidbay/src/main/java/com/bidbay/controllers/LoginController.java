@@ -41,7 +41,7 @@ class LoginController {
 	        model.addAttribute("error", "Usuario y/o contraseña inválidos.");
 	        return "views/login";
 	    } else {
-	    	 model.addAttribute("logueo", "Usuario validado OK.");
+	    	 model.addAttribute("logueo", usuarioBuscado.getNick());
 	        return "index";
 	    }
 	}

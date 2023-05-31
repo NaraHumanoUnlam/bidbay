@@ -31,7 +31,7 @@ public class WebSecurityConfig {
 		
 		http
 			.authorizeHttpRequests((requests) -> requests
-				.requestMatchers("/", "/home","/img/**", "/usuario/agregar","/login").permitAll()
+				.requestMatchers("/", "/home","/img/**", "/usuario/agregar","/login","/compra/pago/form").permitAll()
 				.requestMatchers( "/producto/listar").hasRole("ADMIN")
 				.anyRequest().authenticated()
 			)

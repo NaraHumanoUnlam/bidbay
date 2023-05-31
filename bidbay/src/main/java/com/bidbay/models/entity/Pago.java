@@ -11,6 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;//
 import jakarta.validation.constraints.NotEmpty;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,26 +19,28 @@ import java.util.HashSet;
 
 @Entity
 @Table(name="pago")
-public class Pago {
+public class Pago implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@NotEmpty
 	private Long idPago;
-	@NotEmpty
+	
+	//@NotEmpty
 	private String mailCliente; 
-	@NotEmpty
+	//@NotEmpty
 	private String DNI;
-	@NotEmpty
+	//@NotEmpty
 	private Integer numeroTarjeta; 
-	@NotEmpty
+	//@NotEmpty
 	private Integer cvc; 
 
 	//fecha de vencimiento
 	private Date fechaVencimiento; 
-	@NotEmpty
+	//@NotEmpty
 	private String mes;
-	@NotEmpty
+	//@NotEmpty
 	private String anio;
 	
 //	private String conjuncionFecha = mes+"/"+anio;

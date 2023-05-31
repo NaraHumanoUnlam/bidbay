@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -111,7 +110,14 @@ public class ProductoController {
 		return "views/productoSearhView";
 	}
 	
-	
+	@RequestMapping(value = "/publicacion/listar", method = RequestMethod.GET)
+	public String listarPubliaciones(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
+			@RequestParam("search") @Nullable String search, Model model) {
+		model.addAttribute("titulo", "Publicaciones de productos");
+		model.addAttribute("productos", productoService.findAll());
+			
+		return "views/publicacionView";
+	}
 	
 
 }

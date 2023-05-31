@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bidbay.models.entity.Compra;
 
 public class CompraServiceImpl implements ICompraService{
-
+//REVISAR METODOS IMPLEMENTADOS
 	@Autowired
 	private ICompraService compraDao;
 
@@ -35,5 +35,6 @@ public class CompraServiceImpl implements ICompraService{
 		compraDao.delete(id);
 	}
 
+	
 	
 }

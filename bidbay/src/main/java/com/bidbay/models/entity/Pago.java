@@ -14,6 +14,8 @@ import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -32,14 +34,14 @@ public class Pago implements Serializable {
 	//@NotEmpty
 	private String DNI;
 	//@NotEmpty
-	private Integer numeroTarjeta; 
+	private Long numeroTarjeta; 
 	//@NotEmpty
 	private Integer cvc; 
 	//@NotEmpty
 	private String nombreDeCliente; 
-	
-	//fecha de vencimiento
-	private Date fechaVencimiento; 
+	//@NotEmpty
+
+	private String fechaVencimiento; 
 	//@NotEmpty
 	private String mes;
 	//@NotEmpty
@@ -48,43 +50,34 @@ public class Pago implements Serializable {
 	private String nombreUsario; 
 	
 	private Double precio; 
-//	private String conjuncionFecha = mes+"/"+anio;
 
-  	public Date transcribirFecha  (String M, String A) {
-  		String conjuncionFecha = M+"/"+A;
-  		SimpleDateFormat formatear = new SimpleDateFormat("MM/yyyy");
-  		try {
-			Date fechaFormateada = formatear.parse(conjuncionFecha);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-  		return null; 
-  	}
+
 	//datos para ticket devolucion 
 	//usuario, telefono, productos que compro, precio que pago, 
 
 
 	
+
+
 	public Pago ()  //vacio
 	{
 		super();
 	}
 
 
-	public Pago(@NotEmpty Long idPago, @NotEmpty String mailCliente, @NotEmpty String dNI,
-			@NotEmpty Integer numeroTarjeta, @NotEmpty Integer cvc, @NotEmpty String mes,
+	public Pago( @NotEmpty String mailCliente, @NotEmpty String dNI,
+			@NotEmpty Long numeroTarjeta, @NotEmpty Integer cvc, @NotEmpty String mes,
 			@NotEmpty String anio, @NotEmpty String nombreCliente,   String usario, Double precio) {
 		super();
-		this.idPago = idPago;
+
 		this.mailCliente = mailCliente;
 		this.nombreDeCliente = nombreCliente; 
 		this.DNI = dNI;
 		this.numeroTarjeta = numeroTarjeta;
 		this.cvc = cvc;
-		this.fechaVencimiento = this.transcribirFecha(mes,anio);
-		this.mes = mes;
+		this.mes = mes; 
 		this.anio = anio;
+		this.fechaVencimiento = (this.mes + "/" + this.anio);
 
 		this.nombreUsario = usario;
 		this.precio = precio;
@@ -115,11 +108,11 @@ public class Pago implements Serializable {
 		DNI = dNI;
 	}
 
-	public Integer getNumeroTarjeta() {
+	public Long getNumeroTarjeta() {
 		return numeroTarjeta;
 	}
 
-	public void setNumeroTarjeta(Integer numeroTarjeta) {
+	public void setNumeroTarjeta(Long numeroTarjeta) {
 		this.numeroTarjeta = numeroTarjeta;
 	}
 
@@ -131,20 +124,12 @@ public class Pago implements Serializable {
 		this.cvc = cvc;
 	}
 
-	public Date getMesVencimiento() {
+	public String getfechaDeVencimiento() {
 		return fechaVencimiento;
 	}
 
-	public void setMesVencimiento(Date mesVencimiento) {
-		this.fechaVencimiento = mesVencimiento;
-	}
-
-	public String getAnio() {
-		return anio;
-	}
-
-	public void setAnio(String anio) {
-		this.anio = anio;
+	public void setfechaDeVencimiento(String fechaDeVencimiento) {
+		this.fechaVencimiento = fechaDeVencimiento;
 	}
 
 	public String getUsario() {
@@ -169,6 +154,26 @@ public class Pago implements Serializable {
 
 	public void setNombreDeCliente(String nombreDeCliente) {
 		this.nombreDeCliente = nombreDeCliente;
+	}
+
+
+	public String getMes() {
+		return mes;
+	}
+
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+
+	public String getAnio() {
+		return anio;
+	}
+
+
+	public void setAnio(String anio) {
+		this.anio = anio;
 	}
 
 	

@@ -9,7 +9,7 @@ public interface IPagoService {
 	public List <Pago>findAll();
 	//public String validarMetodoDePago (String metodoDePago);
 	public String pagarCompra (Double precio); 
-	public String pagarCompra(Compra datos);
+	public String pagarCompra(Pago aRealizar);
 	public boolean delete (Long id);
 	public Pago findByDni(String numeroDeDoc);
 	public Pago findById(Long numeroDeDoc);

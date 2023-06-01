@@ -74,86 +74,45 @@
 	</nav>
 </header>
 	<h1 th:text="${titulo}" class="text-3xl mb-10 mt-5 text-center "></h1>
-	 <form th:action="@{/compra/pago/form}" th:object="${pago}" method="POST" class="bg-black m-5 p-5 flex flex-col justify-center justify-items-center items-center">
-        <table class="w-64 m-auto w-4/5">
-            <tr>
-                <td class="text-white">DNI:</td>
-                <td><input type="text" th:field="*{DNI}" class="p-2 m-2" /></td>
-            </tr>
-            <tr>
-                <td class="text-white">Numero Tarjeta:</td>
-                <td><input type="text" th:field="*{numeroTarjeta}" class="p-2 m-2" /></td>
-            </tr>
-<!--             <tr> -->
-<!--                 <td class="text-white">Fecha de vencimiento:</td> -->
-<!--                 <td><input type="text" th:field="*{fechaVencimiento}" class="p-2 m-2" /></td> -->
-<!--             </tr> -->
-        </table>
-        <input type="submit" id="btn3" th:value="${botonSubmit}" class="btn btn-primary btn-green"/>
-        <a th:href="@{/}" class=" hover:bg-red-400 p-2 m-auto rounded-full border border-red-700 m-5 text-xl bg-red-600 text-white mt-5">Cancelar</a>
-        <input type="hidden" th:field="*{idPago}" />
-    </form>
-<!-- 	<form th:action="@{/compra/pago/form}" th:object="${pago}" -->
-<!-- 		method="POST"> -->
-<!-- 		<table> -->
-<!-- 			<tr> -->
-<!-- 				<td class="text-white">DNI:</td> -->
-<!-- 				<td><input type="text" th:field="*{DNI}" /></td> -->
-<!-- 			</tr> -->
-<!-- 		</table> -->
-		<!--   <tr> -->
-		<!--     <label for="documentoCliente">Documento de Cliente:</label> -->
-		<!--     <input type="text" id="documentoCliente" th:field="*{DNI}"required> -->
-		<!--   </div> -->
+	
+	<form th:action="@{/compra/pago/form}" th:object="${pago}"
+		method="POST">
 
-		<!--   <div> -->
-		<!--     <label for="numeroTarjeta">Número de Tarjeta:</label> -->
-		<!--     <input type="text" id="numeroTarjeta" th:field="*{numeroTarjeta}" pattern="[0-9]{16}" inputmode="numeric" required> -->
-		<!--   </div> -->
-		<!--   <div> -->
 
-		<!--     <label for="mes">Vencimiento de Tarjeta:</label> -->
-		<!--     <select id="mes" th:field="*{mes}" required> -->
-		<!--         <option value="">Mes</option> -->
-		<!--         <option value="01">Enero</option> -->
-		<!--         <option value="02">Febrero</option> -->
-		<!--         <option value="03">Marzo</option> -->
-		<!--         <option value="04">Abril</option> -->
-		<!--         <option value="05">Mayo</option> -->
-		<!--         <option value="06">Junio</option> -->
-		<!--         <option value="07">Julio</option> -->
-		<!--         <option value="08">Agosto</option> -->
-		<!--         <option value="09">Septiembre</option> -->
-		<!--         <option value="10">Octubre</option> -->
-		<!--         <option value="11">Noviembre</option> -->
-		<!--         <option value="12">Diciembre</option> -->
-		<!--     </select> -->
-		<!--     <select id="anio" th:field="*{anio}" required> -->
-		<!--             <option value="">Año</option> -->
-		<!--             <option value="2022">2022</option> -->
-		<!--             <option value="2023">2023</option> -->
-		<!--             <option value="2024">2024</option> -->
-		<!--             <option value="2025">2025</option> -->
-		<!--             <option value="2026">2026</option> -->
-		<!--             <option value="2027">2027</option> -->
-		<!--      </select>  -->
-		<!--   </div> -->
-		<!--   <div> -->
-		<!--     <label for="titularTarjeta">Nombre del Titular de la Tarjeta:</label> -->
-		<!--     <input type="text" id="titularTarjeta" th:field="*{titularTarjeta}" required> -->
-		<!--   </div> -->
-		<!--   <div> -->
-		<!--     <label for="cvc">CVC:</label> -->
-		<!--     <input type="text" id="cvc" th:field="*{cvc}" pattern="[0-9]{3}" inputmode="numeric"  required> -->
-		<!--   </div> -->
-<!-- 		<input type="submit" id="Pagar" th:value="${botonSubmit}" class="bg-blue-700"/>  -->
-<!-- 		<input type="hidden" th:field="*{idPago}" /> -->
-<!-- 	</form> -->
+		    <label for="documentoCliente">Documento de Cliente:</label>
+		    <input type="text" id="documentoCliente" th:field="*{DNI}"required>
+		  </div>
 
-	<!-- 	<label>Monto a pagar: ACA TENGO Q PONER EL PRECIO x CANTIDAD</label> -->
+		  <div>
+		    <label for="numeroTarjeta">Número de Tarjeta:</label>
+		    <input type="text" id="numeroTarjeta" th:field="*{numeroTarjeta}" pattern="[0-9]{16}" maxlength="16" inputmode="numeric" required>
+		  </div>
+		  <div>
 
-	<!-- 	<h2 th:text="${error}"></h2> -->
-	<!-- 			<div th:if="${param.error}"></div> -->
+		 <label for="mes">Vencimiento de Tarjeta:</label> -->
+		 	<div>  
+		 	<input type="text" id="mes" th:field="*{mes}" pattern="[1-12]{12}" maxlength="2" inputmode="numeric" required>
+			<input type="text" id="anio" th:field="*{anio}" pattern="[2023-2030]{4}" maxlength="4" inputmode="numeric" required>
+			</div>
+		</div>
+
+		 
+		  <div>
+		    <label for="titularTarjeta">Nombre del Titular de la Tarjeta:</label>
+		    <input type="text" id="titularTarjeta" th:field="*{nombreDeCliente}"  required>
+		  </div>
+		  <div>
+		    <label for="cvc">CVC:</label>
+		    <input type="text" id="cvc" th:field="*{cvc}" pattern="[0-9]{3}" maxlength="3" inputmode="numeric"  required>
+		  </div>
+		<input type="submit" id="Pagar" th:value="${botonSubmit}" class="bg-blue-700"/> 
+		<input type="hidden" th:field="*{idPago}" />
+	</form>
+
+		<label>Monto a pagar: ACA TENGO Q PONER EL PRECIO x CANTIDAD</label>
+
+		<h2 th:text="${error}"></h2>
+				<div th:if="${param.error}"></div>
 
 </body>
 </html>

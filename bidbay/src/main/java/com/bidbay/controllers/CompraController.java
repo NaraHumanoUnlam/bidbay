@@ -1,5 +1,7 @@
 package com.bidbay.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,16 @@ public class CompraController {
 		return "views/pagoView"; //html que traigo
 	}
 	
+	@RequestMapping(value = "/compra/pago/form", method = RequestMethod.GET)
+	public String crear(Map<String, Object> model) {
+
+		Pago pago = new Pago();
+		model.put("pago", pago);
+		model.put("titulo", "Formulario de Pago");
+		model.put("botonSubmit", "Realizar Pago");
+		return "views/pagoView";
+	}
+	
 	@RequestMapping(value = "/compra/pago/form", method = RequestMethod.POST)
 	public String GuardarPago(@Valid Pago pago, BindingResult result, Model model) {
 		if (result.hasErrors()) {
@@ -41,12 +53,16 @@ public class CompraController {
 			return "views/pagoView";
 		}
 		try {
+			//crear lo que tenga que hacer en pago pero digir a esta vista despues
+			//
 	
 		} catch (Exception e) {
 			model.addAttribute("error", "Error al realizar el pago: " + e.getMessage());
 			return "views/pagoView";
 		}
-		return "views:/compraExitosaView"; //crear vista compra exitosa
+		return "redirect:/views/compraView";
 	}
+	
+	
 	
 }

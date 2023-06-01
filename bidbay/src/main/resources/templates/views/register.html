@@ -14,6 +14,7 @@
 
 <body class="text-black text-center text-3xl flex flex-col justify-center items-center justify-items-center">
     <h1 th:text="${titulo}" class="mb-5 mt-5"></h1>
+    	<h2 th:text="${error}"></h2>
     
     <form th:action="@{/usuario/agregar}" th:object="${usuario}" method="post" class="bg-gray-400 p-5 rounded border border-blue-500 drop-shadow-sm drop-shadow-sm m-auto">
     <img alt="logo" src="../img/logo-bidbay.png" class="m-auto bg-white mb-10">

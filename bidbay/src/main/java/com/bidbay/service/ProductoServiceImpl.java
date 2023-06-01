@@ -3,6 +3,7 @@ package com.bidbay.service;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,23 +54,27 @@ public class ProductoServiceImpl implements IProductoService {
     }
 
 	@Override
-	public List<Producto> findByPrecio(Integer minimo, Integer maximo) {
-		// se castea a double
-		return null;
-	}
-
-	@Override
 	public List<Producto> orderList(String orden) {
-		List<Producto> listaOrdenada;
-        listaOrdenada = findAll();
+		List<Producto> listaOrdenada = findAll();
         if (orden.equalsIgnoreCase("asc")) {
-            Collections.sort(listaOrdenada);
+        	Collections.sort(listaOrdenada, Comparator.comparing(Producto::getPrecio));
         } else if (orden.equalsIgnoreCase("desc")) {
-            Collections.sort(listaOrdenada, Collections.reverseOrder());
+        	Collections.sort(listaOrdenada, Comparator.comparing(Producto::getPrecio).reversed());
         }
         return listaOrdenada;
 	}
-
+	
+	@Override
+	public List<Producto> orderFiltredList(String orden, List<Producto> list) {
+        if (orden.equalsIgnoreCase("asc")) {
+        	Collections.sort(list, Comparator.comparing(Producto::getPrecio));
+        } else if (orden.equalsIgnoreCase("desc")) {
+        	Collections.sort(list, Comparator.comparing(Producto::getPrecio).reversed());
+        }
+        return list;
+	}
+	
+	
 	@Override
 	public List<Producto> findByCategoria(String categia) {
 		// TODO Auto-generated method stub

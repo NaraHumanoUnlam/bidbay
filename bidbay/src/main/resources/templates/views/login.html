@@ -50,7 +50,7 @@
 	
 			<div th:if="${param.error}"></div>
 			<div th:if="${param.logout}">Has sido desconectado.</div>
-			<form th:action="@{/login}" method="post" class="p-5">
+			<form th:action="@{login}" method="post" class="p-5">
 				<div class="mb-4">
 					<input type="text" name="username" placeholder="username" class="px-2 rounded border border-gray-500 border-b-4"/>
 				</div>

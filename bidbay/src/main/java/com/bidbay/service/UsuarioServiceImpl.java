@@ -3,15 +3,8 @@ package com.bidbay.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 import com.bidbay.models.entity.Usuario;
-import com.bidbay.security.WebSecurityConfig;
 import com.bidbay.models.dao.IUsuarioDao;
 
 @Service
@@ -38,7 +31,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		    if (usuario.getNick().equals(nick) && usuario.getPassword().equals(password))
 		    	return usuario;
 		}
-		return new Usuario();
+		return null;
 	}
 
 	public Usuario findByUsername(String nick) {
@@ -50,6 +43,22 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return null;
 	}
 	
+	public Usuario findByemail(String email) {
+		List<Usuario> usuarios = (List<Usuario>) usuarioDao.findAll();
+		for (Usuario usuario : usuarios) {
+		    if (usuario.getEmail().equals(email))
+		    	return usuario;
+		}
+		return null;
+	}
 	
-
+	
+	public String findNickById (Long id) {
+		List<Usuario> usuarios = (List<Usuario>) usuarioDao.findAll();
+		for (Usuario usuario : usuarios) {
+		    if (usuario.getId().equals(id))
+		    	return usuario.getNick();
+		}
+		return null;
+	}
 }

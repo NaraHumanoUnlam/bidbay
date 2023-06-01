@@ -41,7 +41,7 @@ class LoginController {
 	        model.addAttribute("error", "Usuario y/o contraseña inválidos.");
 	        return "views/login";
 	    } else {
-	    	 model.addAttribute("logueo", "Usuario validado OK.");
+	    	 model.addAttribute("logueo", usuarioBuscado.getNick());
 	        return "index";
 	    }
 	}
@@ -60,6 +60,11 @@ class LoginController {
 	    if (result.hasErrors()) {
 	        model.addAttribute("titulo", "Registro Usuario");
 	        return "views/login";
+	    }
+	    if (usuarioService.findByUsername(usuario.getNick())!=null || usuarioService.findByemail(usuario.getEmail())!=null) {
+	    	model.addAttribute("titulo", "Registro Usuario");
+	    	model.addAttribute("error","El usuario y/o email ya existe registrado.");
+	    	return "views/register";
 	    }
 
 	    try {

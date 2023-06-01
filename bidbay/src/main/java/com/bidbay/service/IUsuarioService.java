@@ -10,4 +10,5 @@ public interface IUsuarioService {
 	public Usuario validarUsuario(String nick, String password);
 	public Usuario findByUsername(String nick);
 	public Usuario findByemail(String email);
+	public String findNickById (Long id);
 }

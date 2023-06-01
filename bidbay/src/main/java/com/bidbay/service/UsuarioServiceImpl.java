@@ -52,5 +52,13 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return null;
 	}
 	
-
+	
+	public String findNickById (Long id) {
+		List<Usuario> usuarios = (List<Usuario>) usuarioDao.findAll();
+		for (Usuario usuario : usuarios) {
+		    if (usuario.getId().equals(id))
+		    	return usuario.getNick();
+		}
+		return null;
+	}
 }

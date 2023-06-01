@@ -35,7 +35,9 @@ public class Pago implements Serializable {
 	private Integer numeroTarjeta; 
 	//@NotEmpty
 	private Integer cvc; 
-
+	//@NotEmpty
+	private String nombreDeCliente; 
+	
 	//fecha de vencimiento
 	private Date fechaVencimiento; 
 	//@NotEmpty
@@ -43,9 +45,13 @@ public class Pago implements Serializable {
 	//@NotEmpty
 	private String anio;
 	
+	private String nombreUsario; 
+	
+	private Double precio; 
 //	private String conjuncionFecha = mes+"/"+anio;
 
-  	public Date transcribirFecha  (String conjuncionFecha) {
+  	public Date transcribirFecha  (String M, String A) {
+  		String conjuncionFecha = M+"/"+A;
   		SimpleDateFormat formatear = new SimpleDateFormat("MM/yyyy");
   		try {
 			Date fechaFormateada = formatear.parse(conjuncionFecha);
@@ -58,8 +64,7 @@ public class Pago implements Serializable {
 	//datos para ticket devolucion 
 	//usuario, telefono, productos que compro, precio que pago, 
 
-	private Usuario usario; 
-	private Double precio; 
+
 	
 	public Pago ()  //vacio
 	{
@@ -69,18 +74,19 @@ public class Pago implements Serializable {
 
 	public Pago(@NotEmpty Long idPago, @NotEmpty String mailCliente, @NotEmpty String dNI,
 			@NotEmpty Integer numeroTarjeta, @NotEmpty Integer cvc, @NotEmpty String mes,
-			@NotEmpty String anio,  Usuario usario, Double precio) {
+			@NotEmpty String anio, @NotEmpty String nombreCliente,   String usario, Double precio) {
 		super();
 		this.idPago = idPago;
 		this.mailCliente = mailCliente;
-		DNI = dNI;
+		this.nombreDeCliente = nombreCliente; 
+		this.DNI = dNI;
 		this.numeroTarjeta = numeroTarjeta;
 		this.cvc = cvc;
-		this.fechaVencimiento = this.transcribirFecha(mes+"/"+anio);
+		this.fechaVencimiento = this.transcribirFecha(mes,anio);
 		this.mes = mes;
 		this.anio = anio;
 
-		this.usario = usario;
+		this.nombreUsario = usario;
 		this.precio = precio;
 	}
 
@@ -133,20 +139,36 @@ public class Pago implements Serializable {
 		this.fechaVencimiento = mesVencimiento;
 	}
 
-	public Usuario getUsario() {
-		return usario;
+	public String getAnio() {
+		return anio;
 	}
 
-	public void setUsario(Usuario usario) {
-		this.usario = usario;
+	public void setAnio(String anio) {
+		this.anio = anio;
+	}
+
+	public String getUsario() {
+		return nombreUsario;
+	}
+
+	public void setUsario(String usario) {
+		this.nombreUsario = usario;
 	}
 
 	public Double getPrecio() {
 		return precio;
 	}
 
+
 	public void setPrecio(Double precio) {
 		this.precio = precio;
+	}
+	public String getNombreDeCliente() {
+		return nombreDeCliente;
+	}
+
+	public void setNombreDeCliente(String nombreDeCliente) {
+		this.nombreDeCliente = nombreDeCliente;
 	}
 
 	

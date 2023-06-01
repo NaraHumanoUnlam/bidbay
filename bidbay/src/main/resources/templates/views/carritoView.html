@@ -114,7 +114,7 @@
         <tr><td th:text="${precioTotal}"></td></tr>
         </tbody>
     </table>
-    <a th:href="@{/compra}" class="text-black text-2xl bg-green-200 p-2 mt-10 ">Comprar</a>
+    <a th:href="@{/compra}" class="text-black text-2xl bg-green-200 p-2 mt-10 "hidden>Comprar</a>
     <p th:text="${mensajeExito}" class="text-green-500" th:if="${mensajeExito}"></p>
 	<p th:text="${mensajeError}" class="text-red-500" th:if="${mensajeError}"></p>
    </main>

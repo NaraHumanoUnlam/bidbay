@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.bidbay.models.entity.Pago;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICarritoService;
+import com.bidbay.service.IPagoService;
 
 import jakarta.validation.Valid;
 
@@ -20,7 +21,7 @@ import jakarta.validation.Valid;
 public class CompraController {
 	@Autowired
 	private ICarritoService carritoService;
-	
+	private IPagoService pagoService; 
 	@GetMapping("/compra")
 	public String comprar(Model model) {
 		model.addAttribute("titulo", "Compra");
@@ -49,6 +50,7 @@ public class CompraController {
 	public String GuardarPago(@Valid Pago pago, BindingResult result, Model model) {
 			model.addAttribute("titulo", "Formulario de Pago");
 			model.addAttribute("botonSubmit", "Realizar Pago");
+			pagoService.pagarCompra(pago);
 			return "views/pagoExitosoTemporal";
 	}
 	

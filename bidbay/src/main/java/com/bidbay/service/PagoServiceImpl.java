@@ -19,7 +19,7 @@ public class PagoServiceImpl implements IPagoService {
 	@Autowired
 	private IPagoDao pagoDao;
 	private IUsuarioService servicio;
-
+	private ICompraService compraServicio;
 	@Override
 	public List<Pago> findAll() {
 		// TODO Auto-generated method stub
@@ -29,35 +29,25 @@ public class PagoServiceImpl implements IPagoService {
 
 
 	@Override //lo hacemos con Nara
-	public String pagarCompra(Compra compraRealizada) {
+	public String pagarCompra(Pago aRealizar ) {
 
 		boolean respuesta = false; 
 		String Ticket ="";
 		//declaramaos un servicio de compra y tipado compra
 		Pago pagoAGenerar = new Pago();
-		Double PrecioTotal = (compraRealizada.getCarrito().getProducto().getPrecio() * compraRealizada.getCarrito().getCantidadProductos());
 		
-		pagoAGenerar.setPrecio(PrecioTotal);//le mando el precio que debe pagarse en total 
-		pagoAGenerar.setDNI(null); // traer de html
-		pagoAGenerar.setMailCliente(null);
-		pagoAGenerar.setMesVencimiento(null);
-		pagoAGenerar.setAnio(null);
-		pagoAGenerar.transcribirFecha(null, null); 
-		pagoAGenerar.setUsario(servicio.findNickById(compraRealizada.getCarrito().getIdUsuario()));
+	//	Double PrecioTotal = (compraRealizada.getCarrito().getProducto().getPrecio() * compraRealizada.getCarrito().getCantidadProductos());
 		
-		pagoAGenerar.setNombreDeCliente(null);
-		pagoAGenerar.setNumeroTarjeta(null);
-		pagoAGenerar.setCvc(null);
+		//pagoAGenerar.setPrecio(PrecioTotal);//le mando el precio que debe pagarse en total 
+		
+		
 		
 		if (validarPago(pagoAGenerar)) {
-			Ticket = generarTicket(pagoAGenerar.getIdPago(),
-					pagoAGenerar.getPrecio(),
-					pagoAGenerar.getUsario(),
-					compraRealizada.getCodigo(),
-					compraRealizada.getFecha(),
-					compraRealizada.getCarrito().getCantidadProductos(),
-					compraRealizada.getCarrito().getProducto().getDescripcion());
+			
+			Ticket = generarTicket(pagoAGenerar); //compraRealizada
+			
 			save(pagoAGenerar); 
+			
 			respuesta = true; 
 			}else {
 				Ticket = "Su compra no pudo ser realizada"; 
@@ -65,17 +55,18 @@ public class PagoServiceImpl implements IPagoService {
 		return Ticket;
 	}
 
-	private String generarTicket(Long idPago, Double precio, String usuario, String codigoCompra
-			, Date fechaDeCompra, Integer cantidad, String descripcionProducto) {
-		String retornar = "ID de pago: " + idPago.toString()
-				+ "/nCodigo de compra: " + codigoCompra 
-				+ "/nFecha de compra: " + fechaDeCompra.toString() 
-				+ "/nUsuario solicitante: " + usuario
-				+ "/nDescripcion del producto: " + descripcionProducto
-				+ "/nCantidad de producto comprado: " + cantidad.toString()
-				+ "/nPrecio final de la orden: " + precio.toString();
+	private String generarTicket(Pago pagoRealizado, Compra compraRealizada) {
+		
+		String retornar = "ID de pago: " + pagoRealizado.getIdPago().toString()
+				+ "/nCodigo de compra: " + compraRealizada.getCodigo()
+				+ "/nFecha de compra: " + pagoRealizado.getfechaDeVencimiento() 
+				+ "/nUsuario solicitante: " + pagoRealizado.getUsario()
+				+ "/nDescripcion del producto: " + compraRealizada.getCarrito().getProducto().getDescripcion()
+				+ "/nCantidad de producto comprado: " + compraRealizada.getCarrito().getCantidadProductos().toString()
+				+ "/nPrecio final de la orden: " + pagoRealizado.getPrecio().toString();
 		return retornar;
 	}
+	
 	private boolean validarPago(Pago pagoAGenerar) {
 
 	return true;

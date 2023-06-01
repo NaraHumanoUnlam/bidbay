@@ -14,11 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.IUsuarioService;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.validation.Valid;
 
 @Controller
 class LoginController {
-@Autowired
+	@Autowired
 	private IUsuarioService usuarioService;
 
 	@RequestMapping(value="login", method = RequestMethod.GET)

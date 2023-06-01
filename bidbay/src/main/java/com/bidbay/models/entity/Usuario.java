@@ -34,10 +34,6 @@ public class Usuario implements Serializable{
 		private String telefono;
 		
 
-		public Usuario() {
-			super();
-		}
-
 		public Long getId() {
 			return id;
 		}
@@ -106,9 +102,37 @@ public class Usuario implements Serializable{
 			return serialVersionUID;
 		}
 
-		
-		
+		public Usuario(Long id, @NotEmpty String nick, @NotEmpty String email, @NotEmpty String password,
+				@NotEmpty String nombre, @NotEmpty String apellido, @NotEmpty String direccion,
+				@NotEmpty String telefono) {
+			super();
+			this.id = id;
+			this.nick = nick;
+			this.email = email;
+			this.password = password;
+			this.nombre = nombre;
+			this.apellido = apellido;
+			this.direccion = direccion;
+			this.telefono = telefono;
+		}
 
+		public Usuario(@NotEmpty String nick, @NotEmpty String email, @NotEmpty String password,
+				@NotEmpty String nombre, @NotEmpty String apellido, @NotEmpty String direccion,
+				@NotEmpty String telefono) {
+			super();
+			this.nick = nick;
+			this.email = email;
+			this.password = password;
+			this.nombre = nombre;
+			this.apellido = apellido;
+			this.direccion = direccion;
+			this.telefono = telefono;
+		}
 
+		public Usuario() {
+			super();
+		}
+
+		
 		
 }

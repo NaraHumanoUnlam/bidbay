@@ -43,9 +43,6 @@ public class Producto implements Serializable{
 	@NotNull
 	private Integer stock;
 	
-	public Producto() {
-		super();
-	}
 
 	public Long getId() {
 		return id;
@@ -100,6 +97,34 @@ public class Producto implements Serializable{
 	    Producto other = (Producto) obj;
 	    
 	    return id != null && id.equals(other.id);
+	}
+
+	public Producto(Long id, @NotEmpty String nombre, @NotEmpty String descripcion, @NotNull Double precio,
+			@NotNull Integer stock) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.stock = stock;
+	}
+
+	public Producto(@NotEmpty String nombre, @NotEmpty String descripcion, @NotNull Double precio,
+			@NotNull Integer stock) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.stock = stock;
+	}
+
+	public Producto() {
+		super();
+	}
+
+	public static String methodUnderTest() {
+		
+		return "test";
 	}
 
 

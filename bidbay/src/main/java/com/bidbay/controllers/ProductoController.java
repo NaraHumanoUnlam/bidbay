@@ -111,12 +111,26 @@ public class ProductoController {
 	}
 	
 	@RequestMapping(value = "/publicacion/listar", method = RequestMethod.GET)
-	public String listarPubliaciones(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
-			@RequestParam("search") @Nullable String search, Model model) {
+	public String listarPubliaciones(Model model) {
+		//aca van a estar todas las publicaciones hechas igual que el index :P pero con diferente vista
 		model.addAttribute("titulo", "Publicaciones de productos");
 		model.addAttribute("productos", productoService.findAll());
-			
 		return "views/publicacionView";
+	}
+	
+	@RequestMapping(value = "/publicacion/crear", method = RequestMethod.POST)
+	public String crearPublicacion(@Valid Producto producto, BindingResult result, Model model) {
+		//aca va a estar el mercado libre trucho :B
+		productoService.save(producto);
+		model.addAttribute("titulo", "Crear Publicacion");
+		model.addAttribute("producto");
+		return "views/crearPublicacionView";
+	}
+
+	//esto es por mockito
+	public Producto someMethod() {
+		// TODO Auto-generated method stub
+		return new Producto();
 	}
 	
 

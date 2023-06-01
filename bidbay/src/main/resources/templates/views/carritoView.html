@@ -79,23 +79,23 @@
 <main class="flex justify-center items-center flex-col">
     <h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
     <table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
-        <thea>
+        <thead>
             <tr>
                 <th>Producto</th>
                 <th>Stock</th>
-                <th>Editar</th>
+                <th>Precio</th>
             </tr>
         </thead>
         <tbody >
             <tr th:each="carrito: ${carrito}">
                 <td th:text="${carrito.getProducto().getNombre()}"></td>
-                <td th:text="${carrito.getStock()}"></td>
                 <td>
-                	<form th:action="@{/carrito/editar/{id}(id=${carrito.getIdItem()})}" method="post">
-                        <input type="number" name="cantidadProductos" th:value="${carrito.getStock()}" class="border border-gray-400 rounded py-2 px-3">
-                        <button type="submit">Guardar</button>
+					<form th:action="@{/carrito/editar/{id}(id=${carrito.getIdItem()})}" method="post" th:id="'editarForm-' + ${carrito.getIdItem()}">
+                        <input type="number" name="cantidadProductos" th:value="${carrito.getStock()}" class="border border-gray-400 rounded py-2 px-3"
+                        onchange="submitForm(this)">
                     </form>
                 </td>
+                <td th:text="${carrito.getStock() * carrito.getProducto().getPrecio()}"></td>
                 <td>
 				    <form th:action="@{/carrito/eliminar/{id}(id=${carrito.getIdItem()})}" method="post">
 				        <button type="submit">Eliminar</button>
@@ -104,11 +104,23 @@
             </tr>
         </tbody>
     </table>
+    <table>
+    	<thead>
+    	<tr><td>Precio total</td></tr>
+    	</thead>
+        <tbody>
+        <tr><td th:text="${precioTotal}"></td></tr>
+        </tbody>
+    </table>
     <a th:href="@{/compra}" class="text-black text-2xl bg-green-200 p-2 mt-10 ">Comprar</a>
     <p th:text="${mensajeExito}" class="text-green-500" th:if="${mensajeExito}"></p>
 	<p th:text="${mensajeError}" class="text-red-500" th:if="${mensajeError}"></p>
-    <!--<a th:href="@{carrito/agregar}" class=" hover:bg-sky-400 p-5 m-auto rounded-full border border-sky-400 m-5 text-xl bg-sky-600 mb-10">Checkout</a>
-    -->
    </main>
 </body>
+<script>
+	function submitForm(input) {
+		var form = input.parentNode;
+		form.submit();
+	}
+</script>
 </html>

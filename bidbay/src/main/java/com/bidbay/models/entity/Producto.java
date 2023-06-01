@@ -86,6 +86,21 @@ public class Producto implements Serializable{
 	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) {
+	        return true;
+	    }
+	    
+	    if (obj == null || getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    
+	    Producto other = (Producto) obj;
+	    
+	    return id != null && id.equals(other.id);
+	}
 
 
 }

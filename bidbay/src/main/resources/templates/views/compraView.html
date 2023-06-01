@@ -37,7 +37,7 @@
 
 <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
-<body class="bg-black">
+<body class="bg-black text-center">
 	<header class="w-full mb-20">
 		<nav class="navbar navbar-dark bg-gray-200">
 		<div class="h-full w-full flex justify-between items-center">
@@ -70,7 +70,7 @@
 	</nav>
 	</header>
 	<main>
-	<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10 mt-20">
+	<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mt-20">
         <thead>
             <tr>
                 <th>Producto</th>
@@ -86,8 +86,8 @@
             </tr>
         </tbody>
     </table>
-
-    <a th:href="@{/compra/pago/form}"> Pagar </a>
+	<br>
+    <a th:href="@{/compra/pago/form}" class="bg-blue-400 p-3 rounded text-white"> Pagar </a>
     
 	</main>
 </body>

@@ -47,20 +47,9 @@ public class CompraController {
 	
 	@RequestMapping(value = "/compra/pago/form", method = RequestMethod.POST)
 	public String GuardarPago(@Valid Pago pago, BindingResult result, Model model) {
-		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Pago");
-		    model.addAttribute("error", "Error al validar datos");
-			return "views/pagoView";
-		}
-		try {
-			//crear lo que tenga que hacer en pago pero digir a esta vista despues
-			//
-	
-		} catch (Exception e) {
-			model.addAttribute("error", "Error al realizar el pago: " + e.getMessage());
-			return "views/pagoView";
-		}
-		return "redirect:/views/compraView";
+			model.addAttribute("botonSubmit", "Realizar Pago");
+			return "views/pagoExitosoTemporal";
 	}
 	
 	

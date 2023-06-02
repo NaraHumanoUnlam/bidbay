@@ -44,7 +44,7 @@ public class PagoServiceImpl implements IPagoService {
 		
 		if (validarPago(pagoAGenerar)) {
 			
-			Ticket = generarTicket(pagoAGenerar); //compraRealizada
+			//Ticket = generarTicket(pagoAGenerar); //compraRealizada
 			
 			save(pagoAGenerar); 
 			

@@ -1,0 +1,8 @@
+.producto{
+    display: flex;
+}
+.producto-imagen{
+    width: 20px;
+    height: 20px;
+    background-color: brown;
+}

@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+
+.productos-container{
+	display: grid;
+	grid-template-columns: auto auto auto;
+}
+
+footer {
+	position:absolute;
+	bottom:0;
+	width:99%;
+}

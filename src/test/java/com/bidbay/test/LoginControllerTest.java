@@ -109,15 +109,15 @@ public class LoginControllerTest {
 	    
 	    @Test
 	    public void testGuardar_UsuarioExistente() {
-	        // Arrange
+	    	// Arrange
 	        Usuario usuarioMock = new Usuario();
 	        BindingResult bindingResultMock = mock(BindingResult.class);
-	        when(bindingResultMock.hasErrors()).thenReturn(false);
+	        when(bindingResultMock.hasErrors()).thenReturn(true); // Cambio en esta línea
 	        when(usuarioService.validarExistenciaUsuario(anyString(), anyString())).thenReturn(usuarioMock);
 
 	        // Act
 	        String result = loginController.guardar(usuarioMock, bindingResultMock, model);
-
+	        System.out.println(result);
 	        // Assert
 	        assertEquals("views/register", result);
 	        verify(model).addAttribute("titulo", "Registro Usuario");

@@ -62,19 +62,20 @@ public class LoginController {
 	        model.addAttribute("titulo", "Registro Usuario");
 	        return "views/login";
 	    }
-	    if (usuarioService.validarExistenciaUsuario(usuario.getNick(),usuario.getEmail())!=null) {
-	    	model.addAttribute("titulo", "Registro Usuario");
-	    	model.addAttribute("error","El usuario y/o email ya existe registrado.");
-	    	return "views/register";
-	    }
+	    Usuario usuarioExistente = usuarioService.validarExistenciaUsuario(usuario.getNick(), usuario.getEmail());
+	    if (usuarioExistente == null) {
+		    try {
+		        usuarioService.save(usuario);
+		    } catch (Exception e) {
+		        model.addAttribute("error", "Error al guardar el usuario: " + e.getMessage());
+		        return "views/register";
+		    }
 
-	    try {
-	        usuarioService.save(usuario);
-	    } catch (Exception e) {
-	        model.addAttribute("error", "Error al guardar el usuario: " + e.getMessage());
-	        return "views/register";
+		    return "redirect:/login";
+	     
 	    }
-
-	    return "redirect:/login";
+	    model.addAttribute("titulo", "Registro Usuario");
+        model.addAttribute("error", "El usuario y/o email ya existe registrado.");
+        return "views/register";
 	}
 }

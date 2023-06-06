@@ -43,6 +43,8 @@ public class Producto implements Serializable{
 	@NotNull
 	private Integer stock;
 	
+	@NotEmpty
+	private String imagen;
 
 	public Long getId() {
 		return id;
@@ -84,6 +86,15 @@ public class Producto implements Serializable{
 		this.stock = stock;
 	}
 	
+	
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+	public String getImagen() {
+		return imagen;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 	    if (this == obj) {
@@ -100,22 +111,24 @@ public class Producto implements Serializable{
 	}
 
 	public Producto(Long id, @NotEmpty String nombre, @NotEmpty String descripcion, @NotNull Double precio,
-			@NotNull Integer stock) {
+			@NotNull Integer stock, @NotEmpty String imagen ) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.stock = stock;
+		this.imagen = imagen;
 	}
 
 	public Producto(@NotEmpty String nombre, @NotEmpty String descripcion, @NotNull Double precio,
-			@NotNull Integer stock) {
+			@NotNull Integer stock, @NotEmpty String imagen) {
 		super();
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.precio = precio;
 		this.stock = stock;
+		this.imagen = imagen;
 	}
 
 	public Producto() {

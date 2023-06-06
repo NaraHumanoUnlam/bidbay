@@ -12,7 +12,7 @@
 
 <body class="bg-blue-500 text-white text-center">
     <h1 th:text="${titulo}" class="text-3xl mb-10 mt-5"></h1>
-    <form th:action="@{/producto/form}" th:object="${producto}" method="POST" class="flex flex-col justify-center text-black">
+    <form th:action="@{/producto/form}" th:object="${producto}" method="POST" class="flex flex-col justify-center text-black"  enctype="multipart/form-data">
         <table class="w-64 m-auto mb-10">
             <tr>
                 <td class="text-white">Nombre:</td>
@@ -29,6 +29,10 @@
             <tr>
                 <td class="text-white">Stock:</td>
                 <td><input type="text" th:field="*{stock}" /></td>
+            </tr>
+            <tr>
+                <td class="text-white">Imagen:</td>
+                <td><input type="file" name="file" /></td>
             </tr>
         </table>
         <input type="submit" th:value="${botonSubmit}" class=" hover:bg-sky-400 p-5 m-auto rounded-full border border-sky-400 m-5 text-xl bg-sky-600 text-white"/>

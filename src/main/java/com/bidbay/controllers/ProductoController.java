@@ -65,25 +65,22 @@ public class ProductoController {
 	@PostMapping("/form")
 	public String guardar(@Valid @ModelAttribute Producto producto,BindingResult result,
 			Model model, @RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
-		/*
+	
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Producto");
 			return "views/productoForm";
-		}*/
+		}
 		if(!imagen.isEmpty()) {
-			System.out.println("Inicio Imagen");
 			Path directorioImagenes = Paths.get("src//main//resources//static//imagenes");
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-			System.out.println("cargue esto");
 			try {
 				byte[] bytesImg = imagen.getBytes();
 				Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
 				Files.write(rutaCompleta, bytesImg);
 				producto.setImagen(imagen.getOriginalFilename());
-				System.out.println("llegue aca");
+			
 			}catch (IOException e) {
 				e.printStackTrace();
-				System.out.println("sali por error");
 			}
 		} 		
 		try {
@@ -97,6 +94,7 @@ public class ProductoController {
 	}
 	/*
 
+//Version anterior de guardar.
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Producto producto, BindingResult result, Model model) {
 		if (result.hasErrors()) {

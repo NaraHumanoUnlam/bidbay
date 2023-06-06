@@ -43,7 +43,6 @@ public class Producto implements Serializable{
 	@NotNull
 	private Integer stock;
 	
-	@NotEmpty
 	private String imagen;
 
 	public Long getId() {

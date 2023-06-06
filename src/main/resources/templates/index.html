@@ -85,7 +85,7 @@
 					class="grid grid-cols-3 text-center border border-solid border-gray-500 flex flex-col items-center justify-center justify-items-center">
 					<div th:each="producto: ${productos}"
 						class="mb-10">
-						<img th:src="@{'../../imagenes/' + ${producto.imagen}}" alt="${producto.imagen}"  class="w-1/2 h-1/2 m-auto mt-2">
+						<img th:src="@{'../imagenes/' + ${producto.imagen}}" alt="${producto.imagen}"  class="w-1/2 h-1/2 m-auto mt-2">
 						<p th:text="${producto.nombre}" class="text-4xl mb-2"></p>
 						<p th:text="${producto.descripcion}" class="mb-2"></p>
 						<p th:text="${producto.precio}" class="mb-2"></p>

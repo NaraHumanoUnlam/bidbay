@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.bidbay.models.entity.Producto;
+import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
 import org.springframework.lang.Nullable;
 import jakarta.validation.Valid;
@@ -33,6 +34,9 @@ public class ProductoController {
 
 	@Autowired
 	private IProductoService productoService;
+	
+	@Autowired
+	private ICategoriaService categoriaService;
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
@@ -54,8 +58,8 @@ public class ProductoController {
 
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String crear(Map<String, Object> model) {
-
 		Producto producto = new Producto();
+		producto.setCategoria(categoriaService.findOne(1L));
 		model.put("producto", producto);
 		model.put("titulo", "Formulario de Producto");
 		model.put("botonSubmit", "Crear");
@@ -92,24 +96,7 @@ public class ProductoController {
 		}
 		return "redirect:/producto/listar";
 	}
-	/*
-
-//Version anterior de guardar.
-	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String guardar(@Valid Producto producto, BindingResult result, Model model) {
-		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario de Producto");
-			return "views/productoForm";
-		}
-		try {
-			productoService.save(producto);
-		} catch (Exception e) {
-			model.addAttribute("error", "Error al guardar el producto: " + e.getMessage());
-			return "views/productoForm";
-		}
-		return "redirect:/producto/listar";
-	}
-*/
+		
 	@RequestMapping(value = "/form/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Producto p = null;
@@ -169,7 +156,7 @@ public class ProductoController {
 		return "views/crearPublicacionView";
 	}
 
-	//esto es por mockito
+	//esto es por mockito. ok tonces no lo borro xd
 	public Producto someMethod() {
 		// TODO Auto-generated method stub
 		return new Producto();

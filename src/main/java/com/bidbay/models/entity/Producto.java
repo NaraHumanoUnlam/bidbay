@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,11 +32,9 @@ public class Producto implements Serializable{
 	private String descripcion;
 	
 	@ManyToOne
+	@Nullable
 	private Categoria categoria;
 	
-	//@OneToMany
-	// Private Usuario usuario
-    
 	@NotNull
 	private Double precio;
 
@@ -92,6 +91,14 @@ public class Producto implements Serializable{
 	public String getImagen() {
 		return imagen;
 	}
+	
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
@@ -134,9 +141,10 @@ public class Producto implements Serializable{
 	}
 
 	public static String methodUnderTest() {
-		
 		return "test";
 	}
+	
+	
 
 
 }

@@ -8,7 +8,10 @@ import java.util.Comparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.bidbay.models.dao.ICategoriaDao;
 import com.bidbay.models.dao.IProductoDao;
+import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
 
 @Service
@@ -16,7 +19,11 @@ public class ProductoServiceImpl implements IProductoService {
 
     @Autowired
     private IProductoDao productoDao;
-
+    
+    @Autowired
+    private ICategoriaDao categoriaDao;
+ 
+    
 	@Override
 	@Transactional(readOnly = true)
 	public List<Producto> findAll() {
@@ -75,20 +82,21 @@ public class ProductoServiceImpl implements IProductoService {
 	}
 	
 	
-	@Override
-	public List<Producto> findByCategoria(String categia) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	 @Override
+	    @Transactional(readOnly = true)
+	    public List<Producto> findByCategoriaId(Long id) {
+	        List<Producto> productosEncontrados = new ArrayList<>();
+	        for (Categoria g : categoriaDao.findAll()) {
+	            for (Producto p : g.getProductos()) {
+	                if (p.getId().equals(id)) {
+	                	productosEncontrados.add(p);
+	                }
+	            }
+	        }
+	        return productosEncontrados;
+	    }
 
 
-	
 
-    
-
-
-	
-	
-	
 	
 }

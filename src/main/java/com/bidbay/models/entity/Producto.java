@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
@@ -29,10 +30,8 @@ public class Producto implements Serializable{
 	@NotEmpty
 	private String descripcion;
 	
-	// private Long numeroIdentificadorParaUsuario;
-
-	//@ManyToOne
-	// private Categoria categoria
+	@ManyToOne
+	private Categoria categoria;
 	
 	//@OneToMany
 	// Private Usuario usuario

@@ -139,22 +139,6 @@ public class ProductoController {
 		return "views/productoSearhView";
 	}
 	
-	@RequestMapping(value = "/publicacion/listar", method = RequestMethod.GET)
-	public String listarPubliaciones(Model model) {
-		//aca van a estar todas las publicaciones hechas igual que el index :P pero con diferente vista
-		model.addAttribute("titulo", "Publicaciones de productos");
-		model.addAttribute("productos", productoService.findAll());
-		return "views/publicacionView";
-	}
-	
-	@RequestMapping(value = "/publicacion/crear", method = RequestMethod.POST)
-	public String crearPublicacion(@Valid Producto producto, BindingResult result, Model model) {
-		//aca va a estar el mercado libre trucho :B
-		productoService.save(producto);
-		model.addAttribute("titulo", "Crear Publicacion");
-		model.addAttribute("producto");
-		return "views/crearPublicacionView";
-	}
 
 	//esto es por mockito. ok tonces no lo borro xd
 	public Producto someMethod() {

@@ -38,32 +38,25 @@
 
 
 <body class="">
-	<header class="pb-5">
+	<header class="mb-5">
 		<nav class="navbar navbar-dark bg-dark">
 			<div class="h-full w-full flex justify-between items-center">
-				<a th:href="@{/}"><img alt="logo" src="../img/BidBay-Logo-New.png" class="w-38 h-24 ml-10"></a> 
-				<!-- id="barra de busqueda "   -->
+				<a th:href="@{/}"><img alt="logo" src="../img/logo-bidbay.png" class="bg-white ml-10"></a>
 				<div class="flex h-full items-center justify-around ml-20">
-					<div
-						class="h-full w-100 flex flex-row items-center justify-around m-auto mb-2">
+					<div class="h-full w-100 flex flex-row items-center justify-around m-auto mb-2">
 						<form th:action="@{/producto/buscar}" class="flex flex-row">
-							<input name="search" type="text" class="rounded p-2 mt-4 w-96"
-								placeholder="Buscar" />
-								<button type="submit" class="text-white mt-4 ml-2">
-	
-							<i class="fa fa-search"></i>
-						</button> 
+							<input name="search" type="text" class="rounded p-2 mt-4 w-96" placeholder="Buscar" />
+							<button type="submit" class="text-white mt-4 ml-2">
+								<i class="fa fa-search"></i>
+							</button>
 						</form>
 					</div>
 				</div>
-	
-	
+
 				<div id="divCarrito" class="mr-10 text-gray-100">
-					<a th:href="@{/login}" class="text-2xl mr-2"><i
-						class="fa-regular fa-user"></i></a> <a th:href="@{/carrito/listar}"
-						class="text-2xl mr-5"><i
-						class="fa-sharp fa-solid fa-cart-plus"></i></a>
-						<p th:text="${logueo}"></p>
+					<a th:href="@{/login}" class="text-2xl mr-2"><i class="fa-regular fa-user"></i></a> <a
+						th:href="@{/carrito/listar}" class="text-2xl mr-5"><i
+							class="fa-sharp fa-solid fa-cart-plus"></i></a>
 				</div>
 			</div>
 		</nav>

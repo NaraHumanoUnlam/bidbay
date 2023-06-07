@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Categoria</th>
+                <th>Productos Asociados</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="categoria: ${categorias}">
+                <td th:text="${categoria.id}"></td>
+                <td th:text="${categoria.nombre}"></td>
+                <td th:text="${categoria.productos.id}"></td>
+                <td th:text="${categoria.productos.nombre}"></td>
+                <td><a th:href="@{/categoria/form/} + ${categoria.id}">Link</a></td>
+                <td><a th:href="@{/categoria/delete/} + ${categoria.id}"
+                        onclick="return confirm('¿Estás seguro que querés eliminar esta Categoria?')">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</body>
+</html>

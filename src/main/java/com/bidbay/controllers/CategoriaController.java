@@ -1,6 +1,5 @@
 package com.bidbay.controllers;
 
-
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.CategoriaServiceImpl;
@@ -30,25 +29,21 @@ public class CategoriaController {
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(Model model) {
-		model.addAttribute("titulo", "Listado de Productos");
-		model.addAttribute("productos", categoriaService.findAll());
+		model.addAttribute("titulo", "Lista de Categorias");
+		model.addAttribute("categorias", categoriaService.findAll());
 		return "views/categoriaView";
 	}
 
-	@RequestMapping(value = "/categoria/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/productos/{id}", method = RequestMethod.GET)
 	public String mostrarProductosPorCategoria(@PathVariable("id") Long id, Model model) {
 	    Categoria categoria = categoriaService.findOne(id);
-	    
 	    if (categoria == null) {
-	        return "redirect:/categoria";
+	        return "redirect:/categoria/listar";
 	    }
-	    
 	    List<Producto> productos = productoService.findByCategoriaId(categoria.getId());
-	    
 	    model.addAttribute("categoria", categoria);
 	    model.addAttribute("productos", productos);
-	    
-	    return "productos-por-categoria";
+	    return "views/productosPorCategoriaView";
 	}
 
 

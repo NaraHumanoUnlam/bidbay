@@ -125,6 +125,7 @@ public class ProductoController {
 		model.addAttribute("titulo", "Busqueda de Productos");
 		model.addAttribute("productos", productoService.findAll());
 		model.addAttribute("inputValue", search);
+		model.addAttribute("categorias", categoriaService.findAll());
 		if (search != null && order == null) {
 			List<Producto> productosEncontrados = new ArrayList<>();
 			productosEncontrados.addAll(productoService.findByName(search.toString()));

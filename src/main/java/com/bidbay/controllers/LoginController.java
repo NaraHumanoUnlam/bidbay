@@ -16,6 +16,7 @@ import com.bidbay.service.IUsuarioService;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.validation.Valid;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
@@ -35,13 +36,14 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="login", method = RequestMethod.POST)
-	public String validarLogin(@RequestParam("username") String nick, @RequestParam("password") String password, Model model) {
+	public String validarLogin(@RequestParam("username") String nick, @RequestParam("password") String password, HttpSession session, Model model) {
 	    Usuario usuarioBuscado = usuarioService.validarUsuario(nick, password);
 	   
 	    if (usuarioBuscado == null) {
 	        model.addAttribute("error", "Usuario y/o contraseña inválidos.");
 	        return "views/login";
 	    } else {
+	    	session.setAttribute("idUsuario", usuarioBuscado.getId());
 	    	 model.addAttribute("logueo", usuarioBuscado.getNick());
 	        return "index";
 	    }

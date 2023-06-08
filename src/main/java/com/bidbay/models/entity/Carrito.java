@@ -1,80 +1,59 @@
 package com.bidbay.models.entity;
 
 import java.io.Serializable;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
+import java.util.List;
+import java.util.ArrayList;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "carrito")
-public class Carrito implements Serializable{
-	
+public class Carrito implements Serializable {
+    // ...
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idItem;
-	
-
-	//@NotNull
-	private Long idUsuario;
-	
-	@NotNull
-	@OneToOne
-	@JoinColumn(name = "productos", referencedColumnName = "id")
-	private Producto producto;
-	
-	@NotNull
-	private Integer cantidadProductos;
-	
-	public Carrito(Long idUsuario, Producto producto, Integer cantidadProductos) {
-		super();
-		this.idUsuario = idUsuario;
-		this.producto = producto;
-		this.cantidadProductos = cantidadProductos;
-	}
-	
-	public Carrito() {}
-
-	public Long getIdUsuario() {
-		return idUsuario;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @NotNull
+    private Long idUsuario;
+    
+    @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL)
+    private List<CarritoItem> carritoItems;
+    
+    public Carrito() {}
+    
+    public Carrito(Long idUsuario) {
+		// TODO Auto-generated constructor stub
+    	this.idUsuario = idUsuario;
+    	this.carritoItems = new ArrayList<>();
 	}
 
-	public Integer getCantidadProductos() {
-		return cantidadProductos;
+	public List<CarritoItem> getCarritoItems() {
+        return carritoItems;
+    }
+
+    public void setCarritoItems(List<CarritoItem> carritoItems) {
+        this.carritoItems = carritoItems;
+    }
+
+    public void addCarritoItem(CarritoItem carritoItem) {
+        carritoItems.add(carritoItem);
+        carritoItem.setCarrito(this);
+    }
+
+    public void removeCarritoItem(CarritoItem carritoItem) {
+        carritoItems.remove(carritoItem);
+        carritoItem.setCarrito(null);
+    }
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setCantidadProductos(Integer cantidadProductos) {
-		this.cantidadProductos = cantidadProductos;
-	}
-
-	public Producto getProducto() {
-		return producto;
-	}
-	
-	public Long getIdItem() {
-		return idItem;
-	}
-
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
-
-	public Object getStock() {
+	public Object getIdUsuario() {
 		// TODO Auto-generated method stub
-		return this.cantidadProductos;
+		return this.idUsuario;
 	}
-
-	public void setStock(Object stock) {
-		// TODO Auto-generated method stub
-		this.cantidadProductos = (@NotNull Integer) stock;
-	}
-	
 }

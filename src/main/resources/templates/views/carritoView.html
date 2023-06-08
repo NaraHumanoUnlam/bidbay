@@ -89,21 +89,24 @@
             </tr>
         </thead>
         <tbody >
-            <tr th:each="carrito: ${carrito}">
-                <td th:text="${carrito.getProducto().getNombre()}"></td>
-                <td>
-					<form th:action="@{/carrito/editar/{id}(id=${carrito.getIdItem()})}" method="post" th:id="'editarForm-' + ${carrito.getIdItem()}">
-                        <input type="number" name="cantidadProductos" th:value="${carrito.getStock()}" class="border border-gray-400 rounded py-2 px-3"
-                        onchange="submitForm(this)">
-                    </form>
-                </td>
-                <td th:text="${carrito.getStock() * carrito.getProducto().getPrecio()}"></td>
-                <td>
-				    <form th:action="@{/carrito/eliminar/{id}(id=${carrito.getIdItem()})}" method="post">
-				        <button type="submit">Eliminar</button>
-				    </form>
-				</td>
-            </tr>
+	        <tr th:each="carritoItem: ${carrito?.getCarritoItems()}" th:if="${carrito?.getCarritoItems()}">
+	        <td th:text="${carritoItem.getProducto().getNombre()}"></td>
+	        <td th:text="${carritoItem.getStock()}"></td>
+	        <td>
+	            <form th:action="@{/carrito/editar/{id}(id=${carritoItem.getIdItem()})}" method="post">
+	                <input type="number" name="cantidadProductos" th:value="${carritoItem.getStock()}" class="border border-gray-400 rounded py-2 px-3">
+	                <button type="submit">Guardar</button>
+	            </form>
+	        </td>
+	        <td>
+	            <form th:action="@{/carrito/eliminar/{id}(id=${carritoItem.getIdItem()})}" method="post">
+	                <button type="submit">Eliminar</button>
+	            </form>
+	        </td>
+	    	</tr>
+		    <tr th:unless="${carrito?.getCarritoItems()?.isEmpty()}">
+		        <td colspan="5">No hay elementos en el carrito</td>
+		    </tr>
         </tbody>
     </table>
     <table>

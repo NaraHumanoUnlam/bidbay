@@ -16,107 +16,149 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bidbay.models.entity.Carrito;
+import com.bidbay.models.entity.CarritoItem;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICarritoService;
 import com.bidbay.service.IProductoService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 //@SessionAttributes("carrito")
 @RequestMapping("/carrito")
 public class CarritoController {
-	
-	@Autowired
-	private ICarritoService carritoService;
-	
-	@Autowired
-	private IProductoService productoService; 
-	
-	@RequestMapping(value="/listar", method = RequestMethod.GET)
-	public String listar(Model model) {
-		model.addAttribute("titulo", "Listado de carrito");
-		model.addAttribute("carrito", carritoService.findAll());
-		model.addAttribute("precioTotal", calcularPrecioTotal());
-		return "views/carritoView";
-	}
-	
-	@RequestMapping(value = "/form/{id}")
-    public String agregar(@PathVariable(value = "id") Long id, RedirectAttributes redirectAttributes) {
-		Producto p = productoService.findOne(id);
-		List<Carrito> carritosActuales = carritoService.findAll();
-		for(Carrito carritoEncontrado : carritosActuales) {
-			Producto productoEncontrado = carritoEncontrado.getProducto();
-			if(productoEncontrado.equals(p)) {
-				Integer stock = (Integer) carritoEncontrado.getStock();
-				stock++;
-				cambiarStockDelCarrito(carritoEncontrado, stock, redirectAttributes);
-		        return "redirect:/carrito/listar";
-			}
-		}
-        Carrito c = new Carrito(null, p, 1);
-        carritoService.save(c);
+
+    @Autowired
+    private ICarritoService carritoService;
+
+    @Autowired
+    private IProductoService productoService;
+
+    @RequestMapping(value="/listar", method = RequestMethod.GET)
+    public String listar(Model model, HttpSession session) {
+    	Long idUsuario = (Long) session.getAttribute("idUsuario");
+        if (idUsuario == null) {
+            // Si el idUsuario es nulo, que vaya al login
+            return "redirect:/login";
+        }
+        model.addAttribute("titulo", "Listado de carrito");
+        model.addAttribute("carrito", carritoService.findOneByUserID(idUsuario));
+        model.addAttribute("precioTotal", calcularPrecioTotal());
+        return "views/carritoView";
+    }
+
+    @RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
+    public String agregar(@PathVariable(value = "id") Long id, HttpSession session, RedirectAttributes redirectAttributes) {
+        //Este método es una poronga pero después se va a pasar a otro lado, no importa mientras funque
+    	Long idUsuario = (Long) session.getAttribute("idUsuario");
+        if (idUsuario == null) {
+            // Si el idUsuario es nulo, que vaya al login
+            return "redirect:/login";
+        }
+    	Producto producto = productoService.findOne(id);
+        List<Carrito> carritosActuales = carritoService.findAll();
+        
+        for (Carrito carrito : carritosActuales) {
+            if (carrito.getIdUsuario().equals(idUsuario)) {
+                List<CarritoItem> carritoItems = carrito.getCarritoItems();
+                if(!carritoItems.isEmpty()) {
+                	for (CarritoItem carritoItem : carritoItems) {
+                        if (carritoItem.getProducto().equals(producto)) {
+                            Integer stock = carritoItem.getStock();
+                            stock++;
+                            cambiarStockDelCarritoItem(carritoItem, carrito, stock, redirectAttributes);
+                            return "redirect:/carrito/listar";
+                        }
+                    }
+                }
+                CarritoItem carritoItem = new CarritoItem(producto, 1);
+                carrito.addCarritoItem(carritoItem);
+                carritoService.save(carrito);
+                redirectAttributes.addFlashAttribute("mensaje", "Producto agregado correctamente al carrito");
+                return "redirect:/carrito/listar";
+            }
+        }
+        // Si no se encuentra el carrito del usuario, se crea uno nuevo
+        Carrito carrito = new Carrito(idUsuario);
+        CarritoItem carritoItem = new CarritoItem(producto, 1);
+        carrito.addCarritoItem(carritoItem);
+        carritoService.save(carrito);
         redirectAttributes.addFlashAttribute("mensaje", "Producto agregado correctamente al carrito");
         return "redirect:/carrito/listar";
     }
-	
-	@RequestMapping(value = "/editar/{id}", method = RequestMethod.POST)
-	public String editar(@PathVariable(value = "id") Long id, Model model, @RequestParam("cantidadProductos") int stock, RedirectAttributes redirectAttributes) {
-	    /*SI ESTOY LEYENDO ESTO ES PORQYUE VOLVI DE LA FACULTAD:
-	     * TODO: -AGREGAR UN METODO PARA CALCULAR PRECIO TOTAAAAAAAL DE TODOS LOS CARRITOS (NO SEGUN USUARIO PORQUE RIP SECURITY)
-	     * -CAMBIAR LA FORMA DE BAJAR Y AGREGAR STOCK A VER QUE ONDA*/
-		Carrito carrito = carritoService.findOne(id);
-	    if (carrito == null) {
-	        return "redirect:/carrito/listar";
-	    }
-	    
-	    if(stock == 0) {
-	    	redirectAttributes.addFlashAttribute("mensajeError", "El stock debe ser mayor a 0");
-	    	return "redirect:/carrito/listar";
-	    }
-	    
-	    cambiarStockDelCarrito(carrito, stock, redirectAttributes);
 
-	    return "redirect:/carrito/listar";
-	}
-	
-	private void cambiarStockDelCarrito(Carrito carrito, Integer stockNuevo, RedirectAttributes redirectAttributes){
-		Producto producto = carrito.getProducto();
-		if(producto.getStock() < stockNuevo) {
-			stockNuevo = producto.getStock();
-			redirectAttributes.addFlashAttribute("mensajeError", "Stock insuficiente, máximo " + stockNuevo.toString());
-		} else {
-			redirectAttributes.addFlashAttribute("mensajeExito", "Stock actualizado correctamente");
-		}
-		carrito.setStock(stockNuevo);
-		carritoService.save(carrito);
-	}
-	
-	@RequestMapping(value = "/eliminar/{id}", method = RequestMethod.POST)
-	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes redirectAttributes) {
-	    Carrito carritoExistente = carritoService.findOne(id);
+    @RequestMapping(value = "/editar/{id}", method = RequestMethod.POST)
+    public String editar(@PathVariable(value = "id") Long id, HttpSession session , Model model, @RequestParam("cantidadProductos") int stock, RedirectAttributes redirectAttributes) {
+    	Long idUsuario = (Long) session.getAttribute("idUsuario");
+        if (idUsuario == null) {
+            // Si el idUsuario es nulo, que vaya al login
+            return "redirect:/login";
+        }
+    	Carrito carrito = carritoService.findOneByUserID(idUsuario);
+    	CarritoItem carritoItem = carritoService.findCarritoItemById(id, carrito.getId());
+        if (carritoItem == null) {
+            return "redirect:/carrito/listar";
+        }
 
-	    if (carritoExistente == null) {
-	        return "redirect:/carrito/listar";
-	    }
+        if (stock == 0) {
+            redirectAttributes.addFlashAttribute("mensajeError", "El stock debe ser mayor a 0");
+            return "redirect:/carrito/listar";
+        }
 
-	    carritoService.delete(id);
-	    redirectAttributes.addFlashAttribute("mensajeExito", "Producto eliminado correctamente del carrito");
+        cambiarStockDelCarritoItem(carritoItem, carrito, stock, redirectAttributes);
 
-	    return "redirect:/carrito/listar";
-	}
-	
-	private Double calcularPrecioTotal() {
-		List<Carrito> carritos= carritoService.findAll();
-	    Double precioTotal = 0.0;
-	    
-	    for (Carrito carrito : carritos) {
-	        Producto producto = carrito.getProducto();
-	        Integer stock = (Integer) carrito.getStock();
-	        Double precio = producto.getPrecio();
-	        
-	        precioTotal += precio * stock;
-	    }
-	    
-	    return precioTotal;
-	}
-	
+        return "redirect:/carrito/listar";
+    }
+
+    @RequestMapping(value = "/eliminar/{id}", method = RequestMethod.POST)
+    public String eliminar(@PathVariable(value = "id") Long id, HttpSession session, RedirectAttributes redirectAttributes) {
+    	Long idUsuario = (Long) session.getAttribute("idUsuario");
+        if (idUsuario == null) {
+            // Si el idUsuario es nulo, que vaya al login
+            return "redirect:/login";
+        }
+    	Carrito carrito = carritoService.findOneByUserID(idUsuario);
+    	CarritoItem carritoItem = carritoService.findCarritoItemById(id, carrito.getId());
+
+        if (carritoItem == null) {
+            return "redirect:/carrito/listar";
+        }
+
+        carritoService.deleteCarritoItem(carritoItem, carrito.getId());
+        redirectAttributes.addFlashAttribute("mensajeExito", "Producto eliminado correctamente del carrito");
+
+        return "redirect:/carrito/listar";
+    }
+
+    private void cambiarStockDelCarritoItem(CarritoItem carritoItem, Carrito carrito, Integer stockNuevo, RedirectAttributes redirectAttributes) {
+        Producto producto = carritoItem.getProducto();
+        if (producto.getStock() < stockNuevo) {
+            stockNuevo = producto.getStock();
+            redirectAttributes.addFlashAttribute("mensajeError", "Stock insuficiente, máximo " + stockNuevo.toString());
+        } else {
+            redirectAttributes.addFlashAttribute("mensajeExito", "Stock actualizado correctamente");
+        }
+        carritoItem.setStock(stockNuevo);
+        carritoService.saveCarritoItem(carritoItem, carrito.getId());
+    }
+
+    private Double calcularPrecioTotal() {
+        List<Carrito> carritos = carritoService.findAll();
+
+        Double precioTotal = 0.0;
+
+        for (Carrito carrito : carritos) {
+            List<CarritoItem> carritoItems = carrito.getCarritoItems();
+            for (CarritoItem carritoItem : carritoItems) {
+                Producto producto = carritoItem.getProducto();
+                Integer stock = carritoItem.getStock();
+                Double precio = producto.getPrecio();
+
+                precioTotal += precio * stock;
+            }
+        }
+
+        return precioTotal;
+    }
+
 }

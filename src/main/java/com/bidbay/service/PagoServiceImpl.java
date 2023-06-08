@@ -61,8 +61,8 @@ public class PagoServiceImpl implements IPagoService {
 				+ "/nCodigo de compra: " + compraRealizada.getCodigo()
 				+ "/nFecha de compra: " + pagoRealizado.getfechaDeVencimiento() 
 				+ "/nUsuario solicitante: " + pagoRealizado.getUsario()
-				+ "/nDescripcion del producto: " + compraRealizada.getCarrito().getProducto().getDescripcion()
-				+ "/nCantidad de producto comprado: " + compraRealizada.getCarrito().getCantidadProductos().toString()
+				//+ "/nDescripcion del producto: " + compraRealizada.getCarrito().getProducto().getDescripcion()
+				//+ "/nCantidad de producto comprado: " + compraRealizada.getCarrito().getCantidadProductos().toString()
 				+ "/nPrecio final de la orden: " + pagoRealizado.getPrecio().toString();
 		return retornar;
 	}

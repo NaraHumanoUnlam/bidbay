@@ -97,7 +97,7 @@
 					<div class="card link" style="width: 800px;" >
 						<div class="row no-gutters">
 							<div class="col-sm-3">
-								<img class="card-img" src="../../img/imagen-test.png" alt="Imagen">
+								<img th:src="@{'../imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}"  class="w-1/2 h-4/5 m-auto mt-2">
 							</div>
 							<div class="col-sm-9">
 								<div class="card-body">

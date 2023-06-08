@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title th:text="${titulo}"></title>
 </head>
 <body>
+    <h1 th:text="${titulo}"></h1>
     <table>
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Categoria</th>
-                <th>Productos Asociados</th>
+                <th>Categoría</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="categoria: ${categorias}">
                 <td th:text="${categoria.id}"></td>
                 <td th:text="${categoria.nombre}"></td>
-                <td th:text="${categoria.productos.id}"></td>
-                <td th:text="${categoria.productos.nombre}"></td>
-                <td><a th:href="@{/categoria/form/} + ${categoria.id}">Link</a></td>
-                <td><a th:href="@{/categoria/delete/} + ${categoria.id}"
-                        onclick="return confirm('¿Estás seguro que querés eliminar esta Categoria?')">Eliminar</a>
+                <td>
+                    <a th:href="@{/categoria/productos/{id}(id=${categoria.id})}">Ver productos</a>
                 </td>
             </tr>
         </tbody>
     </table>
-    
 </body>
 </html>

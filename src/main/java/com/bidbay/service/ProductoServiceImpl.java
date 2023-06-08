@@ -81,20 +81,16 @@ public class ProductoServiceImpl implements IProductoService {
         return list;
 	}
 	
-	
-	 @Override
-	    @Transactional(readOnly = true)
-	    public List<Producto> findByCategoriaId(Long id) {
-	        List<Producto> productosEncontrados = new ArrayList<>();
-	        for (Categoria g : categoriaDao.findAll()) {
-	            for (Producto p : g.getProductos()) {
-	                if (p.getId().equals(id)) {
-	                	productosEncontrados.add(p);
-	                }
-	            }
-	        }
-	        return productosEncontrados;
+	@Override
+	@Transactional(readOnly = true)
+	public List<Producto> findByCategoriaId(Long id) {
+	    List<Producto> productosEncontrados = new ArrayList<>();
+	    Categoria categoria = categoriaDao.findById(id).orElse(null);
+	    if (categoria != null) {
+	        productosEncontrados = categoria.getProductos();
 	    }
+	    return productosEncontrados;
+	}
 
 
 

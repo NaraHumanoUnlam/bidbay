@@ -26,6 +26,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @SessionAttributes("producto")
@@ -120,45 +121,68 @@ public class ProductoController {
 	}
 
 	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
-	public String buscar(@RequestParam("categoria") @Nullable Long id, @RequestParam("name") @Nullable String name,
-			@RequestParam("order") @Nullable String order, @RequestParam("search") @Nullable String search,
-			Model model) {
-		model.addAttribute("titulo", "Busqueda de Productos");
-		model.addAttribute("productos", productoService.findAll());
-		model.addAttribute("inputValue", search);
-		model.addAttribute("categorias", categoriaService.findAll());
-		List<Producto> productos = productoService.findAll();
-		if (id == null) {
-			if (search != null && order == null) {
-				productos = new ArrayList<>();
-				productos.addAll(productoService.findByName(search.toString()));
-				model.addAttribute("productos", productos);
-			} else if (order != null && search == null) {
-				model.addAttribute("productos", productoService.orderList(order));
-			}
-			if (search != null && order != null) {
-				productos = new ArrayList<>();
-				productos.addAll(productoService.findByName(search.toString()));
-				model.addAttribute("productos", productoService.orderFiltredList(order, productos));
-			}
-		} else {
-			Categoria categoria = categoriaService.findOne(id);
-			if (categoria != null && order == null) {
-				productos = productoService.findByCategoriaId(categoria.getId());
-				model.addAttribute("productos", productos);
-			} else if (categoria != null && order != null) {
-				productos = productoService.findByCategoriaId(categoria.getId());
+	public String buscar(@RequestParam(value = "categoria", required = false) Long id,
+	                     @RequestParam(value = "name", required = false) String name,
+	                     @RequestParam(value = "order", required = false) String order,
+	                     @RequestParam(value = "search", required = false) String search,
+	                     Model model) {
+	    model.addAttribute("titulo", "Búsqueda de Productos");
+	    model.addAttribute("inputValue", search);
+	    model.addAttribute("categorias", categoriaService.findAll());
 
-			}
-		}	
-		if(order != null ) {
-			model.addAttribute("productos", productoService.orderFiltredList(order, productos));
-		} else {
-			model.addAttribute("productos", productos);
-		}
-		return "views/productoSearhView";
+	    List<Producto> productos;
+
+	    if (id != null) {
+	        Categoria categoria = categoriaService.findOne(id);
+	        if (categoria != null) {
+	            productos = productoService.findByCategoriaId(categoria.getId());
+	            model.addAttribute("categoria", categoria);
+	        } else {
+	            productos = productoService.findAll();
+	        }
+	    } else {
+	        productos = productoService.findAll();
+	    }
+
+	    if (search != null && !search.isEmpty()) {
+	        productos = productoService.findByName(search);
+	    }
+
+	    if (order != null) {
+	        if (order.equals("asc")) {
+	            productos.sort(Comparator.comparing(Producto::getPrecio));
+	        } else if (order.equals("desc")) {
+	            productos.sort(Comparator.comparing(Producto::getPrecio).reversed());
+	        }
+	    }
+
+	    model.addAttribute("productos", productos);
+	    return "views/productoSearhView";
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// esto es por mockito. ok tonces no lo borro xd
 	public Producto someMethod() {
 		// TODO Auto-generated method stub

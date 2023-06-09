@@ -72,16 +72,6 @@ public class ProductoServiceImpl implements IProductoService {
 	}
 	
 	@Override
-	public List<Producto> orderFiltredList(String orden, List<Producto> list) {
-        if (orden.equalsIgnoreCase("asc")) {
-        	Collections.sort(list, Comparator.comparing(Producto::getPrecio));
-        } else if (orden.equalsIgnoreCase("desc")) {
-        	Collections.sort(list, Comparator.comparing(Producto::getPrecio).reversed());
-        }
-        return list;
-	}
-	
-	@Override
 	@Transactional(readOnly = true)
 	public List<Producto> findByCategoriaId(Long id) {
 	    List<Producto> productosEncontrados = new ArrayList<>();
@@ -90,7 +80,7 @@ public class ProductoServiceImpl implements IProductoService {
 	        productosEncontrados = categoria.getProductos();
 	    }
 	    return productosEncontrados;
-	}
+	} 
 
 
 

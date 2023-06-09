@@ -1,3 +1,23 @@
-/* Acá proximamente pasamos todos los estilos de todos los css*/
-/* Eso dsp de hacer los includes del header y footer */
-/* C: */
+.footer {
+    box-shadow: 0px -1px 22px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px -1px 22px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px -1px 22px 0px rgba(0,0,0,0.75);
+    font-weight: 700;
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+@keyframes rainbow {
+    0% { color: #00FFFF; }
+    14% { color: #00FF00; }
+    28% { color: #FF0000; }
+    42% { color: #FFFF00; }
+    57% { color: #FFA500; }
+    71% { color: #00FFFF; }
+    85% { color: #00FF00; }
+    100% { color: #00FFFF; }
+  }
+  
+  a.rainbow-link {
+    animation: rainbow 8s linear infinite;
+  }

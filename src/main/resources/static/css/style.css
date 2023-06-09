@@ -1,3 +1,27 @@
+/* Estilos generales para toda la app */
+
+.header{
+  box-shadow: 0px 6px 28px -8px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 6px 28px -8px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 6px 28px -8px rgba(0,0,0,0.75);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 0;
+  background-color: #212529;
+}
+
+.header-col{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-icons div{
+  display: flex;
+  gap: 10px;
+}
+
 .footer {
     box-shadow: 0px -1px 22px 0px rgba(0,0,0,0.75);
     -webkit-box-shadow: 0px -1px 22px 0px rgba(0,0,0,0.75);

@@ -71,12 +71,17 @@
 			<div>
 				<div>
 					<h4 class="h4 text-succes">Ordenar Por: </h4>
-					<div th:if="${inputValue != null}">
+					<div>
 						<a class="btn btn-sombra btn-secondary"
-							th:href="@{/producto/buscar(search=${inputValue},order='asc')}"><b>Precio Mínimo</b></a>
+							th:href="@{/producto/buscar(categoria=${categoria}, search=${inputValue}, order='asc')}"
+							th:if="${productos.size() > 1}">
+							<b>Precio Ascendente</b>
+						</a>
 						<a class="btn btn-sombra btn-secondary"
-							th:href="@{/producto/buscar(search=${inputValue},order='desc')}"><b>Precio
-								Máximo</b></a>
+							th:href="@{/producto/buscar(categoria=${categoria}, search=${inputValue}, order='desc')}"
+							th:if="${productos.size() > 1}">
+							<b>Precio Descendente</b>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -89,7 +94,7 @@
 				<div class="categorias card sombra">
 					<h2>Categorias</h2>
 					<div class="categorias-container" th:each="categoria: ${categorias}">
-						<a href="" th:text="${categoria.nombre}"></a>
+						<a th:href="@{/producto/buscar(categoria=${categoria.id})}" th:text="${categoria.nombre}"></a>
 					</div>
 				</div>
 				<div class="bidbay-bg mt-3 rounded card btn-sombra">

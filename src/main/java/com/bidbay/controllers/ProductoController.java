@@ -1,7 +1,5 @@
 package com.bidbay.controllers;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +13,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
@@ -34,7 +34,7 @@ public class ProductoController {
 
 	@Autowired
 	private IProductoService productoService;
-	
+
 	@Autowired
 	private ICategoriaService categoriaService;
 
@@ -65,16 +65,16 @@ public class ProductoController {
 		model.put("botonSubmit", "Crear");
 		return "views/productoForm";
 	}
-	
+
 	@PostMapping("/form")
-	public String guardar(@Valid @ModelAttribute Producto producto,BindingResult result,
-			Model model, @RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
-	
+	public String guardar(@Valid @ModelAttribute Producto producto, BindingResult result, Model model,
+			@RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
+
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Producto");
 			return "views/productoForm";
 		}
-		if(!imagen.isEmpty()) {
+		if (!imagen.isEmpty()) {
 			Path directorioImagenes = Paths.get("src//main//resources//static//imagenes");
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
 			try {
@@ -82,11 +82,11 @@ public class ProductoController {
 				Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
 				Files.write(rutaCompleta, bytesImg);
 				producto.setImagen(imagen.getOriginalFilename());
-			
-			}catch (IOException e) {
+
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} 		
+		}
 		try {
 			productoService.save(producto);
 		} catch (Exception e) {
@@ -96,7 +96,7 @@ public class ProductoController {
 		}
 		return "redirect:/producto/listar";
 	}
-		
+
 	@RequestMapping(value = "/form/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Producto p = null;
@@ -118,34 +118,51 @@ public class ProductoController {
 		}
 		return "redirect:/producto/listar";
 	}
-	
+
 	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
-	public String buscar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
-			@RequestParam("search") @Nullable String search, Model model) {
+	public String buscar(@RequestParam("categoria") @Nullable Long id, @RequestParam("name") @Nullable String name,
+			@RequestParam("order") @Nullable String order, @RequestParam("search") @Nullable String search,
+			Model model) {
 		model.addAttribute("titulo", "Busqueda de Productos");
 		model.addAttribute("productos", productoService.findAll());
 		model.addAttribute("inputValue", search);
 		model.addAttribute("categorias", categoriaService.findAll());
-		if (search != null && order == null) {
-			List<Producto> productosEncontrados = new ArrayList<>();
-			productosEncontrados.addAll(productoService.findByName(search.toString()));
-			model.addAttribute("productos", productosEncontrados);
-		} else if( order != null && search == null){
-			model.addAttribute("productos", productoService.orderList(order));
-		} if (search != null && order != null) {
-			List<Producto> productosEncontrados = new ArrayList<>();
-			productosEncontrados.addAll(productoService.findByName(search.toString()));
-			model.addAttribute("productos", productoService.orderFiltredList(order, productosEncontrados));
+		List<Producto> productos = productoService.findAll();
+		if (id == null) {
+			if (search != null && order == null) {
+				productos = new ArrayList<>();
+				productos.addAll(productoService.findByName(search.toString()));
+				model.addAttribute("productos", productos);
+			} else if (order != null && search == null) {
+				model.addAttribute("productos", productoService.orderList(order));
+			}
+			if (search != null && order != null) {
+				productos = new ArrayList<>();
+				productos.addAll(productoService.findByName(search.toString()));
+				model.addAttribute("productos", productoService.orderFiltredList(order, productos));
+			}
+		} else {
+			Categoria categoria = categoriaService.findOne(id);
+			if (categoria != null && order == null) {
+				productos = productoService.findByCategoriaId(categoria.getId());
+				model.addAttribute("productos", productos);
+			} else if (categoria != null && order != null) {
+				productos = productoService.findByCategoriaId(categoria.getId());
+
+			}
+		}	
+		if(order != null ) {
+			model.addAttribute("productos", productoService.orderFiltredList(order, productos));
+		} else {
+			model.addAttribute("productos", productos);
 		}
 		return "views/productoSearhView";
 	}
-	
 
-	//esto es por mockito. ok tonces no lo borro xd
+	// esto es por mockito. ok tonces no lo borro xd
 	public Producto someMethod() {
 		// TODO Auto-generated method stub
 		return new Producto();
 	}
-	
 
 }

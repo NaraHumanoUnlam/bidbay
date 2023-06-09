@@ -44,35 +44,9 @@
 <title>Metodo de Pago</title>
 </head>
 <body class="bg-black text-gray-400" >
-<header>
-	<nav class="navbar navbar-dark bg-dark h-full w-full flex justify-between items-center">
-			<div><a th:href="@{/}"><img alt="logo" src="../../img/logo-bidbay.png" class="bg-white ml-10"></a> </div>
-			<div class="flex h-full items-center justify-around ml-20 text-white">
-				<div
-					class="h-full w-100 flex flex-row items-center justify-around m-auto mb-2">
-					<form th:action="@{/producto/buscar}" class="flex flex-row">
-						<input name="search" type="text" class="rounded p-2 mt-4 w-96"
-							placeholder="Buscar" />
-							<button type="submit" class="text-white mt-4 ml-2">
+	
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
 
-						<i class="fa fa-search"></i>
-					</button> 
-					</form>
-					
-				</div>
-			</div>
-
-
-			<div id="divCarrito" class="mr-10 text-gray-100">
-				<a th:href="@{/login}" class="text-2xl mr-2"><i
-					class="fa-regular fa-user"></i></a>
-					<a th:href="@{/carrito/listar}"
-					class="text-2xl mr-5"><i
-					class="fa-sharp fa-solid fa-cart-plus"></i></a>
-					<p th:text="${logueo}"></p>
-			</div>
-	</nav>
-</header>
 	<h1 th:text="${titulo}" class="text-3xl mb-10 mt-5 text-center "></h1>
 	
 	<form th:action="@{/compra/pago/form}" th:object="${pago}"

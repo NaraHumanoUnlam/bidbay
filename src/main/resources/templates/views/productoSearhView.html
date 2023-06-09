@@ -61,30 +61,16 @@
 
 	<main>
 		<div class="d-flex flex-column align-items-center">
-			<h1 th:text="${titulo}" class="h1 text-3xl mb-10"></h1>
+			<h1 th:text="${titulo}" class="h1 text-4xl mb-10"></h1>
 			<div class="container">
 				<div th:if="${inputValue != null}" class="text-center">
-					<h4 class="h4">Resultado de Buscar: <b class="text-danger" th:text="${inputValue}"></b></h4>
+					<h4 class="h4 mt-4" th:unless="${inputValue == null or inputValue == '' or productos.size() == 0}">
+						Resultado de Buscar: <b class="text-danger" th:text="${inputValue}"></b>
+					</h4>
 				</div>
 			</div>
 
-			<div>
-				<div>
-					<h4 class="h4 text-succes">Ordenar Por: </h4>
-					<div>
-						<a class="btn btn-sombra btn-secondary"
-							th:href="@{/producto/buscar(categoria=${categoria}, search=${inputValue}, order='asc')}"
-							th:if="${productos.size() > 1}">
-							<b>Precio Ascendente</b>
-						</a>
-						<a class="btn btn-sombra btn-secondary"
-							th:href="@{/producto/buscar(categoria=${categoria}, search=${inputValue}, order='desc')}"
-							th:if="${productos.size() > 1}">
-							<b>Precio Descendente</b>
-						</a>
-					</div>
-				</div>
-			</div>
+
 		</div>
 
 
@@ -98,14 +84,33 @@
 					</div>
 				</div>
 				<div class="bidbay-bg mt-3 rounded card btn-sombra">
-					<a th:href="@{/}" class="rounded" href=""><img class="sombra rounded" src="../../img/bidbay-bg.png" alt=""></a>
+					<a th:href="@{/}" class="rounded" href=""><img class="sombra rounded" src="../../img/bidbay-bg.png"
+							alt=""></a>
 				</div>
 			</div>
 
 
 			<div class="search-column">
+
+
+				<div class="dropdown btn-sombra mb-3" th:if="${productos.size() != 0}">
+					<button class="btn btn-secondary dropdown-toggle" type="button">
+						Ordenar
+					</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item btn btn-secondary mr-5"
+							th:href="@{/producto/buscar(categoria=${categoria?.id}, search=${inputValue}, order='asc')}">
+							<b>Precio Menor</b>
+						</a>
+						<a class="dropdown-item btn btn-secondary"
+							th:href="@{/producto/buscar(categoria=${categoria?.id}, search=${inputValue}, order='desc')}">
+							<b>Precio Mayor</b>
+						</a>
+					</div>
+				</div>
+
 				<div th:each="producto: ${productos}" class="card link sombra mb-3">
-					<div class="row no-gutters">
+					<div th:if="${productos.size() > 0}" class="row no-gutters">
 						<div class="col-sm-3">
 							<img th:src="@{'../imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}"
 								class="w-4/5 h-auto m-auto rounded">
@@ -114,13 +119,26 @@
 							<div class="card-body">
 								<h5 class="card-title" th:text="${producto.nombre}"></h5>
 								<p class="card-text" th:text="'$' + ${producto.precio}"></p>
-								<a class="btn btn-warning btn-sombra mt-4" th:href="@{/carrito/form/{id}(id=${producto.id})}">Agregar Al
+								<a class="btn btn-warning btn-sombra mt-4"
+									th:href="@{/carrito/form/{id}(id=${producto.id})}">Agregar Al
 									Carrito</a>
 							</div>
 						</div>
 					</div>
 				</div>
+				<div class="text-center" th:if="${productos.size() == 0}">
+					<p class="text-muted h3">No se han encontrado productos buscando: <b class="text-danger"
+							th:text="${inputValue}"></b>
+				</div>
+				<div class="text-center" th:if="${productos.size() == 0}" th:else>
+					<p class="text-muted h5">Error al buscar productos</p>
+				</div>
 			</div>
+
+
+
+
+
 		</div>
 
 

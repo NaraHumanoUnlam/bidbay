@@ -19,8 +19,6 @@ public interface IProductoService {
 
 	public List<Producto> orderList(String orden);
 
-	public List<Producto> orderFiltredList(String orden, List<Producto> list);
-
 	public List<Producto> findByCategoriaId(Long id);
 
 }

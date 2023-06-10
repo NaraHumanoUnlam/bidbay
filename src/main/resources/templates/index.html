@@ -4,10 +4,9 @@
 
 <head th:replace="views/layouts/plantilla.html :: head"></head>
 
-<body class="bg-gray-100">
+<body>
 
 	<header th:replace="views/layouts/plantilla.html :: header"></header>
-
 
 	<main class="w-full flex h-full justify-center m-auto">
 		<section class="rounded flex w-full h-1/4 justify-around items-center pt-20">
@@ -18,8 +17,7 @@
 						<img th:src="@{'../imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}"
 							class="w-1/2 h-1/2 m-auto mt-2">
 						<p th:text="${producto.nombre}" class="text-4xl mb-2"></p>
-						<p th:text="${producto.descripcion}" class="mb-2"></p>
-						<p th:text="${producto.precio}" class="mb-2"></p>
+						<p th:text="'$' + ${producto.precio}" class="mb-2"></p>
 						<a th:href="@{/carrito/form/{id}(id=${producto.id})}"
 							class="bg-blue-400 p-2 m-5 text-white hover:bg-blue-600 rounded">Agregar
 							al carrito</a>

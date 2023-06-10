@@ -1,5 +1,28 @@
 /* Estilos generales para toda la app */
 
+body {
+  background-color: #f5f1f1;
+}
+
+.sombra {
+  box-shadow: 4px 5px 5px -3px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 4px 5px 5px -3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 5px 5px -3px rgba(0, 0, 0, 0.75);
+}
+
+.btn-sombra {
+  box-shadow: 1px 3px 5px -3px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 1px 3px 5px -3px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px 3px 5px -3px rgba(0, 0, 0, 0.75);
+}
+
+.sombra-2 {
+  box-shadow: 1px 1px 9px 1px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 1px 1px 9px 1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 1px 1px 9px 1px rgba(0,0,0,0.75);
+}
+
+
 /* Header */
 
 .header {
@@ -19,11 +42,11 @@
   align-items: center;
 }
 
-.header-logo a{
+.header-logo a {
   transition: transform 0.3s ease;
 }
 
-.header-logo a:hover{
+.header-logo a:hover {
   transform: scale(1.1);
 }
 
@@ -44,11 +67,11 @@
   gap: 10px;
 }
 
-.header-icons div a{
+.header-icons div a {
   transition: transform 0.3s ease;
 }
 
-.header-icons div a:hover{
+.header-icons div a:hover {
   transform: scale(1.2);
 }
 

@@ -62,8 +62,9 @@ public class ProductoController {
 		Producto producto = new Producto();
 		producto.setCategoria(categoriaService.findOne(1L));
 		model.put("producto", producto);
-		model.put("titulo", "Formulario de Producto");
-		model.put("botonSubmit", "Crear");
+		model.put("titulo", "¿Qué querés vender?");
+		model.put("botonSubmit", "Vender");
+		model.put("categorias", categoriaService.findAll());
 		return "views/productoForm";
 	}
 

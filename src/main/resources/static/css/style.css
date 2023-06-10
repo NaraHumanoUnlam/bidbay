@@ -1,47 +1,117 @@
 /* Estilos generales para toda la app */
 
-.header{
-  box-shadow: 0px 6px 28px -8px rgba(0,0,0,0.75);
-  -webkit-box-shadow: 0px 6px 28px -8px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 6px 28px -8px rgba(0,0,0,0.75);
+/* Header */
+
+.header {
+  box-shadow: 0px 6px 28px -8px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 6px 28px -8px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 6px 28px -8px rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 15px 0;
+  padding: 20px 0;
   background-color: #212529;
 }
 
-.header-col{
+.header-col {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.header-icons div{
+.header-logo a{
+  transition: transform 0.3s ease;
+}
+
+.header-logo a:hover{
+  transform: scale(1.1);
+}
+
+.header-search a {
+  color: white;
+  font-weight: 700;
+  margin-left: 40px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.header-search a:hover {
+  transform: scale(1.2);
+}
+
+.header-icons div {
   display: flex;
   gap: 10px;
 }
 
+.header-icons div a{
+  transition: transform 0.3s ease;
+}
+
+.header-icons div a:hover{
+  transform: scale(1.2);
+}
+
+/* Nav */
+
+.navigation-bar {
+  background-color: #212529;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation-bar a {
+  padding: 5px;
+  color: white;
+  font-weight: 700;
+}
+
+/* Footer */
+
 .footer {
-    box-shadow: 0px -1px 22px 0px rgba(0,0,0,0.75);
-    -webkit-box-shadow: 0px -1px 22px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px -1px 22px 0px rgba(0,0,0,0.75);
-    font-weight: 700;
-    text-align: center;
-    font-size: 1.3rem;
+  box-shadow: 0px -1px 22px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px -1px 22px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px -1px 22px 0px rgba(0, 0, 0, 0.75);
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.3rem;
 }
 
 @keyframes rainbow {
-    0% { color: #00FFFF; }
-    14% { color: #00FF00; }
-    28% { color: #FF0000; }
-    42% { color: #FFFF00; }
-    57% { color: #FFA500; }
-    71% { color: #00FFFF; }
-    85% { color: #00FF00; }
-    100% { color: #00FFFF; }
+  0% {
+    color: #00FFFF;
   }
-  
-  a.rainbow-link {
-    animation: rainbow 8s linear infinite;
+
+  14% {
+    color: #00FF00;
   }
+
+  28% {
+    color: #FF0000;
+  }
+
+  42% {
+    color: #FFFF00;
+  }
+
+  57% {
+    color: #FFA500;
+  }
+
+  71% {
+    color: #00FFFF;
+  }
+
+  85% {
+    color: #00FF00;
+  }
+
+  100% {
+    color: #00FFFF;
+  }
+}
+
+a.rainbow-link {
+  animation: rainbow 8s linear infinite;
+}

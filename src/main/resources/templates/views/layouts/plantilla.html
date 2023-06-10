@@ -22,12 +22,11 @@
 		integrity="sha512-WidMaWaNmZqjk3gDE6KBFCoDpBz9stTsTZZTeocfq/eDNkLfpakEd7qR0bPejvy/x0iT0dvzIq4IirnBtVer5A=="
 		crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <link rel="stylesheet" href="../../css/style.css">
+	<link rel="stylesheet" href="../../css/style.css">
 	<link rel="stylesheet" href="../../css/productoSearhView.css">
 </head>
 
 <body>
-
 	<header class="header mb-5 ">
 		<div class="header-logo header-col">
 			<a th:href="@{/}"><img alt="logo" src="../img/BidBay-Logo-New.png" class="w-38 h-24"></a>
@@ -39,27 +38,28 @@
 					<i class="fa fa-search"></i>
 				</button>
 			</form>
+			<a href="">Vender</a>
 		</div>
 		<div class="header-icons header-col">
 			<div id="divCarrito" class="text-gray-100">
-				<a th:href="@{/login}" class="text-2xl mr-2"><i class="fa-regular fa-user"></i></a> <a
-					th:href="@{/carrito/listar}" class="text-2xl mr-5"><i
-						class="fa-sharp fa-solid fa-cart-plus"></i></a>
+				<a th:href="@{/login}" class="text-2xl mr-2"><i class="fa-regular fa-user"></i></a>
+				<a th:href="@{/carrito/listar}" class="text-2xl mr-5"><i class="fa-sharp fa-solid fa-cart-plus"></i></a>
 				<p th:text="${logueo}"></p>
 			</div>
 		</div>
 	</header>
 
-    <footer th:fragment="footer" class="footer bg-dark text-white mt-5 p-4">
-        <div class="container">
-            <div class="col">
-                <p class="">
-                    <span><a class="rainbow-link" href="https://github.com/NaraHumanoUnlam/bidbay" target="_blank">&copy; BidBay
-                            2023</a></span>
-                </p>
-            </div>
-        </div>
-    </footer>
+	<footer th:fragment="footer" class="footer bg-dark text-white mt-5 p-4">
+		<div class="container">
+			<div class="col">
+				<p class="">
+					<span><a class="rainbow-link" href="https://github.com/NaraHumanoUnlam/bidbay"
+							target="_blank">&copy; BidBay
+							2023</a></span>
+				</p>
+			</div>
+		</div>
+	</footer>
 
 </body>
 

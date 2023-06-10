@@ -111,22 +111,23 @@ public class LoginControllerTest {
     
     
     @Test
-    public void testGuardar_UsuarioExistente() {
-    	// Arrange
-        Usuario usuarioMock = new Usuario();
-        BindingResult bindingResultMock = mock(BindingResult.class);
-        when(bindingResultMock.hasErrors()).thenReturn(true); // Cambio en esta línea
-        when(usuarioService.validarExistenciaUsuario(anyString(), anyString())).thenReturn(usuarioMock);
+	public void testGuardar_ConUsuarioExistente() {
+		// Crear un usuario con datos existentes
+		Usuario usuario = new Usuario();
+		usuario.setNick("existinguser");
+		usuario.setEmail("existinguser@example.com");
 
-        // Act
-        String result = loginController.guardar(usuarioMock, bindingResultMock, model);
-        System.out.println(result);
-        // Assert
-        assertEquals("views/register", result);
-        verify(model).addAttribute("titulo", "Registro Usuario");
-        verify(model).addAttribute("error", "El usuario y/o email ya existe registrado.");
-        verify(usuarioService, never()).save(any(Usuario.class));
-    }
+		// Configurar el servicio de usuario para devolver un usuario existente
+		when(usuarioService.validarExistenciaUsuario(usuario.getNick(), usuario.getEmail())).thenReturn(usuario);
+
+		// Llamar al método guardar del controlador
+		String result = loginController.guardar(usuario, bindingResult, model);
+
+		// Verificar que agrega el mensaje de error al modelo y devuelve la vista esperada
+		verify(model).addAttribute("titulo", "Registro Usuario");
+		verify(model).addAttribute("error", "El usuario y/o email ya existe registrado.");
+		assertEquals("views/register", result);
+	}
     
     @Test
     public void testGuardar_SaveUsuarioSuccess() {

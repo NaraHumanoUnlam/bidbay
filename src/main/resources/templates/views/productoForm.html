@@ -7,7 +7,7 @@
 
     <header th:replace="views/layouts/plantilla.html :: header"></header>
 
-    <main>
+    <main class="mb-5">
         <h1 th:text="${titulo}" class="h1 text-4xl mb-5 text-center"></h1>
 
         <form th:action="@{/producto/form}" th:object="${producto}" method="POST" class="formulario mb-5 sombra-2"
@@ -42,6 +42,8 @@
             <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
             <input type="hidden" th:field="*{id}" />
         </form>
+        <!-- esto lo agregue para que se pueda scrolear para abajo :) -->
+        <div class="h-28 w-full"></div>
     </main>
 
     <footer th:replace="views/layouts/plantilla.html :: footer"></footer>

@@ -1,0 +1,48 @@
+.formulario {
+    max-width: 650px;
+    margin: 0 auto;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 4px;
+  }
+  
+  .formulario-div {
+    margin-bottom: 20px;
+  }
+  
+  .formulario-div label {
+    display: block;
+    font-weight: 700;
+    margin-bottom: 5px;
+    font-size: 1.3rem;
+  }
+  
+  .formulario-div input[type="text"],
+  .formulario-div textarea,
+  .formulario-div input[type="file"],
+  .formulario-div select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .formulario-div textarea {
+    height: 80px;
+  }
+  
+  .boton-submit {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: white;
+    transition: transform 0.3s ease;
+  }
+  
+  .boton-submit:hover {
+    transform: scale(1.05);
+    color: rgb(73, 73, 73);
+  }
+  
+  .select-css {
+    font-size: 1rem;
+  }

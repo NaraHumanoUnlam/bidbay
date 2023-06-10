@@ -1,43 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${titulo}"></title>
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<head th:replace="views/layouts/plantilla.html :: head"></head>
 
-<body class="bg-blue-500 text-white text-center">
-    <h1 th:text="${titulo}" class="text-3xl mb-10 mt-5"></h1>
-    <form th:action="@{/producto/form}" th:object="${producto}" method="POST" class="flex flex-col justify-center text-black"  enctype="multipart/form-data">
-        <table class="w-64 m-auto mb-10">
-            <tr>
-                <td class="text-white">Nombre:</td>
-                <td><input type="text" th:field="*{nombre}" /></td>
-            </tr>
-            <tr>
-                <td class="text-white">Descripcion:</td>
-                <td><input type="text" th:field="*{descripcion}" /></td>
-            </tr>
-            <tr>
-                <td class="text-white">Precio:</td>
-                <td><input type="text" th:field="*{precio}" /></td>
-            </tr>
-            <tr>
-                <td class="text-white">Stock:</td>
-                <td><input type="text" th:field="*{stock}" /></td>
-            </tr>
-            <tr>
-                <td class="text-white">Imagen:</td>
-                <td><input type="file" name="file" /></td>
-            </tr>
-        </table>
-        <input type="submit" th:value="${botonSubmit}" class=" hover:bg-sky-400 p-5 m-auto rounded-full border border-sky-400 m-5 text-xl bg-sky-600 text-white"/>
-        <input type="hidden" th:field="*{id}" />
-    </form>
+<body>
+
+    <header th:replace="views/layouts/plantilla.html :: header"></header>
+
+    <main>
+        <h1 th:text="${titulo}" class="h1 text-4xl mb-5 text-center"></h1>
+
+        <form th:action="@{/producto/form}" th:object="${producto}" method="POST" class="formulario mb-5 sombra-2"
+            enctype="multipart/form-data">
+            <div class="formulario-div">
+                <label for="nombre">Producto:</label>
+                <input type="text" id="nombre" th:field="*{nombre}" />
+            </div>
+            <div class="formulario-div">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" th:field="*{descripcion}"></textarea>
+            </div>
+            <div class="formulario-div">
+                <label for="precio">Precio:</label>
+                <input type="text" id="precio" th:field="*{precio}" />
+            </div>
+            <div class="formulario-div">
+                <label for="stock">Stock:</label>
+                <input type="text" id="stock" th:field="*{stock}" />
+            </div>
+            <div class="formulario-div">
+                <label for="imagen">Imagen:</label>
+                <input type="file" id="imagen" name="file" />
+            </div>
+            <div class="formulario-div">
+                <label for="categoria">Seleccione una Categoría:</label>
+                <select id="categoria" th:field="*{categoria.id}" class="select-css">
+                    <option value="" >Seleccione una opción</option>
+                    <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+                </select>
+            </div>
+            <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
+            <input type="hidden" th:field="*{id}" />
+        </form>
+    </main>
+
+    <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+
+
 </body>
 
 </html>

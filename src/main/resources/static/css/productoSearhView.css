@@ -1,21 +1,5 @@
 /* Generales */
 
-body {
-    background-color: #f5f1f1;
-}
-
-.sombra {
-    box-shadow: 4px 5px 5px -3px rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: 4px 5px 5px -3px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 4px 5px 5px -3px rgba(0, 0, 0, 0.75);
-}
-
-.btn-sombra {
-    box-shadow: 1px 3px 5px -3px rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: 1px 3px 5px -3px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 1px 3px 5px -3px rgba(0, 0, 0, 0.75);
-}
-
 .producto {
     display: flex;
 }

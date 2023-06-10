@@ -106,7 +106,7 @@ public class LoginControllerTest {
         String result = loginController.validarLogin("username", "password",session, model);
 
         // Assert
-        //assertEquals("views/login", result);
+        assertEquals("views/login", result);
         verify(model).addAttribute("error", "Usuario y/o contraseña inválidos.");
     }
     

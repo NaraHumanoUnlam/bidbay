@@ -7,10 +7,8 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
@@ -20,11 +18,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
-
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.IUsuarioService;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import com.bidbay.controllers.LoginController;
@@ -76,21 +72,29 @@ public class LoginControllerTest {
     }
     
     
-    @Test
-    public void testValidarLogin_UsuarioValido() {
-        // Arrange
-        Usuario usuarioMock = new Usuario();
-        //HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
-        HttpSession session = Mockito.mock(HttpSession.class);
-        when(usuarioService.validarUsuario(anyString(), anyString())).thenReturn(usuarioMock);
+	@Test
+	public void testValidarLogin_UsuarioValido() {
+		 HttpSession session = Mockito.mock(HttpSession.class);
+		// Crear un usuario válido
+		Usuario usuario = new Usuario();
+		usuario.setNick("testuser");
+		usuario.setPassword("testpassword");
 
-        // Act
-        //String result = loginController.validarLogin("username", "password",session ,model);
+		// Mock del usuario buscado
+		Usuario usuarioBuscado = mock(Usuario.class);
 
-        // Assert
-        //assertEquals("index", result);
-        verify(model).addAttribute("logueo", usuarioMock.getNick());
-    }
+		// Configurar el servicio de usuario para devolver el usuario buscado
+		when(usuarioService.validarUsuario(usuario.getNick(), usuario.getPassword())).thenReturn(usuarioBuscado);
+
+		// Llamar al método validarLogin del controlador
+		String result = loginController.validarLogin(usuario.getNick(), usuario.getPassword(), session, model);
+
+		// Verificar que establece la variable de sesión y devuelve la vista esperada
+		verify(session).setAttribute("idUsuario", usuarioBuscado.getId());
+		verify(model).addAttribute("logueo", usuarioBuscado.getNick());
+		assertEquals("index", result);
+	}
+
     
     @Test
     public void testValidarLogin_UsuarioInvalido() {
@@ -99,7 +103,7 @@ public class LoginControllerTest {
         when(usuarioService.validarUsuario(anyString(), anyString())).thenReturn(null);
 
         // Act
-        //String result = loginController.validarLogin("username", "password",session, model);
+        String result = loginController.validarLogin("username", "password",session, model);
 
         // Assert
         //assertEquals("views/login", result);

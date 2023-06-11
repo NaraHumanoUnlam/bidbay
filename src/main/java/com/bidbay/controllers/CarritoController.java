@@ -71,7 +71,7 @@ public class CarritoController {
         return "redirect:/carrito/listar";
     }
     
-    private Boolean chequearQueElUsuarioEsteLogeado(HttpSession session) {
+    public Boolean chequearQueElUsuarioEsteLogeado(HttpSession session) {
     	Long idUsuario = (Long) session.getAttribute("idUsuario");
         if (idUsuario == null) {
             return false;

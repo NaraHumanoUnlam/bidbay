@@ -164,26 +164,7 @@ public class ProductoController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// esto es por mockito. ok tonces no lo borro xd
 	public Producto someMethod() {
 		// TODO Auto-generated method stub

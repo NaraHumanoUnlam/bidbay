@@ -1,8 +1,11 @@
 package com.bidbay.test;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.bidbay.models.entity.*;
@@ -10,13 +13,17 @@ import com.bidbay.models.entity.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
+
+import java.lang.reflect.Field;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestCarritoItem {
 
     @Mock
     private Producto mockProducto;
+    
 
     @Test
     public void testGetSetCantidadProductos() {
@@ -73,10 +80,14 @@ public class TestCarritoItem {
         assertEquals(stock, result);
     }
 
+    
     @Test
-    public void testGetIdItem() {
+    public void testGetIdItem() throws Exception {
         // Arrange
         CarritoItem carritoItem = new CarritoItem();
+        Field idItemField = CarritoItem.class.getDeclaredField("idItem");
+        idItemField.setAccessible(true);
+        idItemField.set(carritoItem, 123L);
 
         // Act
         Long result = carritoItem.getIdItem();

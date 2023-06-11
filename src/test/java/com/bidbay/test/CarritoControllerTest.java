@@ -10,7 +10,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.*;
+import org.junit.runner.RunWith;
 import org.mockito.*;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,6 +25,7 @@ import jakarta.servlet.http.HttpSession;
 import com.bidbay.models.entity.*;
 import java.util.ArrayList;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CarritoControllerTest {
 
     @InjectMocks

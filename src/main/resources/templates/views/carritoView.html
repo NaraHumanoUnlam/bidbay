@@ -34,7 +34,7 @@
 						</form>
 					</td>
 				</tr>
-				<tr th:unless="${carrito?.getCarritoItems()?.isEmpty()}">
+				<tr th:unless="${carrito != null and not #lists.isEmpty(carrito.carritoItems)}">
 					<td colspan="5">No hay elementos en el carrito</td>
 				</tr>
 			</tbody>

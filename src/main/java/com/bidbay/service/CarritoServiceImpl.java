@@ -21,6 +21,9 @@ public class CarritoServiceImpl implements ICarritoService{
 	
 	@Autowired
     private IProductoService productoService;
+	
+	@Autowired
+	private ICarritoItemService carritoItemService;
 	 
 	@Override
 	public List<Carrito> findAll() {
@@ -66,6 +69,7 @@ public class CarritoServiceImpl implements ICarritoService{
 		// TODO Auto-generated method stub
 		Carrito carrito = findOne(carritoId);
 		carrito.removeCarritoItem(carritoItem);
+		carritoItemService.delete(carritoItem);
 		carritoDao.save(carrito);
 	}
 
@@ -88,7 +92,10 @@ public class CarritoServiceImpl implements ICarritoService{
 				return carrito;
 			}
 		}
-		return null;
+		//Si no encontro, es porque no existe
+		Carrito carrito = new Carrito(idUser);
+        save(carrito);
+		return carrito;
 	}
 
 	@Override

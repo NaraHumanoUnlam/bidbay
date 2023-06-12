@@ -29,6 +29,11 @@ public class Categoria implements Serializable {
 
     public Categoria() {
     }
+    
+    public Categoria(String nombre) {
+    	this.nombre = nombre;
+    }
+
 
     public Categoria(Long id, @NotEmpty String nombre) {
         this.id = id;

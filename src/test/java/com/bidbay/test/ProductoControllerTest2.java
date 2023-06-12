@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bidbay.controllers.ProductoController;
+import com.bidbay.models.dao.ICategoriaDao;
+import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
@@ -35,6 +37,12 @@ public class ProductoControllerTest2 {
 
     @Mock
     private ICategoriaService categoriaService;
+    
+    @Mock
+    private IProductoDao productoDao;
+
+    @Mock
+    private ICategoriaDao categoriaDao;
 
     @Mock
     private Model model;
@@ -56,6 +64,8 @@ public class ProductoControllerTest2 {
         MockitoAnnotations.initMocks(this);
     }
 
+    /* Test Patricia  */
+    
     @Test
     public void listar_ProductosEncontradosPorNombre_DebeDevolverVistaProductoViewConProductosEncontrados() {
         // Configuración del escenario de prueba
@@ -196,4 +206,50 @@ public class ProductoControllerTest2 {
         verify(model).addAttribute("categoria", categoria);
        // verify(model).addAttribute("productos", productos);
     }
+    
+    /* Test Juli */
+
+    @Test
+    public void testGuardarValidProductoDebeRedirigirALista() throws IOException {
+        // Configuración del escenario de prueba
+        Producto producto = new Producto();
+        producto.setNombre("Remera de prueba");
+        producto.setDescripcion("Esto es una prueba para los TDD");
+        producto.setPrecio(2000.00);
+        producto.setStock(45);
+        when(bindingResult.hasErrors()).thenReturn(false);
+        when(multipartFile.isEmpty()).thenReturn(true);
+        doNothing().when(productoService).save(producto);
+
+        // Ejecución del método a probar
+        String viewName = productoController.guardar(producto, bindingResult, model, multipartFile, redirectAttributes);
+
+        // Verificación de resultados
+        Assert.assertEquals("redirect:/producto/listar", viewName);
+        verify(productoService).save(producto);
+        verify(multipartFile, never()).getBytes();
+        verify(model, never()).addAttribute(eq("error"), anyString());
+    }
+
+    @Test
+    public void testBuscar() {
+        // Configuración del escenario de prueba
+        Long categoriaId = 1L;
+        String search = "keyword";
+        String order = "asc";
+        List<Producto> productos = new ArrayList<>();
+        productos.add(new Producto());
+        Categoria categoria = new Categoria();
+        when(categoriaService.findOne(categoriaId)).thenReturn(categoria);
+        when(productoService.findByCategoriaId(categoriaId)).thenReturn(productos);
+        String viewName = productoController.buscar(categoriaId, null, order, search, model);
+        Assert.assertEquals("views/productoSearhView", viewName);
+        verify(model).addAttribute("titulo", "Búsqueda de Productos");
+        verify(model).addAttribute("inputValue", search);
+        verify(model).addAttribute("categorias", categoriaService.findAll());
+        verify(categoriaService).findOne(categoriaId);
+        verify(model).addAttribute("categoria", categoria);
+    }
+
+    
 }

@@ -136,6 +136,31 @@ public class Producto implements Serializable{
 		this.imagen = imagen;
 	}
 
+	
+	public Producto(@NotEmpty String nombre, @NotEmpty String descripcion, Categoria categoria, @NotNull Double precio,
+			@NotNull Integer stock, String imagen) {
+		super();
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.categoria = categoria;
+		this.precio = precio;
+		this.stock = stock;
+		this.imagen = imagen;
+	}
+	
+
+	public Producto(Long id, @NotEmpty String nombre, @NotEmpty String descripcion, Categoria categoria,
+			@NotNull Double precio, @NotNull Integer stock, String imagen) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+		this.categoria = categoria;
+		this.precio = precio;
+		this.stock = stock;
+		this.imagen = imagen;
+	}
+
 	public Producto() {
 		super();
 	}

@@ -1,5 +1,6 @@
 package com.bidbay.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,32 +95,47 @@ public class CarritoServiceImpl implements ICarritoService{
 	public void addProductToCarrito(Long idUsuario, Long idProducto, RedirectAttributes redirectAttributes) {
 		// TODO Auto-generated method stub
 		Producto producto = productoService.findOne(idProducto);
-        List<Carrito> carritosActuales = findAll();
-        
-        for (Carrito carrito : carritosActuales) {
-            if (carrito.getIdUsuario().equals(idUsuario)) {
-                List<CarritoItem> carritoItems = carrito.getCarritoItems();
-                if(!carritoItems.isEmpty()) {
-                	for (CarritoItem carritoItem : carritoItems) {
-                        if (carritoItem.getProducto().equals(producto)) {
-                            Integer stock = carritoItem.getStock();
-                            stock++;
-                            changeCarritoItemStock(carritoItem, carrito, stock, redirectAttributes);
-                        }
-                    }
-                }
-                CarritoItem carritoItem = new CarritoItem(producto, 1);
-                carrito.addCarritoItem(carritoItem);
-                save(carrito);
-                redirectAttributes.addFlashAttribute("mensaje", "Producto agregado correctamente al carrito");
-            }
-        }
-        // Si no se encuentra el carrito del usuario, se crea uno nuevo
-        Carrito carrito = new Carrito(idUsuario);
-        CarritoItem carritoItem = new CarritoItem(producto, 1);
-        carrito.addCarritoItem(carritoItem);
-        save(carrito);
-        redirectAttributes.addFlashAttribute("mensaje", "Producto agregado correctamente al carrito");
+	    if (producto != null) {
+	        List<Carrito> carritosActuales = findAll();
+
+	        boolean carritoEncontrado = false;
+
+	        for (Carrito carrito : carritosActuales) {
+	            if (carrito.getIdUsuario().equals(idUsuario)) {
+	                carritoEncontrado = true;
+
+	                List<CarritoItem> carritoItems = carrito.getCarritoItems();
+	                boolean productoEncontrado = false;
+
+	                for (CarritoItem item : carritoItems) {
+	                    if (item.getProducto().equals(producto)) {
+	                        Integer stock = item.getStock();
+	                        stock++;
+	                        changeCarritoItemStock(item, carrito, stock, redirectAttributes);
+	                        productoEncontrado = true;
+	                        break;
+	                    }
+	                }
+
+	                if (!productoEncontrado) {
+	                    CarritoItem nuevoItem = new CarritoItem(producto, 1);
+	                    carrito.addCarritoItem(nuevoItem);
+	                }
+
+	                save(carrito);
+	                redirectAttributes.addFlashAttribute("mensaje", "Producto agregado correctamente al carrito");
+	                break;
+	            }
+	        }
+
+	        if (!carritoEncontrado) {
+	            Carrito carritoNuevo = new Carrito(idUsuario);
+	            CarritoItem nuevoItem = new CarritoItem(producto, 1);
+	            carritoNuevo.addCarritoItem(nuevoItem);
+	            save(carritoNuevo);
+	            redirectAttributes.addFlashAttribute("mensaje", "Producto agregado correctamente al carrito");
+	        }
+	    }
 	}
 
 	@Override

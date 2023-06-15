@@ -83,7 +83,7 @@
 		<input type="hidden" th:field="*{idPago}" />
 	</form>
 
-		<label>Monto a pagar: ACA TENGO Q PONER EL PRECIO x CANTIDAD</label>
+		<label>Monto a pagar: <span th:text="${precioTotal}"></span></label>
 
 		<h2 th:text="${error}"></h2>
 				<div th:if="${param.error}"></div>

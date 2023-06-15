@@ -52,6 +52,12 @@ public class Pago implements Serializable {
 	private Double precio; 
 
 
+	private Boolean aprobado;
+
+
+	private String ticket;
+	
+
 	//datos para ticket devolucion 
 	//usuario, telefono, productos que compro, precio que pago, 
 
@@ -64,23 +70,25 @@ public class Pago implements Serializable {
 		super();
 	}
 
-
-	public Pago( @NotEmpty String mailCliente, @NotEmpty String dNI,
-			@NotEmpty Long numeroTarjeta, @NotEmpty Integer cvc, @NotEmpty String mes,
-			@NotEmpty String anio, @NotEmpty String nombreCliente,   String usario, Double precio) {
+	public Pago (String nickUsuario, double precio)  //vacio
+	{
 		super();
+		this.nombreUsario = nickUsuario;
+		this.precio = precio;
+	}
+
+	public void guardarDatos( String mail, String Dni, Long tarjeta,Integer clave, String nombre, String mes, String anio) {
+
 
 		this.mailCliente = mailCliente;
-		this.nombreDeCliente = nombreCliente; 
-		this.DNI = dNI;
+		this.nombreDeCliente = nombre; 
+		this.DNI = Dni;
 		this.numeroTarjeta = numeroTarjeta;
 		this.cvc = cvc;
 		this.mes = mes; 
 		this.anio = anio;
 		this.fechaVencimiento = (this.mes + "/" + this.anio);
-
-		this.nombreUsario = usario;
-		this.precio = precio;
+	
 	}
 
 
@@ -176,6 +184,20 @@ public class Pago implements Serializable {
 		this.anio = anio;
 	}
 
+	public String getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
 	
+	public Boolean getAprobado() {
+		return aprobado;
+	}
+
+	public void setAprobado(Boolean aprobado) {
+		this.aprobado = aprobado;
+		}
 	
 }

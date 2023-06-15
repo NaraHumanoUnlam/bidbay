@@ -1,30 +1,32 @@
-<!DOCTYPE html  xmlns:th="http://www.thymeleaf.org">
-<html>
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/notificacion.css">
-</head>
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
 <body>
-    <div class="container mx-auto px-4">
-        <h2 class="text-2xl font-bold mb-4">Enviar Notificación</h2>
-        <form action="/notification" method="post">
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="destinatario">Destinatario:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="destinatario" type="text" name="destinatario">
-            </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="asunto">Asunto:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="asunto" type="text" name="asunto">
-            </div>
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="mensaje">Mensaje:</label>
-                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="mensaje" name="mensaje"></textarea>
-            </div>
+	<main class="w-full flex h-full justify-center m-auto">
+		<section class="rounded flex w-full h-1/4 justify-around items-center pt-20">
+			<div>
+				<div
+					class="grid grid-cols-3 text-center border border-solid border-gray-500 flex flex-col items-center justify-center justify-items-center">
+					<div th:each="producto: ${productos}" class="mb-10">
+						<img th:src="@{'../imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}"
+							class="w-1/2 h-1/2 m-auto mt-2">
+						<p th:text="${producto.nombre}" class="text-4xl mb-2"></p>
+						<p th:text="'$' + ${producto.precio}" class="mb-2"></p>
+						<a th:href="@{/carrito/form/{id}(id=${producto.id})}"
+							class="bg-blue-400 p-2 m-5 text-white hover:bg-blue-600 rounded">Agregar
+							al carrito</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
 
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Enviar</button>
-        </form>
-    </div>
+	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+
 </body>
-</html>

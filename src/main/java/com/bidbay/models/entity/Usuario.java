@@ -1,6 +1,6 @@
 package com.bidbay.models.entity;
 import java.io.Serializable;
-
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 @Entity
 @Table(name="usuarios")
@@ -33,7 +35,8 @@ public class Usuario implements Serializable{
 		@NotEmpty
 		private String telefono;
 		
-
+		private List<String> notificaciones;
+		
 		public Long getId() {
 			return id;
 		}
@@ -101,6 +104,16 @@ public class Usuario implements Serializable{
 		public static long getSerialversionuid() {
 			return serialVersionUID;
 		}
+		
+		
+
+		public List<String> getNotificaciones() {
+			return notificaciones;
+		}
+
+		public void setNotificaciones(List<String> notificaciones) {
+			this.notificaciones = notificaciones;
+		}
 
 		public Usuario(Long id, @NotEmpty String nick, @NotEmpty String email, @NotEmpty String password,
 				@NotEmpty String nombre, @NotEmpty String apellido, @NotEmpty String direccion,
@@ -114,6 +127,7 @@ public class Usuario implements Serializable{
 			this.apellido = apellido;
 			this.direccion = direccion;
 			this.telefono = telefono;
+			this.notificaciones = new ArrayList<String>();
 		}
 
 		public Usuario(@NotEmpty String nick, @NotEmpty String email, @NotEmpty String password,
@@ -127,11 +141,40 @@ public class Usuario implements Serializable{
 			this.apellido = apellido;
 			this.direccion = direccion;
 			this.telefono = telefono;
+			this.notificaciones = new ArrayList<String>();
 		}
 
 		public Usuario() {
 			super();
 		}
+
+		public void agregarNotificacion(String notificacion) {
+			this.notificaciones.add(notificacion);
+			
+		}
+
+		public String buscarNotificacion(String notificacion) {
+			String noti = null;
+			for (String string : notificaciones) {
+				if(string.equals(notificacion)) {
+					noti = string;
+				}
+			}
+			return noti;
+		}
+
+		public Boolean eliminarNotificacion(String notificacion) {
+			Boolean isDeleted = false;
+			for (int i = 0; i < notificaciones.size(); i++) {
+				if(notificacion.equals(notificaciones.get(i))) {
+					notificaciones.remove(i);
+					isDeleted = true;
+				}
+			}
+			return isDeleted;
+		}
+
+		
 
 		
 		

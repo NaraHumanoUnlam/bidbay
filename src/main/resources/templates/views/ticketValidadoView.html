@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css">
+    <style>
+        .ticket-container {
+            width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .ticket-title {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .ticket-details {
+            margin-bottom: 1rem;
+        }
+        .ticket-details span {
+            font-weight: bold;
+        }
+        .ticket-productos ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .ticket-productos li {
+            margin-bottom: 0.5rem;
+        }
+        .ticket-user-details {
+            margin-top: 1rem;
+        }
+        .ticket-user-details span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket-container">
+        <h1 class="ticket-title">Ticket</h1>
+        
+        <div class="ticket-details">
+            <p>ID del Ticket: <span th:text="${ticket.idTicket}"></span></p>
+            <p>ID del Pago: <span th:text="${ticket.idPago}"></span></p>
+            <p>Precio: <span th:text="${ticket.precio}"></span></p>
+        </div>
+        
+        <div class="ticket-productos">
+            <p>Productos:</p>
+            <ul>
+                <li th:each="producto : ${ticket.productos}" th:text="${producto}"></li>
+            </ul>
+        </div>
+        
+        <div class="ticket-user-details">
+            <p>Nick del Usuario: <span th:text="${ticket.nickUser}"></span></p>
+            <p>Dirección: <span th:text="${ticket.direccion}"></span></p>
+        </div>
+    </div>
+</body>
+</html>

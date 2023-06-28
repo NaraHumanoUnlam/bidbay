@@ -40,55 +40,42 @@ public class Pago implements Serializable {
 	//@NotEmpty
 	private String nombreDeCliente; 
 	//@NotEmpty
-
 	private String fechaVencimiento; 
 	//@NotEmpty
 	private String mes;
 	//@NotEmpty
 	private String anio;
 	
+	private Double precio; 	
+
 	private String nombreUsario; 
-	
-	private Double precio; 
-
-
-	private Boolean aprobado;
-
-
 	private String ticket;
+	private Boolean aprobado=false;;
 	
-
-	//datos para ticket devolucion 
-	//usuario, telefono, productos que compro, precio que pago, 
-
-
-	
-
-
 	public Pago ()  //vacio
 	{
 		super();
 	}
 
-	public Pago (String nickUsuario, double precio)  //vacio
-	{
-		super();
-		this.nombreUsario = nickUsuario;
-		this.precio = precio;
-	}
+//	public Pago (String nickUsuario, double precio)  //vacio
+//	{
+//		super();
+//		this.nombreUsario = nickUsuario;
+//		this.precio = precio;
+//	}
 
-	public void guardarDatos( String mail, String Dni, Long tarjeta,Integer clave, String nombre, String mes, String anio) {
+	public Pago( String mail, String Dni, Long tarjeta,Integer clave, String nombre, String mes, String anio, Double precioTotal) {
 
 
 		this.mailCliente = mailCliente;
 		this.nombreDeCliente = nombre; 
 		this.DNI = Dni;
-		this.numeroTarjeta = numeroTarjeta;
+		this.numeroTarjeta = tarjeta;
 		this.cvc = cvc;
 		this.mes = mes; 
 		this.anio = anio;
 		this.fechaVencimiento = (this.mes + "/" + this.anio);
-	
+		this.precio = precioTotal;
 	}
 
 

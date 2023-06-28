@@ -24,7 +24,7 @@ import com.bidbay.service.IProductoService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-//@SessionAttributes("carrito")
+//@SessionAttributes("carrito")2
 @RequestMapping("/carrito")
 public class CarritoController {
 

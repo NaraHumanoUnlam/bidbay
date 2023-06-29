@@ -100,5 +100,39 @@ public class UsuarioReviewTest {
         // Assert
         assertEquals(0.0, promedio, 0.01);
     }
+    //nuevos
+    @Test
+    public void testPuntuarVendedor_RatingMenorACero() {
+        // Arrange
+        Long vendedorId = 1L;
+        double rating = -1.0;
+        Usuario vendedor = new Usuario();
+        vendedor.setId(vendedorId);
+        when(usuarioDao.findById(vendedorId)).thenReturn(Optional.of(vendedor));
+
+        // Act
+        usuarioService.puntuarVendedor(vendedorId, rating);
+
+        // Assert
+        assertEquals(0.0, vendedor.getRating(), 0.01);
+        verify(usuarioDao, times(1)).save(vendedor);
+    }
+
+    @Test
+    public void testPuntuarVendedor_RatingMayorACinco() {
+        // Arrange
+        Long vendedorId = 1L;
+        double rating = 6.0;
+        Usuario vendedor = new Usuario();
+        vendedor.setId(vendedorId);
+        when(usuarioDao.findById(vendedorId)).thenReturn(Optional.of(vendedor));
+
+        // Act
+        usuarioService.puntuarVendedor(vendedorId, rating);
+
+        // Assert
+        assertEquals(5.0, vendedor.getRating(), 0.01);
+        verify(usuarioDao, times(1)).save(vendedor);
+    }
 
 }

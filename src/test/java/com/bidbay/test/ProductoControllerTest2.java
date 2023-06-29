@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.mock.web.MockMultipartFile;
 
 import com.bidbay.controllers.ProductoController;
 import com.bidbay.models.dao.ICategoriaDao;
@@ -20,6 +21,7 @@ import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
+import com.bidbay.excepciones.ArchivoException;
 
 import jakarta.validation.Valid;
 
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class ProductoControllerTest2 {
@@ -111,6 +114,35 @@ public class ProductoControllerTest2 {
         Assert.assertEquals("views/productoForm", viewName);
         verify(model).addAttribute("titulo", "Formulario de Producto");
     }
+    
+    
+    
+    @Test(expected = ArchivoException.class)
+    public void testGuardarWithFileException() {
+        // Arrange
+        Producto producto = new Producto();
+        when(bindingResult.hasErrors()).thenReturn(false);
+
+        // Create a test image file
+        MockMultipartFile imageFile = new MockMultipartFile("file", "test-image.jpg",
+                "image/jpeg", "Test image".getBytes());
+
+        // Mock the productoService to throw ArchivoException
+        doThrow(new ArchivoException("Error al escribir archivo", new Throwable())).when(productoService).save(any());
+
+        // Act
+        String result = productoController.guardar(producto, bindingResult, model, imageFile, redirectAttributes);
+
+        // Assert
+        // The test will pass if the ArchivoException is thrown
+        assertEquals("views/productoForm", result);
+        verify(model, times(1)).addAttribute(eq("error"), anyString());
+        verifyNoMoreInteractions(model);
+        verifyNoMoreInteractions(productoService);
+
+    }
+
+
 /*
     @Test
     public void guardar_ValidacionExitosaSinCargaDeImagen_DebeGuardarProductoYRedirigirALista() {

@@ -74,11 +74,16 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Override
 	public void puntuarVendedor(Long idUsuario, Double rating) {
-		Usuario vendedor = usuarioDao.findById(idUsuario).orElse(null);
-		if (vendedor != null) {
-			vendedor.setRating(rating);
-			usuarioDao.save(vendedor);
-		}
+	    Usuario vendedor = usuarioDao.findById(idUsuario).orElse(null);
+	    if (vendedor != null) {
+	        if (rating < 0) {
+	            rating = 0.0;
+	        } else if (rating > 5) {
+	            rating = 5.0;
+	        }
+	        vendedor.setRating(rating);
+	        usuarioDao.save(vendedor);
+	    }
 	}
 
 	@Override

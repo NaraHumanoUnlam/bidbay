@@ -14,8 +14,8 @@ public class TestPago {
 
         Pago generacionDePago = new Pago("mailCliente","DNI" , 55555555555555555L,123, "nombreDeCliente", "mes","anio", 190.3);
         
-        System.out.println(generacionDePago.getUsario());
-        System.out.println(generacionDePago.getPrecio());
+        /*System.out.println(generacionDePago.getUsario());
+        System.out.println(generacionDePago.getPrecio());*/
         
         Assert.assertNotNull(generacionDePago);
     }
@@ -23,7 +23,7 @@ public class TestPago {
     @Test
     public void VerificarFechaDeVencimientoCon7Digitos() {
     	Pago generacionDePago = new Pago("mailCliente","DNI" , 55555555555555555L,123, "nombreDeCliente", "mm","anio", 190.3);
-    	System.out.println(generacionDePago.getfechaDeVencimiento());
+    	//System.out.println(generacionDePago.getfechaDeVencimiento());
     	int obtenido = generacionDePago.getfechaDeVencimiento().length();
     	int esperado = 7;
     	assertEquals(esperado, obtenido);
@@ -33,7 +33,7 @@ public class TestPago {
     public void seGuardandatos() {
     	Pago generacionDePago = new Pago("mailCliente","DNI" , 55555555555555555L,123, "nombreDeCliente", "mes","anio", 190.3);
         
-    	System.out.println(generacionDePago.getfechaDeVencimiento());
+    	//System.out.println(generacionDePago.getfechaDeVencimiento());
     	
     	assertNotNull(generacionDePago);
     }

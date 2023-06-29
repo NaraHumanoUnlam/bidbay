@@ -76,6 +76,7 @@ public class ProductoController {
 			model.addAttribute("titulo", "Formulario de Producto");
 			return "views/productoForm";
 		}
+
 		if (!imagen.isEmpty()) {
 			Path directorioImagenes = Paths.get("src//main//resources//static//imagenes");
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
@@ -89,13 +90,7 @@ public class ProductoController {
 				throw new ArchivoException("Error al escribir archivo", e);
 			}
 		}
-		try {
-			productoService.save(producto);
-		} catch (Exception e) {
-			model.addAttribute("error", "Error al guardar el producto: " + e.getMessage());
-			
-			return "views/productoForm";
-		}
+		productoService.save(producto);
 		return "redirect:/producto/listar";
 	}
 

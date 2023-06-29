@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bidbay.excepciones.ArchivoException;
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICategoriaService;
@@ -85,14 +86,14 @@ public class ProductoController {
 				producto.setImagen(imagen.getOriginalFilename());
 
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new ArchivoException("Error al escribir archivo", e);
 			}
 		}
 		try {
 			productoService.save(producto);
 		} catch (Exception e) {
 			model.addAttribute("error", "Error al guardar el producto: " + e.getMessage());
-			System.out.println("mensaje de exepcion");
+			
 			return "views/productoForm";
 		}
 		return "redirect:/producto/listar";
@@ -109,6 +110,7 @@ public class ProductoController {
 		model.put("producto", p);
 		model.put("titulo", "Editar Producto");
 		model.put("botonSubmit", "Editar");
+		model.put("categorias", categoriaService.findAll());
 		return "views/productoForm";
 	}
 

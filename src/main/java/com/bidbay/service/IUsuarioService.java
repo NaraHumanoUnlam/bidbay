@@ -13,4 +13,8 @@ public interface IUsuarioService {
 	public Usuario findByemail(String email);
 	public String findNickById (Long object);
 	public Usuario validarExistenciaUsuario(String nick, String email);
+	
+	public void puntuarVendedor(Long idUsuario, Double raiting);
+	public double calcularPromedioRating(Long idUsuario);
+	
 }

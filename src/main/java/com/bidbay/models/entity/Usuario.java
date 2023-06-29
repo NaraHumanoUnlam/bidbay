@@ -37,6 +37,8 @@ public class Usuario implements Serializable{
 		
 		private List<String> notificaciones;
 		
+		private List<Double> ratings;
+		
 		public Long getId() {
 			return id;
 		}
@@ -174,8 +176,29 @@ public class Usuario implements Serializable{
 			return isDeleted;
 		}
 
-		
+		public double getRating() {
+			// TODO Auto-generated method stub
+			if (ratings == null || ratings.isEmpty()) {
+	            return 0.0;
+	        }
+	        double sum = 0.0;
+	        for (Double rating : ratings) {
+	            sum += rating;
+	        }
+	        return sum / ratings.size();
+		}
 
+		public void setRatings(List<Double> ratings) {
+			// TODO Auto-generated method stub
+			this.ratings = ratings;
+		}
 		
-		
+		public void setRating(Double rating) {
+			// TODO Auto-generated method stub
+			if (ratings == null) {
+	            ratings = new ArrayList<>();
+	        }
+	        ratings.add(rating);
+		}
+
 }

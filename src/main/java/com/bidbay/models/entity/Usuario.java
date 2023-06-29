@@ -1,6 +1,7 @@
 package com.bidbay.models.entity;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

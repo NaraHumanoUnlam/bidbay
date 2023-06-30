@@ -10,9 +10,9 @@ import com.bidbay.models.entity.Compra;
 
 public interface ISubastaDao extends CrudRepository<Compra, Long>{
 
-	 @Query("SELECT s FROM subasta s WHERE s.idOfertante = :value")
-	 List<Compra> findByIdOfertante(@Param("value") Long idUsuario);
-	 
-	 @Query("SELECT s FROM subasta s WHERE s.idSubastador = :value")
-	 List<Compra> findByIdSubastador(@Param("value") Long idUsuario);
+//	 @Query("SELECT s FROM subasta s WHERE s.idOfertante = :value")
+//	 List<Compra> findByIdOfertante(@Param("value") Long idUsuario);
+//	 
+//	 @Query("SELECT s FROM subasta s WHERE s.idSubastador = :value")
+//	 List<Compra> findByIdSubastador(@Param("value") Long idUsuario);
 }

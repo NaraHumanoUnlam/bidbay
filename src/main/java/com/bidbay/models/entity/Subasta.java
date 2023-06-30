@@ -1,35 +1,53 @@
 package com.bidbay.models.entity;
 
-import java.util.HashMap;
-import java.util.Map;
 
+import java.util.Iterator;
+import java.util.*;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="subasta")
 public class Subasta {
+	
+	@SuppressWarnings("unused")
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
-	private HashMap<Usuario,Double> ofertantes;
+	
+	@ManyToMany(mappedBy = "subastas")
+	private List<Ofertante> ofertantes;
 	private Usuario subastador;
 	private Producto producto;
 	public Subasta() {
 		super();
+		this.ofertantes = new ArrayList<>();
 	}
-	public Subasta(HashMap<Usuario, Double> ofertantes, Usuario subastador, Producto producto) {
-		this.ofertantes = new HashMap<>();
+	public Subasta(Usuario subastador, Producto producto) {
 		this.subastador = subastador;
 		this.producto = producto;
+		this.ofertantes = new ArrayList<>();
+		
 	}
-	public Subasta(Long id, HashMap<Usuario, Double> ofertantes, Usuario subastador, Producto producto) {
+	public Subasta(Long id, Usuario subastador, Producto producto) {
 		this.id = id;
-		this.ofertantes = ofertantes;
 		this.subastador = subastador;
 		this.producto = producto;
+		this.ofertantes = new ArrayList<>();
 	}
 	public void setId(long l) {
 		this.id = l;
+		this.ofertantes = new ArrayList<>();
 		
 	}
-	public HashMap<Usuario, Double> getOfertantes() {
-		return ofertantes;
-	}
+	
 	public Usuario getSubastador() {
 		return subastador;
 	}
@@ -45,21 +63,32 @@ public class Subasta {
 	public Long getId() {
 		return id;
 	}
-
-	public void agregarOfertante(Usuario ofertante, Double oferta) {
 	
-	 this.ofertantes.put(ofertante, oferta);
+	  public List<Ofertante> getOfertantes() {
+	        return ofertantes;
+	    }
+
+	  public void agregarOfertante(Usuario user, Double valor) {
+		  Ofertante ofertantante = new Ofertante(user,valor);
+		  ofertantante.setId(user.getId());
+		  this.ofertantes.add(ofertantante);
+	  }
+	  
+	public Ofertante obtenerOfertantePorNombre(String nombre) {
 		
+			Ofertante nuevo = null;
+			for (int i = 0; i < ofertantes.size(); i++) {
+				if(ofertantes.get(i).getUsuario().getNombre().equals(nombre)) {
+					nuevo = ofertantes.get(i);
+				}
+				
+			}
+		return nuevo;
 	}
-	public Usuario obtenerOfertantePorOferta(Double oferta) {
-		
-		  for (Map.Entry<Usuario, Double> entry : ofertantes.entrySet()) {
-	            if (entry.getValue() == oferta) {
-	                return entry.getKey();
-	            }
-	        }
-	        return null;
-	}
+	    
+	    
+
+	
 
 	
 }

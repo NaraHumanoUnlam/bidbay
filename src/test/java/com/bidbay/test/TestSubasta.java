@@ -40,6 +40,7 @@ public class TestSubasta {
 		
 	}
 	
+	@Test
 	public void seCreaSubastaYseOferta() {
 		Subasta subastaNueva = new Subasta();
 		subastaNueva.setId(1l);
@@ -48,9 +49,11 @@ public class TestSubasta {
 		Usuario subastador = new Usuario("usuario","unmail@gmail.com","pass","usuario","de prueba","calle falsa 123","55555555");
 		subastaNueva.setSubastador(subastador);
 		Usuario ofertante = new Usuario("ofertante","unmail1@gmail.com","pass","soy","el que oferta","calle falsa 456","666666666");
-		Double oferta = 1.00;
-		subastaNueva.agregarOfertante(ofertante,oferta);
-		Assert.assertEquals(ofertante, subastaNueva.obtenerOfertantePorOferta(oferta));
+		ofertante.setId(1l);
+		subastaNueva.agregarOfertante(ofertante, 1.00);
+		Long ve = ofertante.getId();
+		Long vo = subastaNueva.obtenerOfertantePorNombre(ofertante.getNombre()).getId();
+		Assert.assertEquals(ve, vo);
 		
 	}
 }

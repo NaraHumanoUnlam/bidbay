@@ -23,11 +23,17 @@ public class Ticket implements Serializable {
 	private Long idTicket;
 
 
-	private Long idPago; 
+	private Long idPago;
+	
 	private Double precio; 
 	//CAMBIAR
+	//asociado a una compra
 	private List<String> productos;
-	private String nickUser; 
+	
+	//id usuario entonces
+	private String nickUser;
+	
+	//direccionDe empresa
 	private String direccion; 
 
 

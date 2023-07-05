@@ -36,6 +36,7 @@ public class PagoController {
 	public String crear(@RequestParam("precioTotal") Double precioTotal, Model model) {
 		Double precio = precioTotal;
 		Pago pago = new Pago();
+		//Aca iria compra
 		model.addAttribute("pago", pago);
 	    model.addAttribute("titulo", "Formulario de Pago");
 	    model.addAttribute("botonSubmit", "Realizar Pago");
@@ -53,14 +54,13 @@ public class PagoController {
 	                   @Valid Pago pago,
 	                   BindingResult result,
 	                   Model model) {
-	    // Aquí creas el objeto Pago utilizando los parámetros recibidos del formulario
 	    Pago pagoNuevo = new Pago(DNI, Long.valueOf(numeroTarjeta), mes, anio, nombreDeCliente, Integer.valueOf(cvc));
-	    
+	    //esto esta bien que traiga pago
+	    //no debería ser nombre de client debería ser nombre de el titutl
 	    model.addAttribute("titulo", "Formulario de Pago");
 	    model.addAttribute("botonSubmit", "Realizar Pago");
 	    
 	    Pago respuesta = pagoService.pagar(pagoNuevo);
-	    //CAMBIAR TODO ESTE METOO PUESTO QUE DEBERÍA DEVOLVER TICKET Y NO PAGO
 	    if (respuesta.getAprobado()) {
 	        model.addAttribute("ticket", respuesta);
 	        return "views/ticketValidadoView";

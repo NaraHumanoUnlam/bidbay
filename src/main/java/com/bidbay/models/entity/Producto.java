@@ -34,7 +34,6 @@ public class Producto implements Serializable{
 	@NotEmpty
 	private String descripcion;
 	
-
 	@Nullable
 	@ManyToOne
 	private Categoria categoria;
@@ -179,10 +178,11 @@ public class Producto implements Serializable{
 	public void dejarReseña(Usuario usuario, String mensaje, double puntaje) {
 	    LocalDateTime fecha = LocalDateTime.now();
 	    Review review = new Review(fecha, usuario, this, mensaje, puntaje);
+	    //usuario.setRating(puntaje);
 	    
-	    if (reviews == null) {
+	    /*if (reviews == null) {
 	        reviews = new ArrayList<>();
-	    }
+	    }*/
 	    
 	    reviews.add(review);
 	}

@@ -103,7 +103,8 @@ public class ProductoServiceImpl implements IProductoService {
             String notificacion = "¡Has dejado una reseña para el vendedor!";
             usuario.agregarNotificacion(notificacion);
             usuarioDao.save(usuario);
-	} }
+            } 
+        }
 
 
 

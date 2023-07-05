@@ -183,7 +183,7 @@ public class ProductoController {
 		return "views/productoDeatailView";
 	}
 	
-	@PostMapping("/dejarReseña/{id}")
+	@PostMapping("/dejarReview/{id}")
 	public String dejarReseña(@PathVariable("id") Long idProducto, @RequestParam("mensaje") String mensaje, @RequestParam("puntaje") int puntaje, HttpSession session) {
 		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			return "redirect:/login";

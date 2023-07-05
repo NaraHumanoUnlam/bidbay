@@ -52,7 +52,10 @@
 				</tr>
 			</tbody>
 		</table>
-		<a th:href="@{/pago/form(precioTotal=${precioTotal})}" class="text-black text-2xl bg-green-200 p-2 mt-10 " >Comprar</a>
+		<div th:if="${precioTotal != 0}">
+			<a  th:href="@{/pago/form(precioTotal=${precioTotal})}" class="text-black text-2xl bg-green-200 p-2 mt-10 " >Comprar</a>
+		</div>
+		
 		<p th:text="${mensajeExito}" class="text-green-500" th:if="${mensajeExito}"></p>
 		<p th:text="${mensajeError}" class="text-red-500" th:if="${mensajeError}"></p>
 	</main>

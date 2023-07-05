@@ -3,8 +3,6 @@ package com.bidbay.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.anyDouble;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,7 +11,6 @@ import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -43,7 +40,8 @@ public class CarritoControllerTest {
     @Mock
     private RedirectAttributes redirectAttributes;
     
-    @Before
+    @SuppressWarnings("deprecation")
+	@Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         session = mock(HttpSession.class);

@@ -2,16 +2,15 @@ package com.bidbay.models.entity;
 
 import java.io.Serializable;
 
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.relational.core.mapping.Embedded.Nullable;
 
-import io.micrometer.common.lang.Nullable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -31,8 +30,9 @@ public class Producto implements Serializable{
 	@NotEmpty
 	private String descripcion;
 	
-	@ManyToOne
+
 	@Nullable
+	@ManyToOne
 	private Categoria categoria;
 	
 	@NotNull

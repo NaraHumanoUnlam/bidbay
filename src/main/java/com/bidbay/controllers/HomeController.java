@@ -21,8 +21,7 @@ public class HomeController {
 	@GetMapping(value = { "/", "/home" })
 	public String listar(Model model) {
 		model.addAttribute("titulo", "Bidbay");
-		model.addAttribute("productos", productoService.findAll());
-		
+		model.addAttribute("productos", productoService.findAll());		
 		return "index";
 	}
 	

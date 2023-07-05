@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bidbay.models.dao.IPagoDao;
 import com.bidbay.models.entity.Carrito;
-import com.bidbay.models.entity.Compra;
+import com.bidbay.models.entity.Compras;
 import com.bidbay.models.entity.Pago;
 import com.bidbay.models.entity.Producto;
 

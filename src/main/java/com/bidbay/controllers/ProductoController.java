@@ -183,6 +183,16 @@ public class ProductoController {
 		return "views/productoDeatailView";
 	}
 	
+	@PostMapping("/dejarReseña/{id}")
+	public String dejarReseña(@PathVariable("id") Long idProducto, @RequestParam("mensaje") String mensaje, @RequestParam("puntaje") int puntaje, HttpSession session) {
+		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			return "redirect:/login";
+		}
+		
+		productoService.dejarReseña(idProducto, mensaje, puntaje, session);
+		return "redirect:/producto/details/{idProducto}";
+	}
+	
 	
 
 	// esto es por mockito. ok tonces no lo borro xd

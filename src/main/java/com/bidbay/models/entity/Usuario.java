@@ -44,11 +44,13 @@ public class Usuario implements Serializable{
 		
 		private List<Double> ratings;
 		
-
+		@Column(nullable = true)
+		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})
+		private List<Producto> compras; 
+		
 		@Column(nullable = true)
 		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})
 		private List<Producto> publicaciones;
-		
 
 		@Column(nullable = true)
 		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})

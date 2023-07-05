@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body>
+
+    <header th:replace="views/layouts/plantilla.html :: header"></header>
+
+    <div class="detalle-main card">
+        <div class="detalle-col-1">
+            <img th:src="@{'/imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}" />
+        </div>
+        <div class="detalle-col-2">
+            <div class="detalle-row">
+                <a>
+                    <i class="fa fa-long-arrow-left"></i>
+                    <span class="ml-1">Volver</span>
+                </a>
+                <a th:href="@{/carrito/form/{id}(id=${producto.id})}">
+                    <i class="fa-sharp fa-solid fa-cart-plus"></i>
+                </a>
+            </div>
+            <div class="row-line"></div>
+            <div class="detalle-row">
+                <p class="detalle-titulo" th:text="${producto.nombre}">
+            </div>
+            <div class="detalle-row">
+                <span class="detalle-categoria">Categoría -> </span>
+                <a class="detalle-categoria-link" th:href="@{/producto/buscar(categoria=${producto.categoria.id})}"
+                    th:text="${producto.categoria.nombre}"></a>
+            </div>
+            <div class="row-line"></div>
+            <div class="detalle-row detalle-precio">
+                <p th:text="'$' + ${producto.precio}">
+                <p>Stock Disponible: <span th:text="${producto.stock}"></span></p>
+            </div>
+            <div class="row-line"></div>
+            <div class="detalle-row">
+                <p class="about" th:text="${producto.descripcion}"></p>
+            </div>
+            <div class="row-line"></div>
+            <div class="detalle-row">
+                <a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white"
+                    th:href="@{/carrito/form/{id}(id=${producto.id})}">Agregar Al Carrito</a>
+                <div>
+                    <a href=""><i class="fa fa-heart text-muted"></i></a>
+                    <a href=""><i class="fa fa-share-alt text-muted"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+
+</body>

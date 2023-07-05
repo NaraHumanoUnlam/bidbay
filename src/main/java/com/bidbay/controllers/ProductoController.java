@@ -20,6 +20,8 @@ import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
 import org.springframework.lang.Nullable;
+
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import java.io.IOException;
@@ -157,7 +159,19 @@ public class ProductoController {
 	    return "views/productoSearhView";
 	}
 
-	
+	@RequestMapping(value = "/details/{id}")
+	public String detalles(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+		Producto p = null;
+		if (id > 0) {
+			p = productoService.findOne(id);
+		} else {
+			return "views/productoDeatailView";
+		}
+		model.put("producto", p);
+		model.put("titulo", "Detalles del Producto");
+		model.put("categorias", categoriaService.findAll());
+		return "views/productoDeatailView";
+	}
 	
 	
 

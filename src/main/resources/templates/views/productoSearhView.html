@@ -58,14 +58,14 @@
 				<div th:each="producto: ${productos}" class="card link sombra mb-3">
 					<div th:if="${productos.size() > 0}" class="row no-gutters">
 						<div class="col-sm-3">
-							<a href="">
+							<a th:href="@{/producto/details/{id}(id=${producto.id})}">
 								<img th:src="@{'../imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}"
 									class="w-4/5 h-2/3 m-auto rounded">
 							</a>
 						</div>
 						<div class="card-description col-sm-9">
 							<div class="card-body">
-								<a href="">
+								<a th:href="@{/producto/details/{id}(id=${producto.id})}">
 									<h5 class="card-title" th:text="${producto.nombre}"></h5>
 								</a>
 								<p class="card-text" th:text="'$' + ${producto.precio}"></p>

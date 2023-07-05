@@ -6,26 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bidbay.models.dao.ICompraDao;
-import com.bidbay.models.entity.Compra;
+import com.bidbay.models.entity.Compras;
 
 @Service
-public class CompraServiceImpl implements ICompraService{
+public class CompraServiceImpl implements IComprasService{
 
 	@Autowired
 	private ICompraDao compraDao;
 
 	@Override
-	public List<Compra> findAll() {
-		return (List<Compra>)compraDao.findAll();
+	public List<Compras> findAll() {
+		return (List<Compras>)compraDao.findAll();
 	}
 
 	@Override
-	public void save(Compra compra) {
+	public void save(Compras compra) {
 		compraDao.save(compra);
 	}
 	
 	@Override
-	public Compra findOne(Long id) {
+	public Compras findOne(Long id) {
 		return compraDao.findById(id).orElse(null);
 	}
 
@@ -34,6 +34,11 @@ public class CompraServiceImpl implements ICompraService{
 		compraDao.deleteById(id);
 	}
 
+	
+	@Override
+	public List<Compras> comprasDelUsuario(Long id_usuario) {
+		return compraDao.comprasDelusuario(id_usuario);
+	}
 	
 	
 }

@@ -19,6 +19,8 @@ import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
+import com.bidbay.service.UsuarioServiceImpl;
+
 import org.springframework.lang.Nullable;
 
 import jakarta.servlet.http.HttpSession;
@@ -40,7 +42,10 @@ public class ProductoController {
 
 	@Autowired
 	private ICategoriaService categoriaService;
-
+	
+	@Autowired
+	private UsuarioServiceImpl usuarioService;
+		
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
 			@RequestParam("search") @Nullable String search, Model model) {
@@ -58,16 +63,21 @@ public class ProductoController {
 		}
 		return "views/productoView";
 	}
-
+	
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
-	public String crear(Map<String, Object> model) {
-		Producto producto = new Producto();
-		producto.setCategoria(categoriaService.findOne(1L));
-		model.put("producto", producto);
-		model.put("titulo", "¿Qué querés vender?");
-		model.put("botonSubmit", "Vender");
-		model.put("categorias", categoriaService.findAll());
-		return "views/productoForm";
+	public String crear(HttpSession session, Map <String, Object> model) throws Exception {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+			return "redirect:/login";
+		} else {
+			usuarioService.getUsuarioActualmenteLogeado(session);
+			Producto producto = new Producto();
+			producto.setCategoria(categoriaService.findOne(1L));
+			model.put("producto", producto);
+			model.put("titulo", "¿Qué querés vender?");
+			model.put("botonSubmit", "Vender");
+			model.put("categorias", categoriaService.findAll());
+			return "views/productoForm";
+		}
 	}
 
 	@PostMapping("/form")

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body>
+
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
+
+    <div >
+        <h1 th:text="${usuario.id}"></h1>
+        <h1 th:text="${usuario.nick}"></h1>
+        <h1 th:text="${usuario.email}"></h1>
+        <h1 th:text="${usuario.password}"></h1>
+        <h1 th:text="${usuario.nombre}"></h1>
+        <h1 th:text="${usuario.apellido}"></h1>
+        <h1 th:text="${usuario.direccion}"></h1>
+        <h1 th:text="${usuario.telefono}"></h1>
+    </div>
+
+	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+
+</body>
+
+</html>

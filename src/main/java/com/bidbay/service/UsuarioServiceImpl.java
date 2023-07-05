@@ -4,7 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
+
+import jakarta.servlet.http.HttpSession;
+
 import com.bidbay.models.dao.IUsuarioDao;
 
 @Service
@@ -21,6 +27,11 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public void save(Usuario usuario) {
 		usuarioDao.save(usuario);
+	}
+	
+	@Transactional(readOnly = true)
+	public Usuario findOne(Long id) {
+		return usuarioDao.findById(id).orElse(null);
 	}
 	
 	@Override
@@ -94,4 +105,20 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		}
 		return 0.0;
 	}
+	
+    public Boolean chequearQueElUsuarioEsteLogeado(HttpSession session) {
+    	Long idUsuario = (Long) session.getAttribute("idUsuario");
+        if (idUsuario == null) {
+            return false;
+        }
+        return true;
+    }
+    
+    public Usuario getUsuarioActualmenteLogeado(HttpSession session) {
+    	Long idUsuario = (Long) session.getAttribute("idUsuario");
+    	return findOne(idUsuario);
+    }
+	
+	
+	
 }

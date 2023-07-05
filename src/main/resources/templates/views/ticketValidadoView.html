@@ -46,21 +46,21 @@
         <h1 class="ticket-title">Ticket</h1>
         
         <div class="ticket-details">
-            <p>ID del Ticket: <span th:text="${ticket.idTicket}"></span></p>
-            <p>ID del Pago: <span th:text="${ticket.idPago}"></span></p>
+            <!--  <p>ID del Ticket: <span th:text="${ticket.getTicket().getIdTicket()}"></span></p>-->
+            <p>ID del Pago: <span th:text="${ticket.IdPago}"></span></p>
             <p>Precio: <span th:text="${ticket.precio}"></span></p>
         </div>
         
         <div class="ticket-productos">
-            <p>Productos:</p>
-            <ul>
-                <li th:each="producto : ${ticket.productos}" th:text="${producto}"></li>
-            </ul>
-        </div>
+		    <p>Productos:</p>
+		    <ul>
+		        <!--  <li th:each="producto : ${ticket.getProductos()}" th:text="${producto}"></li> -->
+		    </ul>
+		</div>
         
         <div class="ticket-user-details">
-            <p>Nick del Usuario: <span th:text="${ticket.nickUser}"></span></p>
-            <p>Dirección: <span th:text="${ticket.direccion}"></span></p>
+            <p>Nick del Usuario: <span th:text="${ticket.getNombreDeCliente()}"></span></p>
+            <!--  <p>Dirección: <span th:text="${ticket.getDireccion()}"></span></p>-->
         </div>
     </div>
 </body>

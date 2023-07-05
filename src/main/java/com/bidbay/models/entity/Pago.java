@@ -71,6 +71,19 @@ public class Pago implements Serializable {
 		this.fechaVencimiento = (this.mes + "/" + this.anio);
 		this.precio = precioTotal;
 	}
+	
+	public Pago(String Dni, Long tarjeta,String mes, String anio, String nombre, Integer cvc) {
+
+
+		this.nombreDeCliente = nombre; 
+		this.DNI = Dni;
+		this.numeroTarjeta = tarjeta;
+		this.cvc = cvc;
+		this.mes = mes; 
+		this.anio = anio;
+		this.fechaVencimiento = (this.mes + "/" + this.anio);
+	}
+
 
 
 	public Long getIdPago() {

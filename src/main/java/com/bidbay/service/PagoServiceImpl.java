@@ -51,7 +51,6 @@ public class PagoServiceImpl implements IPagoService {
 
 	@Override
 	public Pago pagar(Pago pagoARealizar ) {
-
 		if (validarPago(pagoARealizar)) {	
 			save(pagoARealizar);
 			pagoARealizar.setAprobado(true); 

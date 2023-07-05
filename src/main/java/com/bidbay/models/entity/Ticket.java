@@ -11,88 +11,88 @@ import jakarta.persistence.Table;
 
 
 
-	@Entity
-	@Table(name="ticket")
-	
-	public class Ticket implements Serializable {
-		
-		private static final long serialVersionUID = 1L; 
-		
-		@Id
-		@GeneratedValue(strategy= GenerationType.IDENTITY)
-		private Long idTicket;
-		
+@Entity
+@Table(name="ticket")
 
-		private Long idPago; 
-		private Double precio; 
-		//CAMBIAR
-		private List<String> productos;
-		private String nickUser; 
-		private String direccion; 
-		
-		
-		public Ticket () {
-			super();
-		}
-		
-		public Long getIdTicket() {
-			return idTicket;
-		}
+public class Ticket implements Serializable {
+
+	private static final long serialVersionUID = 1L; 
+
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private Long idTicket;
 
 
-		public void setIdTicket(Long idTicket) {
-			this.idTicket = idTicket;
-		}
+	private Long idPago; 
+	private Double precio; 
+	//CAMBIAR
+	private List<String> productos;
+	private String nickUser; 
+	private String direccion; 
 
 
-		public Long getIdPago() {
-			return idPago;
-		}
+	public Ticket () {
+		super();
+	}
+
+	public Long getIdTicket() {
+		return idTicket;
+	}
 
 
-		public void setIdPago(Long idPago) {
-			this.idPago = idPago;
-		}
+	public void setIdTicket(Long idTicket) {
+		this.idTicket = idTicket;
+	}
 
 
-		public Double getPrecio() {
-			return precio;
-		}
+	public Long getIdPago() {
+		return idPago;
+	}
 
 
-		public void setPrecio(Double precio) {
-			this.precio = precio;
-		}
+	public void setIdPago(Long idPago) {
+		this.idPago = idPago;
+	}
 
 
-		public List<String> getProductos() {
-			return productos;
-		}
+	public Double getPrecio() {
+		return precio;
+	}
 
 
-		public void setProductos(List<String> productos) {
-			this.productos = productos;
-		}
+	public void setPrecio(Double precio) {
+		this.precio = precio;
+	}
 
 
-		public String getNickUser() {
-			return nickUser;
-		}
+	public List<String> getProductos() {
+		return productos;
+	}
 
 
-		public void setNickUser(String nickUser) {
-			this.nickUser = nickUser;
-		}
+	public void setProductos(List<String> productos) {
+		this.productos = productos;
+	}
 
 
-		public String getDireccion() {
-			return direccion;
-		}
+	public String getNickUser() {
+		return nickUser;
+	}
 
 
-		public void setDireccion(String direccion) {
-			this.direccion = direccion;
-		}
+	public void setNickUser(String nickUser) {
+		this.nickUser = nickUser;
+	}
 
-		
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+
 }

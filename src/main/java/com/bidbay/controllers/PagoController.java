@@ -31,36 +31,45 @@ public class PagoController {
 	@Autowired
 	private IPagoService pagoService; 
 
-
+	
 	@RequestMapping(value = "/pago/form", method = RequestMethod.GET)
-	public String crear(@RequestParam("precioTotal") Double precioTotal, Map<String, Object> model) {
+	public String crear(@RequestParam("precioTotal") Double precioTotal, Model model) {
 		Double precio = precioTotal;
 		Pago pago = new Pago();
-		model.put("precioTotal", precio);
-		model.put("pago", pago);
-		model.put("titulo", "Formulario de Pago");
-		model.put("botonSubmit", "Realizar Pago");
+		model.addAttribute("pago", pago);
+	    model.addAttribute("titulo", "Formulario de Pago");
+	    model.addAttribute("botonSubmit", "Realizar Pago");
+	    model.addAttribute("precioTotal", precioTotal);
 		return "views/pagoView";
 	}
-
-
-
-
-
+	
 	@RequestMapping(value = "/pago/form", method = RequestMethod.POST)
-	public String pago(@Valid Pago pago, BindingResult result, Model model)  {
-		model.addAttribute("titulo", "Formulario de Pago");
-		model.addAttribute("botonSubmit", "Realizar Pago");
-		var respuesta=pagoService.pagar(pago);
-		if(respuesta.getAprobado()){
-			model.addAttribute("idPago", respuesta.getIdPago());
-			return "views/ticketValidadoView";
-		}else {
-			model.addAttribute("error", "El pago ha sido rechazado");
-			return "views/ticketRechazadoView";
-		}
-
+	public String pago(@RequestParam("DNI") String DNI,
+	                   @RequestParam("numeroTarjeta") String numeroTarjeta,
+	                   @RequestParam("mes") String mes,
+	                   @RequestParam("anio") String anio,
+	                   @RequestParam("nombreDeCliente") String nombreDeCliente,
+	                   @RequestParam("cvc") String cvc,
+	                   @Valid Pago pago,
+	                   BindingResult result,
+	                   Model model) {
+	    // Aquí creas el objeto Pago utilizando los parámetros recibidos del formulario
+	    Pago pagoNuevo = new Pago(DNI, Long.valueOf(numeroTarjeta), mes, anio, nombreDeCliente, Integer.valueOf(cvc));
+	    
+	    model.addAttribute("titulo", "Formulario de Pago");
+	    model.addAttribute("botonSubmit", "Realizar Pago");
+	    
+	    Pago respuesta = pagoService.pagar(pagoNuevo);
+	    //CAMBIAR TODO ESTE METOO PUESTO QUE DEBERÍA DEVOLVER TICKET Y NO PAGO
+	    if (respuesta.getAprobado()) {
+	        model.addAttribute("ticket", respuesta);
+	        return "views/ticketValidadoView";
+	    } else {
+	        model.addAttribute("error", "El pago ha sido rechazado");
+	        return "views/ticketRechazadoView";
+	    }
 	}
+	
 
 
 }

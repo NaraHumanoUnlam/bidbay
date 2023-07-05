@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bidbay.excepciones.ArchivoException;
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
+import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
 import com.bidbay.service.UsuarioServiceImpl;
@@ -69,9 +70,10 @@ public class ProductoController {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
 			return "redirect:/login";
 		} else {
-			usuarioService.getUsuarioActualmenteLogeado(session);
+			Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 			Producto producto = new Producto();
 			producto.setCategoria(categoriaService.findOne(1L));
+			producto.setVendedor(user);
 			model.put("producto", producto);
 			model.put("titulo", "¿Qué querés vender?");
 			model.put("botonSubmit", "Vender");

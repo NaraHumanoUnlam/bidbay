@@ -12,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -48,6 +49,18 @@ public class Producto implements Serializable{
 	
 	@OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
 	private List<Review> reviews;
+	
+	@ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario vendedor;
+
+	public Usuario getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(Usuario vendedor) {
+		this.vendedor = vendedor;
+	}
 
 	public Long getId() {
 		return id;

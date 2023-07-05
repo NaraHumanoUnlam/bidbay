@@ -46,10 +46,10 @@ public class Usuario implements Serializable{
 		
 		@Column(nullable = true)
 		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})
-		private List<Producto> compras; 
+		private List<Producto> compras;
 		
-		@Column(nullable = true)
-		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendedor", cascade = CascadeType.ALL)
 		private List<Producto> publicaciones;
 
 		@Column(nullable = true)
@@ -123,7 +123,6 @@ public class Usuario implements Serializable{
 		public static long getSerialversionuid() {
 			return serialVersionUID;
 		}
-		
 		
 
 		public List<String> getNotificaciones() {

@@ -24,69 +24,52 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class PagoController {
+	
 	@Autowired
 	private ICarritoService carritoService;
+	
 	@Autowired
 	private IPagoService pagoService; 
-	
-//	@GetMapping("/pago")
-//	public String comprar(Model model) {
-//		model.addAttribute("titulo", "Compra");
-//		model.addAttribute("carrito", carritoService.findAll());
-//		return "views/compraView";
-//	}
-	
-//
 
+	
 	@RequestMapping(value = "/pago/form", method = RequestMethod.GET)
-	public String crear(@RequestParam("precioTotal") Double precioTotal, Map<String, Object> model) {
+	public String crear(@RequestParam("precioTotal") Double precioTotal, Model model) {
 		Double precio = precioTotal;
 		Pago pago = new Pago();
-//		Carrito carraso = new Carrito(); 
-		model.put("precioTotal", precio);
-//		model.put("carrito", carraso);
-		model.put("pago", pago);
-		model.put("titulo", "Formulario de Pago");
-		model.put("botonSubmit", "Realizar Pago");
+		//Aca iria compra
+		model.addAttribute("pago", pago);
+	    model.addAttribute("titulo", "Formulario de Pago");
+	    model.addAttribute("botonSubmit", "Realizar Pago");
+	    model.addAttribute("precioTotal", precioTotal);
 		return "views/pagoView";
 	}
 	
-	
-		
-
-	
 	@RequestMapping(value = "/pago/form", method = RequestMethod.POST)
-	public String pago(@Valid Pago pago, BindingResult result, Model model)  {
-			model.addAttribute("titulo", "Formulario de Pago");
-			model.addAttribute("botonSubmit", "Realizar Pago");
-			var respuesta=pagoService.pagar(pago);
-			if(respuesta.getAprobado()){
-				model.addAttribute("idPago", respuesta.getIdPago());
-//		        model.addAttribute("usuario", respuesta.getUsuario());
-//		        model.addAttribute("producto", respuesta.getProducto());
-		        return "views/ticketValidadoview";
-			}else {
-				  model.addAttribute("error", "El pago ha sido rechazado");
-			      return "views/ticketRechazadoView";
-			}
-
+	public String pago(@RequestParam("DNI") String DNI,
+	                   @RequestParam("numeroTarjeta") String numeroTarjeta,
+	                   @RequestParam("mes") String mes,
+	                   @RequestParam("anio") String anio,
+	                   @RequestParam("nombreDeCliente") String nombreDeCliente,
+	                   @RequestParam("cvc") String cvc,
+	                   @Valid Pago pago,
+	                   BindingResult result,
+	                   Model model) {
+	    Pago pagoNuevo = new Pago(DNI, Long.valueOf(numeroTarjeta), mes, anio, nombreDeCliente, Integer.valueOf(cvc));
+	    //esto esta bien que traiga pago
+	    //no debería ser nombre de client debería ser nombre de el titutl
+	    model.addAttribute("titulo", "Formulario de Pago");
+	    model.addAttribute("botonSubmit", "Realizar Pago");
+	    
+	    Pago respuesta = pagoService.pagar(pagoNuevo);
+	    if (respuesta.getAprobado()) {
+	        model.addAttribute("ticket", respuesta);
+	        return "views/ticketValidadoView";
+	    } else {
+	        model.addAttribute("error", "El pago ha sido rechazado");
+	        return "views/ticketRechazadoView";
+	    }
 	}
 	
-//	@RequestMapping(value = "/pago/form", method = RequestMethod.POST)
-//	public String pago(@Valid Pago pago, BindingResult result, Model model) {
-//	    model.addAttribute("titulo", "Formulario de Pago");
-//	    model.addAttribute("botonSubmit", "Realizar Pago");
-//	    var respuesta = pagoService.pagar(pago);
-//	    if (respuesta.getAprobado()) {
-//	        model.addAttribute("idPago", respuesta.getIdPago());
-//	        model.addAttribute("successMessage", "¡Pago aceptado! Su ticket ha sido validado.");
-//
-//	        return "views/ticketValidadoview";
-//	    } else {
-//	        model.addAttribute("error", "El pago ha sido rechazado");
-//	        return "views/ticketRechazadoView";
-//	    }
-//	}
-//	
-	
+
+
 }

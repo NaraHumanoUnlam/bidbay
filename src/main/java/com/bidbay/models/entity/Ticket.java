@@ -25,7 +25,8 @@ import jakarta.persistence.Table;
 
 		private Long idPago; 
 		private Double precio; 
-		private List<String> productos; 
+		//CAMBIAR
+		private List<String> productos;
 		private String nickUser; 
 		private String direccion; 
 		

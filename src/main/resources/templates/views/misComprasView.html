@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body class="">
+
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
+
+	<main class="flex justify-center items-center flex-col">
+		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
+		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
+			<thead>
+				<tr>
+					<th>Compra</th>
+					<th>Pago</th>
+					<th>Monto</th>
+					<th>Fecha</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="compra: ${compras}">
+					<td th:text="${compra.id}"></td>
+					<td th:text="${compra.IdPago != null ? compra.IdPago : 'Pendiente'}"></td>
+					<td th:text="${compra.monto}"></td>
+					<td th:text="${compra.fecha}"></td>
+					<td><a th:href="@{/miscompras/detalle/} + ${compra.id}">Mostrar</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<p th:text="${mensaje}" th:if="${mensaje}"></p>
+</body>
+</html>

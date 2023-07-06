@@ -50,19 +50,13 @@ public class Pago implements Serializable {
 
 	private String nombreUsario; 
 	private String ticket;
-	private Boolean aprobado=false;;
+	private Boolean aprobado=false;
 	
-	public Pago ()  //vacio
+	public Pago ()
 	{
 		super();
 	}
 
-//	public Pago (String nickUsuario, double precio)  //vacio
-//	{
-//		super();
-//		this.nombreUsario = nickUsuario;
-//		this.precio = precio;
-//	}
 
 	public Pago( String mail, String Dni, Long tarjeta,Integer clave, String nombre, String mes, String anio, Double precioTotal) {
 
@@ -77,6 +71,19 @@ public class Pago implements Serializable {
 		this.fechaVencimiento = (this.mes + "/" + this.anio);
 		this.precio = precioTotal;
 	}
+	
+	public Pago(String Dni, Long tarjeta,String mes, String anio, String nombre, Integer cvc) {
+
+
+		this.nombreDeCliente = nombre; 
+		this.DNI = Dni;
+		this.numeroTarjeta = tarjeta;
+		this.cvc = cvc;
+		this.mes = mes; 
+		this.anio = anio;
+		this.fechaVencimiento = (this.mes + "/" + this.anio);
+	}
+
 
 
 	public Long getIdPago() {

@@ -53,7 +53,7 @@
 			</tbody>
 		</table>
 		<div th:if="${precioTotal != 0}">
-			<a  th:href="@{/pago/form(precioTotal=${precioTotal})}" class="text-black text-2xl bg-green-200 p-2 mt-10 " >Comprar</a>
+			<a  th:href="@{/miscompras/agregar}" class="text-black text-2xl bg-green-200 p-2 mt-10 " >Comprar</a>
 		</div>
 		
 		<p th:text="${mensajeExito}" class="text-green-500" th:if="${mensajeExito}"></p>

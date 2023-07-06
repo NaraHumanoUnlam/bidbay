@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body class="">
+
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
+
+	<main class="flex justify-center items-center flex-col">
+		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
+		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
+			<thead>
+				<tr>
+					<th >Producto</th>
+					<th >Cantidad</th>
+					<th >Precio Unitario</th>
+					<th >Total</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="detalle: ${detalles}">
+					<td th:text="${detalle.producto.nombre}"></td>
+					<td th:text="${detalle.cantidad}"></td>
+					<td th:text="${detalle.precioCompra}"></td>
+					<td th:text="${detalle.precioCompra*detalle.cantidad }"></td>
+				</tr>
+			</tbody>
+		</table>
+		<p th:text="${mensaje}" th:if="${mensaje}"></p>
+</body>
+</html>

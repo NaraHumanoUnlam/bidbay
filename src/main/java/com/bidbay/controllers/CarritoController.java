@@ -25,7 +25,6 @@ import com.bidbay.service.IProductoService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-//@SessionAttributes("carrito")2
 @RequestMapping("/carrito")
 public class CarritoController {
 
@@ -46,7 +45,6 @@ public class CarritoController {
 
     @RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
     public String agregarProductoAlCarrito(@PathVariable(value = "id") Long id, HttpSession session, RedirectAttributes redirectAttributes) {
-    	//En realidad el método es una poronga aún, pero esta en el servicio!!
     	if(!chequearQueElUsuarioEsteLogeado(session)) {
     		return "redirect:/login";
     	}

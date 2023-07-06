@@ -49,17 +49,22 @@ public class ProductoController {
 		
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
-			@RequestParam("search") @Nullable String search, Model model) {
+			HttpSession session,@RequestParam("search") @Nullable String search, Model model) {
+		
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+			return "redirect:/login";
+		} 
+		Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 		model.addAttribute("titulo", "Listado de Productos");
-		model.addAttribute("productos", productoService.findAll());
+		model.addAttribute("productos",productoService.productoDelUsuario(user.getId()));
 		if (search != null) {
 			List<Producto> productosEncontrados = new ArrayList<>();
-			productosEncontrados.addAll(productoService.findByName(search.toString()));
+			productosEncontrados.addAll(productoService.findByNameDelUsuario(search.toString(),user.getId()));
 			model.addAttribute("productos", productosEncontrados);
 			model.addAttribute("inputValue", search);
 		} else {
 			if (order != null) {
-				model.addAttribute("productos", productoService.orderList(order));
+				model.addAttribute("productos", productoService.orderListDelUsuario(order,user.getId()));
 			}
 		}
 		return "views/productoView";

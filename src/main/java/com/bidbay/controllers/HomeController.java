@@ -22,7 +22,7 @@ public class HomeController {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
-	@GetMapping(value = { "/", "/home" })
+	@GetMapping(value = { "/", "/home","/index" })
 	public String listar(Model model, HttpSession session) {
 		model.addAttribute("titulo", "Bidbay");
 		model.addAttribute("productos", productoService.findAll());

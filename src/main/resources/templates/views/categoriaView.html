@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="views/layouts/plantilla.html :: head">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${titulo}"></title>
-</head>
-<body>
-    <h1 th:text="${titulo}"></h1>
-    <table>
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body class="">
+
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
+
+	<main class="flex justify-center items-center flex-col">
+		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
+		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Categoría</th>
-                <th>Acciones</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +22,7 @@
                 <td th:text="${categoria.id}"></td>
                 <td th:text="${categoria.nombre}"></td>
                 <td>
-                    <a th:href="@{/categoria/productos/{id}(id=${categoria.id})}">Ver productos</a>
+                    <a class="btn btn-secondary text-light" th:href="@{/categoria/productos/{id}(id=${categoria.id})}">View</a>
                 </td>
             </tr>
         </tbody>

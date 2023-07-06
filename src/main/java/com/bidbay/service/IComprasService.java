@@ -17,4 +17,7 @@ public interface IComprasService {
 	public List<Compras> comprasDelUsuario(Long id_usuario);
 	
 	public void crearCompra(Long idUsuario);
+
+	public Double calcularMontoTotalDeCompras(Long id);
+
 }

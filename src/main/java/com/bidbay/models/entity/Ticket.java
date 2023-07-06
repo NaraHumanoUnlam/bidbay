@@ -25,7 +25,8 @@ public class Ticket implements Serializable {
 
 	private Long idPago;
 	
-	private Double precio; 
+	private Double precio;
+	
 	//CAMBIAR
 	//asociado a una compra
 	private List<String> productos;

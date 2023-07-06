@@ -14,5 +14,6 @@ public class AppConfig {
     public ISubastaDao subastaDao() {
         return new SubastaDaoImpl();
     }
+   
 }
 

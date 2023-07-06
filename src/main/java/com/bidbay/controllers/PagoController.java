@@ -16,6 +16,7 @@ import com.bidbay.models.entity.Pago;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICarritoService;
 import com.bidbay.service.IPagoService;
+import com.bidbay.service.IUsuarioService;
 
 import jakarta.validation.Valid;
 import org.springframework.ui.Model;
@@ -25,11 +26,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class PagoController {
 	
-	/*@Autowired
-	private ICarritoService carritoService;*/
+	@Autowired
+	private IPagoService pagoService;
 	
 	@Autowired
-	private IPagoService pagoService; 
+	private IUsuarioService usuarioService;
 
 	
 	@RequestMapping(value = "/pago/form", method = RequestMethod.GET)
@@ -70,7 +71,6 @@ public class PagoController {
 	        return "views/ticketRechazadoView";
 	    }
 	}
-	
 
 
 }

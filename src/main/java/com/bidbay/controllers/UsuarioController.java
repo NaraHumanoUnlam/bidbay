@@ -28,12 +28,19 @@ public class UsuarioController {
 			return "redirect:/login";
 		} else {
 			Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("titulo", "Perfil de: " + usuario.getNick());
 			return "views/perfilUsuarioView";
 		}
 
 
+	}
+	
+	@GetMapping("/logOut")
+	public String logOutPerfil(HttpSession session, Model model) {
+		session.invalidate();
+		return "redirect:/home";
 	}
 	
 	

@@ -35,6 +35,8 @@ public class DetalleCompras implements Serializable {
 	
 	@ManyToOne
     private Compras compra;
+	
+	public DetalleCompras() {}
 		
     public DetalleCompras(Producto producto, Compras compra) {
     	this.producto = producto;

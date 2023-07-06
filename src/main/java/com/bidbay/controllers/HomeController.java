@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bidbay.service.IProductoService;
+import com.bidbay.service.IUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -18,16 +19,22 @@ public class HomeController {
 	@Autowired
 	private IProductoService productoService;
 	
+	@Autowired
+	private IUsuarioService usuarioService;
+	
 	@GetMapping(value = { "/", "/home" })
-	public String listar(Model model) {
+	public String listar(Model model, HttpSession session) {
 		model.addAttribute("titulo", "Bidbay");
-		model.addAttribute("productos", productoService.findAll());		
+		model.addAttribute("productos", productoService.findAll());
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+		}
 		return "index";
 	}
 	
 	
 	@PostMapping("/")
-	public String listarNotificaciones(Model model,HttpSession session) {
+	public String listarNotificaciones(Model model, HttpSession session) {
 		
 		if(session.getAttribute("idUsuario")!=null) {
 			Long idUsuario = (Long) session.getAttribute("idUsuario");

@@ -59,16 +59,38 @@ public class CompraServiceImpl implements IComprasService{
 	@Override
 	public void crearCompra(Long idUsuario){
 		Compras compras = new Compras(idUsuario);
+		
 		Carrito carrito = carritoDao.findCarritoFromUser(idUsuario);
 		List<CarritoItem> items = carritoItemDao.findCarritoItemsFromCarrito(carrito.getId());
+		
 		List<DetalleCompras> detalles = new ArrayList<DetalleCompras>();
 		
 		for(CarritoItem carritoItem : items) {
 			DetalleCompras detalle = new DetalleCompras(carritoItem.getProducto(), compras);
+			detalle.setCantidad(carritoItem.getCantidadProductos());
+			detalle.setPrecioCompra(carritoItem.getProducto().getPrecio());
 			detalles.add(detalle);
 		}
 		
 		compras.setDetalles(detalles);
+		compraDao.save(compras);
+	}
+
+	@Override
+	public Double calcularMontoTotalDeCompras(Long id) {
+		// TODO Auto-generated method stub
+		List<Compras> comprasDelUsuario = compraDao.comprasDelusuario(id);
+		Double montoTotal = 0.0;
+	    
+	    for (Compras compra : comprasDelUsuario) {
+	        List<DetalleCompras> detallesCompra = compra.getDetalles();
+	        
+	        for (DetalleCompras detalleCompra : detallesCompra) {
+	            montoTotal += detalleCompra.getPrecioCompra();
+	        }
+	    }
+	    
+	    return montoTotal;
 	}
 	
 	

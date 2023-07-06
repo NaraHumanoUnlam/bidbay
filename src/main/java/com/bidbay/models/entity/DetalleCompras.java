@@ -38,26 +38,12 @@ public class DetalleCompras implements Serializable {
 	
 	public DetalleCompras() {}
 	
-	
-		
-<<<<<<< HEAD
-  
-	
-	public DetalleCompras(@NotNull Producto producto, Compras compra) {
-		super();
-		this.producto = producto;
-		this.compra = compra;
-	}
-=======
+
     public DetalleCompras(Producto producto, Compras compras) {
-		// TODO Auto-generated constructor stub
     	this.producto = producto;
-    	this.compra = compra;
+    	this.compra = compras;
 	}
 
-
-
->>>>>>> c8e9e3cedae5dcf5bdb371117e87853f1bab6582
 	public Compras getCompra() {
 		return compra;
 	}

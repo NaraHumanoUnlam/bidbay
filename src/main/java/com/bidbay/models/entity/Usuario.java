@@ -217,4 +217,26 @@ public class Usuario implements Serializable{
 	        ratings.add(rating);
 		}
 
+		public List<Producto> getPublicaciones() {
+			return publicaciones;
+		}
+
+		public void setPublicaciones(List<Producto> publicaciones) {
+			this.publicaciones = publicaciones;
+		}
+
+		public List<Producto> getFavoritos() {
+			return favoritos;
+		}
+
+		public void setFavoritos(List<Producto> favoritos) {
+			this.favoritos = favoritos;
+		}
+
+		public List<Double> getRatings() {
+			return ratings;
+		}
+		
+		
+
 }

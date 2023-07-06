@@ -31,7 +31,16 @@ public class DetalleCompras implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "productos", referencedColumnName = "id")
 	private Producto producto;
+
+	
+	@ManyToOne
+    private Compras compra;
+	
+	public DetalleCompras() {}
+	
+	
 		
+<<<<<<< HEAD
   
 	
 	public DetalleCompras(@NotNull Producto producto, Compras compra) {
@@ -39,6 +48,16 @@ public class DetalleCompras implements Serializable {
 		this.producto = producto;
 		this.compra = compra;
 	}
+=======
+    public DetalleCompras(Producto producto, Compras compras) {
+		// TODO Auto-generated constructor stub
+    	this.producto = producto;
+    	this.compra = compra;
+	}
+
+
+
+>>>>>>> c8e9e3cedae5dcf5bdb371117e87853f1bab6582
 	public Compras getCompra() {
 		return compra;
 	}
@@ -46,8 +65,6 @@ public class DetalleCompras implements Serializable {
 		this.compra = compra;
 	}
 	
-	@ManyToOne
-    private Compras compra;
     
     	
 	public Long getIdDetalle() {

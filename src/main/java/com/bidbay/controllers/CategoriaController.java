@@ -3,6 +3,7 @@ package com.bidbay.controllers;
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.CategoriaServiceImpl;
+import com.bidbay.service.IUsuarioService;
 import com.bidbay.service.ProductoServiceImpl;
 
 import java.util.List;
@@ -26,6 +27,9 @@ public class CategoriaController {
     
     @Autowired
     private ProductoServiceImpl productoService;
+    
+    @Autowired
+	private IUsuarioService usuarioService;
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(Model model) {

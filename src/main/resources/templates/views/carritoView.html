@@ -53,7 +53,9 @@
 			</tbody>
 		</table>
 		<div th:if="${precioTotal != 0}">
-			<a  th:href="@{/miscompras/agregar}" class="text-black text-2xl bg-green-200 p-2 mt-10 " >Comprar</a>
+			<form th:action="@{/miscompras/agregar}" method="post">
+				<input type="submit" value="Generar orden de compra" class="text-black text-2xl bg-green-200 p-2 mt-10 "> 
+			</form>
 		</div>
 		
 		<p th:text="${mensajeExito}" class="text-green-500" th:if="${mensajeExito}"></p>

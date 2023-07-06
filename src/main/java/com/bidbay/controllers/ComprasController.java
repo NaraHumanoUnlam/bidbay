@@ -37,6 +37,7 @@ public class ComprasController {
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 		model.addAttribute("titulo", "Listado de Compras");
 		model.addAttribute("compras", comprasService.comprasDelUsuario(usuario.getId()));
+		model.addAttribute("precioTotal", comprasService.calcularMontoTotalDeCompras(usuario.getId()));
 		return "views/misComprasView";
 	}
 	
@@ -51,12 +52,28 @@ public class ComprasController {
 		return "views/detalleMisComprasView";
 	}
 	
-	@RequestMapping(value = "/agregar", method = RequestMethod.GET)
+	@RequestMapping(value = "/agregar", method = RequestMethod.POST)
 	public String agregar(HttpSession session, Model model) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
 			return "redirect:/login";
 		} 
+		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 		comprasService.crearCompra(usuarioService.getUsuarioActualmenteLogeado(session).getId());
+		model.addAttribute("titulo", "Listado de Compras");
+		model.addAttribute("compras", comprasService.comprasDelUsuario(usuario.getId()));
+		model.addAttribute("precioTotal", comprasService.calcularMontoTotalDeCompras(usuario.getId()));
+		return "views/misComprasView";
+	}
+	
+	@RequestMapping(value = "/agregar", method = RequestMethod.GET)
+	public String agregarGet(HttpSession session, Model model) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+			return "redirect:/login";
+		} 
+		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+		model.addAttribute("titulo", "Listado de Compras");
+		model.addAttribute("compras", comprasService.comprasDelUsuario(usuario.getId()));
+		model.addAttribute("precioTotal", comprasService.calcularMontoTotalDeCompras(usuario.getId()));
 		return "views/misComprasView";
 	}
 }

@@ -8,12 +8,12 @@
 
 	<header th:replace="views/layouts/plantilla.html :: header"></header>
 
-	<main class="w-full flex h-full justify-center m-auto">
-		<section class="rounded flex w-full h-1/4 justify-around items-center pt-20">
-			<div>
+	<main class="w-75 p-5 flex h-full justify-center m-auto">
+		<section class="rounded flex w-full h-1/4 justify-around items-center pt-20 p-5">
+			<div class="p-5">
 				<div
 					class="grid grid-cols-3 text-center border border-solid border-gray-500 flex flex-col items-center justify-center justify-items-center">
-					<div th:each="producto: ${productos}" class="mb-10">
+					<div th:each="producto: ${productos}" class="mb-10 mb-5">
 						<img th:src="@{'../imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}"
 							class="w-1/2 h-1/2 m-auto mt-2">
 						<p th:text="${producto.nombre}" class="text-4xl mb-2"></p>

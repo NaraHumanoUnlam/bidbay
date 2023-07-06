@@ -1,5 +1,6 @@
 package com.bidbay.controllers;
 
+import java.sql.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,17 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bidbay.models.entity.Carrito;
+import com.bidbay.models.entity.Compras;
 import com.bidbay.models.entity.Pago;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICarritoService;
+import com.bidbay.service.IComprasService;
 import com.bidbay.service.IPagoService;
 import com.bidbay.service.IUsuarioService;
 
 import jakarta.validation.Valid;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 @Controller
 public class PagoController {
 	
@@ -31,6 +30,9 @@ public class PagoController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+	private IComprasService compraService;
 
 	
 	@RequestMapping(value = "/pago/form", method = RequestMethod.GET)
@@ -38,7 +40,8 @@ public class PagoController {
 		Double precio = precioTotal;
 		
 		Pago pago = new Pago();
-		//Aca iria compra
+	
+		//Compras compra = compraService.findOne(idCompra);
 		model.addAttribute("pago", pago);
 	    model.addAttribute("titulo", "Formulario de Pago");
 	    model.addAttribute("botonSubmit", "Realizar Pago");
@@ -65,6 +68,7 @@ public class PagoController {
 	    Pago respuesta = pagoService.pagar(pagoNuevo);
 	    if (respuesta.getAprobado()) {
 	        model.addAttribute("ticket", respuesta);
+	        java.util.Date fechaActual = new java.util.Date();
 	        return "views/ticketValidadoView";
 	    } else {
 	        model.addAttribute("error", "El pago ha sido rechazado");

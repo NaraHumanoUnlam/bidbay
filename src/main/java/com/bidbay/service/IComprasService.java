@@ -15,4 +15,6 @@ public interface IComprasService {
 	public void delete(Long id);
 	
 	public List<Compras> comprasDelUsuario(Long id_usuario);
+	
+	public void crearCompra(Long idUsuario);
 }

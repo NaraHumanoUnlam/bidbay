@@ -29,17 +29,20 @@ public class Compras  implements Serializable {
 	private Long id;
 	
 	@NotNull
-	private Long IdUsuario ;
+	private Long IdUsuario;
 	
 	private Long IdPago;
+	
 	private Double monto;
+	
 	private Date fecha;
 	
 	@OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
     private List<DetalleCompras> detalles;
 	
-	public Compras() {
+	public Compras(Long idUsuario) {
 		this.detalles=new ArrayList<DetalleCompras>();
+		this.IdUsuario = idUsuario;
 	}
     
 	public List<DetalleCompras> getDetalles() {
@@ -50,9 +53,12 @@ public class Compras  implements Serializable {
 		this.detalles = detalles;
 	}
 	
+	
+	
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -81,4 +87,6 @@ public class Compras  implements Serializable {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	
+	
 }

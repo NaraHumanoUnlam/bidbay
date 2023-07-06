@@ -11,11 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bidbay.models.dao.ICategoriaDao;
+import com.bidbay.models.dao.IOperacionCV;
 import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.dao.IUsuarioDao;
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
+import com.bidbay.models.entity.OperacionCV;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,6 +32,9 @@ public class ProductoServiceImpl implements IProductoService {
     
     @Autowired
     private IUsuarioDao usuarioDao;
+    
+    @Autowired
+    private IOperacionCV operacionCVDao;
  
     
 	@Override
@@ -135,13 +140,31 @@ public class ProductoServiceImpl implements IProductoService {
 	}
 	
 	@Override
-	public Integer comprasDelUsuario(Long id_usuario) {
-		return productoDao.cantidadCompras(id_usuario);
+	public List<OperacionCV> detalleComprasDelUsuario(Long id_usuario) {
+		return operacionCVDao.detalleCompras(id_usuario);
 	}
 	
 	@Override
+	public List<OperacionCV> detalleVentasDelUsuario(Long id_usuario) {
+		return operacionCVDao.detalleVentas(id_usuario);
+	}
+	
+	
+	@Override
+	public Integer comprasDelUsuario(Long id_usuario) {
+		 Integer sumatoria=0;
+		 for (OperacionCV operacion : detalleComprasDelUsuario(id_usuario)) 
+			 sumatoria+= operacion.getCantidad();
+		return sumatoria;
+	}
+	
+	
+	@Override
 	public Integer ventasDelUsuario(Long id_usuario) {
-		return productoDao.cantidadVentas(id_usuario);
+		 Integer sumatoria=0;
+		 for (OperacionCV operacion : detalleVentasDelUsuario(id_usuario)) 
+			 sumatoria+= operacion.getCantidad();
+		return sumatoria;
 	}
 
 }

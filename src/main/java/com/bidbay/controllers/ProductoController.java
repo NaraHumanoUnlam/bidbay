@@ -51,7 +51,9 @@ public class ProductoController {
 	public String listar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
 			HttpSession session,@RequestParam("search") @Nullable String search, Model model) {
 		
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+		}else {
 			return "redirect:/login";
 		} 
 		Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);

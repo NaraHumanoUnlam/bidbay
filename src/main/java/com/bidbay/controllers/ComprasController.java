@@ -31,7 +31,9 @@ public class ComprasController {
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(HttpSession session,Model model) {
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+		}else {
 			return "redirect:/login";
 		} 
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
@@ -43,7 +45,9 @@ public class ComprasController {
 	
 	@RequestMapping(value = "/detalle/{id}")
 	public String vista(@PathVariable(value = "id") Long id,HttpSession session,Model model) {
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+		}else {
 			return "redirect:/login";
 		} 
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
@@ -54,7 +58,9 @@ public class ComprasController {
 	
 	@RequestMapping(value = "/agregar", method = RequestMethod.POST)
 	public String agregar(HttpSession session, Model model) {
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+		}else {
 			return "redirect:/login";
 		} 
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
@@ -67,7 +73,9 @@ public class ComprasController {
 	
 	@RequestMapping(value = "/agregar", method = RequestMethod.GET)
 	public String agregarGet(HttpSession session, Model model) {
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+		}else {
 			return "redirect:/login";
 		} 
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);

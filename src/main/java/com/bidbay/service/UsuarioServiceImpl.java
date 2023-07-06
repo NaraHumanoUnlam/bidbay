@@ -130,7 +130,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     	Long idUsuario = getUsuarioActualmenteLogeado(session).getId();
     	Usuario u = findOne(idUsuario);
     	if(!getListaDeProductosFavoritos(session).contains(p)) {
-        	u.getFavoritos().add(p);
+        	//u.getFavoritos().add(p);
     	}
     }
     
@@ -138,14 +138,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
     	Long idUsuario = getUsuarioActualmenteLogeado(session).getId();
     	Usuario u = findOne(idUsuario);
     	if(getListaDeProductosFavoritos(session).contains(p)) {
-    	  	u.getFavoritos().remove(p);
+    	  	//u.getFavoritos().remove(p);
     	}
     }
         
     public List<Producto> getListaDeProductosFavoritos(HttpSession session){
     	Long idUsuario = getUsuarioActualmenteLogeado(session).getId();
     	Usuario u = findOne(idUsuario);
-    	return u.getFavoritos();
+    	//return u.getFavoritos();
+    	return null;
     }
     
     public void agregarProductoAPublicaciones(Producto p, HttpSession session) {

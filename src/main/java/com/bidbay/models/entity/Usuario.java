@@ -10,6 +10,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
@@ -52,9 +53,7 @@ public class Usuario implements Serializable{
 		@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendedor", cascade = CascadeType.ALL)
 		private List<Producto> publicaciones;
 
-		@Column(nullable = true)
-		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})
-		private List<Producto> favoritos; 
+
 		
 		public Long getId() {
 			return id;
@@ -225,13 +224,6 @@ public class Usuario implements Serializable{
 			this.publicaciones = publicaciones;
 		}
 
-		public List<Producto> getFavoritos() {
-			return favoritos;
-		}
-
-		public void setFavoritos(List<Producto> favoritos) {
-			this.favoritos = favoritos;
-		}
 
 		public List<Double> getRatings() {
 			return ratings;

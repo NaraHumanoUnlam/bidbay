@@ -14,6 +14,7 @@ import com.bidbay.models.dao.IPagoDao;
 import com.bidbay.models.entity.Pago;
 import com.bidbay.models.entity.Ticket;
 import com.bidbay.service.ICarritoService;
+import com.bidbay.service.IUsuarioService;
 import com.bidbay.service.TicketServicesImpl;
 
 @Controller
@@ -24,6 +25,8 @@ public class TicketController {
 	@Autowired
 	private IPagoDao pagoDao; 
 	
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	
 	@RequestMapping(value = "/ticketValidado", method = RequestMethod.GET)

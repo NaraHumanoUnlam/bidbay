@@ -40,6 +40,7 @@ public class Compras  implements Serializable {
 	@OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
     private List<DetalleCompras> detalles;
 	
+
 	public Compras() {
 		this.detalles=new ArrayList<DetalleCompras>();
 	}
@@ -55,6 +56,14 @@ public class Compras  implements Serializable {
 
 	public void setDetalles(List<DetalleCompras> detalles) {
 		this.detalles = detalles;
+		Double precioTotal = 0.0;
+		for(DetalleCompras detalle : detalles) {
+            Integer stock = detalle.getCantidad();
+            Double precio = detalle.getPrecioCompra();
+
+            precioTotal += precio * stock;
+        }
+		this.monto = precioTotal;
 	}
 	
 	

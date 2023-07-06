@@ -31,6 +31,13 @@ public class DetalleCompras implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "productos", referencedColumnName = "id")
 	private Producto producto;
+
+	
+	@ManyToOne
+    private Compras compra;
+	
+	public DetalleCompras() {}
+
 		
     public Compras getCompra() {
 		return compra;
@@ -39,8 +46,6 @@ public class DetalleCompras implements Serializable {
 		this.compra = compra;
 	}
 	
-	@ManyToOne
-    private Compras compra;
     
     	
 	public Long getIdDetalle() {

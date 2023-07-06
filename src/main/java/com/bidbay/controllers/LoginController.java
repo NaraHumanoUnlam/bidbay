@@ -44,8 +44,8 @@ public class LoginController {
 	        return "views/login";
 	    } else {
 	    	session.setAttribute("idUsuario", usuarioBuscado.getId());
-	    	 model.addAttribute("logueo", usuarioBuscado.getNick());
-	        return "index";
+	    	session.setAttribute("logueo", usuarioBuscado.getNick());
+	        return "redirect:home";
 	    }
 	}
 

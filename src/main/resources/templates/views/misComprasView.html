@@ -30,5 +30,6 @@
 			</tbody>
 		</table>
 		<p th:text="${mensaje}" th:if="${mensaje}"></p>
+		<a th:href="@{/pago/form(precioTotal=${precioTotal})}" class="bg-blue-400 p-3 rounded text-white">Pagar todas</a>
 </body>
 </html>

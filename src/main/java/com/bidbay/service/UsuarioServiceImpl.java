@@ -106,6 +106,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return 0.0;
 	}
 	
+	@Override
     public Boolean chequearQueElUsuarioEsteLogeado(HttpSession session) {
     	Long idUsuario = (Long) session.getAttribute("idUsuario");
         if (idUsuario == null) {

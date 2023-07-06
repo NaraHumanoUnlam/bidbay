@@ -17,6 +17,7 @@
         <h1 th:text="${usuario.direccion}"></h1>
         <h1 th:text="${usuario.telefono}"></h1>
     </div>
+    <a th:href="@{/usuario/logOut}" class="bg-sky-400 hover:bg-sky-200 p-2 m-5 h-[80px]">Cerrar Sesión</a>
 
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 

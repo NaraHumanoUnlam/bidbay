@@ -78,6 +78,7 @@ public class ProductoController {
 			model.put("titulo", "¿Qué querés vender?");
 			model.put("botonSubmit", "Vender");
 			model.put("categorias", categoriaService.findAll());
+			model.put("logueo",session.getAttribute("logueo"));
 			return "views/productoForm";
 		}
 	}

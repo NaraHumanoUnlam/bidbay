@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.bidbay.models.entity.Subasta;
 import com.bidbay.service.ISubastaService;
+import com.bidbay.service.IUsuarioService;
 
 @SessionAttributes("subasta")
 @Controller
 public class SubastaController {
 	@Autowired
 	private ISubastaService subastaServ;
+	
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	@GetMapping("/{id}")
 	public String listaProductos(@PathVariable Long id,Model model) {

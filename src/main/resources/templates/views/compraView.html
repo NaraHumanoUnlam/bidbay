@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="views/layouts/plantilla.html :: head">
 <meta charset="UTF-8">
 <title th:text="${titulo}"></title>
    <script src="https://cdn.tailwindcss.com"></script>
@@ -87,7 +87,7 @@
         </tbody>
     </table>
 	<br>
-    <a th:href="@{/compra/pago/form}" class="bg-blue-400 p-3 rounded text-white"> Pagar </a>
+    
     
 	</main>
 </body>

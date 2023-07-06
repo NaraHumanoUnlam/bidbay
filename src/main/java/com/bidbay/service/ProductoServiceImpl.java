@@ -1,6 +1,7 @@
 package com.bidbay.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,8 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bidbay.models.dao.ICategoriaDao;
 import com.bidbay.models.dao.IProductoDao;
+import com.bidbay.models.dao.IUsuarioDao;
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
+import com.bidbay.models.entity.Usuario;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service
 public class ProductoServiceImpl implements IProductoService {
@@ -22,6 +27,9 @@ public class ProductoServiceImpl implements IProductoService {
     
     @Autowired
     private ICategoriaDao categoriaDao;
+    
+    @Autowired
+    private IUsuarioDao usuarioDao;
  
     
 	@Override
@@ -80,7 +88,23 @@ public class ProductoServiceImpl implements IProductoService {
 	        productosEncontrados = categoria.getProductos();
 	    }
 	    return productosEncontrados;
-	} 
+	}
+
+	@Override
+	public void dejarReseña(Long idProducto, String mensaje, int puntaje, HttpSession session) {
+		// TODO Auto-generated method stub
+		Usuario usuario = usuarioDao.findById((Long) session.getAttribute("idUsuario")).orElse(null);
+        Producto producto = productoDao.findById(idProducto).orElse(null);
+        
+        if (usuario != null && producto != null) {
+            producto.dejarReseña(usuario, mensaje, puntaje);
+            productoDao.save(producto);
+            
+            String notificacion = "¡Has dejado una reseña para el vendedor!";
+            usuario.agregarNotificacion(notificacion);
+            usuarioDao.save(usuario);
+            } 
+        }
 
 
 

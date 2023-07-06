@@ -8,4 +8,5 @@ import com.bidbay.models.entity.Usuario;
 
 public interface IUsuarioDao extends CrudRepository<Usuario, Long> {
 	
+	
 }

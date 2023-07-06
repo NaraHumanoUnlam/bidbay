@@ -71,6 +71,7 @@ public class CompraServiceImpl implements IComprasService{
 			detalle.setCantidad(carritoItem.getCantidadProductos());
 			detalle.setPrecioCompra(carritoItem.getProducto().getPrecio());
 			detalles.add(detalle);
+			carritoItemDao.delete(carritoItem);
 		}
 		
 		compras.setDetalles(detalles);

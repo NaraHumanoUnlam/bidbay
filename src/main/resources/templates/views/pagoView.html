@@ -10,8 +10,8 @@
     <title>Metodo de Pago</title>
 </head>
 <body class="bg-gray-100">
-    <header>
-        <!-- Navbar -->
+    <!--<header>
+         Navbar 
         <nav class="bg-black py-4">
             <div class="container mx-auto flex items-center justify-between px-4">
                 <a href="#" class="text-white text-lg font-bold">Logo</a>
@@ -22,14 +22,15 @@
                 </ul>
             </div>
         </nav>
-    </header>
+    </header>-->
 
     <div class="container mx-auto py-8">
         <h1 th:text="${titulo}" class="text-3xl mb-10 mt-5 text-center"></h1>
 
         <div class="flex justify-center">
   		  <div class="w-max bg-white p-6 rounded shadow-lg" style ="border: 1px solid #000000; border-radius: 5px;">
-            <form th:action="@{/pago/form}" th:object="${pago}" method="POST" class="max-w-lg mx-auto">
+            <form th:action="${pagoParticular} ? @{/pago/form/{idCompra}(idCompra=${compra.id}, precioTotal=${compra.monto})} : @{/pago/form}" 
+            th:object="${pago}" method="POST" class="max-w-lg mx-auto">
                 <div class="mb-4">
                     <label for="documentoCliente" class="block text-gray-700 font-bold mb-2">Documento de Cliente:</label>
                     <input type="text" id="documentoCliente" th:field="*{DNI}" required class="w-full border-solid border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
@@ -70,7 +71,6 @@
         <div class="text-center mt-3">
             <label class="text-gray-700 font-bold">Monto a pagar:</label>
             <span th:text="${precioTotal}" th:field="*{precio}" class="border-solid border-b-2 border-gray-500"></span>
-            
         </div>
     </div>
 

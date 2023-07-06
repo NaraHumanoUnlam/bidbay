@@ -10,7 +10,8 @@ public interface IPagoService {
 	public boolean delete (Long id);
 
 	public Pago findById(Long numeroDeDoc);
-	public void save (Pago pago); 
-	public Pago pagar(Pago pagoARealizar);
+	public void save (Pago pago);
+	public Pago pagarParticular(Pago pagoARealizar, Long idCompra);
+	public Pago pagarTotal(Pago pagoARealizar, Long idUsuario);
 
 }

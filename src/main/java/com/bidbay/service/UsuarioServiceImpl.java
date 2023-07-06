@@ -119,6 +119,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
         return true;
     }
     
+	@Override
     public Usuario getUsuarioActualmenteLogeado(HttpSession session) {
     	Long idUsuario = (Long) session.getAttribute("idUsuario");
     	return findOne(idUsuario);

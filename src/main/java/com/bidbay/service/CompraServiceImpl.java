@@ -1,6 +1,7 @@
 package com.bidbay.service;
 
 import java.util.List;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,6 +92,13 @@ public class CompraServiceImpl implements IComprasService{
 	    }
 	    
 	    return montoTotal;
+	}
+
+	@Override
+	public void actualizarFechayPago(Date fecha, Long idPago, Long idCompra) {
+		
+		compraDao.actualizarFechaYidPago(fecha, idPago, idCompra);
+		
 	}
 	
 	

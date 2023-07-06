@@ -1,5 +1,6 @@
 package com.bidbay.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.bidbay.models.entity.Compras;
@@ -19,5 +20,7 @@ public interface IComprasService {
 	public void crearCompra(Long idUsuario);
 
 	public Double calcularMontoTotalDeCompras(Long id);
+	
+	public void actualizarFechayPago(Date fecha, Long idPago, Long idCompra);
 
 }

@@ -60,7 +60,7 @@
                     <label for="cvc" class="block text-gray-700 font-bold mb-2">CVC:</label>
                     <input type="text" id="cvc" th:field="*{cvc}" pattern="[0-9]{3}" maxlength="3" inputmode="numeric" required class="w-full border-solid border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
                 </div>
-
+				
                 <div class="mb-4">
                     <input type="submit" id="Pagar" th:value="${botonSubmit}" class="w-full bg-blue-700 text-white py-2 px-4 rounded">
                 </div>
@@ -70,6 +70,7 @@
         <div class="text-center mt-3">
             <label class="text-gray-700 font-bold">Monto a pagar:</label>
             <span th:text="${precioTotal}" th:field="*{precio}" class="border-solid border-b-2 border-gray-500"></span>
+            
         </div>
     </div>
 

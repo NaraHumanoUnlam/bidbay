@@ -14,15 +14,15 @@
 			<div class="p-5">
 				<div
 					class="grid grid-cols-3 text-center items-center justify-center justify-items-center gap-2 h-[250px]">
-					<div th:each="producto: ${productos}" class="mb-10 mb-5 bg-white">
-						<div class="flex flex-row m-auto h-full w-full bg-white p-2">
+					<div th:each="producto: ${productos}" class="mb-10 mb-5 bg-white m-3">
+						<div class="flex flex-row m-auto h-full w-full bg-white p-2 gap-2">
 							<div class="flex flex-col w-full m-2 items-center justify-center">
 							<a th:href="@{/producto/details/{id}(id=${producto.id})}">
 								<img th:src="@{'/imagenes/'+${producto.imagen}}"
 									th:alt="${producto.imagen}" class="h-[150px] w-[150px]" />
 									</a>
 							</div>
-							<div class="flex flex-col w-full text-sm justify-center items-center content-center gap-3">
+							<div class="flex flex-col w-full text-sm justify-center items-center content-center gap-4">
 								<div class="bg-gray-400 h-[2px]"></div>
 								<div class="flex flex-row ml-2 text-2xl font-bold text-uppercase">
 									<p class="detalle-titulo" th:text="${producto.nombre}">

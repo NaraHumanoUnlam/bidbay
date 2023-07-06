@@ -12,4 +12,9 @@ public interface ICompraDao extends CrudRepository<Compras, Long>{
 	
 	@Query(value = "select * from compras where id_usuario=?1", nativeQuery = true)
 	public List<Compras> comprasDelusuario(Long id_usuario);
+	
+//	@Query(value = "UPDATE compras"
+//			+ "SET nombre-de-la-columna = valor[, nombre-de-la-columna=valor]\r\n"
+//			+ "[WHERE condición]", nativeQuery = true)
+//	public List<Compras> actualizarEstadorCompra(Long id_usuario);
 }

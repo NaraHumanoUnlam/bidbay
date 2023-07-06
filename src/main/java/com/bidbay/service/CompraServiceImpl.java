@@ -65,7 +65,11 @@ public class CompraServiceImpl implements IComprasService{
 		
 		List<DetalleCompras> detalles = new ArrayList<DetalleCompras>();
 		
+<<<<<<< HEAD
 		for(CarritoItem carritoItem : items) { 
+=======
+		for(CarritoItem carritoItem : items) {
+>>>>>>> f63d485bf28d860d7d699aec661aa748b96138ca
 			DetalleCompras detalle = new DetalleCompras(carritoItem.getProducto(), compras);
 			detalle.setCantidad(carritoItem.getCantidadProductos());
 			detalle.setPrecioCompra(carritoItem.getProducto().getPrecio());

@@ -82,7 +82,7 @@ public class CompraServiceImpl implements IComprasService{
 	@Override
 	public Double calcularMontoTotalDeCompras(Long id) {
 		// TODO Auto-generated method stub
-		List<Compras> comprasDelUsuario = compraDao.comprasDelusuario(id);
+		List<Compras> comprasDelUsuario = compraDao.comprasSinPagarDelusuario(id);
 		Double montoTotal = 0.0;
 	    
 	    for (Compras compra : comprasDelUsuario) {

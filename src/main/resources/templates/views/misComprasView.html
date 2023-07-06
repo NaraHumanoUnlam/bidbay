@@ -9,7 +9,7 @@
 
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-12">
+		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
 			<thead>
 				<tr>
 					<th>Compra</th>
@@ -26,12 +26,13 @@
 					<td th:text="${compra.monto}"></td>
 					<td th:text="${compra.fecha} ?: 'Pendiente de pago'"></td>
 					<td class="btn btn-secondary text-light"><a th:href="@{/miscompras/detalle/} + ${compra.id}">View</a></td>
-					<td><a th:href="@{/pago/form/} + ${compra.id} + '/' + ${compra.monto}">Pagar</a></td>
+					<td><a th:if="${compra.idPago == null}" th:href="@{/pago/form/} + ${compra.id} + '/' + ${compra.monto}">Pagar</a></td>
 				</tr>
 			</tbody>
 		</table>
 		<p th:text="${mensaje}" th:if="${mensaje}"></p>
 		<p>Podés pagar todas tus ordenes de compra o pagarlas individualmente</p>
-		<a th:href="@{/pago/form(precioTotal=${precioTotal})}" class="bg-blue-400 p-3 rounded text-white">Pagar todas</a>
+		<a th:if="${precioTotal != 0.0}" th:href="@{/pago/form(precioTotal=${precioTotal})}" class="bg-blue-400 p-3 rounded text-white">Pagar todas</a>
+		<a th:if="${precioTotal == 0.0}" class="bg-gray-400 p-3 rounded text-white">Todas las compras están pagas</a>
 </body>
 </html>

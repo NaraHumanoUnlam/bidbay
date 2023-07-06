@@ -1,6 +1,7 @@
 package com.bidbay.service;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -63,6 +64,9 @@ public class PagoServiceImpl implements IPagoService {
 		if (validarPago(pagoARealizar) && compraAPagar != null) {	
 			save(pagoARealizar);
 			compraAPagar.setIdPago(pagoARealizar.getIdPago());
+			LocalDate currentDate = LocalDate.now();
+	        Date fecha = java.sql.Date.valueOf(currentDate);
+	        compraAPagar.setFecha(fecha);
 			compraDao.save(compraAPagar);
 			pagoARealizar.setAprobado(true);
 		}else {
@@ -76,6 +80,8 @@ public class PagoServiceImpl implements IPagoService {
 		if (validarPago(pagoARealizar)) {	
 			save(pagoARealizar);
 			this.pagarComprasDelUsuario(pagoARealizar.getIdPago(), idUsuario);
+			
+	        
 			pagoARealizar.setAprobado(true);
 		}else {
 			pagoARealizar.setAprobado(false);
@@ -90,6 +96,9 @@ public class PagoServiceImpl implements IPagoService {
 		List<Compras> comprasDelUsuario = compraDao.comprasDelusuario(idUsuario);
 		for(Compras compra : comprasDelUsuario) {
 			compra.setIdPago(idPago);
+			LocalDate currentDate = LocalDate.now();
+	        Date fecha = java.sql.Date.valueOf(currentDate);
+	        compra.setFecha(fecha);
 			compraDao.save(compra);
 		}
 	}

@@ -40,7 +40,7 @@ public class PagoController {
 
 	
 	@RequestMapping(value = "/pago/form/{idCompra}/{precioTotal}", method = RequestMethod.GET)
-	public String pagarCompraParticular(@PathParam("idCompra") Long idCompra, @PathParam("precioTotal") Double precioTotal, Model model) {
+	public String pagarCompraParticular(@PathVariable("idCompra") Long id, @PathVariable("precioTotal") Double precioTotal, Model model) {
 		//Double precio = precioTotal * 1.00;
 		
 		Pago pago = new Pago();

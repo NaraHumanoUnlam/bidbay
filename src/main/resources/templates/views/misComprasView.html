@@ -25,7 +25,7 @@
 					<td th:text="${compra.IdPago != null ? compra.IdPago : 'Pendiente'}"></td>
 					<td th:text="${compra.monto}"></td>
 					<td th:text="${compra.fecha}"></td>
-					<td><a th:href="@{/miscompras/detalle/} + ${compra.id}">Mostrar</a></td>
+					<td class="btn btn-secondary text-light"><a th:href="@{/miscompras/detalle/} + ${compra.id}">View</a></td>
 				</tr>
 			</tbody>
 		</table>

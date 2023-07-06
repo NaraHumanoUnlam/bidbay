@@ -11,6 +11,7 @@ import com.bidbay.models.entity.Usuario;
 
 import jakarta.servlet.http.HttpSession;
 
+import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.dao.IUsuarioDao;
 
 @Service
@@ -18,6 +19,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	
 	@Autowired
 	private IUsuarioDao usuarioDao;
+	
+	@Autowired
+	private IProductoDao productoDao;
 	
 	@Override
 	public List<Usuario> findAll() {
@@ -119,6 +123,51 @@ public class UsuarioServiceImpl implements IUsuarioService {
     	return findOne(idUsuario);
     }
 	
-	
+	/* Relacionados a Producto */
+    
+    public void agregarProductoAFavoritos(Producto p, HttpSession session) {
+    	Long idUsuario = getUsuarioActualmenteLogeado(session).getId();
+    	Usuario u = findOne(idUsuario);
+    	if(!getListaDeProductosFavoritos(session).contains(p)) {
+        	u.getFavoritos().add(p);
+    	}
+    }
+    
+    public void eliminarProductoDeFavoritos(Producto p, HttpSession session) {
+    	Long idUsuario = getUsuarioActualmenteLogeado(session).getId();
+    	Usuario u = findOne(idUsuario);
+    	if(getListaDeProductosFavoritos(session).contains(p)) {
+    	  	u.getFavoritos().remove(p);
+    	}
+    }
+        
+    public List<Producto> getListaDeProductosFavoritos(HttpSession session){
+    	Long idUsuario = getUsuarioActualmenteLogeado(session).getId();
+    	Usuario u = findOne(idUsuario);
+    	return u.getFavoritos();
+    }
+    
+    public void agregarProductoAPublicaciones(Producto p, HttpSession session) {
+    	Long idUsuario = getUsuarioActualmenteLogeado(session).getId();
+    	Usuario u = findOne(idUsuario);
+    	if(!getListaDeProductosPublicaciones(session).contains(p)) {
+        	u.getPublicaciones().add(p);
+    	}
+    }
+    
+    public void eliminarProductoDePublicaciones(Producto p, HttpSession session) {
+    	Long idUsuario = getUsuarioActualmenteLogeado(session).getId();
+    	Usuario u = findOne(idUsuario);
+    	if(getListaDeProductosPublicaciones(session).contains(p)) {
+    	  	u.getPublicaciones().remove(p);
+    	}
+    }
+        
+    public List<Producto> getListaDeProductosPublicaciones(HttpSession session){
+    	Long idUsuario = getUsuarioActualmenteLogeado(session).getId();
+    	Usuario u = findOne(idUsuario);
+    	return u.getPublicaciones();
+    }
+    
 	
 }

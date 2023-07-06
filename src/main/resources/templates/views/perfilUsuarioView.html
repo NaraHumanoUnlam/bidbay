@@ -5,21 +5,185 @@
 
 <body>
 
-	<header th:replace="views/layouts/plantilla.html :: header"></header>
+    <header th:replace="views/layouts/plantilla.html :: header"></header>
 
-    <div >
-        <h1 th:text="${usuario.id}"></h1>
-        <h1 th:text="${usuario.nick}"></h1>
-        <h1 th:text="${usuario.email}"></h1>
-        <h1 th:text="${usuario.password}"></h1>
-        <h1 th:text="${usuario.nombre}"></h1>
-        <h1 th:text="${usuario.apellido}"></h1>
-        <h1 th:text="${usuario.direccion}"></h1>
-        <h1 th:text="${usuario.telefono}"></h1>
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-4 ">
+                <div class="card mb-4">
+                    <div class="card-body text-center btn-sombra">
+
+                        <h5 class="my-3 text-upp" style="text-transform: capitalize" th:text="${usuario.nick}"></h5>
+                        <p class="text-muted mb-4" th:text="'Número de Usuario: ' + ${usuario.id}"></p>
+                        <div class="d-flex justify-content-center mb-2">
+                            <!--
+                                <button type="button" class="btn btn-primary">Follow</button>
+                                <button type="button" class="btn btn-outline-primary ms-1">Message</button>
+                                -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RESERVADO PARA NOTIFICACION 
+                    <div class="card mb-4 mb-lg-0">
+                        <div class="card-body p-0">
+                            <ul class="list-group list-group-flush rounded-3">
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fas fa-globe fa-lg text-warning"></i>
+                                    <p class="mb-0">https://mdbootstrap.com</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fab fa-github fa-lg" style="color: #333333;"></i>
+                                    <p class="mb-0">mdbootstrap</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
+                                    <p class="mb-0">@mdbootstrap</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fab fa-instagram fa-lg" style="color: #ac2bac;"></i>
+                                    <p class="mb-0">mdbootstrap</p>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                                    <i class="fab fa-facebook-f fa-lg" style="color: #3b5998;"></i>
+                                    <p class="mb-0">mdbootstrap</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    -->
+
+            </div>
+            <div class="col-lg-8">
+
+         
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <a class="card mb-4 mb-md-0 btn-sombra">
+                            <div class="card-body perfil-card">
+                                <h2 class="mb-4" style="font-size: 1.3rem;"> Publicaciones </h2>
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1">Numero</p>
+                                    <p><i class="fa-solid fa-list"></i></p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a class="card mb-4 mb-md-0 mt-4 btn-sombra">
+                            <div class="card-body perfil-card">
+                                <h2 class="mb-4" style="font-size: 1.3rem;"> Mis Ventas </h2>
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1">Numero</p>
+                                    <p><i class="fa-brands fa-sellsy"></i></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <a class="card mb-4 mb-md-0 btn-sombra" onmouseover="mostrarPopup();"
+                            onmouseout="ocultarPopup();">
+                            <div class="card-body perfil-card">
+                                <h2 class="mb-4" style="font-size: 1.3rem;">Favoritos</h2>
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1">Numero</p>
+                                    <p><i class="fa fa-heart text-muted"></i></p>
+                                </div>
+                            </div>
+                        </a>
+                        <div id="perfil-popup" class="card popup-disabled">
+                            <a class="">
+                                <div>
+                                    asdasd
+                                </div>
+                            </a>
+                        </div>
+
+                        <a class="card mb-4 mb-md-0 mt-4 btn-sombra">
+                            <div class="card-body perfil-card">
+                                <h2 class="mb-4" style="font-size: 1.3rem;"> Mis Compras </h2>
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1">Numero</p>
+                                    <p><i class="fa-solid fa-cart-shopping"></i></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body btn-sombra">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Nombre Completo</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${usuario.nombre} + ' ' + ${usuario.apellido}"
+                                    style="text-transform: capitalize;"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Contraseña</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${usuario.password}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${usuario.email}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Teléfono</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:th:text="${usuario.telefono}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Dirección</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:th:text="${usuario.direccion}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 
+    <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+    <script>
+        function mostrarPopup() {
+            console.log("holaa");
+            var popup = document.getElementById('perfil-popup');
+            popup.classList.add('popup-active');
+            popup.classList.remove('popup-disabled');
+        }
+
+        function ocultarPopup() {
+            var popup = document.getElementById('perfil-popup');
+            popup.classList.remove('popup-active');
+            popup.classList.add('popup-disabled');
+
+        }
+    </script>
 </body>
 
 </html>

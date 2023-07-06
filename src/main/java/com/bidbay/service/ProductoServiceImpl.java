@@ -67,10 +67,33 @@ public class ProductoServiceImpl implements IProductoService {
         }
         return productosEncontrados;
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<Producto> findByNameDelUsuario(String name, Long id_usuario) {
+        List<Producto> productosEncontrados = new ArrayList<>();
+        for (Producto p : productoDelUsuario(id_usuario)) {
+            if (p.getNombre().toLowerCase().contains(name.toLowerCase())) {
+            	productosEncontrados.add(p);
+            }
+        }
+        return productosEncontrados;
+    }
 
 	@Override
 	public List<Producto> orderList(String orden) {
 		List<Producto> listaOrdenada = findAll();
+        if (orden.equalsIgnoreCase("asc")) {
+        	Collections.sort(listaOrdenada, Comparator.comparing(Producto::getPrecio));
+        } else if (orden.equalsIgnoreCase("desc")) {
+        	Collections.sort(listaOrdenada, Comparator.comparing(Producto::getPrecio).reversed());
+        }
+        return listaOrdenada;
+	}
+	
+	@Override
+	public List<Producto> orderListDelUsuario(String orden, Long id_usuario) {
+		List<Producto> listaOrdenada = productoDelUsuario(id_usuario);
         if (orden.equalsIgnoreCase("asc")) {
         	Collections.sort(listaOrdenada, Comparator.comparing(Producto::getPrecio));
         } else if (orden.equalsIgnoreCase("desc")) {
@@ -105,8 +128,10 @@ public class ProductoServiceImpl implements IProductoService {
             usuarioDao.save(usuario);
             } 
         }
-
-
-
 	
+	@Override
+	public List<Producto> productoDelUsuario(Long id_usuario) {
+		return productoDao.detallesProducto(id_usuario);
+	}
+
 }

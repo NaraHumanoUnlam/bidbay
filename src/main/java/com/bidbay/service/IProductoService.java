@@ -24,5 +24,10 @@ public interface IProductoService {
 	public List<Producto> findByCategoriaId(Long id);
 	
 	void dejarReseña(Long idProducto, String mensaje, int puntaje, HttpSession session);
+	
+	public List<Producto> productoDelUsuario(Long id_usuario);
 
+	public List<Producto> orderListDelUsuario(String orden, Long id_usuario);
+	
+	public List<Producto> findByNameDelUsuario(String name, Long id_usuario);
 }

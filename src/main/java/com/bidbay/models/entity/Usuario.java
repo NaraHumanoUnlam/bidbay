@@ -171,6 +171,159 @@ public class Usuario implements Serializable {
 		for (String string : notificaciones) {
 			if (string.equals(notificacion)) {
 				noti = string;
+
+		@NotEmpty
+		private String nick;
+		@NotEmpty
+		private String email;
+		@NotEmpty
+		private String password;
+		@NotEmpty
+		private String nombre;
+		@NotEmpty
+		private String apellido;
+		@NotEmpty
+		private String direccion;
+		@NotEmpty
+		private String telefono;
+		
+		private List<String> notificaciones;
+		
+		private List<Double> ratings;
+		
+		@Column(nullable = true)
+		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})
+		private List<Producto> compras;
+		
+		
+		@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendedor", cascade = CascadeType.ALL)
+		private List<Producto> publicaciones;
+
+		@Column(nullable = true)
+		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})
+		private List<Producto> favoritos; 
+		
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getNick() {
+			return nick;
+		}
+
+		public void setNick(String nick) {
+			this.nick = nick;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+		public String getPassword() {
+			return password;
+		}
+
+		public void setPassword(String password) {
+			this.password = password;
+		}
+
+		public String getNombre() {
+			return nombre;
+		}
+
+		public void setNombre(String nombre) {
+			this.nombre = nombre;
+		}
+
+		public String getApellido() {
+			return apellido;
+		}
+
+		public void setApellido(String apellido) {
+			this.apellido = apellido;
+		}
+
+		public String getDireccion() {
+			return direccion;
+		}
+
+		public void setDireccion(String direccion) {
+			this.direccion = direccion;
+		}
+
+		public String getTelefono() {
+			return telefono;
+		}
+
+		public void setTelefono(String telefono) {
+			this.telefono = telefono;
+		}
+
+		public static long getSerialversionuid() {
+			return serialVersionUID;
+		}
+		
+
+		public List<String> getNotificaciones() {
+			return notificaciones;
+		}
+
+		public void setNotificaciones(List<String> notificaciones) {
+			this.notificaciones = notificaciones;
+		}
+
+		public Usuario(Long id, @NotEmpty String nick, @NotEmpty String email, @NotEmpty String password,
+				@NotEmpty String nombre, @NotEmpty String apellido, @NotEmpty String direccion,
+				@NotEmpty String telefono) {
+			super();
+			this.id = id;
+			this.nick = nick;
+			this.email = email;
+			this.password = password;
+			this.nombre = nombre;
+			this.apellido = apellido;
+			this.direccion = direccion;
+			this.telefono = telefono;
+			this.notificaciones = new ArrayList<String>();
+		}
+
+		public Usuario(@NotEmpty String nick, @NotEmpty String email, @NotEmpty String password,
+				@NotEmpty String nombre, @NotEmpty String apellido, @NotEmpty String direccion,
+				@NotEmpty String telefono) {
+			super();
+			this.nick = nick;
+			this.email = email;
+			this.password = password;
+			this.nombre = nombre;
+			this.apellido = apellido;
+			this.direccion = direccion;
+			this.telefono = telefono;
+			this.notificaciones = new ArrayList<String>();
+		}
+
+		public Usuario() {
+			super();
+		}
+
+		public void agregarNotificacion(String notificacion) {
+			this.notificaciones.add(notificacion);
+			
+		}
+
+		public String buscarNotificacion(String notificacion) {
+			String noti = null;
+			for (String string : notificaciones) {
+				if(string.equals(notificacion)) {
+					noti = string;
+				}
 			}
 		}
 		return noti;

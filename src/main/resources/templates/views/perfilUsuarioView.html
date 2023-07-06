@@ -17,6 +17,7 @@
                         <h5 class="my-3 text-upp" style="text-transform: capitalize" th:text="${usuario.nick}"></h5>
                         <p class="text-muted mb-4" th:text="'Número de Usuario: ' + ${usuario.id}"></p>
                         <div class="d-flex justify-content-center mb-2">
+						 	
                             <!--
                                 <button type="button" class="btn btn-primary">Follow</button>
                                 <button type="button" class="btn btn-outline-primary ms-1">Message</button>
@@ -66,7 +67,8 @@
                             <div class="card-body perfil-card">
                                 <h2 class="mb-4" style="font-size: 1.3rem;"> Publicaciones </h2>
                                 <div class="d-flex justify-content-between">
-                                    <p class="mb-1">Numero</p>
+                                    <span class="mb-1">Numero</span>
+                                     <span class="text-muted mb-4" th:text="${cantidadPublicaciones}"></span>
                                     <p><i class="fa-solid fa-list"></i></p>
                                 </div>
                             </div>
@@ -76,12 +78,15 @@
                             <div class="card-body perfil-card">
                                 <h2 class="mb-4" style="font-size: 1.3rem;"> Mis Ventas </h2>
                                 <div class="d-flex justify-content-between">
-                                    <p class="mb-1">Numero</p>
+                                    <span class="mb-1">Numero</span>
+                                    <span class="text-muted mb-4" th:text="${cantidadVentas}"></span>
+                                    
                                     <p><i class="fa-brands fa-sellsy"></i></p>
                                 </div>
                             </div>
                         </a>
                     </div>
+
 
                     <div class="col-md-6 mb-4">
                         <a class="card mb-4 mb-md-0 btn-sombra" onmouseover="mostrarPopup();"
@@ -89,8 +94,9 @@
                             <div class="card-body perfil-card">
                                 <h2 class="mb-4" style="font-size: 1.3rem;">Favoritos</h2>
                                 <div class="d-flex justify-content-between">
-                                    <p class="mb-1">Numero</p>
-                                    <p><i class="fa fa-heart text-muted"></i></p>
+                                    <span class="mb-1">Numero</span>
+                                    <span class="text-muted mb-4" th:text="${cantidadFavoritos}"></span>
+                                    
                                 </div>
                             </div>
                         </a>
@@ -106,7 +112,8 @@
                             <div class="card-body perfil-card">
                                 <h2 class="mb-4" style="font-size: 1.3rem;"> Mis Compras </h2>
                                 <div class="d-flex justify-content-between">
-                                    <p class="mb-1">Numero</p>
+                                    <span class="mb-1">Numero</span>
+                                    <span class="text-muted mb-4" th:text="${cantidadCompras}"></span>
                                     <p><i class="fa-solid fa-cart-shopping"></i></p>
                                 </div>
                             </div>

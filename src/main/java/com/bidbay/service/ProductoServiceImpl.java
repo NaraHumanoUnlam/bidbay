@@ -133,5 +133,15 @@ public class ProductoServiceImpl implements IProductoService {
 	public List<Producto> productoDelUsuario(Long id_usuario) {
 		return productoDao.detallesProducto(id_usuario);
 	}
+	
+	@Override
+	public Integer comprasDelUsuario(Long id_usuario) {
+		return productoDao.cantidadCompras(id_usuario);
+	}
+	
+	@Override
+	public Integer ventasDelUsuario(Long id_usuario) {
+		return productoDao.cantidadVentas(id_usuario);
+	}
 
 }

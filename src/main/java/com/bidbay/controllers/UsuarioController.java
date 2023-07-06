@@ -31,6 +31,10 @@ public class UsuarioController {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("titulo", "Perfil de: " + usuario.getNick());
+			model.addAttribute("cantidadPublicaciones", productoService.productoDelUsuario(usuario.getId()).size());
+			model.addAttribute("cantidadCompras", productoService.comprasDelUsuario(usuario.getId()));
+			model.addAttribute("cantidadVentas", productoService.ventasDelUsuario(usuario.getId()));
+			model.addAttribute("cantidadFavoritos",0);
 			return "views/perfilUsuarioView";
 		}
 

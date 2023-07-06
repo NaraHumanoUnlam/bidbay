@@ -40,6 +40,10 @@ public class Compras  implements Serializable {
 	@OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
     private List<DetalleCompras> detalles;
 	
+	public Compras() {
+		this.detalles=new ArrayList<DetalleCompras>();
+	}
+	
 	public Compras(Long idUsuario) {
 		this.detalles=new ArrayList<DetalleCompras>();
 		this.IdUsuario = idUsuario;

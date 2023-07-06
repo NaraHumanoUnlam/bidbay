@@ -237,3 +237,42 @@ a.rainbow-link {
   font-size: 1.3rem;
   color: rgb(120, 234, 139);
 }
+
+.col-md-6 .card:nth-of-type(1) .perfil-card {
+  background-color: hsla(180, 100%, 50%, 0.5);
+}
+
+.col-md-6 .card:nth-of-type(2) .perfil-card {
+  background-color: hsla(132, 100%, 50%, 0.5);
+}
+
+.col-md-6.mb-4 .card:nth-of-type(1) .perfil-card {
+  background-color: hsla(300, 100%, 50%, 0.5);
+}
+
+.col-md-6.mb-4 .card:nth-of-type(2) .perfil-card {
+  background-color: rgba(255, 153, 51, 0.5);
+}
+
+.perfil-card{
+  font-weight: 700;
+}
+
+#perfil-popup {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 5;
+  max-width: 25rem;
+  width: 100%;
+}
+
+.popup-disabled{
+  display: none;
+
+}
+
+.popup.active {
+  display: block;
+}

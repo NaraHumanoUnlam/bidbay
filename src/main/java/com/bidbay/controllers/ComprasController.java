@@ -50,4 +50,13 @@ public class ComprasController {
 		model.addAttribute("detalles", detalleServices.listarDetallePorId(id));
 		return "views/detalleMisComprasView";
 	}
+	
+	@RequestMapping(value = "/agregar", method = RequestMethod.GET)
+	public String agregar(HttpSession session, Model model) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+			return "redirect:/login";
+		} 
+		comprasService.crearCompra(usuarioService.getUsuarioActualmenteLogeado(session).getId());
+		return "views/misComprasView";
+	}
 }

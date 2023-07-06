@@ -22,26 +22,32 @@ public class DetalleCompras implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idDetalle;
-	private int cantidad;
-	@Column(name = "precio_compra")
 	
+	private int cantidad;
+	
+	@Column(name = "precio_compra")
 	private Double precioCompra;
 
 	@NotNull
 	@OneToOne
 	@JoinColumn(name = "productos", referencedColumnName = "id")
 	private Producto producto;
-		
-    public Compras getCompra() {
-		return compra;
-	}
-	public void setCompra(Compras compra) {
-		this.compra = compra;
-	}
 	
 	@ManyToOne
     private Compras compra;
+		
+    public DetalleCompras(Producto producto, Compras compra) {
+    	this.producto = producto;
+    	this.compra = compra;
+    }
+	
+	public Compras getCompra() {
+		return compra;
+	}
     
+	public void setCompra(Compras compra) {
+		this.compra = compra;
+	}
     	
 	public Long getIdDetalle() {
 		return idDetalle;

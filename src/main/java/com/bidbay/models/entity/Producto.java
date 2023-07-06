@@ -191,7 +191,7 @@ public class Producto implements Serializable{
 	public void dejarReseña(Usuario usuario, String mensaje, double puntaje) {
 	    LocalDateTime fecha = LocalDateTime.now();
 	    Review review = new Review(fecha, usuario, this, mensaje, puntaje);
-	    //usuario.setRating(puntaje);
+	    this.vendedor.setRating(puntaje);
 	    
 	    /*if (reviews == null) {
 	        reviews = new ArrayList<>();

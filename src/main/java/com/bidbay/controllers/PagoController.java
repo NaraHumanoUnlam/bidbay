@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class PagoController {
 	
-	@Autowired
-	private ICarritoService carritoService;
+	/*@Autowired
+	private ICarritoService carritoService;*/
 	
 	@Autowired
 	private IPagoService pagoService; 
@@ -35,6 +35,7 @@ public class PagoController {
 	@RequestMapping(value = "/pago/form", method = RequestMethod.GET)
 	public String crear(@RequestParam("precioTotal") Double precioTotal, Model model) {
 		Double precio = precioTotal;
+		
 		Pago pago = new Pago();
 		//Aca iria compra
 		model.addAttribute("pago", pago);
@@ -56,7 +57,7 @@ public class PagoController {
 	                   Model model) {
 	    Pago pagoNuevo = new Pago(DNI, Long.valueOf(numeroTarjeta), mes, anio, nombreDeCliente, Integer.valueOf(cvc));
 	    //esto esta bien que traiga pago
-	    //no debería ser nombre de client debería ser nombre de el titutl
+	    //no debería ser nombre de client debería ser nombre de el titular
 	    model.addAttribute("titulo", "Formulario de Pago");
 	    model.addAttribute("botonSubmit", "Realizar Pago");
 	    

@@ -32,10 +32,7 @@ public class DetalleCompras implements Serializable {
 	@JoinColumn(name = "productos", referencedColumnName = "id")
 	private Producto producto;
 		
-    public DetalleCompras(Producto producto2, Compras compras) {
-		// TODO Auto-generated constructor stub
-	}
-	public Compras getCompra() {
+    public Compras getCompra() {
 		return compra;
 	}
 	public void setCompra(Compras compra) {

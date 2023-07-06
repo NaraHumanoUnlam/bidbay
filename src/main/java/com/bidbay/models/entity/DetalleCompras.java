@@ -32,7 +32,14 @@ public class DetalleCompras implements Serializable {
 	@JoinColumn(name = "productos", referencedColumnName = "id")
 	private Producto producto;
 		
-    public Compras getCompra() {
+  
+	
+	public DetalleCompras(@NotNull Producto producto, Compras compra) {
+		super();
+		this.producto = producto;
+		this.compra = compra;
+	}
+	public Compras getCompra() {
 		return compra;
 	}
 	public void setCompra(Compras compra) {

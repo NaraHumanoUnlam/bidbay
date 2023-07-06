@@ -2,14 +2,7 @@ package com.bidbay.models.entity;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "subastas")
@@ -22,15 +15,13 @@ public class Subasta {
     private String nombre;
     
     @Column(name = "subastador")
-    @OneToOne
     private Usuario subastador;
 
-    @Column(name = "ofertante")
-    @ManyToOne
-    private Ofertante ofertante;
+//    @Column(name = "ofertante")
+//    @ManyToOne
+//    private Ofertante ofertante;
     
     @Column(name = "producto")
-    @OneToOne
     private Producto producto;
 
     @Column(name = "precio_inicial")
@@ -71,14 +62,14 @@ public class Subasta {
 	}
 
 
-	public Ofertante getOfertante() {
-		return ofertante;
-	}
-
-
-	public void setOfertante(Ofertante ofertante) {
-		this.ofertante = ofertante;
-	}
+//	public Ofertante getOfertante() {
+//		return ofertante;
+//	}
+//
+//
+//	public void setOfertante(Ofertante ofertante) {
+//		this.ofertante = ofertante;
+//	}
 
 
 	public Producto getProducto() {

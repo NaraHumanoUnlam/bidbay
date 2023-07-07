@@ -19,6 +19,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -191,7 +192,7 @@ public class Producto implements Serializable{
 		return "test";
 	}
 	
-	public void dejarReseña(Usuario usuario, String mensaje, double puntaje) {
+	public void dejarReview(Usuario usuario, String mensaje, Double puntaje) {
 	    LocalDateTime fecha = LocalDateTime.now();
 	    Review review = new Review(fecha, usuario, this, mensaje, puntaje);
 	    this.vendedor.setRating(puntaje);

@@ -73,10 +73,10 @@
                             <p class="popup-producto_titulo" th:if="${listaVentas.size() > 0 }">Lista de Ventas</p>
                             <a th:each="producto: ${listaVentas}">
                                 <div class="usuario-producto_list ">
-                                    <img th:src="@{'../imagenes/'+${imagenProducto}}" th:alt="${imagen_producto}">
+                                    <img th:src="@{'../imagenes/'+${producto.imagenProducto}}" th:alt="${producto.imagenProducto}">
                                     <div>
-                                        <p th:text="${producto.nombre}"></p>
-                                        <p th:text="'$' + ${producto.precio}"></p>
+                                        <p th:text="${producto.descripcionProducto}"></p>
+                                        <p th:text="'$' + ${producto.precioCompra}"></p>
                                     </div>
                                 </div>
                             </a>

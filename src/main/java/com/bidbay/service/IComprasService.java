@@ -23,4 +23,5 @@ public interface IComprasService {
 	
 	public void actualizarFechayPago(Date fecha, Long idPago, Long idCompra);
 
+
 }

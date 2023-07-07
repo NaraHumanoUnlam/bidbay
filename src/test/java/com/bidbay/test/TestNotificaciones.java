@@ -28,7 +28,7 @@ public class TestNotificaciones {
     public void seCreaUsuarioySeLeasignaUnaNotificacion() {
         Usuario usuario = new Usuario(3L, "prueba1", "unemail@dominio.com", "123456", "nombre", "apellido",
                 "Calle Falsa 123", "55555555");
-        Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
+        Notificacion notificacion = new Notificacion("Novedades","¡Bienvenido!", usuario);
         usuario.agregarNotificacion(notificacion);
         Assert.assertEquals(notificacion, usuario.getNotificaciones().get(0));
     }
@@ -37,7 +37,7 @@ public class TestNotificaciones {
     public void seCreaUsuarioySeConsultaNotificacion() {
         Usuario usuario = new Usuario(3L, "prueba1", "unemail@dominio.com", "123456", "nombre", "apellido",
                 "Calle Falsa 123", "55555555");
-        Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
+        Notificacion notificacion = new Notificacion("Novedades","¡Bienvenido!", usuario);
 
         usuario.agregarNotificacion(notificacion);
         
@@ -49,7 +49,7 @@ public class TestNotificaciones {
     public void seCreaUsuarioyEliminaNotificacion() {
         Usuario usuario = new Usuario(3L, "prueba1", "unemail@dominio.com", "123456", "nombre", "apellido",
                 "Calle Falsa 123", "55555555");
-        Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
+        Notificacion notificacion = new Notificacion("Novedades","¡Bienvenido!", usuario);
 
         usuario.agregarNotificacion(notificacion);
         
@@ -61,9 +61,9 @@ public class TestNotificaciones {
     public void seCreaUsuarioyListaTodasLasNotificaciones() {
         Usuario usuario = new Usuario(3L, "prueba1", "unemail@dominio.com", "123456", "nombre", "apellido",
                 "Calle Falsa 123", "55555555");
-        Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
-        Notificacion notificacion2 = new Notificacion("una nueva notificacion nueva", usuario);
-        Notificacion notificacion3 = new Notificacion("una nueva notificacion nueva nueva",usuario);
+        Notificacion notificacion = new Notificacion("Novedades","¡Bienvenido!", usuario);
+        Notificacion notificacion2 = new Notificacion("Novedades","¡Bienvenido, noti nueva!", usuario);
+        Notificacion notificacion3 = new Notificacion("Novedades","¡Bienvenido! noti numero 3", usuario);
 
         usuario.agregarNotificacion(notificacion);
         usuario.agregarNotificacion(notificacion2);

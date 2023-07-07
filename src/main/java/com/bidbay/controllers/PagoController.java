@@ -41,15 +41,16 @@ public class PagoController {
 	
 	@RequestMapping(value = "/pago/form/{idCompra}/{precioTotal}", method = RequestMethod.GET)
 	public String pagarCompraParticular(@PathVariable("idCompra") Long id, @PathVariable("precioTotal") Double precioTotal, Model model) {
-		//Double precio = precioTotal * 1.00;
 		
 		Pago pago = new Pago();
+		Compras compra = compraService.findOne(id);
 	
 		model.addAttribute("pago", pago);
-	    model.addAttribute("titulo", "Formulario de Pago particular");
+	    model.addAttribute("titulo", "Formulario de Pago Particular");
 	    model.addAttribute("botonSubmit", "Realizar Pago");
 	    model.addAttribute("precioTotal", precioTotal);
 	    model.addAttribute("pagoParticular", true);
+	    model.addAttribute("compra", compra);
 		return "views/pagoView";
 	}
 	
@@ -60,7 +61,7 @@ public class PagoController {
 		Pago pago = new Pago();
 	
 		model.addAttribute("pago", pago);
-	    model.addAttribute("titulo", "Formulario de Pago total");
+	    model.addAttribute("titulo", "Formulario de Pago Total");
 	    model.addAttribute("botonSubmit", "Realizar Pago");
 	    model.addAttribute("precioTotal", precioTotal);
 	    model.addAttribute("pagoParticular", false);

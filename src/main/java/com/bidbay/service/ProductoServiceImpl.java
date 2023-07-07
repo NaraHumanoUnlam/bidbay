@@ -125,7 +125,7 @@ public class ProductoServiceImpl implements IProductoService {
             producto.dejarReseña(usuario, mensaje, puntaje);
             productoDao.save(producto);
             
-            Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
+            Notificacion notificacion = new Notificacion("Reseña","¡Bienvenido!", usuario);
             usuario.agregarNotificacion(notificacion);
             usuarioDao.save(usuario);
             } 

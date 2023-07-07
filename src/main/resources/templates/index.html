@@ -7,7 +7,18 @@
 <body>
 
 	<header th:replace="views/layouts/plantilla.html :: header"></header>
-
+	<div id="conteiner-notificacion" class="w-full">
+		<aside class="flex flex-col hidden">
+			<div
+				class="w-[400px] h-[125px] bg-lime-700 bg-opacity-20 right-0 top-[135px] fixed border border border border border-lime-700 border-opacity-50">
+			<p 
+				class="text-black text-[12px] font-bold">Novedades</p>
+			<p
+				class="text-black text-[12px] font-normal">¡Bienvenido
+				a Bidbay!</p>
+				</div>
+		</aside>
+	</div>
 	<main class="w-full flex h-[900px] justify-center m-auto">
 		<section
 			class="rounded flex w-full h-1/2 justify-around items-center p-5">

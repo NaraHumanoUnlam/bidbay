@@ -24,27 +24,31 @@ private static final long serialVersionUID = 1L;
     @JoinColumn(name = "usuarios_id")
 	private Usuario usuarios;
 	
+	private String titulo;
 	private String notificacion;
 	
 	private Date fecha;
 
-	public Notificacion(Long id, String notificacion, Date fecha, Usuario user) {
+	public Notificacion(Long id,String titulo, String notificacion, Date fecha, Usuario user) {
 		super();
 		this.id = id;
+		this.titulo = titulo;
 		this.notificacion = notificacion;
 		this.fecha = fecha;
 		this.usuarios = user;
 	}
 
-	public Notificacion(String notificacion, Date fecha, Usuario user) {
+	public Notificacion(String titulo,String notificacion, Date fecha, Usuario user) {
 		super();
+		this.titulo = titulo;
 		this.notificacion = notificacion;
 		this.fecha = fecha;
 		this.usuarios = user;
 	}
 
-	public Notificacion(String notificacion, Usuario user) {
+	public Notificacion(String titulo,String notificacion, Usuario user) {
 		super();
+		this.titulo = titulo;
 		this.notificacion = notificacion;
 		this.usuarios = user;
 		this.fecha = new Date(System.currentTimeMillis());

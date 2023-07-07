@@ -30,15 +30,15 @@ public class UsuarioController {
 			Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("usuario", usuario);
-			model.addAttribute("titulo", "Perfil de: " + usuario.getNick());
+			model.addAttribute("titulo", "Perfil de " + usuario.getNick().toUpperCase());
 			model.addAttribute("cantidadPublicaciones", productoService.productoDelUsuario(usuario.getId()).size());
 			model.addAttribute("cantidadCompras", productoService.comprasDelUsuario(usuario.getId()));
 			model.addAttribute("cantidadVentas", productoService.ventasDelUsuario(usuario.getId()));
 			model.addAttribute("cantidadFavoritos",0);
+			model.addAttribute("listaPublicaciones", usuarioService.getListaDeProductosPublicaciones(session));
+			model.addAttribute("listaVentas", productoService.detalleVentasDelUsuario(usuario.getId()));
 			return "views/perfilUsuarioView";
 		}
-
-
 	}
 	
 	@GetMapping("/logOut")

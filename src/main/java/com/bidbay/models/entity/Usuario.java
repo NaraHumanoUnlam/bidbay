@@ -41,7 +41,8 @@ public class Usuario implements Serializable{
 		@NotEmpty
 		private String telefono;
 		
-		private List<String> notificaciones;
+		@OneToMany(mappedBy = "usuarios", cascade = CascadeType.ALL, orphanRemoval = true)
+		private List<Notificacion> notificaciones;
 		
 		private List<Double> ratings;
 		
@@ -124,11 +125,11 @@ public class Usuario implements Serializable{
 		}
 		
 
-		public List<String> getNotificaciones() {
+		public List<Notificacion> getNotificaciones() {
 			return notificaciones;
 		}
 
-		public void setNotificaciones(List<String> notificaciones) {
+		public void setNotificaciones(List<Notificacion> notificaciones) {
 			this.notificaciones = notificaciones;
 		}
 
@@ -144,7 +145,7 @@ public class Usuario implements Serializable{
 			this.apellido = apellido;
 			this.direccion = direccion;
 			this.telefono = telefono;
-			this.notificaciones = new ArrayList<String>();
+			this.notificaciones = new ArrayList<Notificacion>();
 		}
 
 		public Usuario(@NotEmpty String nick, @NotEmpty String email, @NotEmpty String password,
@@ -158,29 +159,29 @@ public class Usuario implements Serializable{
 			this.apellido = apellido;
 			this.direccion = direccion;
 			this.telefono = telefono;
-			this.notificaciones = new ArrayList<String>();
+			this.notificaciones = new ArrayList<Notificacion>();
 		}
 
 		public Usuario() {
 			super();
 		}
 
-		public void agregarNotificacion(String notificacion) {
+		public void agregarNotificacion(Notificacion notificacion) {
 			this.notificaciones.add(notificacion);
 			
 		}
 
-		public String buscarNotificacion(String notificacion) {
-			String noti = null;
-			for (String string : notificaciones) {
-				if(string.equals(notificacion)) {
-					noti = string;
+		public Notificacion buscarNotificacion(Notificacion notificacion) {
+			Notificacion noti = null;
+			for (Notificacion notifi : notificaciones) {
+				if(notifi.equals(notificacion)) {
+					noti = notifi;
 				}
 			}
 			return noti;
 		}
 
-		public Boolean eliminarNotificacion(String notificacion) {
+		public Boolean eliminarNotificacion(Notificacion notificacion) {
 			Boolean isDeleted = false;
 			for (int i = 0; i < notificaciones.size(); i++) {
 				if(notificacion.equals(notificaciones.get(i))) {

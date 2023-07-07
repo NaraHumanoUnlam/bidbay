@@ -14,10 +14,7 @@ import com.bidbay.models.dao.ICategoriaDao;
 import com.bidbay.models.dao.IOperacionCV;
 import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.dao.IUsuarioDao;
-import com.bidbay.models.entity.Categoria;
-import com.bidbay.models.entity.Producto;
-import com.bidbay.models.entity.Usuario;
-import com.bidbay.models.entity.OperacionCV;
+import com.bidbay.models.entity.*;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -128,7 +125,7 @@ public class ProductoServiceImpl implements IProductoService {
             producto.dejarReseña(usuario, mensaje, puntaje);
             productoDao.save(producto);
             
-            String notificacion = "¡Has dejado una reseña para el vendedor!";
+            Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
             usuario.agregarNotificacion(notificacion);
             usuarioDao.save(usuario);
             } 

@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.bidbay.models.dao.IUsuarioDao;
+import com.bidbay.models.entity.Notificacion;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.UsuarioServiceImpl;
 
@@ -27,8 +28,7 @@ public class TestNotificaciones {
     public void seCreaUsuarioySeLeasignaUnaNotificacion() {
         Usuario usuario = new Usuario(3L, "prueba1", "unemail@dominio.com", "123456", "nombre", "apellido",
                 "Calle Falsa 123", "55555555");
-        String notificacion = "una nueva notificacion";
-
+        Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
         usuario.agregarNotificacion(notificacion);
         Assert.assertEquals(notificacion, usuario.getNotificaciones().get(0));
     }
@@ -37,11 +37,11 @@ public class TestNotificaciones {
     public void seCreaUsuarioySeConsultaNotificacion() {
         Usuario usuario = new Usuario(3L, "prueba1", "unemail@dominio.com", "123456", "nombre", "apellido",
                 "Calle Falsa 123", "55555555");
-        String notificacion = "una nueva notificacion";
+        Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
 
         usuario.agregarNotificacion(notificacion);
         
-        String result =  usuario.buscarNotificacion(notificacion);
+        Notificacion result =  usuario.buscarNotificacion(notificacion);
         Assert.assertEquals(notificacion,result);
     }
     
@@ -49,7 +49,7 @@ public class TestNotificaciones {
     public void seCreaUsuarioyEliminaNotificacion() {
         Usuario usuario = new Usuario(3L, "prueba1", "unemail@dominio.com", "123456", "nombre", "apellido",
                 "Calle Falsa 123", "55555555");
-        String notificacion = "una nueva notificacion";
+        Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
 
         usuario.agregarNotificacion(notificacion);
         
@@ -61,9 +61,9 @@ public class TestNotificaciones {
     public void seCreaUsuarioyListaTodasLasNotificaciones() {
         Usuario usuario = new Usuario(3L, "prueba1", "unemail@dominio.com", "123456", "nombre", "apellido",
                 "Calle Falsa 123", "55555555");
-        String notificacion = "una nueva notificacion";
-        String notificacion2 = "una nueva notificacion nueva";
-        String notificacion3 = "una nueva notificacion nueva nueva";
+        Notificacion notificacion = new Notificacion("¡Bienvenido!", usuario);
+        Notificacion notificacion2 = new Notificacion("una nueva notificacion nueva", usuario);
+        Notificacion notificacion3 = new Notificacion("una nueva notificacion nueva nueva",usuario);
 
         usuario.agregarNotificacion(notificacion);
         usuario.agregarNotificacion(notificacion2);

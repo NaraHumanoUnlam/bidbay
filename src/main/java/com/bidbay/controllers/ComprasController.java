@@ -84,4 +84,10 @@ public class ComprasController {
 		model.addAttribute("precioTotal", comprasService.calcularMontoTotalDeCompras(usuario.getId()));
 		return "views/misComprasView";
 	}
+	
+	@RequestMapping(value = "/eliminar/{id}", method = RequestMethod.POST)
+	public String eliminarCompra(@PathVariable("id") Long id) {
+	    comprasService.delete(id);
+	    return "redirect:/miscompras/listar";
+	}
 }

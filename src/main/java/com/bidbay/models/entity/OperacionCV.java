@@ -17,7 +17,9 @@ public class OperacionCV {
 	private Date fecha;
 	private int cantidad;
 	private Double precioCompra;
-	private String producto;
+	private Long producto;
+	private String descripcionProducto;
+	private String imagenProducto;
 	private Long usuarioVende;
 	public Long getCompra() {
 		return compra;
@@ -34,18 +36,21 @@ public class OperacionCV {
 	public int getCantidad() {
 		return cantidad;
 	}
-	
 	public Double getPrecioCompra() {
 		return precioCompra;
 	}
-	public String getProducto() {
+	public Long getProducto() {
 		return producto;
+	}
+	public String getDescripcionProducto() {
+		return descripcionProducto;
+	}
+	public String getImagenProducto() {
+		return imagenProducto;
 	}
 	public Long getUsuarioVende() {
 		return usuarioVende;
 	}
 	
-
 	
-
 }

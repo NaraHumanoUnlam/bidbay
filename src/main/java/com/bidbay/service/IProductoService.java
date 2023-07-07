@@ -17,7 +17,6 @@ public interface IProductoService {
 	public List<Producto> findByName(String name);
 	public List<Producto> orderList(String orden);
 	public List<Producto> findByCategoriaId(Long id);
-	void dejarReseña(Long idProducto, String mensaje, int puntaje, HttpSession session);
 	public List<Producto> productoDelUsuario(Long id_usuario);
 	public List<Producto> orderListDelUsuario(String orden, Long id_usuario);
 	public List<Producto> findByNameDelUsuario(String name, Long id_usuario);
@@ -25,4 +24,5 @@ public interface IProductoService {
 	public Integer ventasDelUsuario(Long id_usuario);
 	public List<OperacionCV> detalleComprasDelUsuario(Long id_usuario);
 	public List<OperacionCV> detalleVentasDelUsuario(Long id_usuario);
+	public void dejarReview(Long idProducto, String mensaje, Double puntaje, HttpSession session);
 }

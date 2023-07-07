@@ -34,9 +34,11 @@ public class UsuarioController {
 			model.addAttribute("cantidadPublicaciones", productoService.productoDelUsuario(usuario.getId()).size());
 			model.addAttribute("cantidadCompras", productoService.comprasDelUsuario(usuario.getId()));
 			model.addAttribute("cantidadVentas", productoService.ventasDelUsuario(usuario.getId()));
-			model.addAttribute("cantidadFavoritos",0);
+			model.addAttribute("cantidadFavoritos",productoService.detalleFavoritosDelUsuario(usuario.getId()).size());
+			model.addAttribute("listaFavoritos",productoService.detalleFavoritosDelUsuario(usuario.getId()));
 			model.addAttribute("listaPublicaciones", usuarioService.getListaDeProductosPublicaciones(session));
 			model.addAttribute("listaVentas", productoService.detalleVentasDelUsuario(usuario.getId()));
+			model.addAttribute("listaCompras", productoService.detalleComprasDelUsuario(usuario.getId()));
 			return "views/perfilUsuarioView";
 		}
 	}

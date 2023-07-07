@@ -3,6 +3,7 @@ package com.bidbay.service;
 import java.util.List;
 
 import com.bidbay.models.entity.Categoria;
+import com.bidbay.models.entity.Favoritos;
 import com.bidbay.models.entity.OperacionCV;
 import com.bidbay.models.entity.Producto;
 
@@ -25,4 +26,6 @@ public interface IProductoService {
 	public List<OperacionCV> detalleComprasDelUsuario(Long id_usuario);
 	public List<OperacionCV> detalleVentasDelUsuario(Long id_usuario);
 	public void dejarReview(Long idProducto, String mensaje, Double puntaje, HttpSession session);
+	public List<Favoritos>  detalleFavoritosDelUsuario(Long id_usuario);
+	public Boolean clickFavoritoDelUsuario(Long id_usuario , Long id_producto);
 }

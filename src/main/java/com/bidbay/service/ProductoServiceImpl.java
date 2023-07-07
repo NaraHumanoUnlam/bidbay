@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bidbay.models.dao.ICategoriaDao;
+import com.bidbay.models.dao.IFavoritosDao;
 import com.bidbay.models.dao.IOperacionCV;
 import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.dao.IUsuarioDao;
@@ -32,6 +33,8 @@ public class ProductoServiceImpl implements IProductoService {
     @Autowired
     private IOperacionCV operacionCVDao;
  
+    @Autowired
+    private IFavoritosDao favoritosDao;
     
 	@Override
 	@Transactional(readOnly = true)
@@ -164,5 +167,33 @@ public class ProductoServiceImpl implements IProductoService {
 			 sumatoria+= operacion.getCantidad();
 		return sumatoria;
 	}
+	
+	@Override
+	public List<Favoritos>  detalleFavoritosDelUsuario(Long id_usuario) {
+		return (List<Favoritos>) favoritosDao.favoritosDelusuario(id_usuario);
+	}
+	
+	public Favoritos buscoFavoritoDelUsuario(Long id_usuario , Long id_producto) {
+		 for (Favoritos favorito : detalleFavoritosDelUsuario(id_usuario)) {
+			 if(favorito.getProducto().getId() == id_producto)
+				 return favorito;
+		 }
+		return null;
+	}
+	
+
+	public Boolean clickFavoritoDelUsuario(Long id_usuario , Long id_producto) {
+		Favoritos favorito = buscoFavoritoDelUsuario(id_usuario ,id_producto);
+		if (favorito == null) {
+			favorito.setProducto(findOne(id_producto));
+			favorito.setUsuario(usuarioDao.findById(id_usuario).orElse(null));
+			favoritosDao.save(favorito);
+			return true;
+		} else {
+			favoritosDao.delete(favorito);
+			return false;
+		}
+	}
+	
 
 }

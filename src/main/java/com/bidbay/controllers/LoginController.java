@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
+import com.bidbay.models.entity.RolUsuario;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.IUsuarioService;
 
@@ -45,6 +45,14 @@ public class LoginController {
 	    } else {
 	    	session.setAttribute("idUsuario", usuarioBuscado.getId());
 	    	session.setAttribute("logueo", usuarioBuscado.getNick());
+	    	switch (usuarioBuscado.getRol()) {
+	    	case ROL_USUARIO:
+	    		session.setAttribute("rol", "Usuario");
+	    		break;
+	    	case ROL_MODELADOR:
+	    		session.setAttribute("rol", "Modelador");
+	    		break;
+	    	}
 	        return "redirect:home";
 	    }
 	}

@@ -195,5 +195,18 @@ public class ProductoServiceImpl implements IProductoService {
 		}
 	}
 	
+	@Override
+	public List<OperacionCV> findAllComprasVentas() {
+		   return (List<OperacionCV>)operacionCVDao.findAll();
+	}
+	
+	@Override
+	public Integer cantidadComprasVentas() {
+		 Integer sumatoria=0;
+		 for (OperacionCV operacion : findAllComprasVentas()) 
+			 sumatoria+= operacion.getCantidad();
+		return sumatoria;
+	}
+
 
 }

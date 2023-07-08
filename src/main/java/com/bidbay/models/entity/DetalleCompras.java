@@ -22,11 +22,23 @@ public class DetalleCompras implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idDetalle;
-	private int cantidad;
-	@Column(name = "precio_compra")
 	
+	private int cantidad;
+	
+	@Column(name = "precio_compra")
 	private Double precioCompra;
+	
+	@Column(name = "precio_unitario")
+	private Double precioUnitario;
 
+	public Double getPrecioUnitario() {
+		return precioUnitario;
+	}
+
+
+	public void setPrecioUnitario(Double precioUnitario) {
+		this.precioUnitario = precioUnitario;
+	}
 	@NotNull
 	@OneToOne
 	@JoinColumn(name = "productos", referencedColumnName = "id")

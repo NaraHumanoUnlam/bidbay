@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bidbay.models.entity.Usuario;
+import com.bidbay.service.INotificacionService;
 import com.bidbay.service.IUsuarioService;
 
 import jakarta.validation.Valid;
@@ -21,6 +22,9 @@ public class LoginController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+	private INotificacionService notificacionService;
 
 	@RequestMapping(value="login", method = RequestMethod.GET)
 	public String loguear(Model model) {
@@ -65,6 +69,7 @@ public class LoginController {
 		model.put("titulo", "Registro Usuario");
 		Usuario usuario = new Usuario();
 		model.put("usuario", usuario);
+		
 		return "views/register";
 	}
 	
@@ -78,9 +83,17 @@ public class LoginController {
 	    if (usuarioExistente == null) {
 		    try {
 		        usuarioService.save(usuario);
+		        
 		    } catch (Exception e) {
 		        model.addAttribute("error", "Error al guardar el usuario: " + e.getMessage());
 		        return "views/register";
+		    }
+		    
+		    try {
+		    	notificacionService.crearNotificacion("Bienvenida", "¡Bienvenido " + usuario.getNick() + "a BIDBAY!", usuario.getId(),"");
+		    }catch(Exception e) {
+		    	model.addAttribute("error", "Error generar notificacion para el usuario: " + e.getMessage());
+		    	return "views/register";
 		    }
 
 		    return "redirect:/login";

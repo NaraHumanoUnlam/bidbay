@@ -119,21 +119,7 @@ public class ProductoServiceImpl implements IProductoService {
 	
 	
 
-	@Override
-	public void dejarReview(Long idProducto, String mensaje, Double puntaje, HttpSession session) {
-		// TODO Auto-generated method stub
-		Usuario usuario = usuarioDao.findById((Long) session.getAttribute("idUsuario")).orElse(null);
-        Producto producto = productoDao.findById(idProducto).orElse(null);
-        
-        if (usuario != null && producto != null) {
-            producto.dejarReview(usuario, mensaje, puntaje);
-            productoDao.save(producto);
-            
-            Notificacion notificacion = new Notificacion("Reseña","¡Bienvenido!", usuario);
-            usuario.agregarNotificacion(notificacion);
-            usuarioDao.save(usuario);
-            } 
-        }
+	
 	
 	@Override
 	public List<Producto> productoDelUsuario(Long id_usuario) {

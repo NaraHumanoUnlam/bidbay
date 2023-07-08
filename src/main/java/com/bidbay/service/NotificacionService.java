@@ -31,6 +31,18 @@ public class NotificacionService implements INotificacionService{
 	public void save(Notificacion notificacion) {
 		notificacionDao.save(notificacion);
 	}
+
+	@Override
+	@Transactional
+	public void eliminarNotificacion(Long id) {
+		notificacionDao.eliminarNotificacion(id);
+	}
+
+	@Override
+	public void crearNotificacion(String titulo, String notificacion, Long idUsuario, String enlace) {
+		notificacionDao.crearNotificacion(titulo, notificacion, idUsuario, enlace);
+		
+	}
 	
 	
 

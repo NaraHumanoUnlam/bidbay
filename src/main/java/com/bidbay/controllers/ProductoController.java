@@ -53,6 +53,7 @@ public class ProductoController {
 		
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
 		}else {
 			return "redirect:/login";
 		} 
@@ -86,6 +87,7 @@ public class ProductoController {
 			model.put("botonSubmit", "Vender");
 			model.put("categorias", categoriaService.findAll());
 			model.put("logueo",session.getAttribute("logueo"));
+			model.put("rol",session.getAttribute("rol"));
 			return "views/productoForm";
 		}
 	}
@@ -180,12 +182,17 @@ public class ProductoController {
 	}
 
 	@RequestMapping(value = "/details/{id}")
-	public String detalles(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+	public String detalles(@PathVariable(value = "id") Long id,HttpSession session, Map<String, Object> model) {
+		
 		Producto p = null;
 		if (id > 0) {
 			p = productoService.findOne(id);
 		} else {
 			return "views/productoDeatailView";
+		}
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.put("logueo",session.getAttribute("logueo"));
+			model.put("rol",session.getAttribute("rol"));
 		}
 		model.put("producto", p);
 		model.put("titulo", "Detalles del Producto");

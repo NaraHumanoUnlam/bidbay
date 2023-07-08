@@ -45,6 +45,7 @@ public class CarritoController {
         model.addAttribute("carrito", carritoService.findOneByUserID(idUsuario));
         model.addAttribute("precioTotal", carritoService.calcularPrecioTotal(idUsuario));
         model.addAttribute("logueo",session.getAttribute("logueo"));
+        model.addAttribute("rol",session.getAttribute("rol"));
         return "views/carritoView";
     }
 
@@ -64,6 +65,7 @@ public class CarritoController {
     	}
         carritoService.editCarritoItem((Long) session.getAttribute("idUsuario"), id, stock, redirectAttributes);
         model.addAttribute("logueo",session.getAttribute("logueo"));
+        model.addAttribute("rol",session.getAttribute("rol"));
         return "redirect:/carrito/listar";
     }
 

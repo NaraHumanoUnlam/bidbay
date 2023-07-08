@@ -28,4 +28,5 @@ public interface IProductoService {
 	public void dejarReview(Long idProducto, String mensaje, Double puntaje, HttpSession session);
 	public List<Favoritos>  detalleFavoritosDelUsuario(Long id_usuario);
 	public Boolean clickFavoritoDelUsuario(Long id_usuario , Long id_producto);
+	public void actualizarStock (Integer cantidad, Long id); 
 }

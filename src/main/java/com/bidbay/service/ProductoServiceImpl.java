@@ -181,6 +181,11 @@ public class ProductoServiceImpl implements IProductoService {
 			return false;
 		}
 	}
+
+	@Override
+	public void actualizarStock(Integer cantidad, Long id) {
+		productoDao.actualizarStock(cantidad, id);
+	}
 	
 	@Override
 	public List<OperacionCV> findAllComprasVentas() {

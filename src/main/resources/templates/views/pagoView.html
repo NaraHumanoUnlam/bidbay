@@ -33,7 +33,7 @@
             th:object="${pago}" method="POST" class="max-w-lg mx-auto">
                 <div class="mb-4">
                     <label for="documentoCliente" class="block text-gray-700 font-bold mb-2">Documento de Cliente:</label>
-                    <input type="text" id="documentoCliente" th:field="*{DNI}" required class="w-full border-solid border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
+                    <input type="text" id="documentoCliente" th:field="*{DNI}"  pattern="[0-9]{8}" maxlength="8" inputmode="numeric"  required class="w-full border-solid border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-500">
                 </div>
 
                 <div class="mb-4">

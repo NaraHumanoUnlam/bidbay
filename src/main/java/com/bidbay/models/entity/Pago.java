@@ -34,9 +34,12 @@ public class Pago implements Serializable {
 	//@NotEmpty
 	private String DNI;
 	//@NotEmpty
-	private Long numeroTarjeta; 
+	private String numeroTarjeta; 
 	//@NotEmpty
-	private Integer cvc; 
+	private String cvc; 
+	
+	private String tipoDeTarjeta; 
+	
 	//@NotEmpty
 	private String nombreDeCliente; 
 	//@NotEmpty
@@ -48,9 +51,14 @@ public class Pago implements Serializable {
 	
 	private Double precio; 	
 
+	private String mensaje;
+	
+	private Boolean aprobado;
+
 	private String nombreUsario; 
-	private String ticket;
-	private Boolean aprobado=false;
+	
+	private Ticket ticket;
+
 	
 	public Pago ()
 	{
@@ -58,21 +66,22 @@ public class Pago implements Serializable {
 	}
 
 
-	public Pago( String mail, String Dni, Long tarjeta,Integer clave, String nombre, String mes, String anio, Double precioTotal) {
+	public Pago( String Dni, String mail, String tarjeta,String clave, String nombre, String mes, String anio, Double precioTotal) {
 
 
 		this.mailCliente = mailCliente;
 		this.nombreDeCliente = nombre; 
 		this.DNI = Dni;
 		this.numeroTarjeta = tarjeta;
-		this.cvc = cvc;
+		this.cvc = clave;
 		this.mes = mes; 
 		this.anio = anio;
 		this.fechaVencimiento = (this.mes + "/" + this.anio);
 		this.precio = precioTotal;
+		this.aprobado=false;
 	}
 	
-	public Pago(String Dni, Long tarjeta,String mes, String anio, String nombre, Integer cvc) {
+	public Pago(String Dni, String tarjeta,String mes, String anio, String nombre, String cvc) {
 
 
 		this.nombreDeCliente = nombre; 
@@ -82,6 +91,7 @@ public class Pago implements Serializable {
 		this.mes = mes; 
 		this.anio = anio;
 		this.fechaVencimiento = (this.mes + "/" + this.anio);
+		this.aprobado=false;
 	}
 
 
@@ -110,19 +120,19 @@ public class Pago implements Serializable {
 		DNI = dNI;
 	}
 
-	public Long getNumeroTarjeta() {
+	public String getNumeroTarjeta() {
 		return numeroTarjeta;
 	}
 
-	public void setNumeroTarjeta(Long numeroTarjeta) {
+	public void setNumeroTarjeta(String numeroTarjeta) {
 		this.numeroTarjeta = numeroTarjeta;
 	}
 
-	public Integer getCvc() {
+	public String getCvc() {
 		return cvc;
 	}
 
-	public void setCvc(Integer cvc) {
+	public void setCvc(String cvc) {
 		this.cvc = cvc;
 	}
 
@@ -178,11 +188,11 @@ public class Pago implements Serializable {
 		this.anio = anio;
 	}
 
-	public String getTicket() {
+	public Ticket getTicket() {
 		return ticket;
 	}
-
-	public void setTicket(String ticket) {
+//revisar ticket 
+	public void setTicket(Ticket ticket) {
 		this.ticket = ticket;
 	}
 	
@@ -193,5 +203,20 @@ public class Pago implements Serializable {
 	public void setAprobado(Boolean aprobado) {
 		this.aprobado = aprobado;
 		}
-	
-}
+	public String getMensaje() {
+		return mensaje;
+	}
+
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+	public String getTipoDeTarjeta() {
+		return tipoDeTarjeta;
+	}
+
+
+	public void setTipoDeTarjeta(String tipoDeTarjeta) {
+		this.tipoDeTarjeta = tipoDeTarjeta;
+	}
+}//ultima llave

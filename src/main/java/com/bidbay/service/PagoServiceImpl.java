@@ -65,17 +65,19 @@ public class PagoServiceImpl implements IPagoService {
 	@Override
 	public Pago pagarParticular(Pago pagoARealizar, Long idCompra, Long idUsuario) {
 		Compras compraAPagar = compraDao.findById(idCompra).orElse(null);
-		if (validarPago(pagoARealizar) && compraAPagar != null) {	
+		if (validarPago(pagoARealizar).getAprobado() && compraAPagar != null) {	
 			save(pagoARealizar);
 			compraAPagar.setIdPago(pagoARealizar.getIdPago());
 			LocalDate currentDate = LocalDate.now();
 	        Date fecha = java.sql.Date.valueOf(currentDate);
 	        compraAPagar.setFecha(fecha);
 			compraDao.save(compraAPagar);
+
 			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario);
 			pagoARealizar.setAprobado(true);
 		}else {
 			pagoARealizar.setAprobado(false);
+
 		}
 		return pagoARealizar;
 	}
@@ -83,15 +85,19 @@ public class PagoServiceImpl implements IPagoService {
 	@Transactional
 	@Override
 	public Pago pagarTotal(Pago pagoARealizar, Long idUsuario) {
-		if (validarPago(pagoARealizar)) {	
+		if (validarPago(pagoARealizar).getAprobado()) {	
 			save(pagoARealizar);
 			this.pagarComprasDelUsuario(pagoARealizar.getIdPago(), idUsuario);
+
 			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario);
 			pagoARealizar.setAprobado(true);
 		}else {
 			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue denegado", idUsuario);
 			pagoARealizar.setAprobado(false);
 		}
+
+		} //marcar mensaje a devolver
+		
 		return pagoARealizar;
 	}
 	
@@ -109,35 +115,53 @@ public class PagoServiceImpl implements IPagoService {
 		}
 	}
 
-	private boolean validarPago(Pago pagoAGenerar) {
-		return true;
-		/*int validacion=0;
-		//datos de tarjeta hardcodeado
-		if (pagoAGenerar.getNumeroTarjeta().equals(pagoAGenerar.getNumeroTarjeta())) {
-			//traer datos  avalidar, 5 tarjetas o mp		
+	private Pago validarPago(Pago pagoAGenerar) {
+		String regexNumeroT = "^[0-9]{1,16}$";
+		String regexCVC = "^[0-9]{1,3}$";
+		String regexNombre = "^[a-zA-Z]+$";
+		int validacion=0;
+		
+		if (pagoAGenerar.getNumeroTarjeta().matches(regexNumeroT)) {
 			validacion++;
-			if(pagoAGenerar.getCvc().equals(pagoAGenerar.getCvc())) {
 
+			if(pagoAGenerar.getCvc().matches(regexCVC)) {
 				validacion++;
-				if(pagoAGenerar.getNombreDeCliente().equals("otro")) {
-
+				
+				if(pagoAGenerar.getNombreDeCliente().matches(regexNombre)) {
 					validacion++;
-					System.out.println("validaciones exitosas: " + validacion);
-					return true;
+					pagoAGenerar.setMensaje("validaciones exitosas, su pago fue aprobado! ");
+					pagoAGenerar.setAprobado(true);
+					System.out.println(pagoAGenerar.getAprobado());
+		
+					String primerosCuatroDigitos = pagoAGenerar.getNumeroTarjeta().substring(0, 4);
+					if (primerosCuatroDigitos.equals("4517")){
+						pagoAGenerar.setTipoDeTarjeta("Debito");
+					}else {
+						pagoAGenerar.setTipoDeTarjeta("Credito");
+					}
+					
+					return pagoAGenerar;
 				}else {
-					System.out.println(pagoAGenerar.getNombreDeCliente() + " es un nombre invalido");
-					return false;
+					pagoAGenerar.setMensaje("Pago Rechazado: " + pagoAGenerar.getNombreDeCliente() + " es un nombre invalido");
+					return pagoAGenerar;
 				}
 			}
 			else {
-				System.out.println(pagoAGenerar.getCvc() + " es una clave invalida");
-				return false;
+				pagoAGenerar.setMensaje("Pago Rechazado: " + pagoAGenerar.getCvc() + " es una clave invalida");
+				return pagoAGenerar;
 			}
 		}
 		else {
-			System.out.println(pagoAGenerar.getNumeroTarjeta() + " es una tarjeta invalida");
-			return false;
-		}*/
+			pagoAGenerar.setMensaje("Pago Rechazado: " + pagoAGenerar.getNumeroTarjeta() + " es una tarjeta invalida");
+			
+			return pagoAGenerar;
+		}
+	}
+
+	@Override
+	public void generarTicket(Long idCompra, Double Precio, String nickuser) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

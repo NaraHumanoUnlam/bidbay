@@ -1,7 +1,6 @@
 package com.bidbay.models.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.relational.core.mapping.Embedded.Nullable;
 import jakarta.persistence.CascadeType;
@@ -35,6 +34,10 @@ public class Producto implements Serializable{
 	@Nullable
 	@ManyToOne
 	private Categoria categoria;
+	
+	@Nullable
+	@ManyToOne
+	private Intercambio intercambio;
 	
 	@NotNull
 	private Double precio;
@@ -184,17 +187,29 @@ public class Producto implements Serializable{
 	public static String methodUnderTest() {
 		return "test";
 	}
-	
-	public void dejarReview(Usuario usuario, String mensaje, Double puntaje) {
-	    LocalDateTime fecha = LocalDateTime.now();
-	    Review review = new Review(fecha, usuario, this, mensaje, puntaje);
-	    this.vendedor.setRating(puntaje);
-	    
-	    /*if (reviews == null) {
+
+	public void agregarReview(Review reviewNueva) {
+		// TODO Auto-generated method stub
+		if (reviews == null) {
 	        reviews = new ArrayList<>();
-	    }*/
-	    
-	    reviews.add(review);
+	    }
+	    reviews.add(reviewNueva);
+	}
+
+	public Intercambio getTipoIntercambio() {
+		return intercambio;
+	}
+
+	public void setTipoIntercambio(Intercambio tipoIntercambio) {
+		this.intercambio = tipoIntercambio;
+	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
 	}
 
 }

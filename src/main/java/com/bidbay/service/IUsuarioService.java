@@ -16,8 +16,6 @@ public interface IUsuarioService {
 	public String findNickById (Long object);
 	public Usuario validarExistenciaUsuario(String nick, String email);
 	
-	public void puntuarVendedor(Long idUsuario, Double raiting);
-	public double calcularPromedioRating(Long idUsuario);
 	public Boolean chequearQueElUsuarioEsteLogeado(HttpSession session);
 	public Usuario getUsuarioActualmenteLogeado(HttpSession session);
 }

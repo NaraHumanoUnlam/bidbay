@@ -30,6 +30,7 @@ public class UsuarioController {
 			Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("usuario", usuario);
+			model.addAttribute("rol",session.getAttribute("rol"));
 			model.addAttribute("titulo", "Perfil de " + usuario.getNick().toUpperCase());
 			model.addAttribute("cantidadPublicaciones", productoService.productoDelUsuario(usuario.getId()).size());
 			model.addAttribute("cantidadCompras", productoService.comprasDelUsuario(usuario.getId()));

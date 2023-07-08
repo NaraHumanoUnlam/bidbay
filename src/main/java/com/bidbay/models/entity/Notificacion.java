@@ -3,6 +3,7 @@ package com.bidbay.models.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +29,9 @@ private static final long serialVersionUID = 1L;
 	private String notificacion;
 	
 	private Date fecha;
+	
+	@Nullable
+	private String enlace;
 
 	public Notificacion(Long id,String titulo, String notificacion, Date fecha, Usuario user) {
 		super();
@@ -53,6 +57,60 @@ private static final long serialVersionUID = 1L;
 		this.usuarios = user;
 		this.fecha = new Date(System.currentTimeMillis());
 	}
+
+	public Notificacion() {
+		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Usuario getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Usuario usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getNotificacion() {
+		return notificacion;
+	}
+
+	public String getEnlace() {
+		return enlace;
+	}
+
+	public void setEnlace(String enlace) {
+		this.enlace = enlace;
+	}
+
+	public void setNotificacion(String notificacion) {
+		this.notificacion = notificacion;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+
 	
 	
 	

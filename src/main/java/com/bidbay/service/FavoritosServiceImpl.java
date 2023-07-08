@@ -3,10 +3,12 @@ package com.bidbay.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.bidbay.models.dao.IFavoritosDao;
 import com.bidbay.models.entity.Favoritos;
 
+@Service
 public class FavoritosServiceImpl implements IFavoritosService{
 	@Autowired
 	private IFavoritosDao favoritosDao;

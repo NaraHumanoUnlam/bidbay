@@ -33,6 +33,7 @@ public class ComprasController {
 	public String listar(HttpSession session,Model model) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
 		}else {
 			return "redirect:/login";
 		} 
@@ -47,6 +48,7 @@ public class ComprasController {
 	public String vista(@PathVariable(value = "id") Long id,HttpSession session,Model model) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
 		}else {
 			return "redirect:/login";
 		} 
@@ -60,6 +62,7 @@ public class ComprasController {
 	public String agregar(HttpSession session, Model model) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
 		}else {
 			return "redirect:/login";
 		} 
@@ -75,6 +78,7 @@ public class ComprasController {
 	public String agregarGet(HttpSession session, Model model) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
 		}else {
 			return "redirect:/login";
 		} 

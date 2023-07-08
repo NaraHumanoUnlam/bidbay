@@ -71,6 +71,7 @@ public class PagoServiceImpl implements IPagoService {
 			compraDao.save(compraAPagar);
 
 			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario);
+			notificacionDao.crearNotificacionConEnlace("Reseña", "¡DEJA TU RESEÑA GATO!", idUsuario, "<a href=\"/review/dejarReview/" + compraAPagar.getDetalles().get(0).getProducto().getId() + "\">Dejar Reseña</a>");
 			pagoARealizar.setAprobado(true);
 		} else {
 			pagoARealizar.setAprobado(false);

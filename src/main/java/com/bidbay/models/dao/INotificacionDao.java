@@ -15,4 +15,8 @@ public interface INotificacionDao extends CrudRepository<Notificacion, Long>{
 	@Modifying
 	@Query(value = "insert into notificacion (fecha, titulo, notificacion, usuarios_id) values (current_date(),?,?,?)", nativeQuery = true)
 	public void crearNotificacion(String titulo, String texto, Long idUsuario);
+	
+	@Modifying
+	@Query(value = "insert into notificacion (fecha, titulo, notificacion, usuarios_id, enlace) values (current_date(),?,?,?, ?)", nativeQuery = true)
+	public void crearNotificacionConEnlace(String titulo, String texto, Long idUsuario, String enlace);
 }

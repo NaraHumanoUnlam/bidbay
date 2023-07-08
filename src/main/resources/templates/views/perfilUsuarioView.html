@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body>
+
+    <header th:replace="views/layouts/plantilla.html :: header"></header>
+
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-4 "  th:if="${rol != 'Moderador'}">
+                <div class="card mb-4">
+                    <div class="card-body text-center btn-sombra">
+
+                        <h5 class="my-3 text-upp" style="text-transform: capitalize" th:text="${usuario.nick}"></h5>
+                        <p class="text-muted mb-4" th:text="'Número de Usuario: ' + ${usuario.id}"></p>
+                        <div class="d-flex justify-content-center mb-2">
+                            <a th:href="@{/usuario/logOut}" class="btn btn-outline-primary ms-1">Cerrar Sesión</a>
+                            <a class="btn btn-outline-primary ms-1">Editar Perfil</a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-4 "  th:if="${rol == 'Moderador'}">
+                <div class="card mb-4">
+                    <div class="card-body text-center btn-sombra">
+
+                        <h5 class="my-3 text-upp" style="text-transform: capitalize" th:text="${usuario.nick}"></h5>
+                        <p class="text-muted mb-4" th:text="'Número de Usuario: ' + ${usuario.id}"></p>
+                        <div class="d-flex justify-content-center mb-2">
+                            <p class="text-muted mb-4">Estadisticas Generales</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-8">
+
+
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <a class="card mb-4 mb-md-0 btn-sombra" onmouseover="mostrarPopupPublicaciones();"
+                            onmouseout="ocultarPopupPublicaciones();">
+                            <div class="card-body perfil-card">
+                                <h2 class="mb-4" style="font-size: 1.3rem;">Publicaciones</h2>
+                                <div class="d-flex justify-content-between">
+                                    <span class="mb-1" th:text="${cantidadPublicaciones}"></span>
+                                    <span class="text-muted mb-4"></span>
+                                    <p><i class="fa-solid fa-list"></i></p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div id="publicaciones-popup" class="card publicaciones-disabled scrollable-content"
+                            onmouseover="mostrarPopupPublicaciones()" onmouseout="ocultarPopupPublicaciones()">
+                            <p class="popup-producto_titulo" th:if="${listaPublicaciones.size() == 0 }">Aún no has
+                                publicado ningún producto</p>
+                            <p class="popup-producto_titulo" th:if="${listaPublicaciones.size() > 0 }">Lista de
+                                Publicaciones</p>
+                            <a th:each="producto: ${listaPublicaciones}"
+                                th:href="@{/producto/details/{id}(id=${producto.id})}">
+                                <div class="usuario-producto_list ">
+                                    <img th:src="@{'../imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}">
+                                    <div>
+                                        <p th:text="${producto.nombre}"></p>
+                                        <p th:text="'$' + ${producto.precio}"></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <a class="card mb-4 mb-md-0 btn-sombra mt-4" onmouseover="mostrarPopupVentas();"
+                            onmouseout="ocultarPopupVentas();">
+                            <div class="card-body perfil-card">
+                                <h2 class="mb-4" style="font-size: 1.3rem;"> Mis Ventas </h2>
+                                <div class="d-flex justify-content-between">
+                                    <span class="mb-1" th:text="${cantidadVentas}"></span>
+                                    <span class="text-muted mb-4"></span>
+                                    <p><i class="fa-brands fa-sellsy"></i></p>
+                                </div>
+                            </div>
+                        </a>
+                        <div id="ventas-popup" class="card ventas-disabled scrollable-content"
+                            onmouseover="mostrarPopupVentas()" onmouseout="ocultarPopupVentas()">
+                            <p class="popup-producto_titulo" th:if="${listaVentas.size() == 0 }">Aún no has vendido
+                                ningún producto</p>
+                            <p class="popup-producto_titulo" th:if="${listaVentas.size() > 0 }">Lista de Ventas</p>
+                            <a th:each="producto: ${listaVentas}">
+                                <div class="usuario-producto_list ">
+                                    <img th:src="@{'../imagenes/'+${producto.imagenProducto}}" th:alt="${producto.imagenProducto}">
+                                    <div>
+                                        <p th:text="${producto.descripcionProducto}"></p>
+                                        <p th:text="'$' + ${producto.precioCompra}"></p>
+                                    </div>
+                                </div>
+                            </a>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 mb-4">
+                        <a class="card mb-4 mb-md-0 btn-sombra" onmouseover="mostrarPopupFavoritos();"
+                            onmouseout="ocultarPopupFavoritos();">
+                            <div class="card-body perfil-card">
+                                <h2 class="mb-4" style="font-size: 1.3rem;">Favoritos</h2>
+                                <div class="d-flex justify-content-between">
+                                    <span class="mb-1" th:text="${cantidadFavoritos}"></span>
+                                    <span class="text-muted mb-4"></span>
+                                    <p><i class="fa fa-heart text-muted"></i></p>
+                                </div>
+                            </div>
+                        </a>
+                        <div id="favoritos-popup" class="card favoritos-disabled scrollable-content"
+                            onmouseover="mostrarPopupFavoritos()" onmouseout="ocultarPopupFavoritos()">
+                            <p class="popup-producto_titulo" th:if="${listaFavoritos.size() == 0 }">Aún no has
+                                añadido ningún producto</p>
+                            <p class="popup-producto_titulo" th:if="${listaFavoritos.size() > 0 }">Lista de
+                                Favoritos</p>
+                            <a th:each="favorito: ${listaFavoritos}"
+                                th:href="@{/producto/details/{id}(id=${favorito.producto.id})}">
+                                <div class="usuario-producto_list ">
+                                    <img th:src="@{'../imagenes/'+${favorito.producto.imagen}}">
+                                    <div>
+                                        <p th:text="${favorito.producto.nombre}"></p>
+                                        <p th:text="'$' + ${favorito.producto.precio}"></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <a class="card mb-4 mb-md-0 mt-4 btn-sombra">
+                            <div class="card-body perfil-card">
+                                <h2 class="mb-4" style="font-size: 1.3rem;"> Mis Compras </h2>
+                                <div class="d-flex justify-content-between">
+                                    <span class="mb-1" th:text="${cantidadCompras}"></span>
+                                    <span class="text-muted mb-4"></span>
+                                    <p><i class="fa-solid fa-cart-shopping"></i></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card mb-4"  th:if="${rol != 'Moderador'}">
+                    <div class="card-body btn-sombra">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Nombre Completo</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${usuario.nombre} + ' ' + ${usuario.apellido}"
+                                    style="text-transform: capitalize;"></p>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${usuario.email}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Teléfono</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${usuario.telefono}"></p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Dirección</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0" th:text="${usuario.direccion}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+    <script>
+        function mostrarPopupFavoritos() {
+            var popup = document.getElementById('favoritos-popup');
+            popup.classList.add('favoritos-active');
+            popup.classList.remove('favoritos-disabled');
+        }
+
+        function ocultarPopupFavoritos() {
+            var popup = document.getElementById('favoritos-popup');
+            popup.classList.remove('favoritos-active');
+            popup.classList.add('favoritos-disabled');
+        }
+
+        function mostrarPopupPublicaciones() {
+            var popup = document.getElementById('publicaciones-popup');
+            popup.classList.add('publicaciones-active');
+            popup.classList.remove('publicaciones-disabled');
+        }
+
+        function ocultarPopupPublicaciones() {
+            var popup = document.getElementById('publicaciones-popup');
+            popup.classList.remove('publicaciones-active');
+            popup.classList.add('publicaciones-disabled');
+        }
+
+        function mostrarPopupVentas() {
+            var popup = document.getElementById('ventas-popup');
+            popup.classList.add('ventas-active');
+            popup.classList.remove('ventas-disabled');
+        }
+
+        function ocultarPopupVentas() {
+            var popup = document.getElementById('ventas-popup');
+            popup.classList.remove('ventas-active');
+            popup.classList.add('ventas-disabled');
+        }
+    </script>
+</body>
+
+</html>

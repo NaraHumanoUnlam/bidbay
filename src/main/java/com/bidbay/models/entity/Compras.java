@@ -59,9 +59,8 @@ public class Compras  implements Serializable {
 		Double precioTotal = 0.0;
 		for(DetalleCompras detalle : detalles) {
             Integer stock = detalle.getCantidad();
-            Double precio = detalle.getPrecioCompra();
-
-            precioTotal += precio * stock;
+            Double precio = detalle.getPrecioUnitario();
+            precioTotal = stock * precio;
         }
 		this.monto = precioTotal;
 	}

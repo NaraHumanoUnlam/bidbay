@@ -7,35 +7,24 @@
 <body>
 
 	<header th:replace="views/layouts/plantilla.html :: header"></header>
-	<aside id="conteiner-notificacion" class="w-full hidden">
-		<div class="flex flex-col">
-			<div class="bg-white  right-0 top-[136px] absolute">
-				<div th:each="item: ${notificaciones}" class="w-[394px] h-[100px] bg-red-200 flex flex-col text-center border-red-400 border-solid border">
-				<p
-					class="text-black text-[24px] font-bold m-2" th:text="${item.titulo}"></p>
-				<p
-					class="text-black text-[16px] font-normal" th:text="${item.notificacion}"></p>
-				</div>
-			</div>
-		</div>
-	</aside>
+	<aside th:replace="views/layouts/plantilla.html :: aside"></aside>
 	<main class="w-full flex h-[900px] justify-center m-auto">
 		<section
 			class="rounded flex w-full h-1/2 justify-around items-center p-5">
 			<div class="p-5">
 				<div
-					class="grid grid-cols-3 text-center items-center justify-center justify-items-center gap-2 h-[250px]">
-					<div th:each="producto: ${productos}" class="mb-10 mb-5 bg-white m-3">
+					class="grid grid-cols-3 text-center items-center justify-center justify-items-center gap-2 h-[250px] rounded">
+					<div th:each="producto: ${productos}" class="mb-10 mb-5 bg-white m-3 shadow">
 						<div class="flex flex-row m-auto w-full h-full w-full bg-white p-2 gap-2">
 							<div class="flex flex-col w-fukk m-2 items-center justify-center">
 							<a th:href="@{/producto/details/{id}(id=${producto.id})}">
 								<img th:src="@{'/imagenes/'+${producto.imagen}}"
-									th:alt="${producto.imagen}" class="h-[150px] w-[150px]" />
+									th:alt="${producto.imagen}" class="h-[200px] w-[200px]" />
 									</a>
 							</div>
-							<div class="flex flex-col  w-[200px] h-[300px] text-sm justify-center items-center content-center gap-4">
+							<div class="flex flex-col  w-[200px] h-[200px] text-sm justify-center items-center content-center gap-3 m-2">
 								<div class="bg-gray-400 h-[2px]"></div>
-								<div class="flex flex-row text-2xl font-bold text-uppercase">
+								<div class="flex flex-row text-xl font-bold text-uppercase">
 									<p class="detalle-titulo" th:text="${producto.nombre}">
 								</div>
 								<div class="bg-gray-400 h-[2px]"></div>
@@ -61,16 +50,7 @@
 	</main>
 
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
-<script type="text/javascript">
-
-function mostrarPopUpNotificacion() {
-
-    let popupNotificacion = document.getElementById('conteiner-notificacion');
-	let btn_notifi = document.getElementById('btn-notificaciones');
-    popupNotificacion.classList.toggle('hidden');
-   
-}
-</script>
+	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
 
 </html>

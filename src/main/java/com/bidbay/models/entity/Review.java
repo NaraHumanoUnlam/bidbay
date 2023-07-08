@@ -1,6 +1,7 @@
 package com.bidbay.models.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
@@ -15,19 +16,21 @@ public class Review implements Serializable {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long idReview;
 
-	private LocalDateTime fecha;
+	private Date fecha;
 
-    @ManyToOne
+	@ManyToOne()
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToOne
+    @JoinColumn(name = "producto_id")
     private Producto producto;
 
     private String mensaje;
 
     private double puntaje;
 
-	public Review(LocalDateTime fecha, Usuario usuario, Producto producto, String mensaje, double puntaje) {
+	public Review(Date fecha, Usuario usuario, Producto producto, String mensaje, double puntaje) {
 		super();
 		this.fecha = fecha;
 		this.usuario = usuario;
@@ -35,5 +38,10 @@ public class Review implements Serializable {
 		this.mensaje = mensaje;
 		this.puntaje = puntaje;
 	}
+
+	public double getPuntaje() {
+		return puntaje;
+	}
+
     
 }

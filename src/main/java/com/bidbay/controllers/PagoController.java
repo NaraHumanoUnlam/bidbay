@@ -1,6 +1,7 @@
 package com.bidbay.controllers;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,20 +46,7 @@ public class PagoController {
 	private INotificacionService notificacionService;
 
 	
-	@RequestMapping(value = "/pago/form/{idCompra}/{precioTotal}", method = RequestMethod.GET)
-	public String pagarCompraParticular(@PathVariable("idCompra") Long id, @PathVariable("precioTotal") Double precioTotal, Model model) {
-		
-		Pago pago = new Pago();
-		Compras compra = compraService.findOne(id);
-	
-		model.addAttribute("pago", pago);
-	    model.addAttribute("titulo", "Formulario de Pago Particular");
-	    model.addAttribute("botonSubmit", "Realizar Pago");
-	    model.addAttribute("precioTotal", precioTotal);
-	    model.addAttribute("pagoParticular", true);
-	    model.addAttribute("compra", compra);
-		return "views/pagoView";
-	}
+
 	
 	@RequestMapping(value = "/pago/form", method = RequestMethod.GET)
 	public String pagarCompraTotal(@RequestParam("precioTotal") Double precioTotal, Model model) {
@@ -84,16 +72,15 @@ public class PagoController {
 	                   @Valid Pago pago,
 	                   BindingResult result,
 	                   Model model, HttpSession session) {
-	    Pago pagoNuevo = new Pago(DNI, Long.valueOf(numeroTarjeta), mes, anio, nombreDeCliente, Integer.valueOf(cvc));
+	    Pago pagoNuevo = new Pago(DNI, numeroTarjeta, mes, anio, nombreDeCliente, cvc);
 	    Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 	    model.addAttribute("titulo", "Formulario de Pago");
 	    model.addAttribute("botonSubmit", "Realizar Pago");
 	    
 	    Pago respuesta = pagoService.pagarTotal(pagoNuevo, usuario.getId());
+	    
 	    if (respuesta.getAprobado()) {
 	        model.addAttribute("ticket", respuesta);
-	        java.util.Date fechaActual = new java.util.Date();
-	        //notificacionService.crearNotificacion("Pago confirmado","Pagaste todas tus compras!", usuario);
 	        return "views/ticketValidadoView";
 	    } else {
 	        model.addAttribute("error", "El pago ha sido rechazado");
@@ -101,6 +88,22 @@ public class PagoController {
 	        //notificacionService.crearNotificacion("Pago denegado","Tu pago ha sido denegado!", usuario);
 	        return "views/ticketRechazadoView";
 	    }
+	}
+	
+	
+	@RequestMapping(value = "/pago/form/{idCompra}/{precioTotal}", method = RequestMethod.GET)
+	public String pagarCompraParticular(@PathVariable("idCompra") Long id, @PathVariable("precioTotal") Double precioTotal, Model model) {
+		
+		Pago pago = new Pago();
+		Compras compra = compraService.findOne(id);
+	
+		model.addAttribute("pago", pago);
+	    model.addAttribute("titulo", "Formulario de Pago Particular");
+	    model.addAttribute("botonSubmit", "Realizar Pago");
+	    model.addAttribute("precioTotal", precioTotal);
+	    model.addAttribute("pagoParticular", true);
+	    model.addAttribute("compra", compra);
+		return "views/pagoView";
 	}
 	
 	@RequestMapping(value = "/pago/form/{idCompra}", method = RequestMethod.POST)
@@ -114,9 +117,9 @@ public class PagoController {
 	                   @PathVariable("idCompra") Long idCompra,
 	                   BindingResult result,
 	                   Model model, HttpSession session) {
-	    Pago pagoNuevo = new Pago(DNI, Long.valueOf(numeroTarjeta), mes, anio, nombreDeCliente, Integer.valueOf(cvc));
-	    Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
-	    Pago respuesta = pagoService.pagarParticular(pagoNuevo, idCompra, usuario.getId());
+		 Pago pagoNuevo = new Pago(DNI, numeroTarjeta, mes, anio, nombreDeCliente, cvc);
+		 Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+	    Pago respuesta = pagoService.pagarParticular(pagoNuevo, idCompra, usuario.getId() );
 	    
 	    model.addAttribute("titulo", "Formulario de Pago");
 	    model.addAttribute("botonSubmit", "Realizar Pago");

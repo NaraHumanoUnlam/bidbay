@@ -3,6 +3,7 @@ package com.bidbay.models.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,6 +30,7 @@ private static final long serialVersionUID = 1L;
 	
 	private Date fecha;
 	
+	@Nullable
 	private String enlace;
 
 	public Notificacion(Long id,String titulo, String notificacion, Date fecha, Usuario user) {

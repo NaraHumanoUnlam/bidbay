@@ -53,7 +53,7 @@ public class ReviewServiceImpl implements IReviewService{
         	reviewDao.save(reviewNueva);
         	usuarioDao.actualizarRating(usuarioId);
         	productoDao.save(producto);
-        	this.notificacionDao.crearNotificacion("Review", "Generaste una review", usuarioId);
+        	this.notificacionDao.crearNotificacion("Review", "Generaste una review", usuarioId,"");
             usuarioDao.save(usuario);
             } 
         }

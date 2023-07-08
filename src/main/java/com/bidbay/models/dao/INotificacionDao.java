@@ -13,10 +13,11 @@ public interface INotificacionDao extends CrudRepository<Notificacion, Long>{
 	public Notificacion obtenerNotificacion(Long id);
 	
 	@Modifying
-	@Query(value = "insert into notificacion (fecha, titulo, notificacion, usuarios_id) values (current_date(),?,?,?)", nativeQuery = true)
-	public void crearNotificacion(String titulo, String texto, Long idUsuario);
+	@Query(value = "insert into notificacion (fecha, titulo, notificacion, usuarios_id,enlace) values (current_date(),?,?,?,?)", nativeQuery = true)
+	public void crearNotificacion(String titulo, String texto, Long idUsuario, String enlace);
+	
 	
 	@Modifying
-	@Query(value = "insert into notificacion (fecha, titulo, notificacion, usuarios_id, enlace) values (current_date(),?,?,?, ?)", nativeQuery = true)
-	public void crearNotificacionConEnlace(String titulo, String texto, Long idUsuario, String enlace);
+	@Query(value = "delete from notificacion where id = ?", nativeQuery = true)
+	public void eliminarNotificacion(Long id);
 }

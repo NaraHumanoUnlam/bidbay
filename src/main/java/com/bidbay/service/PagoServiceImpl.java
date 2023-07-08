@@ -70,8 +70,8 @@ public class PagoServiceImpl implements IPagoService {
 			compraAPagar.setFecha(fecha);
 			compraDao.save(compraAPagar);
 
-			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario);
-			notificacionDao.crearNotificacionConEnlace("Reseña", "¡DEJA TU RESEÑA GATO!", idUsuario, "<a href=\"/review/dejarReview/" + compraAPagar.getDetalles().get(0).getProducto().getId() + "\">Dejar Reseña</a>");
+			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario, "");
+			notificacionDao.crearNotificacion("Reseña", "¡DEJA TU RESEÑA GATO!", idUsuario, "<a href=\"/review/dejarReview/" + compraAPagar.getDetalles().get(0).getProducto().getId() + "\">Dejar Reseña</a>");
 			pagoARealizar.setAprobado(true);
 		} else {
 			pagoARealizar.setAprobado(false);
@@ -87,10 +87,10 @@ public class PagoServiceImpl implements IPagoService {
 			save(pagoARealizar);
 			this.pagarComprasDelUsuario(pagoARealizar.getIdPago(), idUsuario);
 
-			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario);
+			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario,"");
 			pagoARealizar.setAprobado(true);
 		} else {
-			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue denegado", idUsuario);
+			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue denegado", idUsuario, "");
 			pagoARealizar.setAprobado(false);
 		}
 

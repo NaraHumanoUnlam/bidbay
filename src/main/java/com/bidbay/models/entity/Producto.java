@@ -2,10 +2,7 @@ package com.bidbay.models.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.ArrayList;
-
 import org.springframework.data.relational.core.mapping.Embedded.Nullable;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -214,7 +211,5 @@ public class Producto implements Serializable{
 	public void setReviews(List<Review> reviews) {
 		this.reviews = reviews;
 	}
-	
-	
 
 }

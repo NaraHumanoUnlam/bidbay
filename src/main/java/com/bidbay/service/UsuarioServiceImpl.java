@@ -87,7 +87,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return null;
 	}
 
-	@Override
+	/*@Override
 	public void puntuarVendedor(Long idUsuario, Double rating) {
 	    Usuario vendedor = usuarioDao.findById(idUsuario).orElse(null);
 	    if (vendedor != null) {
@@ -108,7 +108,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 			return vendedor.getRating();
 		}
 		return 0.0;
-	}
+	}*/
 	
 	@Override
     public Boolean chequearQueElUsuarioEsteLogeado(HttpSession session) {
@@ -171,6 +171,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
     	Usuario u = findOne(idUsuario);
     	return u.getPublicaciones();
     }
+
     
 	
 }

@@ -195,17 +195,13 @@ public class Producto implements Serializable{
 	public static String methodUnderTest() {
 		return "test";
 	}
-	
-	public void dejarReview(Usuario usuario, String mensaje, Double puntaje) {
-	    LocalDateTime fecha = LocalDateTime.now();
-	    Review review = new Review(fecha, usuario, this, mensaje, puntaje);
-	    this.vendedor.setRating(puntaje);
-	    
-	    /*if (reviews == null) {
+
+	public void agregarReview(Review reviewNueva) {
+		// TODO Auto-generated method stub
+		if (reviews == null) {
 	        reviews = new ArrayList<>();
-	    }*/
-	    
-	    reviews.add(review);
+	    }
+	    reviews.add(reviewNueva);
 	}
 
 	public Intercambio getTipoIntercambio() {

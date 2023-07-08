@@ -28,6 +28,8 @@ private static final long serialVersionUID = 1L;
 	private String notificacion;
 	
 	private Date fecha;
+	
+	private String enlace;
 
 	public Notificacion(Long id,String titulo, String notificacion, Date fecha, Usuario user) {
 		super();
@@ -84,6 +86,14 @@ private static final long serialVersionUID = 1L;
 
 	public String getNotificacion() {
 		return notificacion;
+	}
+
+	public String getEnlace() {
+		return enlace;
+	}
+
+	public void setEnlace(String enlace) {
+		this.enlace = enlace;
 	}
 
 	public void setNotificacion(String notificacion) {

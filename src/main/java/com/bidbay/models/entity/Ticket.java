@@ -34,8 +34,7 @@ public class Ticket implements Serializable {
 	//id usuario entonces
 	private String nickUser;
 	
-	//direccionDe empresa
-	private String direccion; 
+
 
 
 	public Ticket () {
@@ -92,14 +91,6 @@ public class Ticket implements Serializable {
 	}
 
 
-	public String getDireccion() {
-		return direccion;
-	}
-
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
 
 
 }

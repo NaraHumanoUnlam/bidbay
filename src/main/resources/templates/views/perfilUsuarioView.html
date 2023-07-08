@@ -10,7 +10,7 @@
 
     <div class="container py-5">
         <div class="row">
-            <div class="col-lg-4 ">
+            <div class="col-lg-4 "  th:if="${rol != 'Modelador'}">
                 <div class="card mb-4">
                     <div class="card-body text-center btn-sombra">
 
@@ -19,6 +19,20 @@
                         <div class="d-flex justify-content-center mb-2">
                             <a th:href="@{/usuario/logOut}" class="btn btn-outline-primary ms-1">Cerrar Sesión</a>
                             <a class="btn btn-outline-primary ms-1">Editar Perfil</a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="col-lg-4 "  th:if="${rol == 'Modelador'}">
+                <div class="card mb-4">
+                    <div class="card-body text-center btn-sombra">
+
+                        <h5 class="my-3 text-upp" style="text-transform: capitalize" th:text="${usuario.nick}"></h5>
+                        <p class="text-muted mb-4" th:text="'Número de Usuario: ' + ${usuario.id}"></p>
+                        <div class="d-flex justify-content-center mb-2">
+                            <p class="text-muted mb-4">Estadisticas Generales</p>
                         </div>
                     </div>
                 </div>
@@ -117,7 +131,7 @@
                     </div>
                 </div>
 
-                <div class="card mb-4">
+                <div class="card mb-4"  th:if="${rol != 'Modelador'}">
                     <div class="card-body btn-sombra">
                         <div class="row">
                             <div class="col-sm-3">

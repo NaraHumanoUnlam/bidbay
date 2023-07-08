@@ -38,6 +38,7 @@ public class ComprasController {
 		} 
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 		model.addAttribute("titulo", "Listado de Compras");
+		model.addAttribute("rol", "Usuario");
 		model.addAttribute("compras", comprasService.comprasDelUsuario(usuario.getId()));
 		model.addAttribute("precioTotal", comprasService.calcularMontoTotalDeCompras(usuario.getId()));
 		return "views/misComprasView";
@@ -51,6 +52,7 @@ public class ComprasController {
 			return "redirect:/login";
 		} 
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+		model.addAttribute("rol", "Usuario");
 		model.addAttribute("titulo", "Listado de Detalles de Compra: " + id);
 		model.addAttribute("detalles", detalleServices.listarDetallePorId(id));
 		return "views/detalleMisComprasView";

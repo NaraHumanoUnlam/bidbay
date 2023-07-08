@@ -41,6 +41,8 @@ public class Usuario implements Serializable{
 		@NotEmpty
 		private String telefono;
 		
+		private RolUsuario rol;
+		
 		@OneToMany(mappedBy = "usuarios", cascade = CascadeType.ALL, orphanRemoval = true)
 		private List<Notificacion> notificaciones;
 		
@@ -53,9 +55,15 @@ public class Usuario implements Serializable{
 		
 		@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendedor", cascade = CascadeType.ALL)
 		private List<Producto> publicaciones;
-
-
 		
+		public RolUsuario getRol() {
+			return rol;
+		}
+
+		public void setRol(RolUsuario rol) {
+			this.rol = rol;
+		}
+
 		public Long getId() {
 			return id;
 		}
@@ -145,6 +153,7 @@ public class Usuario implements Serializable{
 			this.apellido = apellido;
 			this.direccion = direccion;
 			this.telefono = telefono;
+			this.rol = RolUsuario.ROL_USUARIO;
 			this.notificaciones = new ArrayList<Notificacion>();
 		}
 
@@ -159,11 +168,13 @@ public class Usuario implements Serializable{
 			this.apellido = apellido;
 			this.direccion = direccion;
 			this.telefono = telefono;
+			this.rol = RolUsuario.ROL_USUARIO;
 			this.notificaciones = new ArrayList<Notificacion>();
 		}
 
 		public Usuario() {
 			super();
+			this.rol = RolUsuario.ROL_USUARIO;
 		}
 
 		public void agregarNotificacion(Notificacion notificacion) {

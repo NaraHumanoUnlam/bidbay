@@ -64,13 +64,17 @@ public class ModeladorController {
 		}
 	}	
 	
-	@RequestMapping(value = "/listar", method = RequestMethod.GET)
+	@RequestMapping(value = "/compras", method = RequestMethod.GET)
 	public String listar(HttpSession session,Model model) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			if (!session.getAttribute("rol").equals("Modelador")) {
+				return "redirect:/home";
+			}
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 		}else {
 			return "redirect:/login";
 		} 
+		
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 		model.addAttribute("titulo", "Listado de Compras");
 		model.addAttribute("compras", comprasService.comprasDelUsuario(usuario.getId()));
@@ -81,6 +85,9 @@ public class ModeladorController {
 	@RequestMapping(value = "/detalle/{id}")
 	public String vista(@PathVariable(value = "id") Long id,HttpSession session,Model model) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			if (!session.getAttribute("rol").equals("Modelador")) {
+				return "redirect:/home";
+			}
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 		}else {
 			return "redirect:/login";

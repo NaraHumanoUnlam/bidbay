@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.bidbay.models.entity.RolUsuario;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.IProductoService;
 import com.bidbay.service.IComprasService;
@@ -35,6 +34,7 @@ public class ModeladorController {
 	@Autowired
 	private IComprasService comprasService;
 	
+	@Autowired
 	private IDetalleCompraService  detalleServices;
 	
 	
@@ -65,7 +65,7 @@ public class ModeladorController {
 	}	
 	
 	@RequestMapping(value = "/compras", method = RequestMethod.GET)
-	public String listar(HttpSession session,Model model) {
+	public String compras(HttpSession session,Model model) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			if (!session.getAttribute("rol").equals("Modelador")) {
 				return "redirect:/home";
@@ -76,14 +76,15 @@ public class ModeladorController {
 		} 
 		
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+		model.addAttribute("rol", "Modelador");
 		model.addAttribute("titulo", "Listado de Compras");
-		model.addAttribute("compras", comprasService.comprasDelUsuario(usuario.getId()));
-		model.addAttribute("precioTotal", comprasService.calcularMontoTotalDeCompras(usuario.getId()));
+		model.addAttribute("compras", comprasService.findAll());
+		model.addAttribute("precioTotal", 0);
 		return "views/misComprasView";
 	}
 	
 	@RequestMapping(value = "/detalle/{id}")
-	public String vista(@PathVariable(value = "id") Long id,HttpSession session,Model model) {
+	public String detalleCompras(@PathVariable(value = "id") Long id,HttpSession session,Model model) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			if (!session.getAttribute("rol").equals("Modelador")) {
 				return "redirect:/home";
@@ -92,6 +93,7 @@ public class ModeladorController {
 		}else {
 			return "redirect:/login";
 		} 
+		model.addAttribute("rol", "Modelador");
 		model.addAttribute("titulo", "Listado de Detalles de Compra: " + id);
 		model.addAttribute("detalles", detalleServices.listarDetallePorId(id));
 		return "views/detalleMisComprasView";

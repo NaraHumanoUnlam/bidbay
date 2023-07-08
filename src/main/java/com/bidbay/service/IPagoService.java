@@ -13,5 +13,6 @@ public interface IPagoService {
 	public void save (Pago pago);
 	public Pago pagarParticular(Pago pagoARealizar, Long idCompra);
 	public Pago pagarTotal(Pago pagoARealizar, Long idUsuario);
-
+	public void generarTicket(Long idCompra, Double Precio, String nickuser ); 
+	
 }

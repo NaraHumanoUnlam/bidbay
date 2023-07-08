@@ -23,7 +23,7 @@
 					<td th:text="${carritoItem.getStock()}"></td>
 					<td>
 						<form th:action="@{/carrito/editar/{id}(id=${carritoItem.getIdItem()})}" method="post">
-							<input type="number" name="cantidadProductos" th:value="${carritoItem.getStock()}"
+							<input type="number" name="cantidadProductos" th:value="${carritoItem.getStock()}" min="1"
 								class="border border-gray-400 rounded py-2 px-3">
 							<button type="submit">Guardar</button>
 						</form>

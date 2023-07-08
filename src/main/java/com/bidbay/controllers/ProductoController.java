@@ -49,11 +49,13 @@ public class ProductoController {
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
-			HttpSession session, @RequestParam("search") @Nullable String search, Model model) {
 
-		if (usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
-			model.addAttribute("logueo", session.getAttribute("logueo"));
-		} else {
+			HttpSession session,@RequestParam("search") @Nullable String search, Model model) {
+		
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
+		}else {
 			return "redirect:/login";
 		}
 		Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
@@ -85,7 +87,9 @@ public class ProductoController {
 			model.put("titulo", "¿Qué querés vender?");
 			model.put("botonSubmit", "Vender");
 			model.put("categorias", categoriaService.findAll());
-			model.put("logueo", session.getAttribute("logueo"));
+			model.put("logueo",session.getAttribute("logueo"));
+			model.put("rol",session.getAttribute("rol"));
+
 			return "views/productoForm";
 		}
 	}
@@ -179,6 +183,7 @@ public class ProductoController {
 	}
 
 	@RequestMapping(value = "/details/{id}")
+
 	public String detalles(@PathVariable(value = "id") Long id,
 			@RequestParam(value = "fav", required = false) Boolean fav, Map<String, Object> model,
 			HttpSession session) {
@@ -187,6 +192,10 @@ public class ProductoController {
 			p = productoService.findOne(id);
 		} else {
 			return "views/productoDeatailView";
+		}
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.put("logueo",session.getAttribute("logueo"));
+			model.put("rol",session.getAttribute("rol"));
 		}
 		model.put("producto", p);
 		model.put("titulo", "Detalles del Producto");

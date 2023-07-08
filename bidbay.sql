@@ -12,4 +12,5 @@ SELECT c.id AS compra,
        p.usuario_id AS usuario_vende
 FROM detalle_compras dc
 JOIN compras c ON dc.compra_id = c.id
-JOIN productos p ON dc.productos = p.id;
+JOIN productos p ON dc.productos = p.id
+where c.id_pago is not null;

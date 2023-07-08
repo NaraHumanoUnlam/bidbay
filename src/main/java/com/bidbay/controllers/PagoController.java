@@ -116,10 +116,10 @@ public class PagoController {
 	                   @Valid Pago pago,
 	                   @PathVariable("idCompra") Long idCompra,
 	                   BindingResult result,
-	                   Model model) {
+	                   Model model, HttpSession session) {
 		 Pago pagoNuevo = new Pago(DNI, numeroTarjeta, mes, anio, nombreDeCliente, cvc);
-		    
-	    Pago respuesta = pagoService.pagarParticular(pagoNuevo, idCompra);
+		 Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+	    Pago respuesta = pagoService.pagarParticular(pagoNuevo, idCompra, usuario.getId() );
 	    
 	    model.addAttribute("titulo", "Formulario de Pago");
 	    model.addAttribute("botonSubmit", "Realizar Pago");

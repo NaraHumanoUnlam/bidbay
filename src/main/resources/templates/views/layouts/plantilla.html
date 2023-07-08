@@ -52,34 +52,49 @@
 		</div>
 		<div class="header-icons header-col">
 			<div id="divCarrito" class="text-gray-100">
-				<div th:if="${logueo != null}"
-					class="flex flex-col justify-center items-center content-center">
-					<a th:href=@{/usuario/perfil} class="text-2xl mr-2"><i
-						class="fa-regular fa-user"></i></a>
+				
+				<div th:if="${logueo != null}" class="flex flex-col justify-center items-center content-center">
+					<a th:href=@{/usuario/perfil} class="text-2xl mr-2" th:if="${rol != 'Moderador'}"><i class="fa-regular fa-user"></i></a>
+					<a th:href=@{/moderador/perfilModerador} class="text-2xl mr-2" th:if="${rol == 'Moderador'}"><i class="fa-regular fa-user"></i></a>
 					<p th:text="${logueo}"></p>
 				</div>
+				
 				<div th:if="${logueo == null}" class="flex flex-col">
-					<a th:href=@{/login} class="text-2xl mr-2"><i
-						class="fa-regular fa-user"></i></a>
-				</div>
-				<a href="#" id="btn-notificaciones" onclick="mostrarPopUpNotificacion()"> <img alt="sin_notificacion" src="/img/icons/Doorbell.png"
-            class="w-8 h-8">
-    </a>
-    
-    <a th:href="@{/producto/listar}" class="text-2xl mr-5"><i
-					class="fa-solid fa-tag"></i></a> <a th:href="@{/miscompras/listar}"
-					class="text-2xl mr-5"><i class="fa-solid fa-bag-shopping"></i></a>
-				<a th:href="@{/carrito/listar}" class="text-2xl mr-5"><i
-					class="fa-sharp fa-solid fa-cart-plus"></i></a> <a
-					th:href="@{/usuario/logOut}" class="text-2xl mr-5"><i
-					class="fa fa-fw fa-sign-out"></i></a>
+					<a th:href=@{/login} class="text-2xl mr-2"><i class="fa-regular fa-user"></i></a>
+				</div>	
+						
+				<a href="#" id="btn-notificaciones" onclick="mostrarPopUpNotificacion()"> <img alt="sin_notificacion" src="/img/icons/Doorbell.png" class="w-8 h-8"> </a>  
+    			<a th:href="@{/producto/listar}" class="text-2xl mr-5" th:if="${rol != 'Moderador'}"><i class="fa-solid fa-tag"></i></a> 
+    			<a th:href="@{/moderador/productos}" class="text-2xl mr-5" th:if="${rol == 'Moderador'}"><i class="fa-solid fa-tag"></i></a>
+    			<a th:href="@{/miscompras/listar}" class="text-2xl mr-5"  th:if="${rol != 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>
+    			<a th:href="@{/moderador/compras}" class="text-2xl mr-5"  th:if="${rol == 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>
+				<a th:href="@{/carrito/listar}" class="text-2xl mr-5" th:if="${rol != 'Moderador'}"><i class="fa-sharp fa-solid fa-cart-plus"></i></a> 
+				<a th:href="@{/usuario/logOut}" class="text-2xl mr-5"><i class="fa fa-fw fa-sign-out"></i></a>
 			</div>
 		</div>
 		<div id="notificacion" class="hidden">
 			<i class="fa-sharp fa-regular fa-bell"></i>
 		</div>
 	</header>
-	
+	<aside id="conteiner-notificacion" class="w-full hidden">
+		<div class="flex flex-col">
+			<div class="bg-white  right-0 top-[136px] absolute">
+				<div th:each="item: ${notificaciones}"
+					class="w-[394px] h-[100px] flex flex-col text-center border-red-400 border-solid border">
+					<div class="grid grid-flow-row items-center justify-center content-center gap-10">
+						<p class="text-black text-[24px] font-bold m-2 col-start-1 row-start-1"
+							th:text="${item.titulo}"></p>
+						<a href="#" th:href="@{/notificacion/eliminar} +'/' + ${item.id}" id="btn-eliminar-notificacion" class="col-start-4 row-start-1"><img src="/img/icons/Remove.png" alt="eliminar notificacion"></a> 
+					</div>
+					<p class="text-black text-[16px] font-normal"
+						th:utext="${item.notificacion}"></p>
+					<div th:if="${item.enlace} != null" th:inline="text">
+						<p th:utext="${item.enlace}"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</aside>
 	<footer th:fragment="footer" class="footer bg-dark text-white mt-5 p-4"
 		style="margin-top: 10rem !important;">
 		<div class="container">
@@ -92,16 +107,14 @@
 			</div>
 		</div>
 	</footer>
-<script type="text/javascript">
+	<script type="text/javascript">
+		function mostrarPopUpNotificacion() {
 
-function mostrarPopUpNotificacion() {
-
-    let popupNotificacion = document.getElementById('conteiner-notificacion');
-	let btn_notifi = document.getElementById('btn-notificaciones');
-    popupNotificacion.classList.toggle('hidden');
-   
-}
-</script>
+			let popupNotificacion = document.getElementById('conteiner-notificacion');
+			popupNotificacion.classList.toggle('hidden');
+			
+		}
+	</script>
 </body>
 
 </html>

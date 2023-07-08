@@ -20,6 +20,7 @@ import com.bidbay.models.entity.Carrito;
 import com.bidbay.models.entity.CarritoItem;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICarritoService;
+import com.bidbay.service.INotificacionService;
 import com.bidbay.service.IProductoService;
 import com.bidbay.service.IUsuarioService;
 
@@ -34,6 +35,10 @@ public class CarritoController {
     
     @Autowired
 	private IUsuarioService usuarioService;
+    
+    @Autowired
+    private INotificacionService notifiacionService;
+   
 
     @RequestMapping(value="/listar", method = RequestMethod.GET)
     public String listar(Model model, HttpSession session) {
@@ -45,6 +50,8 @@ public class CarritoController {
         model.addAttribute("carrito", carritoService.findOneByUserID(idUsuario));
         model.addAttribute("precioTotal", carritoService.calcularPrecioTotal(idUsuario));
         model.addAttribute("logueo",session.getAttribute("logueo"));
+        model.addAttribute("rol",session.getAttribute("rol"));
+        model.addAttribute("notificaciones", notifiacionService.findAll());
         return "views/carritoView";
     }
 
@@ -64,6 +71,7 @@ public class CarritoController {
     	}
         carritoService.editCarritoItem((Long) session.getAttribute("idUsuario"), id, stock, redirectAttributes);
         model.addAttribute("logueo",session.getAttribute("logueo"));
+        model.addAttribute("rol",session.getAttribute("rol"));
         return "redirect:/carrito/listar";
     }
 

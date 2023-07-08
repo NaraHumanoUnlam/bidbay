@@ -79,11 +79,10 @@ public class PagoServiceImpl implements IPagoService {
 			Date fecha = java.sql.Date.valueOf(currentDate);
 			compraAPagar.setFecha(fecha);
 			compraDao.save(compraAPagar);
-			
 			//generarTicket(); 
 			descontarStockProductos(compraAPagar);
 			
-			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario);
+			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
 		
 		}
 		return pagoARealizar;
@@ -98,12 +97,12 @@ public class PagoServiceImpl implements IPagoService {
 		if (validarPago(pagoARealizar).getAprobado()) {
 			save(pagoARealizar);
 			this.pagarComprasDelUsuario(pagoARealizar.getIdPago(), idUsuario);
-			
-			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario);
+
+			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
 			
 		} else {
-			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario);
-			
+			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
+
 		}
 
 	// marcar mensaje a devolver

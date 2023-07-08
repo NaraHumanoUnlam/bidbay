@@ -119,21 +119,7 @@ public class ProductoServiceImpl implements IProductoService {
 	
 	
 
-	@Override
-	public void dejarReview(Long idProducto, String mensaje, Double puntaje, HttpSession session) {
-		// TODO Auto-generated method stub
-		Usuario usuario = usuarioDao.findById((Long) session.getAttribute("idUsuario")).orElse(null);
-        Producto producto = productoDao.findById(idProducto).orElse(null);
-        
-        if (usuario != null && producto != null) {
-            producto.dejarReview(usuario, mensaje, puntaje);
-            productoDao.save(producto);
-            
-            Notificacion notificacion = new Notificacion("Reseña","¡Bienvenido!", usuario);
-            usuario.agregarNotificacion(notificacion);
-            usuarioDao.save(usuario);
-            } 
-        }
+	
 	
 	@Override
 	public List<Producto> productoDelUsuario(Long id_usuario) {
@@ -185,6 +171,7 @@ public class ProductoServiceImpl implements IProductoService {
 	public Boolean clickFavoritoDelUsuario(Long id_usuario , Long id_producto) {
 		Favoritos favorito = buscoFavoritoDelUsuario(id_usuario ,id_producto);
 		if (favorito == null) {
+			favorito = new Favoritos();
 			favorito.setProducto(findOne(id_producto));
 			favorito.setUsuario(usuarioDao.findById(id_usuario).orElse(null));
 			favoritosDao.save(favorito);
@@ -200,5 +187,18 @@ public class ProductoServiceImpl implements IProductoService {
 		productoDao.actualizarStock(cantidad, id);
 	}
 	
+	@Override
+	public List<OperacionCV> findAllComprasVentas() {
+		   return (List<OperacionCV>)operacionCVDao.findAll();
+	}
+	
+	@Override
+	public Integer cantidadComprasVentas() {
+		 Integer sumatoria=0;
+		 for (OperacionCV operacion : findAllComprasVentas()) 
+			 sumatoria+= operacion.getCantidad();
+		return sumatoria;
+	}
+
 
 }

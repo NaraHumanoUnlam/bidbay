@@ -70,7 +70,8 @@ public class CompraServiceImpl implements IComprasService{
 		for(CarritoItem carritoItem : items) {
 			DetalleCompras detalle = new DetalleCompras(carritoItem.getProducto(), compras);
 			detalle.setCantidad(carritoItem.getCantidadProductos());
-			detalle.setPrecioCompra(carritoItem.getProducto().getPrecio());
+			detalle.setPrecioCompra(carritoItem.getProducto().getPrecio()*carritoItem.getCantidadProductos());
+			detalle.setPrecioUnitario(carritoItem.getProducto().getPrecio());
 			detalles.add(detalle);
 			carritoItemDao.delete(carritoItem);
 		}
@@ -89,6 +90,7 @@ public class CompraServiceImpl implements IComprasService{
 	        List<DetalleCompras> detallesCompra = compra.getDetalles();
 	        
 	        for (DetalleCompras detalleCompra : detallesCompra) {
+	        	
 	            montoTotal += detalleCompra.getPrecioCompra();
 	        }
 	    }

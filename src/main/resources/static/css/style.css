@@ -196,7 +196,7 @@ a.rainbow-link {
 .detalle-row:last-of-type div a{
   font-weight: 700;
   font-size: 1.2rem;
-  color: rgba(127, 126, 126, 0.727);
+
 }
 
 .row-line{
@@ -267,7 +267,8 @@ a.rainbow-link {
   border: 1px solid #ccc;
   padding: 10px;
   z-index: 5;
-  max-width: 25rem;
+  max-width: 30rem;
+
   width: 100%;
 }
 
@@ -348,4 +349,12 @@ a.rainbow-link {
 .scrollable-content {
   max-height: 300px; 
   overflow-y: auto;
+}
+
+.favorito-true{
+  color: #FF0000;
+}
+
+.favorito-false i{
+  color: rgba(127, 126, 126, 0.727);
 }

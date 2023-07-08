@@ -33,6 +33,7 @@ public class HomeController {
 		model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones );
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
 		}
 		return "index";
 	}

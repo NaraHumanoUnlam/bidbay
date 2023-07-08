@@ -6,7 +6,7 @@
 <body class="">
 
 	<header th:replace="views/layouts/plantilla.html :: header"></header>
-
+	<aside th:replace="views/layouts/plantilla.html :: aside"></aside>
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
 		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
@@ -15,12 +15,14 @@
 					<th>Producto</th>
 					<th>Stock</th>
 					<th>Precio</th>
+					<th>Cantidad</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="carritoItem: ${carrito?.getCarritoItems()}" th:if="${carrito?.getCarritoItems()}">
 					<td th:text="${carritoItem.getProducto().getNombre()}"></td>
 					<td th:text="${carritoItem.getStock()}"></td>
+					<td th:text="${carritoItem.getProducto().getPrecio()}"></td>
 					<td>
 						<form th:action="@{/carrito/editar/{id}(id=${carritoItem.getIdItem()})}" method="post">
 							<input type="number" name="cantidadProductos" th:value="${carritoItem.getStock()}" min="1"
@@ -61,6 +63,7 @@
 		<p th:text="${mensajeExito}" class="text-green-500" th:if="${mensajeExito}"></p>
 		<p th:text="${mensajeError}" class="text-red-500" th:if="${mensajeError}"></p>
 	</main>
+	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
 <script>
 	function submitForm(input) {

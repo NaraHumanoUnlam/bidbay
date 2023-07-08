@@ -39,6 +39,13 @@
                     <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
                 </select>
             </div>
+<!--             <div class="formulario-div"> -->
+<!--                 <label for="intercambio">Seleccione una Intercambio:</label> -->
+<!--                 <select id="intercambio" th:field="*{intercambio.id}" class="select-css"> -->
+<!--                     <option value="" >Seleccione una opción</option> -->
+<!--                     <option th:each="intercambio : ${intercambios}" th:value="${intercambio.id}" th:text="${intercambio.nombre}"></option> -->
+<!--                 </select> -->
+<!--             </div> -->
             <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
             <input type="hidden" th:field="*{id}" />
         </form>

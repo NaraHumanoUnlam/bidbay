@@ -1,0 +1,69 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body>
+
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
+	<aside id="conteiner-notificacion" class="w-full hidden">
+		<div class="flex flex-col">
+			<div class="bg-white  right-0 top-[136px] absolute">
+				<div th:each="item: ${notificaciones}" class="w-[394px] h-[100px] bg-red-200 flex flex-col text-center border-red-400 border-solid border">
+				<p
+					class="text-black text-[24px] font-bold m-2" th:text="${item.titulo}"></p>
+				<p
+					class="text-black text-[16px] font-normal" th:utext="${item.notificacion}"></p>
+					<div th:if="${item.enlace} != null" th:inline="text">
+					    <p th:utext="${item.enlace}"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</aside>
+	<main class="w-full flex h-[900px] justify-center m-auto">
+	    <div class="flex flex-col gap-2 text-center">
+	        <h1 class="font-bold m-2 text-[24px]">Dejar Reseña</h1>
+	        <h2>Producto:</h2>
+	        <div class="flex-row flex gap-2">
+	        	<div class="flex flex-col">
+	        		<img th:src="@{'/imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}">
+		        </div>
+		        <div class="flex flex-col gap-2 text-left">
+			        <h2 th:text="${producto.nombre}"></h2>
+		       		<h2 th:text="${producto.descripcion}"></h2>
+		        </div>
+	        </div>
+	        
+	        
+	        <form th:action="@{'/review/dejarReview/' + ${producto.id}}" method="post" class="flex flex-col gap-2">
+	            <textarea name="mensaje" placeholder="Escribe tu reseña"></textarea>
+	            <label for="puntaje">Calificación:</label>
+	            <select name="puntaje">
+	                <option value="1">1 Estrella</option>
+	                <option value="2">2 Estrellas</option>
+	                <option value="3">3 Estrellas</option>
+	                <option value="4">4 Estrellas</option>
+	                <option value="5">5 Estrellas</option>
+	            </select>
+	            <p>*Tu reseña podrá ser vista por otros usuarios cuando busquen sobre este producto</p>
+	            <button type="submit"  class="bg-blue-400 p-3 rounded text-white">Enviar Reseña</button>
+	        </form>
+	    </div>
+	</main>
+
+	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+<script type="text/javascript">
+
+function mostrarPopUpNotificacion() {
+
+    let popupNotificacion = document.getElementById('conteiner-notificacion');
+	let btn_notifi = document.getElementById('btn-notificaciones');
+    popupNotificacion.classList.toggle('hidden');
+   
+}
+</script>
+</body>
+
+</html>

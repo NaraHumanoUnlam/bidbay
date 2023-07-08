@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bidbay.models.dao.INotificacionDao;
 import com.bidbay.models.entity.Notificacion;
+import com.bidbay.models.entity.Usuario;
 
 @Service
 public class NotificacionService implements INotificacionService{
@@ -19,6 +20,7 @@ public class NotificacionService implements INotificacionService{
 	public Notificacion obtenerNotificacion(Long id) {
 		return notificacionDao.obtenerNotificacion(id);
 	}
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<Notificacion> findAll() {
@@ -28,8 +30,8 @@ public class NotificacionService implements INotificacionService{
 	@Override
 	public void save(Notificacion notificacion) {
 		notificacionDao.save(notificacion);
-		
 	}
+	
 	
 
 }

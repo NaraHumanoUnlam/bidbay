@@ -11,7 +11,7 @@ public interface IPagoService {
 
 	public Pago findById(Long numeroDeDoc);
 	public void save (Pago pago);
-	public Pago pagarParticular(Pago pagoARealizar, Long idCompra);
 	public Pago pagarTotal(Pago pagoARealizar, Long idUsuario);
+	public Pago pagarParticular(Pago pagoARealizar, Long idCompra, Long idUsuario);
 
 }

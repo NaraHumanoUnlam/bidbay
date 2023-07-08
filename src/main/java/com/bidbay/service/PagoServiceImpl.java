@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bidbay.models.dao.ICompraDao;
+import com.bidbay.models.dao.INotificacionDao;
 import com.bidbay.models.dao.IPagoDao;
 import com.bidbay.models.dao.IUsuarioDao;
 import com.bidbay.models.entity.Carrito;
@@ -29,6 +30,9 @@ public class PagoServiceImpl implements IPagoService {
 	
 	@Autowired
 	private IUsuarioDao usuarioDao;
+	
+	@Autowired
+	private INotificacionDao notificacionDao;
 
 
 	@Override
@@ -57,9 +61,9 @@ public class PagoServiceImpl implements IPagoService {
 		return  pagoDao.findById(idPago).orElse(null);
 	}
 
-	
+	@Transactional
 	@Override
-	public Pago pagarParticular(Pago pagoARealizar, Long idCompra) {
+	public Pago pagarParticular(Pago pagoARealizar, Long idCompra, Long idUsuario) {
 		Compras compraAPagar = compraDao.findById(idCompra).orElse(null);
 		if (validarPago(pagoARealizar) && compraAPagar != null) {	
 			save(pagoARealizar);
@@ -68,6 +72,7 @@ public class PagoServiceImpl implements IPagoService {
 	        Date fecha = java.sql.Date.valueOf(currentDate);
 	        compraAPagar.setFecha(fecha);
 			compraDao.save(compraAPagar);
+			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario);
 			pagoARealizar.setAprobado(true);
 		}else {
 			pagoARealizar.setAprobado(false);
@@ -75,15 +80,16 @@ public class PagoServiceImpl implements IPagoService {
 		return pagoARealizar;
 	}
 	
+	@Transactional
 	@Override
 	public Pago pagarTotal(Pago pagoARealizar, Long idUsuario) {
 		if (validarPago(pagoARealizar)) {	
 			save(pagoARealizar);
 			this.pagarComprasDelUsuario(pagoARealizar.getIdPago(), idUsuario);
-			
-	        
+			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario);
 			pagoARealizar.setAprobado(true);
 		}else {
+			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue denegado", idUsuario);
 			pagoARealizar.setAprobado(false);
 		}
 		return pagoARealizar;

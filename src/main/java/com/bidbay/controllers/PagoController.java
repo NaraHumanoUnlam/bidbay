@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bidbay.models.dao.INotificacionDao;
 import com.bidbay.models.entity.Carrito;
 import com.bidbay.models.entity.Compras;
 import com.bidbay.models.entity.Pago;
@@ -20,8 +21,10 @@ import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.ICarritoService;
 import com.bidbay.service.IComprasService;
+import com.bidbay.service.INotificacionService;
 import com.bidbay.service.IPagoService;
 import com.bidbay.service.IUsuarioService;
+import com.bidbay.service.NotificacionService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -37,6 +40,9 @@ public class PagoController {
 	
 	@Autowired
 	private IComprasService compraService;
+	
+	@Autowired
+	private INotificacionService notificacionService;
 
 	
 	@RequestMapping(value = "/pago/form/{idCompra}/{precioTotal}", method = RequestMethod.GET)
@@ -87,9 +93,12 @@ public class PagoController {
 	    if (respuesta.getAprobado()) {
 	        model.addAttribute("ticket", respuesta);
 	        java.util.Date fechaActual = new java.util.Date();
+	        //notificacionService.crearNotificacion("Pago confirmado","Pagaste todas tus compras!", usuario);
 	        return "views/ticketValidadoView";
 	    } else {
 	        model.addAttribute("error", "El pago ha sido rechazado");
+	       
+	        //notificacionService.crearNotificacion("Pago denegado","Tu pago ha sido denegado!", usuario);
 	        return "views/ticketRechazadoView";
 	    }
 	}
@@ -104,10 +113,10 @@ public class PagoController {
 	                   @Valid Pago pago,
 	                   @PathVariable("idCompra") Long idCompra,
 	                   BindingResult result,
-	                   Model model) {
+	                   Model model, HttpSession session) {
 	    Pago pagoNuevo = new Pago(DNI, Long.valueOf(numeroTarjeta), mes, anio, nombreDeCliente, Integer.valueOf(cvc));
-	    
-	    Pago respuesta = pagoService.pagarParticular(pagoNuevo, idCompra);
+	    Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+	    Pago respuesta = pagoService.pagarParticular(pagoNuevo, idCompra, usuario.getId());
 	    
 	    model.addAttribute("titulo", "Formulario de Pago");
 	    model.addAttribute("botonSubmit", "Realizar Pago");

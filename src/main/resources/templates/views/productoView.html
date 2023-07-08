@@ -9,30 +9,38 @@
 
 <main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-		<form th:action="@{/producto/listar}">
+		<form th:action="@{/producto/listar}" th:if="${rol != 'Moderador'}">
+			
+				<input name="search" type="text" placeholder="Buscar">
+				<input type="submit" value="Buscar" class="btn btn-secondary text-light">
+		</form>
+		<form th:action="@{/moderador/productos}" th:if="${rol == 'Moderador'}">
 			
 				<input name="search" type="text" placeholder="Buscar">
 				<input type="submit" value="Buscar" class="btn btn-secondary text-light">
 		</form>
 		
-		
 			<p th:if="${inputValue != null}" th:text="'Resultado de buscar: ' + ${inputValue}"></p>
-			<a th:if="${inputValue != null}" th:text="Volver" th:href="@{/producto/listar}"></a>
+			<a th:if="${rol != 'Moderador'}" class="btn btn-secondary text-light" th:text="Volver" th:href="@{/producto/listar}"></a>
+			<a th:if="${rol == 'Moderador'}" class="btn btn-secondary text-light" th:text="Volver" th:href="@{/moderador/productos}"></a>
 			<br>
 
-				<p>
+				<p  th:if="${rol != 'Moderador'}">
 					<a class="btn btn-secondary text-light"
 					th:href="@{/producto/form}">Agregar Producto</a>
 				</p>
 		
 			<div>
 				<h4>Ordenar: </h4>
-				<div>
-					<a class="btn btn-secondary text-light"
-						th:href="@{/producto/listar?order=asc}"><b>Ascendente</b></a>
-					<a class="btn btn-secondary text-light"
-						th:href="@{/producto/listar?order=desc}"><b>Descendente</b></a>
+				<div th:if="${rol != 'Moderador'}">
+					<a class="btn btn-secondary text-light" th:href="@{/producto/listar?order=asc}"><b>Ascendente</b></a>
+					<a class="btn btn-secondary text-light" th:href="@{/producto/listar?order=desc}"><b>Descendente</b></a>
 					<a class="btn btn-secondary text-light" th:href="@{/producto/listar}"><b>Default</b> </a>
+				</div>
+				<div th:if="${rol == 'Moderador'}">
+					<a class="btn btn-secondary text-light" th:href="@{/moderador/productos?order=asc}"><b>Ascendente</b></a>
+					<a class="btn btn-secondary text-light" th:href="@{/moderador/productos?order=desc}"><b>Descendente</b></a>
+					<a class="btn btn-secondary text-light" th:href="@{/moderador/productos}"><b>Default</b> </a>
 				</div>
 			</div>
 			<br>
@@ -45,9 +53,9 @@
 					<th>Descripcion</th>
 					<th>Precio</th>
 					<th>Stock</th>
-					<th></th>
-					<th></th>
-					<th>Carrito</th>
+					<th th:if="${rol != 'Moderador'}"></th>
+					<th th:if="${rol != 'Moderador'}"></th>
+					<th th:if="${rol != 'Moderador'}">Carrito</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -57,11 +65,11 @@
 					<td th:text="${producto.descripcion}"></td>
 					<td th:text="${producto.precio}"></td>
 					<td th:text="${producto.stock}"></td>
-					<td><a class="btn btn-secondary text-light" th:href="@{/producto/form/} + ${producto.id}">Edit</a></td>
-					<td><a class="btn btn-secondary text-light" th:href="@{/producto/delete/} + ${producto.id}"
+					<td th:if="${rol != 'Moderador'}"><a class="btn btn-secondary text-light" th:href="@{/producto/form/} + ${producto.id}">Edit</a></td>
+					<td th:if="${rol != 'Moderador'}"><a class="btn btn-secondary text-light" th:href="@{/producto/delete/} + ${producto.id}"
 							onclick="return confirm('¿Estás seguro que querés eliminar esta Producto?')">Del</a>
 					</td>
-					<td><a class="btn btn-secondary text-light" th:href="@{/carrito/form/{id}(id=${producto.id})}">Add</a></td>
+					<td th:if="${rol != 'Moderador'}"><a class="btn btn-secondary text-light" th:href="@{/carrito/form/{id}(id=${producto.id})}">Add</a></td>
 				</tr>
 			</tbody>
 		</table>

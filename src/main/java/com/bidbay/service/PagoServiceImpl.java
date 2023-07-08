@@ -115,7 +115,7 @@ public class PagoServiceImpl implements IPagoService {
 	private Pago validarPago(Pago pagoAGenerar) {
 		String regexNumeroT = "^[0-9]{1,16}$";
 		String regexCVC = "^[0-9]{1,3}$";
-		String regexNombre = "^[a-zA-Z]+$";
+		String regexNombre = "^[a-zA-Z ]+$";
 		int validacion = 0;
 
 		if (pagoAGenerar.getNumeroTarjeta().matches(regexNumeroT)) {

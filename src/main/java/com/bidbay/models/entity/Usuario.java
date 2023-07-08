@@ -44,7 +44,10 @@ public class Usuario implements Serializable{
 		@OneToMany(mappedBy = "usuarios", cascade = CascadeType.ALL, orphanRemoval = true)
 		private List<Notificacion> notificaciones;
 		
-		private List<Double> ratings;
+		@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+		private List<Review> reviewsDejadas;
+		
+		private Double rating;
 		
 		@Column(nullable = true)
 		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})
@@ -192,7 +195,7 @@ public class Usuario implements Serializable{
 			return isDeleted;
 		}
 
-		public double getRating() {
+		/*public double getRating() {
 			// TODO Auto-generated method stub
 			if (ratings == null || ratings.isEmpty()) {
 	            return 0.0;
@@ -215,7 +218,7 @@ public class Usuario implements Serializable{
 	            ratings = new ArrayList<>();
 	        }
 	        ratings.add(rating);
-		}
+		}*/
 
 		public List<Producto> getPublicaciones() {
 			return publicaciones;
@@ -226,8 +229,8 @@ public class Usuario implements Serializable{
 		}
 
 
-		public List<Double> getRatings() {
-			return ratings;
+		public Double getRating() {
+			return rating;
 		}
 		
 		

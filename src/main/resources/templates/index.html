@@ -14,7 +14,10 @@
 				<p
 					class="text-black text-[24px] font-bold m-2" th:text="${item.titulo}"></p>
 				<p
-					class="text-black text-[16px] font-normal" th:text="${item.notificacion}"></p>
+					class="text-black text-[16px] font-normal" th:utext="${item.notificacion}"></p>
+					<div th:if="${item.enlace} != null" th:inline="text">
+					    <p th:utext="${item.enlace}"></p>
+					</div>
 				</div>
 			</div>
 		</div>

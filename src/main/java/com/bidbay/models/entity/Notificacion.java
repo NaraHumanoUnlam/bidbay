@@ -53,6 +53,52 @@ private static final long serialVersionUID = 1L;
 		this.usuarios = user;
 		this.fecha = new Date(System.currentTimeMillis());
 	}
+
+	public Notificacion() {
+		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Usuario getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(Usuario usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getNotificacion() {
+		return notificacion;
+	}
+
+	public void setNotificacion(String notificacion) {
+		this.notificacion = notificacion;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+
 	
 	
 	

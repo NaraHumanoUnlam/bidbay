@@ -1,6 +1,8 @@
 package com.bidbay.models.entity;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.Time;
 
 import jakarta.persistence.*;
 
@@ -30,6 +32,9 @@ public class Subasta {
     
     @Column(name = "precio_maximo")
     private BigDecimal maximo;
+    
+    private Date fechaLimite;
+    private Time horaLimite;
 
 
 	public Long getId() {
@@ -60,17 +65,6 @@ public class Subasta {
 	public void setSubastador(Usuario subastador) {
 		this.subastador = subastador;
 	}
-
-
-//	public Ofertante getOfertante() {
-//		return ofertante;
-//	}
-//
-//
-//	public void setOfertante(Ofertante ofertante) {
-//		this.ofertante = ofertante;
-//	}
-
 
 	public Producto getProducto() {
 		return producto;

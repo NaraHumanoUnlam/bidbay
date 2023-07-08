@@ -1,17 +1,35 @@
 package com.bidbay.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
-import com.bidbay.models.dao.INotificaionDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.bidbay.models.dao.INotificacionDao;
 import com.bidbay.models.entity.Notificacion;
 
+@Service
 public class NotificacionService implements INotificacionService{
 
 	@Autowired
-	private INotificaionDao notificacionDao;
+	private INotificacionDao notificacionDao;
+	
 	@Override
 	public Notificacion obtenerNotificacion(Long id) {
 		return notificacionDao.obtenerNotificacion(id);
 	}
+	@Override
+	@Transactional(readOnly = true)
+	public List<Notificacion> findAll() {
+		return (List<Notificacion>) notificacionDao.findAll();
+	}
+	
+	@Override
+	public void save(Notificacion notificacion) {
+		notificacionDao.save(notificacion);
+		
+	}
+	
 
 }

@@ -15,12 +15,14 @@
 					<th>Producto</th>
 					<th>Stock</th>
 					<th>Precio</th>
+					<th>Cantidad</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="carritoItem: ${carrito?.getCarritoItems()}" th:if="${carrito?.getCarritoItems()}">
 					<td th:text="${carritoItem.getProducto().getNombre()}"></td>
 					<td th:text="${carritoItem.getStock()}"></td>
+					<td th:text="${carritoItem.getProducto().getPrecio()}"></td>
 					<td>
 						<form th:action="@{/carrito/editar/{id}(id=${carritoItem.getIdItem()})}" method="post">
 							<input type="number" name="cantidadProductos" th:value="${carritoItem.getStock()}" min="1"

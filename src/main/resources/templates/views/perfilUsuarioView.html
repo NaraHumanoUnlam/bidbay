@@ -43,11 +43,15 @@
                                 </div>
                             </div>
                         </a>
-                        <!-- Error -->
-                       <!-- <div id="publicaciones-popup" class="card publicaciones-disabled scrollable-content" onmouseover="mostrarPopupPublicaciones()" onmouseout="ocultarPopupPublicaciones()">
-                            <p class="popup-producto_titulo" th:if="${listaPublicaciones.size() == 0 }">Aún no has publicado ningún producto</p>
-                            <p class="popup-producto_titulo" th:if="${listaPublicaciones.size() > 0 }">Lista de Publicaciones</p>
-                            <a th:each="producto: ${listaPublicaciones}" th:href="@{/producto/details/{id}(id=${producto.id})}">
+
+                        <div id="publicaciones-popup" class="card publicaciones-disabled scrollable-content"
+                            onmouseover="mostrarPopupPublicaciones()" onmouseout="ocultarPopupPublicaciones()">
+                            <p class="popup-producto_titulo" th:if="${listaPublicaciones.size() == 0 }">Aún no has
+                                publicado ningún producto</p>
+                            <p class="popup-producto_titulo" th:if="${listaPublicaciones.size() > 0 }">Lista de
+                                Publicaciones</p>
+                            <a th:each="producto: ${listaPublicaciones}"
+                                th:href="@{/producto/details/{id}(id=${producto.id})}">
                                 <div class="usuario-producto_list ">
                                     <img th:src="@{'../imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}">
                                     <div>
@@ -56,7 +60,8 @@
                                     </div>
                                 </div>
                             </a>
-                        </div> --> 
+                        </div>
+
                         <a class="card mb-4 mb-md-0 btn-sombra mt-4" onmouseover="mostrarPopupVentas();"
                             onmouseout="ocultarPopupVentas();">
                             <div class="card-body perfil-card">
@@ -68,8 +73,10 @@
                                 </div>
                             </div>
                         </a>
-                      <!--  <div id="ventas-popup" class="card ventas-disabled scrollable-content" onmouseover="mostrarPopupVentas()" onmouseout="ocultarPopupVentas()">
-                            <p class="popup-producto_titulo" th:if="${listaVentas.size() == 0 }">Aún no has vendido ningún producto</p>
+                        <div id="ventas-popup" class="card ventas-disabled scrollable-content"
+                            onmouseover="mostrarPopupVentas()" onmouseout="ocultarPopupVentas()">
+                            <p class="popup-producto_titulo" th:if="${listaVentas.size() == 0 }">Aún no has vendido
+                                ningún producto</p>
                             <p class="popup-producto_titulo" th:if="${listaVentas.size() > 0 }">Lista de Ventas</p>
                             <a th:each="producto: ${listaVentas}">
                                 <div class="usuario-producto_list ">
@@ -80,7 +87,7 @@
                                     </div>
                                 </div>
                             </a>
-                        </div> --> 
+                        </div>
                     </div>
 
 
@@ -96,14 +103,23 @@
                                 </div>
                             </div>
                         </a>
-                        <div id="favoritos-popup" class="card favoritos-disabled">
-                            <a class="">
-                                <div>
-                                    asdasd
+                        <div id="favoritos-popup" class="card favoritos-disabled scrollable-content"
+                            onmouseover="mostrarPopupFavoritos()" onmouseout="ocultarPopupFavoritos()">
+                            <p class="popup-producto_titulo" th:if="${listaFavoritos.size() == 0 }">Aún no has
+                                añadido ningún producto</p>
+                            <p class="popup-producto_titulo" th:if="${listaFavoritos.size() > 0 }">Lista de
+                                Favoritos</p>
+                            <a th:each="favorito: ${listaFavoritos}"
+                                th:href="@{/producto/details/{id}(id=${favorito.producto.id})}">
+                                <div class="usuario-producto_list ">
+                                    <img th:src="@{'../imagenes/'+${favorito.producto.imagen}}">
+                                    <div>
+                                        <p th:text="${favorito.producto.nombre}"></p>
+                                        <p th:text="'$' + ${favorito.producto.precio}"></p>
+                                    </div>
                                 </div>
                             </a>
                         </div>
-
                         <a class="card mb-4 mb-md-0 mt-4 btn-sombra">
                             <div class="card-body perfil-card">
                                 <h2 class="mb-4" style="font-size: 1.3rem;"> Mis Compras </h2>
@@ -168,14 +184,14 @@
     <script>
         function mostrarPopupFavoritos() {
             var popup = document.getElementById('favoritos-popup');
-           // popup.classList.add('favoritos-active');
-           // popup.classList.remove('favoritos-disabled');
+            popup.classList.add('favoritos-active');
+            popup.classList.remove('favoritos-disabled');
         }
 
         function ocultarPopupFavoritos() {
             var popup = document.getElementById('favoritos-popup');
-            //popup.classList.remove('favoritos-active');
-           // popup.classList.add('favoritos-disabled');
+            popup.classList.remove('favoritos-active');
+            popup.classList.add('favoritos-disabled');
         }
 
         function mostrarPopupPublicaciones() {

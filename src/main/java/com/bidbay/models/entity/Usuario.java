@@ -49,12 +49,9 @@ public class Usuario implements Serializable{
 		@Column(nullable = true)
 		@OneToMany(fetch=FetchType.LAZY, mappedBy="id", cascade={CascadeType.ALL})
 		private List<Producto> compras;
-		
-		
+				
 		@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendedor", cascade = CascadeType.ALL)
 		private List<Producto> publicaciones;
-
-
 		
 		public Long getId() {
 			return id;

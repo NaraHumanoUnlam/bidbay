@@ -43,38 +43,38 @@ public class ProductoController {
 
 	@Autowired
 	private ICategoriaService categoriaService;
-	
+
 	@Autowired
 	private UsuarioServiceImpl usuarioService;
-		
+
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
-			HttpSession session,@RequestParam("search") @Nullable String search, Model model) {
-		
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
-			model.addAttribute("logueo",session.getAttribute("logueo"));
-		}else {
+			HttpSession session, @RequestParam("search") @Nullable String search, Model model) {
+
+		if (usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo", session.getAttribute("logueo"));
+		} else {
 			return "redirect:/login";
-		} 
+		}
 		Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 		model.addAttribute("titulo", "Listado de Productos");
-		model.addAttribute("productos",productoService.productoDelUsuario(user.getId()));
+		model.addAttribute("productos", productoService.productoDelUsuario(user.getId()));
 		if (search != null) {
 			List<Producto> productosEncontrados = new ArrayList<>();
-			productosEncontrados.addAll(productoService.findByNameDelUsuario(search.toString(),user.getId()));
+			productosEncontrados.addAll(productoService.findByNameDelUsuario(search.toString(), user.getId()));
 			model.addAttribute("productos", productosEncontrados);
 			model.addAttribute("inputValue", search);
 		} else {
 			if (order != null) {
-				model.addAttribute("productos", productoService.orderListDelUsuario(order,user.getId()));
+				model.addAttribute("productos", productoService.orderListDelUsuario(order, user.getId()));
 			}
 		}
 		return "views/productoView";
 	}
-	
+
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
-	public String crear(HttpSession session, Map <String, Object> model) throws Exception {
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+	public String crear(HttpSession session, Map<String, Object> model) throws Exception {
+		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
 			return "redirect:/login";
 		} else {
 			Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
@@ -85,7 +85,7 @@ public class ProductoController {
 			model.put("titulo", "¿Qué querés vender?");
 			model.put("botonSubmit", "Vender");
 			model.put("categorias", categoriaService.findAll());
-			model.put("logueo",session.getAttribute("logueo"));
+			model.put("logueo", session.getAttribute("logueo"));
 			return "views/productoForm";
 		}
 	}
@@ -141,46 +141,47 @@ public class ProductoController {
 
 	@RequestMapping(value = "/buscar", method = RequestMethod.GET)
 	public String buscar(@RequestParam(value = "categoria", required = false) Long id,
-	                     @RequestParam(value = "name", required = false) String name,
-	                     @RequestParam(value = "order", required = false) String order,
-	                     @RequestParam(value = "search", required = false) String search,
-	                     Model model) {
-	    model.addAttribute("titulo", "Búsqueda de Productos");
-	    model.addAttribute("inputValue", search);
-	    model.addAttribute("categorias", categoriaService.findAll());
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "order", required = false) String order,
+			@RequestParam(value = "search", required = false) String search, Model model) {
+		model.addAttribute("titulo", "Búsqueda de Productos");
+		model.addAttribute("inputValue", search);
+		model.addAttribute("categorias", categoriaService.findAll());
 
-	    List<Producto> productos;
+		List<Producto> productos;
 
-	    if (id != null) {
-	        Categoria categoria = categoriaService.findOne(id);
-	        if (categoria != null) {
-	            productos = productoService.findByCategoriaId(categoria.getId());
-	            model.addAttribute("categoria", categoria);
-	        } else {
-	            productos = productoService.findAll();
-	        }
-	    } else {
-	        productos = productoService.findAll();
-	    }
+		if (id != null) {
+			Categoria categoria = categoriaService.findOne(id);
+			if (categoria != null) {
+				productos = productoService.findByCategoriaId(categoria.getId());
+				model.addAttribute("categoria", categoria);
+			} else {
+				productos = productoService.findAll();
+			}
+		} else {
+			productos = productoService.findAll();
+		}
 
-	    if (search != null && !search.isEmpty()) {
-	        productos = productoService.findByName(search);
-	    }
+		if (search != null && !search.isEmpty()) {
+			productos = productoService.findByName(search);
+		}
 
-	    if (order != null) {
-	        if (order.equals("asc")) {
-	            productos.sort(Comparator.comparing(Producto::getPrecio));
-	        } else if (order.equals("desc")) {
-	            productos.sort(Comparator.comparing(Producto::getPrecio).reversed());
-	        }
-	    }
+		if (order != null) {
+			if (order.equals("asc")) {
+				productos.sort(Comparator.comparing(Producto::getPrecio));
+			} else if (order.equals("desc")) {
+				productos.sort(Comparator.comparing(Producto::getPrecio).reversed());
+			}
+		}
 
-	    model.addAttribute("productos", productos);
-	    return "views/productoSearhView";
+		model.addAttribute("productos", productos);
+		return "views/productoSearhView";
 	}
 
 	@RequestMapping(value = "/details/{id}")
-	public String detalles(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+	public String detalles(@PathVariable(value = "id") Long id,
+			@RequestParam(value = "fav", required = false) Boolean fav, Map<String, Object> model,
+			HttpSession session) {
 		Producto p = null;
 		if (id > 0) {
 			p = productoService.findOne(id);
@@ -190,26 +191,28 @@ public class ProductoController {
 		model.put("producto", p);
 		model.put("titulo", "Detalles del Producto");
 		model.put("categorias", categoriaService.findAll());
+		if (usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			fav = productoService.clickFavoritoDelUsuario(p.getId(),
+					usuarioService.getUsuarioActualmenteLogeado(session).getId());
+		}
 		return "views/productoDeatailView";
 	}
-	
+
 	@PostMapping("/dejarReview/{id}")
-	public String dejarReview(@PathVariable("id") Long idProducto, @RequestParam("mensaje") String mensaje, @RequestParam("puntaje") Double puntaje, HttpSession session) {
+	public String dejarReview(@PathVariable("id") Long idProducto, @RequestParam("mensaje") String mensaje,
+			@RequestParam("puntaje") Double puntaje, HttpSession session) {
 		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			return "redirect:/login";
 		}
-		
+
 		productoService.dejarReview(idProducto, mensaje, puntaje, session);
 		return "redirect:/producto/details/{idProducto}";
 	}
-	
-	
 
 	// esto es por mockito. ok tonces no lo borro xd
 	public Producto someMethod() {
 		// TODO Auto-generated method stub
 		return new Producto();
 	}
-
 
 }

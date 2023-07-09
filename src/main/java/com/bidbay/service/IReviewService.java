@@ -1,8 +1,11 @@
 package com.bidbay.service;
 
-import jakarta.servlet.http.HttpSession;
+import java.util.List;
+
+import com.bidbay.models.entity.Review;
 
 public interface IReviewService {
+	public List<Review> findAll();
 	
 	public void dejarReview(Long idProducto, String mensaje, Double puntaje, Long usuarioId);
 

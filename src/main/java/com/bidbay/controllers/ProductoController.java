@@ -206,6 +206,7 @@ public class ProductoController {
 		model.put("producto", p);
 		model.put("titulo", "Detalles del Producto");
 	    model.put("reviews", reviewService.getReviewsPorProducto(id));
+	    model.put("usuarioComproProducto", reviewService.usuarioHabilitado(usuarioService.getUsuarioActualmenteLogeado(session).getId(), p.getId(), id));
 		model.put("categorias", categoriaService.findAll());
 		return "views/productoDeatailView";
 	}

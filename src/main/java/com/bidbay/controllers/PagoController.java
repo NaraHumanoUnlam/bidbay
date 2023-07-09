@@ -84,7 +84,6 @@ public class PagoController {
 	        return "views/ticketValidadoView";
 	    } else {
 	        model.addAttribute("error", "El pago ha sido rechazado");
-	        //notificacionService.crearNotificacion("Pago denegado","Tu pago ha sido denegado!", usuario);
 	        return "views/ticketRechazadoView";
 	    }
 	}

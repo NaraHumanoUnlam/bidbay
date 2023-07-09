@@ -40,22 +40,33 @@ public class ReviewServiceImpl implements IReviewService{
 	
 	@Override
 	@Transactional
-	public void dejarReview(Long idProducto, String mensaje, Double puntaje, Long usuarioId) {
+	public void dejarReview(Long idProducto, String mensaje, Double puntaje, Long usuarioId, Long notificacionId) {
 		// TODO Auto-generated method stub
 		Usuario usuario = usuarioDao.findById(usuarioId).orElse(null);
         Producto producto = productoDao.findById(idProducto).orElse(null);
         LocalDate currentDate = LocalDate.now();
         Date fecha = java.sql.Date.valueOf(currentDate);
         
-        if (usuario != null && producto != null) {
+        if (usuario != null && producto != null && this.usuarioHabilitado(usuarioId, idProducto, notificacionId)) {
         	Review reviewNueva = new Review(fecha, usuario, producto, mensaje, puntaje);
         	producto.agregarReview(reviewNueva);
         	reviewDao.save(reviewNueva);
         	usuarioDao.actualizarRating(usuarioId);
         	productoDao.save(producto);
+        	this.notificacionDao.eliminarNotificacion(notificacionId);
         	this.notificacionDao.crearNotificacion("Review", "Generaste una review", usuarioId,"");
             usuarioDao.save(usuario);
             } 
         }
+
+
+	@Override
+	public boolean usuarioHabilitado(Long id, Long idProducto, Long notificacionId) {
+		// TODO Auto-generated method stub
+		if(reviewDao.usuarioComproProducto(id, idProducto) >= 1 && reviewDao.notificacionDelUsuario(id, notificacionId) >= 1) {
+			return true;
+		}
+		return false;
+	}
 
 }

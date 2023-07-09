@@ -3,6 +3,7 @@ package com.bidbay.service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,13 @@ public class ReviewServiceImpl implements IReviewService{
 	@Autowired
 	private INotificacionDao notificacionDao;
 	
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Review> findAll() {
+		   return (List<Review>)reviewDao.findAll();
+	}
+
 	
 	@Override
 	@Transactional

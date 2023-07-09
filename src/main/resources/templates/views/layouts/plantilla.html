@@ -88,9 +88,11 @@
 					</div>
 					<p class="text-black text-[16px] font-normal"
 						th:utext="${item.notificacion}"></p>
-					<div th:if="${item.enlace} != null" th:inline="text">
-						<p th:utext="${item.enlace}"></p>
-					</div>
+					<div th:if="${item.enlace != null and item.enlace != ''}">
+					    <a th:href="@{${item.enlace + '?notificacionId='} + ${item.id}}">
+					        <p>Dejar reseña</p>
+					    </a>
+					</div>			
 				</div>
 			</div>
 		</div>

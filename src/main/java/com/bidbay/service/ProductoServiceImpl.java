@@ -171,6 +171,7 @@ public class ProductoServiceImpl implements IProductoService {
 	public Boolean clickFavoritoDelUsuario(Long id_usuario , Long id_producto) {
 		Favoritos favorito = buscoFavoritoDelUsuario(id_usuario ,id_producto);
 		if (favorito == null) {
+			favorito = new Favoritos();
 			favorito.setProducto(findOne(id_producto));
 			favorito.setUsuario(usuarioDao.findById(id_usuario).orElse(null));
 			favoritosDao.save(favorito);
@@ -179,6 +180,11 @@ public class ProductoServiceImpl implements IProductoService {
 			favoritosDao.delete(favorito);
 			return false;
 		}
+	}
+
+	@Override
+	public void actualizarStock(Integer cantidad, Long id) {
+		productoDao.actualizarStock(cantidad, id);
 	}
 	
 	@Override

@@ -2,6 +2,7 @@ package com.bidbay.service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bidbay.models.dao.ICompraDao;
 import com.bidbay.models.dao.INotificacionDao;
 import com.bidbay.models.dao.IPagoDao;
+import com.bidbay.models.dao.IProductoDao;
+import com.bidbay.models.dao.ITicketDao;
 import com.bidbay.models.dao.IUsuarioDao;
 import com.bidbay.models.entity.Carrito;
 import com.bidbay.models.entity.Compras;
@@ -31,6 +34,12 @@ public class PagoServiceImpl implements IPagoService {
 
 	@Autowired
 	private IUsuarioDao usuarioDao;
+	
+	@Autowired
+	private ITicketDao ticketDao; 
+	
+	@Autowired
+	private IProductoService productoServicio;
 
 	@Autowired
 	private INotificacionDao notificacionDao;
@@ -71,13 +80,16 @@ public class PagoServiceImpl implements IPagoService {
 			Date fecha = java.sql.Date.valueOf(currentDate);
 			compraAPagar.setFecha(fecha);
 			compraDao.save(compraAPagar);
+
 			
 			this.mandarNotificacionDeReview(compraAPagar.getDetalles(), idUsuario);
-			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario, "");
-			//notificacionDao.crearNotificacion("Reseña", "Deja una reseña en tu última compra " + compraAPagar.getDetalles().get(0).getProducto().getNombre()+ ".", idUsuario, "<a href=\"/review/dejarReview/" + compraAPagar.getDetalles().get(0).getProducto().getId() + "\">Dejar Reseña</a>");
-			pagoARealizar.setAprobado(true);
-		} else {
-			pagoARealizar.setAprobado(false);
+			
+
+
+			//generarTicket(); 
+			descontarStockProductos(compraAPagar);
+			
+			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
 
 		}
 		return pagoARealizar;
@@ -92,43 +104,50 @@ public class PagoServiceImpl implements IPagoService {
 
 	}
 
+
+
 	@Transactional
 	@Override
 	public Pago pagarTotal(Pago pagoARealizar, Long idUsuario) {
+		
 		if (validarPago(pagoARealizar).getAprobado()) {
 			save(pagoARealizar);
 			this.pagarComprasDelUsuario(pagoARealizar.getIdPago(), idUsuario);
 
-			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue aprobado", idUsuario, "");
-			pagoARealizar.setAprobado(true);
+			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
+			
 		} else {
-			notificacionDao.crearNotificacion("Transaccion", "Tu pago fue denegado", idUsuario, "");
-			pagoARealizar.setAprobado(false);
+			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
+
 		}
 
 	// marcar mensaje a devolver
-
 	return pagoARealizar;
 
 	}
 
 	private void pagarComprasDelUsuario(Long idPago, Long idUsuario) {
 		// TODO Auto-generated method stub
-		List<Compras> comprasDelUsuario = compraDao.comprasDelusuario(idUsuario);
+		List<Compras> comprasDelUsuario = compraDao.comprasSinPagarDelusuario(idUsuario);
 		for (Compras compra : comprasDelUsuario) {
 			compra.setIdPago(idPago);
 			LocalDate currentDate = LocalDate.now();
 			Date fecha = java.sql.Date.valueOf(currentDate);
 			compra.setFecha(fecha);
+
 			this.mandarNotificacionDeReview(compra.getDetalles(), idUsuario);
+
+			descontarStockProductos(compra);
+
 			compraDao.save(compra);
+			
 		}
 	}
 
 	private Pago validarPago(Pago pagoAGenerar) {
 		String regexNumeroT = "^[0-9]{1,16}$";
 		String regexCVC = "^[0-9]{1,3}$";
-		String regexNombre = "^[a-zA-Z]+$";
+		String regexNombre = "^[a-zA-Z ]+$";
 		int validacion = 0;
 
 		if (pagoAGenerar.getNumeroTarjeta().matches(regexNumeroT)) {
@@ -172,5 +191,13 @@ public class PagoServiceImpl implements IPagoService {
 		// TODO Auto-generated method stub
 
 	}
+	
+	private void descontarStockProductos(Compras compraAPagar) {
+		List<DetalleCompras>variable = compraAPagar.getDetalles();
+		for (DetalleCompras detalleCompras : variable) {
+			productoServicio.actualizarStock(1, detalleCompras.getProducto().getId());
+		}
+	}
+	
 
 }

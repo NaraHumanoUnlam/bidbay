@@ -17,8 +17,8 @@
 					<th>Monto</th>
 					<th>Fecha de pago</th>
 					<th></th>
-					<th th:if="${rol != 'Modelador'}"></th>
-					<th th:if="${rol != 'Modelador'}"></th>
+					<th th:if="${rol != 'Moderador'}"></th>
+					<th th:if="${rol != 'Moderador'}"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -28,26 +28,26 @@
 					<td th:text="${compra.monto}"></td>
 					<td th:text="${compra.fecha} ?: 'Pendiente de pago'"></td>
 					
-					<td class="btn btn-secondary text-light" th:if="${rol == 'Modelador'}"><a th:href="@{/moderador/detalle/} + ${compra.id}">View</a></td>
-					<td class="btn btn-secondary text-light" th:if="${rol != 'Modelador'}"><a th:href="@{/miscompras/detalle/} + ${compra.id}">View</a></td>
-					<td th:if="${rol != 'Modelador'}"><a th:if="${compra.idPago == null}" th:href="@{/pago/form/} + ${compra.id} + '/' + ${compra.monto}">Pagar</a></td>
-					<td th:if="${rol != 'Modelador'}"><form th:if="${compra.idPago == null}" th:action="@{/miscompras/eliminar/} + ${compra.id}" method="post" class="d-inline">
+					<td class="btn btn-secondary text-light" th:if="${rol == 'Moderador'}"><a th:href="@{/moderador/detalle/} + ${compra.id}">View</a></td>
+					<td class="btn btn-secondary text-light" th:if="${rol != 'Moderador'}"><a th:href="@{/miscompras/detalle/} + ${compra.id}">View</a></td>
+					<td th:if="${rol != 'Moderador'}"><a th:if="${compra.idPago == null}" th:href="@{/pago/form/} + ${compra.id} + '/' + ${compra.monto}">Pagar</a></td>
+					<td th:if="${rol != 'Moderador'}"><form th:if="${compra.idPago == null}" th:action="@{/miscompras/eliminar/} + ${compra.id}" method="post" class="d-inline">
 	                    <button type="submit" class="btn btn-danger bg-red-500">Eliminar</button>
 	                	</form></td>
 				</tr>
 			</tbody>
 		</table>
-		<div th:if="${rol != 'Modelador'}">
+		<div th:if="${rol != 'Moderador'}">
 			<p  th:text="${mensaje}" th:if="${mensaje}"></p>
 		</div>
-		<div th:if="${rol != 'Modelador'}">
+		<div th:if="${rol != 'Moderador'}">
 			<p>Podés pagar todas tus ordenes de compra o pagarlas individualmente</p>
 		</div>
 		<br>
-		<div th:if="${rol != 'Modelador'}">
+		<div th:if="${rol != 'Moderador'}">
 			<a th:if="${precioTotal != 0.0}" th:href="@{/pago/form(precioTotal=${precioTotal})}" class="bg-blue-400 p-3 rounded text-white">Pagar todas</a>
 		</div>
-		<div th:if="${rol != 'Modelador'}">
+		<div th:if="${rol != 'Moderador'}">
 			<a th:if="${precioTotal == 0.0}" class="bg-gray-400 p-3 rounded text-white">Todas las compras están pagas</a>
 		</div>
 </body>

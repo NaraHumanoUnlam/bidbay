@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bidbay.excepciones.ArchivoException;
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Producto;
+import com.bidbay.models.entity.Review;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
+import com.bidbay.service.IReviewService;
 import com.bidbay.service.UsuarioServiceImpl;
 
 import org.springframework.lang.Nullable;
@@ -43,6 +45,9 @@ public class ProductoController {
 
 	@Autowired
 	private ICategoriaService categoriaService;
+	
+	@Autowired
+	private IReviewService reviewService;
 
 	@Autowired
 	private UsuarioServiceImpl usuarioService;
@@ -200,6 +205,7 @@ public class ProductoController {
 		}
 		model.put("producto", p);
 		model.put("titulo", "Detalles del Producto");
+	    model.put("reviews", reviewService.getReviewsPorProducto(id));
 		model.put("categorias", categoriaService.findAll());
 		return "views/productoDeatailView";
 	}

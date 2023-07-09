@@ -3,6 +3,7 @@ package com.bidbay.service;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +68,13 @@ public class ReviewServiceImpl implements IReviewService{
 			return true;
 		}
 		return false;
+	}
+
+
+	@Override
+	public List<Review> getReviewsPorProducto(Long id) {
+		// TODO Auto-generated method stub
+		return reviewDao.filtrarReviewsPorProducto(id);
 	}
 
 }

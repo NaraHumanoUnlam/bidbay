@@ -18,5 +18,8 @@ public interface IReviewDao extends CrudRepository<Review, Long>{
 	
 	@Query(value = "SELECT COUNT(*) FROM review r where r.usuario_id = ? AND r.producto_id = ?", nativeQuery = true)
 	public int usuarioNoDejoReview(Long id, Long idProducto);
+
+	@Query(value = "SELECT * from review r where r.usuario_id = ?", nativeQuery = true)
+	public List<Review> filtrarReviewsPorUsuario(Long idUsuario);
 	
 }

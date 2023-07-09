@@ -14,6 +14,7 @@ public interface INotificacionService{
 	public void save(Notificacion notificacion);
 	public void eliminarNotificacion(Long id);
 	void crearNotificacion(String titulo, String notificacion, Long idUsuario,String enlace);
+	public List<Notificacion> findAllByUser(Long userID);
 
 
 	

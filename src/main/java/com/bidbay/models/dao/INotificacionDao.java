@@ -1,6 +1,8 @@
 package com.bidbay.models.dao;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -20,4 +22,7 @@ public interface INotificacionDao extends CrudRepository<Notificacion, Long>{
 	@Modifying
 	@Query(value = "delete from notificacion where id = ?", nativeQuery = true)
 	public void eliminarNotificacion(Long id);
+	
+	@Query(value = "select * from notificacion where usuarios_id=?", nativeQuery = true)
+	public List<Notificacion> findAllByID(Long userID);
 }

@@ -43,6 +43,12 @@ public class NotificacionService implements INotificacionService{
 		notificacionDao.crearNotificacion(titulo, notificacion, idUsuario, enlace);
 		
 	}
+
+	@Override
+	public List<Notificacion> findAllByUser(Long userID) {
+		// TODO Auto-generated method stub
+		return notificacionDao.findAllByID(userID);
+	}
 	
 	
 

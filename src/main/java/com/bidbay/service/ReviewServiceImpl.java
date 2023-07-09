@@ -55,13 +55,15 @@ public class ReviewServiceImpl implements IReviewService{
         LocalDate currentDate = LocalDate.now();
         Date fecha = java.sql.Date.valueOf(currentDate);
         
-        if (usuario != null && producto != null && this.usuarioHabilitado(usuarioId, idProducto, notificacionId)) {
+        if (usuario != null && producto != null && this.usuarioHabilitado(usuarioId, idProducto)) {
         	Review reviewNueva = new Review(fecha, usuario, producto, mensaje, puntaje);
         	producto.agregarReview(reviewNueva);
         	reviewDao.save(reviewNueva);
         	usuarioDao.actualizarRating(usuarioId);
         	productoDao.save(producto);
-        	this.notificacionDao.eliminarNotificacion(notificacionId);
+        	if(notificacionId != 0) {
+        		this.notificacionDao.eliminarNotificacion(notificacionId);
+        	}
         	this.notificacionDao.crearNotificacion("Review", "Generaste una review", usuarioId,"");
             usuarioDao.save(usuario);
             } 
@@ -69,9 +71,9 @@ public class ReviewServiceImpl implements IReviewService{
 
 
 	@Override
-	public boolean usuarioHabilitado(Long id, Long idProducto, Long notificacionId) {
+	public boolean usuarioHabilitado(Long id, Long idProducto) {
 		// TODO Auto-generated method stub
-		if(reviewDao.usuarioComproProducto(id, idProducto) >= 1 && reviewDao.notificacionDelUsuario(id, notificacionId) >= 1) {
+		if(reviewDao.usuarioComproProducto(id, idProducto) >= 1 && reviewDao.usuarioNoDejoReview(id, idProducto) == 0) {
 			return true;
 		}
 		return false;

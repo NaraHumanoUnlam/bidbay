@@ -13,7 +13,7 @@ public interface IReviewService {
 	
 	public void dejarReview(Long idProducto, String mensaje, Double puntaje, Long usuarioId, Long notificacionId);
 
-	public boolean usuarioHabilitado(Long id, Long idProducto, Long notificacionId);
+	public boolean usuarioHabilitado(Long id, Long idProducto);
 
 	public List<Review> getReviewsPorProducto(Long id);
 

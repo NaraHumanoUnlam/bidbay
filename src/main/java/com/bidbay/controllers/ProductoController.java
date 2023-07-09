@@ -183,9 +183,7 @@ public class ProductoController {
 	}
 
 	@RequestMapping(value = "/details/{id}")
-
-	public String detalles(@PathVariable(value = "id") Long id,
-			@RequestParam(value = "fav", required = false) Boolean fav, Map<String, Object> model,
+	public String detalles(@PathVariable("id") Long id, @RequestParam(value = "fav", defaultValue = "false") boolean fav, Map<String, Object> model,
 			HttpSession session) {
 		Producto p = null;
 		if (id > 0) {
@@ -196,14 +194,13 @@ public class ProductoController {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
+			if (fav) { 
+				productoService.clickFavoritoDelUsuario(usuarioService.getUsuarioActualmenteLogeado(session).getId(),p.getId());
+			}
 		}
 		model.put("producto", p);
 		model.put("titulo", "Detalles del Producto");
 		model.put("categorias", categoriaService.findAll());
-		if (usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
-			fav = productoService.clickFavoritoDelUsuario(p.getId(),
-					usuarioService.getUsuarioActualmenteLogeado(session).getId());
-		}
 		return "views/productoDeatailView";
 	}
 

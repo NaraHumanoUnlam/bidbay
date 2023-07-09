@@ -63,7 +63,8 @@
 					<a th:href=@{/login} class="text-2xl mr-2"><i class="fa-regular fa-user"></i></a>
 				</div>	
 						
-				<a href="#" id="btn-notificaciones" onclick="mostrarPopUpNotificacion()"> <img alt="sin_notificacion" src="/img/icons/Doorbell.png" class="w-8 h-8"> </a>  
+				<a href="#" id="btn-notificaciones" onclick="mostrarPopUpNotificacion()"  th:if="${rol != 'Moderador'}"> <img alt="sin_notificacion" src="/img/icons/Doorbell.png" class="w-8 h-8"> </a>  
+				<a th:href="@{/moderador/review}" id="btn-notificaciones"  th:if="${rol == 'Moderador'}"> <img alt="sin_notificacion" src="/img/icons/Doorbell.png" class="w-8 h-8"> </a>
     			<a th:href="@{/producto/listar}" class="text-2xl mr-5" th:if="${rol != 'Moderador'}"><i class="fa-solid fa-tag"></i></a> 
     			<a th:href="@{/moderador/productos}" class="text-2xl mr-5" th:if="${rol == 'Moderador'}"><i class="fa-solid fa-tag"></i></a>
     			<a th:href="@{/miscompras/listar}" class="text-2xl mr-5"  th:if="${rol != 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>

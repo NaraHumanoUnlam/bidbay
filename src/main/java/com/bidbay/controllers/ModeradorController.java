@@ -153,5 +153,13 @@ public class ModeradorController {
 		model.addAttribute("reviews", reviewDao.findAll());
 		return "views/reviewView";
 	}
+	
+	@RequestMapping(value = "/reviewDel/{id}")
+	public String eliminarReview(@PathVariable(value = "id") Long id) {
+		if (id > 0) {
+			reviewDao.deleteById(id);
+		}
+		return "redirect:/moderador/review";
+	}
 
 }

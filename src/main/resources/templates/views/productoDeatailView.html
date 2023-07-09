@@ -68,11 +68,11 @@
 			<p>Aún no hay reseñas para este producto.</p>
 		</div>
 		<div th:if="${usuarioComproProducto}">
-            <a th:href="@{/review/dejarReview/{idProducto}(idProducto=${producto.id},notificacionId=0)}" class="boton-reseña">Dejar Reseña</a>
+            <a th:href="@{/review/dejarReview/{idProducto}(idProducto=${producto.id},notificacionId=0)}" class="">Dejar Reseña</a>
         </div>
 	</div>
 
 
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
-
+	
 </body>

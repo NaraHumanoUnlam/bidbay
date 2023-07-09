@@ -195,7 +195,9 @@ public class PagoServiceImpl implements IPagoService {
 	private void descontarStockProductos(Compras compraAPagar) {
 		List<DetalleCompras>variable = compraAPagar.getDetalles();
 		for (DetalleCompras detalleCompras : variable) {
-			productoServicio.actualizarStock(1, detalleCompras.getProducto().getId());
+			for (int i = 0; i < detalleCompras.getCantidad(); i++) {
+				productoServicio.actualizarStock(1, detalleCompras.getProducto().getId());
+			}
 		}
 	}
 	

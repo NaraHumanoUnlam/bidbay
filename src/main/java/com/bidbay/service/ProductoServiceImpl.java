@@ -16,8 +16,6 @@ import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.dao.IUsuarioDao;
 import com.bidbay.models.entity.*;
 
-import jakarta.servlet.http.HttpSession;
-
 @Service
 public class ProductoServiceImpl implements IProductoService {
 
@@ -198,6 +196,14 @@ public class ProductoServiceImpl implements IProductoService {
 		 for (OperacionCV operacion : findAllComprasVentas()) 
 			 sumatoria+= operacion.getCantidad();
 		return sumatoria;
+	}
+	
+	@Override
+	public boolean productoEsVendidoPorUsuario(Long idUsuario, Long idProducto) {
+		if(productoDao.productoEsVendidoPorUsuario(idUsuario, idProducto) == 0) {
+			return false;
+		}
+		return true;
 	}
 
 

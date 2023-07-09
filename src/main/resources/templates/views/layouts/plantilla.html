@@ -50,6 +50,7 @@
 				</button>
 			</form>
 		</div>
+
 		<div id="divCarrito" class="header-icons header-col text-gray-100">
 			<div th:if="${logueo != null}" class="flex justify-center items-center content-center mr-5">
 				<a th:href=@{/usuario/perfil} class="text-2xl" th:if="${rol != 'Moderador'}"><i class="fa-regular fa-user"></i></a>
@@ -62,6 +63,7 @@
 			</div>	
 			<div>
 				<a th:href="@{/producto/listar}" class="text-2xl" th:if="${rol != 'Moderador'}"><i class="fa-solid fa-tag"></i></a> 
+        <a th:href="@{/moderador/review}" id="btn-notificaciones"  th:if="${rol == 'Moderador'}"> <img alt="sin_notificacion" src="/img/icons/Doorbell.png" class="w-8 h-8"> </a>
 				<a th:href="@{/moderador/productos}" class="text-2xl" th:if="${rol == 'Moderador'}"><i class="fa-solid fa-tag"></i></a>
 				<a th:href="@{/miscompras/listar}" class="text-2xl"  th:if="${rol != 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>
 				<a th:href="@{/moderador/compras}" class="text-2xl"  th:if="${rol == 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>
@@ -86,9 +88,11 @@
 					</div>
 					<p class="text-black text-[16px] font-normal"
 						th:utext="${item.notificacion}"></p>
-					<div th:if="${item.enlace} != null" th:inline="text">
-						<p th:utext="${item.enlace}"></p>
-					</div>
+					<div th:if="${item.enlace != null and item.enlace != ''}">
+					    <a th:href="@{${item.enlace + '?notificacionId='} + ${item.id}}">
+					        <p>Dejar reseña</p>
+					    </a>
+					</div>			
 				</div>
 			</div>
 		</div>

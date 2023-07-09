@@ -32,5 +32,6 @@ public interface IProductoService {
 	public void actualizarStock (Integer cantidad, Long id); 
 	public List<OperacionCV> findAllComprasVentas();
 	public Integer cantidadComprasVentas();
+	boolean productoEsVendidoPorUsuario(Long idUsuario, Long idProducto);
 
 }

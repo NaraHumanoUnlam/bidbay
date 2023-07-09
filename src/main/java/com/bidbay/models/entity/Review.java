@@ -28,7 +28,53 @@ public class Review implements Serializable {
 
     private String mensaje;
 
-    private double puntaje;
+    public Long getIdReview() {
+		return idReview;
+	}
+
+	public void setIdReview(Long idReview) {
+		this.idReview = idReview;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
+	public void setPuntaje(double puntaje) {
+		this.puntaje = puntaje;
+	}
+
+	private double puntaje;
+    
+    public Review() {}
 
 	public Review(Date fecha, Usuario usuario, Producto producto, String mensaje, double puntaje) {
 		super();

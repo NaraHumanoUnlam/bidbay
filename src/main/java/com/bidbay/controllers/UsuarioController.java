@@ -50,8 +50,6 @@ public class UsuarioController {
 		return "redirect:/home";
 	}
 	
-
-	
 	
 
 }

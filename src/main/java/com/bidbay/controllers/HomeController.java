@@ -1,6 +1,7 @@
 package com.bidbay.controllers;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,12 +30,15 @@ public class HomeController {
 	public String listar(Model model, HttpSession session) {
 		model.addAttribute("titulo", "Bidbay");
 		model.addAttribute("productos", productoService.findAll());
-		List<Notificacion> notificaciones = servNoti.findAll();
-		model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones );
+		
+		List<Notificacion> notificaciones = new ArrayList<Notificacion>();
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("rol",session.getAttribute("rol"));
+			Long userID = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+			notificaciones = servNoti.findAllByUser(userID);
 		}
+		model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones );
 		return "index";
 	}
 	

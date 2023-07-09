@@ -21,6 +21,7 @@ import com.bidbay.models.entity.Compras;
 import com.bidbay.models.entity.DetalleCompras;
 import com.bidbay.models.entity.Pago;
 import com.bidbay.models.entity.Producto;
+import com.bidbay.models.entity.Notificacion;
 
 @Service
 public class PagoServiceImpl implements IPagoService {
@@ -79,13 +80,28 @@ public class PagoServiceImpl implements IPagoService {
 			Date fecha = java.sql.Date.valueOf(currentDate);
 			compraAPagar.setFecha(fecha);
 			compraDao.save(compraAPagar);
+
+			
+			this.mandarNotificacionDeReview(compraAPagar.getDetalles(), idUsuario);
+			
+
+
 			//generarTicket(); 
 			descontarStockProductos(compraAPagar);
 			
 			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
-		
+
 		}
 		return pagoARealizar;
+	}
+	
+	@Transactional
+	private void mandarNotificacionDeReview(List<DetalleCompras> detalleCompra, Long idUsuario) {
+		// TODO Auto-generated method stub
+		for (DetalleCompras detalle : detalleCompra) {
+		    notificacionDao.crearNotificacion("Reseña", "Deja una reseña en tu última compra: " + detalle.getProducto().getNombre() + ".", idUsuario, "/review/dejarReview/" + detalle.getProducto().getId());
+		}
+
 	}
 
 
@@ -112,13 +128,17 @@ public class PagoServiceImpl implements IPagoService {
 
 	private void pagarComprasDelUsuario(Long idPago, Long idUsuario) {
 		// TODO Auto-generated method stub
-		List<Compras> comprasDelUsuario = compraDao.comprasDelusuario(idUsuario);
+		List<Compras> comprasDelUsuario = compraDao.comprasSinPagarDelusuario(idUsuario);
 		for (Compras compra : comprasDelUsuario) {
 			compra.setIdPago(idPago);
 			LocalDate currentDate = LocalDate.now();
 			Date fecha = java.sql.Date.valueOf(currentDate);
 			compra.setFecha(fecha);
+
+			this.mandarNotificacionDeReview(compra.getDetalles(), idUsuario);
+
 			descontarStockProductos(compra);
+
 			compraDao.save(compra);
 			
 		}
@@ -175,7 +195,9 @@ public class PagoServiceImpl implements IPagoService {
 	private void descontarStockProductos(Compras compraAPagar) {
 		List<DetalleCompras>variable = compraAPagar.getDetalles();
 		for (DetalleCompras detalleCompras : variable) {
-			productoServicio.actualizarStock(detalleCompras.getCantidad(), detalleCompras.getProducto().getId());
+			for (int i = 0; i < detalleCompras.getCantidad(); i++) {
+				productoServicio.actualizarStock(1, detalleCompras.getProducto().getId());
+			}
 		}
 	}
 	

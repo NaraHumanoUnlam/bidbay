@@ -34,25 +34,36 @@ public class ReviewController {
 	private IUsuarioService usuarioService;
 	
 	@RequestMapping(value = "/dejarReview/{id}", method = RequestMethod.GET)
-	public String mostrarFormularioReview(@PathVariable("id") Long idProducto, HttpSession session, Model model) {
+	public String mostrarFormularioReview(@PathVariable("id") Long idProducto, @RequestParam("notificacionId") Long notificacionId, HttpSession session, Model model) {
 		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			return "redirect:/login";
 		}
 		Producto producto = productoService.findOne(idProducto);
 		model.addAttribute("producto", producto);
+		model.addAttribute("notificacionId", notificacionId);
 		
 		return "views/dejarReviewView";
 	}
 	
 	@RequestMapping(value = "/dejarReview/{id}", method = RequestMethod.POST)
-	public String guardarReview(@PathVariable("id") Long idProducto, @RequestParam("mensaje") String mensaje, @RequestParam("puntaje") int puntaje, HttpSession session) {
+	public String guardarReview(@PathVariable("id") Long idProducto, @RequestParam("mensaje") String mensaje, @RequestParam("notificacionId") Long notificacionId, @RequestParam("puntaje") int puntaje, HttpSession session) {
 		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			return "redirect:/login";
 		}
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 	    double puntajeDouble = (double) puntaje;
-		reviewService.dejarReview(idProducto, mensaje, puntajeDouble, usuario.getId());
+		reviewService.dejarReview(idProducto, mensaje, puntajeDouble, usuario.getId(), notificacionId);
 		return "redirect:/producto/details/" + idProducto;
+	}
+	
+	@RequestMapping(value = "/verReview/{id}", method = RequestMethod.GET)
+	public String mostrarReviewsDelUser(@PathVariable("id") Long idUsuario, HttpSession session, Model model) {
+		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			return "redirect:/login";
+		}
+		model.addAttribute("reviews", reviewService.getReviewsPorUsuario(idUsuario));
+		
+		return "views/misReviewsView";
 	}
 
 }

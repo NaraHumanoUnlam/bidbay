@@ -12,21 +12,22 @@
 		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
 			<thead>
 				<tr>
-					<th >Producto</th>
-					<th >Cantidad</th>
-					<th >Precio Unitario</th>
-					<th >Total</th>
+					<th>Fecha</th>
+					<th>Producto</th>
+					<th>Mensaje</th>
+					<th>Puntaje</th>
 				</tr>
 			</thead>
+
 			<tbody>
-				<tr th:each="detalle: ${detalles}">
-					<td th:text="${detalle.producto.nombre}"></td>
-					<td th:text="${detalle.cantidad}"></td>
-					<td th:text="${detalle.precioUnitario}"></td>
-					<td th:text="${detalle.precioCompra}"></td>
+				<tr th:if="${review != null}" th:each="review: ${reviews}">
+					<td th:text="${review.fecha}"></td>
+					<td th:text="${review.producto.nombre}"></td>
+					<td th:text="${review.mensaje}"></td>
+					<td th:text="${review.puntaje}"></td>
+					<td></td>
 				</tr>
 			</tbody>
 		</table>
-		<p th:text="${mensaje}" th:if="${mensaje}"></p>
 </body>
 </html>

@@ -13,5 +13,6 @@ public interface ICarritoDao extends CrudRepository<Carrito, Long>{
 	
 	@Query(value = "select * from carrito where id_usuario=?1", nativeQuery = true)
 	public Carrito findCarritoFromUser(Long id_usuario);
+	
 
 }

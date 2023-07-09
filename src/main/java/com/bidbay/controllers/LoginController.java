@@ -57,8 +57,6 @@ public class LoginController {
 	    		break;
 	    	}
 	    	 model.addAttribute("rol", session.getAttribute("rol"));
-	    	System.out.println(usuarioBuscado.getRol());
-	    	System.out.println(session.getAttribute("rol"));
 	        return "redirect:home";
 	    }
 	}

@@ -45,7 +45,7 @@
                     th:href="@{/carrito/form/{id}(id=${producto.id})}">Agregar Al Carrito</a>
                 <div>
                     <!-- Cuando fav sea false -->
-                    <a th:href="@{/producto/details/{id}(id=${producto.id},fav)}">
+                    <a th:href="@{/producto/details/{id}(id=${producto.id},fav=true)}">
                         <i class="fa fa-heart text-muted"></i>
                     </a>
                     <a href=""><i class="fa fa-share-alt text-muted"></i></a>

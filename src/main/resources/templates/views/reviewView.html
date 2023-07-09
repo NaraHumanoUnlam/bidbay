@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body class="">
+
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
+
+	<main class="flex justify-center items-center flex-col">
+		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
+		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
+			<thead>
+				<tr>
+					<th>Fecha</th>
+					<th>Producto</th>
+					<th>Usuario</th>
+					<th>Mensaje</th>
+					<th>Puntaje</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:if="${review != null}" th:each="review: ${reviews}">
+					<td th:text="${review.fecha}"></td>
+					<td th:text="${review.usuario.nick}"></td>
+					<td th:text="${review.producto.nombre}"></td>
+					<td th:text="${review.mensaje}"></td>
+					<td th:text="${review.puntaje}"></td>
+					<td><a  class="btn btn-danger bg-red-500" th:href="@{/moderador/reviewDel/} + ${review.idReview}">Eliminar</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+</body>
+</html>

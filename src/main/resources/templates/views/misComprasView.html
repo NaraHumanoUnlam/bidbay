@@ -31,7 +31,8 @@
 					<td class="btn btn-secondary text-light" th:if="${rol == 'Moderador'}"><a th:href="@{/moderador/detalle/} + ${compra.id}">View</a></td>
 					<td class="btn btn-secondary text-light" th:if="${rol != 'Moderador'}"><a th:href="@{/miscompras/detalle/} + ${compra.id}">View</a></td>
 					<td th:if="${rol != 'Moderador'}"><a th:if="${compra.idPago == null}" th:href="@{/pago/form/} + ${compra.id} + '/' + ${compra.monto}">Pagar</a></td>
-					<td th:if="${rol != 'Moderador'}"><form th:if="${compra.idPago == null}" th:action="@{/miscompras/eliminar/} + ${compra.id}" method="post" class="d-inline">
+					<td th:if="${rol != 'Moderador'}">
+						<form th:if="${compra.idPago == null}" th:action="@{/miscompras/eliminar/} + ${compra.id}" method="post" class="d-inline">
 	                    <button type="submit" class="btn btn-danger bg-red-500">Eliminar</button>
 	                	</form></td>
 				</tr>

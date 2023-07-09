@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bidbay.models.dao.IReviewDao;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.IProductoService;
@@ -43,6 +44,8 @@ public class ModeradorController {
 	@Autowired
 	private IDetalleCompraService  detalleServices;
 	
+	@Autowired
+	private IReviewDao reviewDao;
 	
 	@GetMapping("/perfilModerador")
 	public String showPerfil(HttpSession session, Model model) {
@@ -131,6 +134,32 @@ public class ModeradorController {
 			}
 		}
 		return "views/productoView";
+	}
+	
+	@RequestMapping(value = "/review", method = RequestMethod.GET)
+	public String review(HttpSession session,Model model) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			if (!session.getAttribute("rol").equals("Moderador")) {
+				return "redirect:/home";
+			}
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
+		}else {
+			return "redirect:/login";
+		} 
+		
+		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+		model.addAttribute("titulo", "Listado de Reseñas");
+		model.addAttribute("reviews", reviewDao.findAll());
+		return "views/reviewView";
+	}
+	
+	@RequestMapping(value = "/reviewDel/{id}")
+	public String eliminarReview(@PathVariable(value = "id") Long id) {
+		if (id > 0) {
+			reviewDao.deleteById(id);
+		}
+		return "redirect:/moderador/review";
 	}
 
 }

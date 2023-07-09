@@ -112,7 +112,7 @@ public class PagoServiceImpl implements IPagoService {
 
 	private void pagarComprasDelUsuario(Long idPago, Long idUsuario) {
 		// TODO Auto-generated method stub
-		List<Compras> comprasDelUsuario = compraDao.comprasDelusuario(idUsuario);
+		List<Compras> comprasDelUsuario = compraDao.comprasSinPagarDelusuario(idUsuario);
 		for (Compras compra : comprasDelUsuario) {
 			compra.setIdPago(idPago);
 			LocalDate currentDate = LocalDate.now();
@@ -175,7 +175,7 @@ public class PagoServiceImpl implements IPagoService {
 	private void descontarStockProductos(Compras compraAPagar) {
 		List<DetalleCompras>variable = compraAPagar.getDetalles();
 		for (DetalleCompras detalleCompras : variable) {
-			productoServicio.actualizarStock(detalleCompras.getCantidad(), detalleCompras.getProducto().getId());
+			productoServicio.actualizarStock(1, detalleCompras.getProducto().getId());
 		}
 	}
 	

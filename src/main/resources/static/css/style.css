@@ -258,9 +258,6 @@ a.rainbow-link {
   font-weight: 700;
 }
 
-
-
-
 #favoritos-popup {
   position: absolute;
   background: #fff;
@@ -326,6 +323,25 @@ a.rainbow-link {
   display: block;
 }
 
+#compras-popup {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 5;
+  max-width: 30rem;
+  width: 100%;
+}
+
+.compras-disabled{
+  display: none;
+}
+
+.compras.active {
+  display: block;
+}
+
+
 .usuario-producto_list{
   display: flex;
   padding: .5rem;
@@ -358,3 +374,4 @@ a.rainbow-link {
 .favorito-false i{
   color: rgba(127, 126, 126, 0.727);
 }
+

@@ -50,28 +50,26 @@
 				</button>
 			</form>
 		</div>
-		<div class="header-icons header-col">
-			<div id="divCarrito" class="text-gray-100">
-				
-				<div th:if="${logueo != null}" class="flex flex-col justify-center items-center content-center">
-					<a th:href=@{/usuario/perfil} class="text-2xl mr-2" th:if="${rol != 'Moderador'}"><i class="fa-regular fa-user"></i></a>
-					<a th:href=@{/moderador/perfilModerador} class="text-2xl mr-2" th:if="${rol == 'Moderador'}"><i class="fa-regular fa-user"></i></a>
-					<p th:text="${logueo}"></p>
-				</div>
-				
-				<div th:if="${logueo == null}" class="flex flex-col">
-					<a th:href=@{/login} class="text-2xl mr-2"><i class="fa-regular fa-user"></i></a>
-				</div>	
-						
-				<a href="#" id="btn-notificaciones" onclick="mostrarPopUpNotificacion()"> <img alt="sin_notificacion" src="/img/icons/Doorbell.png" class="w-8 h-8"> </a>  
-    			<a th:href="@{/producto/listar}" class="text-2xl mr-5" th:if="${rol != 'Moderador'}"><i class="fa-solid fa-tag"></i></a> 
-    			<a th:href="@{/moderador/productos}" class="text-2xl mr-5" th:if="${rol == 'Moderador'}"><i class="fa-solid fa-tag"></i></a>
-    			<a th:href="@{/miscompras/listar}" class="text-2xl mr-5"  th:if="${rol != 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>
-    			<a th:href="@{/moderador/compras}" class="text-2xl mr-5"  th:if="${rol == 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>
-				<a th:href="@{/carrito/listar}" class="text-2xl mr-5" th:if="${rol != 'Moderador'}"><i class="fa-sharp fa-solid fa-cart-plus"></i></a> 
-				<a th:href="@{/usuario/logOut}" class="text-2xl mr-5"><i class="fa fa-fw fa-sign-out"></i></a>
+		<div id="divCarrito" class="header-icons header-col text-gray-100">
+			<div th:if="${logueo != null}" class="flex justify-center items-center content-center mr-5">
+				<a th:href=@{/usuario/perfil} class="text-2xl" th:if="${rol != 'Moderador'}"><i class="fa-regular fa-user"></i></a>
+				<a th:href=@{/moderador/perfilModerador} class="text-2xl mr-2" th:if="${rol == 'Moderador'}"><i class="fa-regular fa-user"></i></a>
+				<p th:text="${logueo}" style="text-transform: capitalize;"></p>
+				<a href="#" id="btn-notificaciones" onclick="mostrarPopUpNotificacion()" class="mr-5"><i class="fa-regular fa-bell" style="color: #ffffff;"></i></a>  
+			</div>
+			<div th:if="${logueo == null}" class="flex flex-col">
+				<a th:href=@{/login} class="text-2xl mr-2"><i class="fa-regular fa-user"></i></a>
+			</div>	
+			<div>
+				<a th:href="@{/producto/listar}" class="text-2xl" th:if="${rol != 'Moderador'}"><i class="fa-solid fa-tag"></i></a> 
+				<a th:href="@{/moderador/productos}" class="text-2xl" th:if="${rol == 'Moderador'}"><i class="fa-solid fa-tag"></i></a>
+				<a th:href="@{/miscompras/listar}" class="text-2xl"  th:if="${rol != 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>
+				<a th:href="@{/moderador/compras}" class="text-2xl"  th:if="${rol == 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>
+				<a th:href="@{/carrito/listar}" class="text-2xl" th:if="${rol != 'Moderador'}"><i class="fa-sharp fa-solid fa-cart-plus"></i></a> 
+				<a th:href="@{/usuario/logOut}" class="text-2xl"><i class="fa fa-fw fa-sign-out"></i></a>
 			</div>
 		</div>
+		
 		<div id="notificacion" class="hidden">
 			<i class="fa-sharp fa-regular fa-bell"></i>
 		</div>

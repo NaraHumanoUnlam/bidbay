@@ -10,7 +10,7 @@
 
     <div class="container py-5">
         <div class="row">
-            <div class="col-lg-4 "  th:if="${rol != 'Moderador'}">
+            <div class="col-lg-4 " th:if="${rol != 'Moderador'}">
                 <div class="card mb-4">
                     <div class="card-body text-center btn-sombra">
 
@@ -19,13 +19,14 @@
                         <div class="d-flex justify-content-center mb-2">
                             <a th:href="@{/usuario/logOut}" class="btn btn-outline-primary ms-1">Cerrar Sesión</a>
                             <a class="btn btn-outline-primary ms-1">Editar Perfil</a>
+                            <a th:href="@{/review/verReview/{id}(id=${usuario.id})}" class="btn btn-outline-primary ms-1">Ver mis reseñas</a>
                         </div>
                     </div>
                 </div>
 
 
             </div>
-            <div class="col-lg-4 "  th:if="${rol == 'Moderador'}">
+            <div class="col-lg-4 " th:if="${rol == 'Moderador'}">
                 <div class="card mb-4">
                     <div class="card-body text-center btn-sombra">
 
@@ -57,7 +58,6 @@
                                 </div>
                             </div>
                         </a>
-
                         <div id="publicaciones-popup" class="card publicaciones-disabled scrollable-content"
                             onmouseover="mostrarPopupPublicaciones()" onmouseout="ocultarPopupPublicaciones()">
                             <p class="popup-producto_titulo" th:if="${listaPublicaciones.size() == 0 }">Aún no has
@@ -94,17 +94,17 @@
                             <p class="popup-producto_titulo" th:if="${listaVentas.size() > 0 }">Lista de Ventas</p>
                             <a th:each="producto: ${listaVentas}">
                                 <div class="usuario-producto_list ">
-                                    <img th:src="@{'../imagenes/'+${producto.imagenProducto}}" th:alt="${producto.imagenProducto}">
+                                    <img th:src="@{'../imagenes/'+${producto.imagenProducto}}"
+                                        th:alt="${producto.imagenProducto}">
                                     <div>
                                         <p th:text="${producto.descripcionProducto}"></p>
                                         <p th:text="'$' + ${producto.precioCompra}"></p>
                                     </div>
                                 </div>
                             </a>
-
                         </div>
-                    </div>
 
+                    </div>
 
                     <div class="col-md-6 mb-4">
                         <a class="card mb-4 mb-md-0 btn-sombra" onmouseover="mostrarPopupFavoritos();"
@@ -135,20 +135,38 @@
                                 </div>
                             </a>
                         </div>
-                        <a class="card mb-4 mb-md-0 mt-4 btn-sombra">
+
+                        <a class="card mb-4 mb-md-0 btn-sombra mt-4" onmouseover="mostrarPopupCompras();" onmouseout="ocultarPopupCompras();">
                             <div class="card-body perfil-card">
                                 <h2 class="mb-4" style="font-size: 1.3rem;"> Mis Compras </h2>
                                 <div class="d-flex justify-content-between">
-                                    <span class="mb-1" th:text="${cantidadCompras}"></span>
+                                    <span class="mb-1" th:text="${cantidadVentas}"></span>
                                     <span class="text-muted mb-4"></span>
-                                    <p><i class="fa-solid fa-cart-shopping"></i></p>
+                                    <p><i class="fa-brands fa-sellsy"></i></p>
                                 </div>
                             </div>
                         </a>
+                        <div id="compras-popup" class="card compras-disabled scrollable-content" onmouseover="mostrarPopupCompras();" onmouseout="ocultarPopupCompras();">
+                            <p class="popup-producto_titulo" th:if="${listaCompras.size() == 0}">Aún no has realizado ninguna compra</p>
+                            <p class="popup-producto_titulo" th:if="${listaCompras.size() > 0}">Lista de Compras</p>
+                            <a th:each="compra: ${listaCompras}">
+                                <div class="usuario-producto_list ">
+                                    <img th:src="@{'../imagenes/'+${producto.imagenProducto}}"
+                                    th:alt="${producto.imagenProducto}">
+                                    <div>
+                                        <p th:text="${producto.descripcionProducto}"></p>
+                                        <p th:text="'$' + ${producto.precioCompra}"></p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    
+
+
                     </div>
                 </div>
 
-                <div class="card mb-4"  th:if="${rol != 'Moderador'}">
+                <div class="card mb-4" th:if="${rol != 'Moderador'}">
                     <div class="card-body btn-sombra">
                         <div class="row">
                             <div class="col-sm-3">
@@ -231,6 +249,18 @@
             var popup = document.getElementById('ventas-popup');
             popup.classList.remove('ventas-active');
             popup.classList.add('ventas-disabled');
+        }
+
+        function mostrarPopupCompras() {
+            var popup = document.getElementById('compras-popup');
+            popup.classList.add('compras-active');
+            popup.classList.remove('compras-disabled');
+        }
+
+        function ocultarPopupCompras() {
+            var popup = document.getElementById('compras-popup');
+            popup.classList.remove('compras-active');
+            popup.classList.add('compras-disabled');
         }
     </script>
 </body>

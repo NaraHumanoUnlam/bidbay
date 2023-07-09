@@ -33,12 +33,12 @@ public class UsuarioController {
 			model.addAttribute("rol",session.getAttribute("rol"));
 			model.addAttribute("titulo", "Perfil de " + usuario.getNick().toUpperCase());
 			model.addAttribute("cantidadPublicaciones", productoService.productoDelUsuario(usuario.getId()).size());
-			model.addAttribute("cantidadCompras", productoService.comprasDelUsuario(usuario.getId()));
 			model.addAttribute("cantidadVentas", productoService.ventasDelUsuario(usuario.getId()));
 			model.addAttribute("cantidadFavoritos",productoService.detalleFavoritosDelUsuario(usuario.getId()).size());
 			model.addAttribute("listaFavoritos", productoService.detalleFavoritosDelUsuario(usuario.getId()));
 			model.addAttribute("listaPublicaciones", usuarioService.getListaDeProductosPublicaciones(session));
 			model.addAttribute("listaVentas", productoService.detalleVentasDelUsuario(usuario.getId()));
+			model.addAttribute("cantidadCompras", productoService.comprasDelUsuario(usuario.getId()));
 			model.addAttribute("listaCompras", productoService.detalleComprasDelUsuario(usuario.getId()));
 			return "views/perfilUsuarioView";
 		}
@@ -49,8 +49,6 @@ public class UsuarioController {
 		session.invalidate();
 		return "redirect:/home";
 	}
-	
-
 	
 	
 

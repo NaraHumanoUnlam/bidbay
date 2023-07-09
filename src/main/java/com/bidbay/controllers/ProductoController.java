@@ -202,10 +202,12 @@ public class ProductoController {
 			if (fav) { 
 				productoService.clickFavoritoDelUsuario(usuarioService.getUsuarioActualmenteLogeado(session).getId(),p.getId());
 			}
+			model.put("usuarioComproProducto", reviewService.usuarioHabilitado(usuarioService.getUsuarioActualmenteLogeado(session).getId(), p.getId()));
 		}
 		model.put("producto", p);
 		model.put("titulo", "Detalles del Producto");
 	    model.put("reviews", reviewService.getReviewsPorProducto(id));
+	    
 		model.put("categorias", categoriaService.findAll());
 		return "views/productoDeatailView";
 	}

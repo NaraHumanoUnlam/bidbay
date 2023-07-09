@@ -44,31 +44,34 @@
                 <a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white"
                     th:href="@{/carrito/form/{id}(id=${producto.id})}">Agregar Al Carrito</a>
                 <div>
-                    <!-- Cuando fav sea false -->
-                    <a th:href="@{/producto/details/{id}(id=${producto.id},fav=true)}">
+                     <a th:href="@{/producto/details/{id}(id=${producto.id},fav)}">
                         <i class="fa fa-heart text-muted"></i>
                     </a>
                     <a href=""><i class="fa fa-share-alt text-muted"></i></a>
                 </div>
             </div>
         </div>
-        <div>
-        	<h2>Reseñas de este producto</h2>
-        	<div th:if="${reviews != null and !reviews.isEmpty()}">
-		    <div th:each="review : ${reviews}">
-		         <p>Fecha: <span th:text="${review.fecha}"></span></p>
-		         <p>Usuario: <span th:text="${review.usuario.nombre}"></span></p>
-		         <p>Mensaje: <span th:text="${review.mensaje}"></span></p>
-		         <p>Puntaje: <span th:text="${review.puntaje}"></span></p>
-		       </div>
-		    </div>
-		    <div th:if="${reviews == null or reviews.isEmpty()}">
-		        <p>Aún no hay reseñas para este producto.</p>
-		    </div>
+	</div>
+    
+    <div class="flex flex-col text-center">
+		<h2 class="font-bold text-[24px]">Reseñas de este producto</h2>
+		<p>Todas las reviews son escritas por usuarios reales</p>
+		<div th:if="${reviews != null and !reviews.isEmpty()}" class="flex flex-row gap-3 justify-center p-2">
+			<div th:each="review : ${reviews}" class="flex flex-col gap-2 text-left bg-gray-200 p-2 rounded-sm">
+				<p>Fecha: <span th:text="${review.fecha}"></span></p>
+				<p>"<span th:text="${review.mensaje}"></span>"</p>
+				<p>Puntaje: <span th:text="${review.puntaje}"></span></p>
+			</div>
+		</div>
+		<div th:if="${reviews == null or reviews.isEmpty()}">
+			<p>Aún no hay reseñas para este producto.</p>
+		</div>
+		<div th:if="${usuarioComproProducto}">
+            <a th:href="@{/review/dejarReview/{idProducto}(idProducto=${producto.id},notificacionId=0)}" class="">Dejar Reseña</a>
         </div>
-    </div>
+	</div>
 
 
-    <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
-
+	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+	
 </body>

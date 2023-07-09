@@ -54,24 +54,48 @@ public class ReviewServiceImpl implements IReviewService{
         Producto producto = productoDao.findById(idProducto).orElse(null);
         LocalDate currentDate = LocalDate.now();
         Date fecha = java.sql.Date.valueOf(currentDate);
+        Boolean usuarioHabilitado = false;
+        if (this.chequearQueElUsuarioYProductoSeanValidos(usuario, producto)) {
+        	usuarioHabilitado = this.chequearSiElUsuarioEstaHabilitado(usuarioId, idProducto, notificacionId);
+        }
         
-        if (usuario != null && producto != null && this.usuarioHabilitado(usuarioId, idProducto, notificacionId)) {
+        if(usuarioHabilitado) {
         	Review reviewNueva = new Review(fecha, usuario, producto, mensaje, puntaje);
         	producto.agregarReview(reviewNueva);
         	reviewDao.save(reviewNueva);
         	usuarioDao.actualizarRating(usuarioId);
         	productoDao.save(producto);
-        	this.notificacionDao.eliminarNotificacion(notificacionId);
-        	this.notificacionDao.crearNotificacion("Review", "Generaste una review", usuarioId,"");
-            usuarioDao.save(usuario);
-            } 
-        }
+        	usuarioDao.save(usuario);
+        	if(notificacionId != 0) {
+        		this.notificacionDao.eliminarNotificacion(notificacionId);
+        	}
+        } 
+      }
+
+
+	private boolean chequearQueElUsuarioYProductoSeanValidos(Usuario usuario, Producto producto) {
+		// TODO Auto-generated method stub
+		 if (usuario != null && producto != null) {
+			 return true;
+		 }
+		 return false;
+	}
+
+
+	private boolean chequearSiElUsuarioEstaHabilitado(Long usuarioId, Long idProducto, Long notificacionId) {
+		// TODO Auto-generated method stub
+		boolean resultado = this.usuarioHabilitado(usuarioId, idProducto);
+		if(resultado == false && notificacionId != 0) {
+			this.notificacionDao.eliminarNotificacion(notificacionId);
+		}
+		return resultado;
+	}
 
 
 	@Override
-	public boolean usuarioHabilitado(Long id, Long idProducto, Long notificacionId) {
+	public boolean usuarioHabilitado(Long id, Long idProducto) {
 		// TODO Auto-generated method stub
-		if(reviewDao.usuarioComproProducto(id, idProducto) >= 1 && reviewDao.notificacionDelUsuario(id, notificacionId) >= 1) {
+		if(reviewDao.usuarioComproProducto(id, idProducto) >= 1 && reviewDao.usuarioNoDejoReview(id, idProducto) == 0) {
 			return true;
 		}
 		return false;
@@ -82,6 +106,13 @@ public class ReviewServiceImpl implements IReviewService{
 	public List<Review> getReviewsPorProducto(Long id) {
 		// TODO Auto-generated method stub
 		return reviewDao.filtrarReviewsPorProducto(id);
+	}
+
+
+	@Override
+	public List<Review> getReviewsPorUsuario(Long idUsuario) {
+		// TODO Auto-generated method stub
+		return reviewDao.filtrarReviewsPorUsuario(idUsuario);
 	}
 
 }

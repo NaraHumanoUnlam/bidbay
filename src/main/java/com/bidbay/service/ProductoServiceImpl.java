@@ -197,6 +197,14 @@ public class ProductoServiceImpl implements IProductoService {
 			 sumatoria+= operacion.getCantidad();
 		return sumatoria;
 	}
+	
+	@Override
+	public boolean productoEsVendidoPorUsuario(Long idUsuario, Long idProducto) {
+		if(productoDao.productoEsVendidoPorUsuario(idUsuario, idProducto) == 0) {
+			return false;
+		}
+		return true;
+	}
 
 
 }

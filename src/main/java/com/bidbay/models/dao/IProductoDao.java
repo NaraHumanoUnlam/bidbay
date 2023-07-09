@@ -20,4 +20,7 @@ public interface IProductoDao extends CrudRepository<Producto, Long>{
 	 		+ "WHERE id = ? ",nativeQuery = true )
 	 public void actualizarStock(Integer cantidad, Long id);
 	
+	@Query(value = "select count(*) from productos where usuario_id =? and id=?", nativeQuery = true)
+	public int productoEsVendidoPorUsuario(Long idUsuario, Long idProducto);
+	
 }

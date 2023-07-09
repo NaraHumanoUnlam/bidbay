@@ -77,4 +77,11 @@ public class ReviewServiceImpl implements IReviewService{
 		return false;
 	}
 
+
+	@Override
+	public List<Review> getReviewsPorProducto(Long id) {
+		// TODO Auto-generated method stub
+		return reviewDao.filtrarReviewsPorProducto(id);
+	}
+
 }

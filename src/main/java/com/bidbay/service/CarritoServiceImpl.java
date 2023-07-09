@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bidbay.models.dao.ICarritoDao;
+import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.entity.Carrito;
 import com.bidbay.models.entity.CarritoItem;
 import com.bidbay.models.entity.Producto;
@@ -21,6 +22,9 @@ public class CarritoServiceImpl implements ICarritoService{
 	
 	@Autowired
     private IProductoService productoService;
+	
+	@Autowired
+    private IProductoDao productoDao;
 	
 	@Autowired
 	private ICarritoItemService carritoItemService;
@@ -102,7 +106,7 @@ public class CarritoServiceImpl implements ICarritoService{
 	public void addProductToCarrito(Long idUsuario, Long idProducto, RedirectAttributes redirectAttributes) {
 		// TODO Auto-generated method stub
 		Producto producto = productoService.findOne(idProducto);
-	    if (producto != null) {
+	    if (producto != null && productoService.productoEsVendidoPorUsuario(idUsuario, idProducto) == false) {
 	        List<Carrito> carritosActuales = findAll();
 
 	        boolean carritoEncontrado = false;

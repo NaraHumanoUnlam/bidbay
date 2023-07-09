@@ -55,7 +55,7 @@
 					<th>Stock</th>
 					<th th:if="${rol != 'Moderador'}"></th>
 					<th th:if="${rol != 'Moderador'}"></th>
-					<th th:if="${rol != 'Moderador'}">Carrito</th>
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -69,7 +69,7 @@
 					<td th:if="${rol != 'Moderador'}"><a class="btn btn-secondary text-light" th:href="@{/producto/delete/} + ${producto.id}"
 							onclick="return confirm('¿Estás seguro que querés eliminar esta Producto?')">Del</a>
 					</td>
-					<td th:if="${rol != 'Moderador'}"><a class="btn btn-secondary text-light" th:href="@{/carrito/form/{id}(id=${producto.id})}">Add</a></td>
+					
 				</tr>
 			</tbody>
 		</table>

@@ -40,6 +40,13 @@ public class ReviewServiceImpl implements IReviewService{
 	
 	
 	@Override
+	@Transactional(readOnly = true)
+	public List<Review> findAll() {
+		   return (List<Review>)reviewDao.findAll();
+	}
+
+	
+	@Override
 	@Transactional
 	public void dejarReview(Long idProducto, String mensaje, Double puntaje, Long usuarioId, Long notificacionId) {
 		// TODO Auto-generated method stub

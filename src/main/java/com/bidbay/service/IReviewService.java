@@ -4,9 +4,12 @@ import java.util.List;
 
 import com.bidbay.models.entity.Review;
 
+
 import jakarta.servlet.http.HttpSession;
 
+
 public interface IReviewService {
+	public List<Review> findAll();
 	
 	public void dejarReview(Long idProducto, String mensaje, Double puntaje, Long usuarioId, Long notificacionId);
 

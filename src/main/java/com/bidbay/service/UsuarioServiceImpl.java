@@ -11,6 +11,7 @@ import com.bidbay.models.entity.Usuario;
 
 import jakarta.servlet.http.HttpSession;
 
+import com.bidbay.models.dao.INotificacionDao;
 import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.dao.IUsuarioDao;
 
@@ -23,6 +24,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Autowired
 	private IProductoDao productoDao;
 	
+	@Autowired
+	private INotificacionDao notificacionDao;
+	
 	@Override
 	public List<Usuario> findAll() {
 		return (List<Usuario>)usuarioDao.findAll();
@@ -31,6 +35,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public void save(Usuario usuario) {
 		usuarioDao.save(usuario);
+		String mensaje = "¡Bienvenido a Bidbay " + usuario.getNick() + "!";
+		Long idUser = usuario.getId() == null ? 0 : usuario.getId();
+		try {
+
+			notificacionDao.crearNotificacion("Bienvenida", mensaje,idUser, "");
+		}catch(Exception e) {
+			System.out.println("Error en inser a tabla: " + e);
+		}
 	}
 	
 	@Transactional(readOnly = true)

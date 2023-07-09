@@ -52,23 +52,23 @@
                 </div>
             </div>
         </div>
-        <div>
-        	<h2>Reseñas de este producto</h2>
-        	<div th:if="${reviews != null and !reviews.isEmpty()}">
-		    <div th:each="review : ${reviews}">
-		         <p>Fecha: <span th:text="${review.fecha}"></span></p>
-		         <p>Usuario: <span th:text="${review.usuario.nombre}"></span></p>
-		         <p>Mensaje: <span th:text="${review.mensaje}"></span></p>
-		         <p>Puntaje: <span th:text="${review.puntaje}"></span></p>
-		       </div>
-		    </div>
-		    <div th:if="${reviews == null or reviews.isEmpty()}">
-		        <p>Aún no hay reseñas para este producto.</p>
-		    </div>
-        </div>
-    </div>
+	</div>
+    
+    <div class="flex flex-col text-center">
+		<h2 class="font-bold text-[24px]">Reseñas de este producto</h2>
+		<div th:if="${reviews != null and !reviews.isEmpty()}" class="flex flex-row gap-3 justify-center p-2">
+			<div th:each="review : ${reviews}" class="flex flex-col gap-2 text-left bg-gray-200 p-2 m-2 rounded-sm">
+				<p>Fecha: <span th:text="${review.fecha}"></span></p>
+				<p>"<span th:text="${review.mensaje}"></span>"</p>
+				<p>Puntaje: <span th:text="${review.puntaje}"></span></p>
+			</div>
+		</div>
+		<div th:if="${reviews == null or reviews.isEmpty()}">
+			<p>Aún no hay reseñas para este producto.</p>
+		</div>
+	</div>
 
 
-    <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 
 </body>

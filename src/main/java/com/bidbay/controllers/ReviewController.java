@@ -55,5 +55,15 @@ public class ReviewController {
 		reviewService.dejarReview(idProducto, mensaje, puntajeDouble, usuario.getId(), notificacionId);
 		return "redirect:/producto/details/" + idProducto;
 	}
+	
+	@RequestMapping(value = "/verReview/{id}", method = RequestMethod.GET)
+	public String mostrarReviewsDelUser(@PathVariable("id") Long idUsuario, HttpSession session, Model model) {
+		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			return "redirect:/login";
+		}
+		model.addAttribute("reviews", reviewService.getReviewsPorUsuario(idUsuario));
+		
+		return "views/misReviewsView";
+	}
 
 }

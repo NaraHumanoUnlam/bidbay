@@ -17,4 +17,6 @@ public interface IReviewService {
 
 	public List<Review> getReviewsPorProducto(Long id);
 
+	public List<Review> getReviewsPorUsuario(Long idUsuario);
+
 }

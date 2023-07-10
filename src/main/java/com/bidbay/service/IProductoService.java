@@ -25,7 +25,7 @@ public interface IProductoService {
 	public Integer ventasDelUsuario(Long id_usuario);
 	public List<OperacionCV> detalleComprasDelUsuario(Long id_usuario);
 	public List<OperacionCV> detalleVentasDelUsuario(Long id_usuario);
-	
+	public Favoritos buscoFavoritoDelUsuario(Long id_usuario , Long id_producto);
 	public List<Favoritos>  detalleFavoritosDelUsuario(Long id_usuario);
 	public Boolean clickFavoritoDelUsuario(Long id_usuario , Long id_producto);
 

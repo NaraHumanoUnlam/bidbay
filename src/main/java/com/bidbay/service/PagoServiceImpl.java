@@ -86,13 +86,14 @@ public class PagoServiceImpl implements IPagoService {
 			Date fecha = java.sql.Date.valueOf(currentDate);
 			compraAPagar.setFecha(fecha);
 			compraDao.save(compraAPagar);
-			
+
 			this.mandarNotificacionDeReview(compraAPagar.getDetalles(), idUsuario);
 			
 			generarTicket(pagoARealizar, compraAPagar, idUsuario);
 			
-			//descontarStockProductos(compraAPagar);
-			
+
+			descontarStockProductos(compraAPagar);
+
 			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
 
 		}
@@ -141,7 +142,7 @@ public class PagoServiceImpl implements IPagoService {
 			
 			compra.setFecha(fecha);
 			this.mandarNotificacionDeReview(compra.getDetalles(), idUsuario);
-			//descontarStockProductos(compra);
+
 			precioAcumulado += compra.getMonto();
 			compraDao.save(compra);
 			
@@ -202,6 +203,7 @@ public class PagoServiceImpl implements IPagoService {
 		}
 	}
 	
+
 	private Boolean validarStock (Compras compraAPagar) {
 		Boolean validacionDeStock=false; 
 		List<DetalleCompras>variable = compraAPagar.getDetalles();
@@ -213,15 +215,10 @@ public class PagoServiceImpl implements IPagoService {
 		return validacionDeStock; 
 	}
 	
+
 	@Override
 	public void generarTicket(Pago pagoARealizar, Compras compraAPagar, Long idUsuario) {
-		
-//		List<Producto> listaDeProductos = new ArrayList<Producto>();
-//		List<DetalleCompras>listaDetalleCompra = compraAPagar.getDetalles();
-//		for (DetalleCompras detalleCompras : listaDetalleCompra) {
-//			Producto estoMeDaUnProducto = detalleCompras.getProducto();
-//			listaDeProductos.add(estoMeDaUnProducto);
-//		},listaDeProductos
+
 		
 		Ticket ticket = new Ticket(pagoARealizar.getIdPago(), idUsuario, compraAPagar.getFecha(),compraAPagar.getMonto());
 		ticketDao.save(ticket);

@@ -58,14 +58,15 @@
 					<p th:text="${logueo}" class="text-capitalize text-md font-regular"></p>
 				</div>
 				<a th:href=@{/moderador/perfilModerador} class="text-2xl mr-2" th:if="${rol == 'Moderador'}"><i class="fa-regular fa-user"></i></a>
-				<a href="#" id="btn-notificaciones" onclick="mostrarPopUpNotificacion()" class="text-white text-2xl"><i class="fa-solid fa-bell"></i></a>  
+				<a href="#" id="btn-notificaciones" onclick="mostrarPopUpNotificacion()" class="text-white text-2xl"><i class="fa-solid fa-bell" th:if="${rol != 'Moderador'}"></i></a>  
 			</div>
 			<div th:if="${logueo == null}" class="flex flex-col">
 				<a th:href=@{/login} class="text-2xl mr-2"><i class="fa-regular fa-user"></i></a>
 			</div>	
+
 			<div class="flex justify-center items-center content-center">
 				<a th:href="@{/producto/listar}" class="text-2xl" th:if="${rol != 'Moderador'}"><i class="fa-solid fa-tag"></i></a> 
-        		<a th:href="@{/moderador/review}" class="text-2xl" id="btn-notificaciones"  th:if="${rol == 'Moderador'}"> <i class="fa-solid fa-clipboard-list-check"></i></a>
+        		<a th:href="@{/moderador/review}" class="text-2xl"  th:if="${rol == 'Moderador'}"> <i class="fa-regular fa-bell"></i></a>
 				<a th:href="@{/moderador/productos}" class="text-2xl" th:if="${rol == 'Moderador'}"><i class="fa-solid fa-tag"></i></a>
 				<a th:href="@{/miscompras/listar}" class="text-2xl"  th:if="${rol != 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>
 				<a th:href="@{/moderador/compras}" class="text-2xl"  th:if="${rol == 'Moderador'}"><i class="fa-solid fa-bag-shopping"></i></a>

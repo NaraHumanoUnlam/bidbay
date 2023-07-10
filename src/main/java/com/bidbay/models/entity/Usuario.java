@@ -43,10 +43,10 @@ public class Usuario implements Serializable{
 		
 		private RolUsuario rol;
 		
-		@OneToMany(mappedBy = "usuarios", cascade = CascadeType.ALL, orphanRemoval = true)
+		@OneToMany(mappedBy = "usuarios", cascade = CascadeType.ALL)
 		private List<Notificacion> notificaciones;
 		
-		@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+		@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 		private List<Review> reviewsDejadas;
 		
 		private Double rating;

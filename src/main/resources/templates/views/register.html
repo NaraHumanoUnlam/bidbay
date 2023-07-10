@@ -9,45 +9,83 @@
 
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-    	<h2 th:text="${error}"></h2>
+    	<h2 id="errorMsg" th:text="${error}"></h2> <br>
     
-    <form th:action="@{/usuario/form}" th:object="${usuario}" method="post" class="formulario mb-5 sombra-2">
-    <img alt="logo" src="../img/BidBay-Logo-New.png" class="m-auto w-28 h-18 mb-10">    
+    <form id="registroForm" th:action="@{/usuario/form}" th:object="${usuario}" method="post" onsubmit="return validarFormulario();" class="formulario mb-5 sombra-2">    
+  
         <table class="p-5 m-auto">
             <tr>
                 <td>Usuario:</td>
-                <td><input type="text" th:field="*{nick}" /></td>
+                <td><input type="text" name="nick" th:field="*{nick}"  /></td>
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><input type="password" th:field="*{password}" /></td>
+                <td><input type="password" name="password" th:field="*{password}"  /></td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td><input type="text" th:field="*{email}" /></td>
+                <td><input type="text" name="email" th:field="*{email}" /></td>
             </tr>
             <tr>
                 <td>Nombre:</td>
-                <td><input type="text" th:field="*{nombre}" /></td>
+                <td><input type="text" name="nombre" th:field="*{nombre}"  /></td>
             </tr>
             <tr>
                 <td>Apellido:</td>
-                <td><input type="text" th:field="*{apellido}" /></td>
+                <td><input type="text" name="apellido" th:field="*{apellido}" /></td>
             </tr>
             <tr>
                 <td>Direccion:</td>
-                <td><input type="text" th:field="*{direccion}" /></td>
+                <td><input type="text" name="direccion" th:field="*{direccion}"  /></td>
             </tr>
         
             <tr>
                 <td>Telefono:</td>
-                <td><input type="text" th:field="*{telefono}" /></td>
+                <td><input type="text" name="telefono" th:field="*{telefono}" /></td>
             </tr>
         </table>
-            
+        
+           
         <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
         <input type="hidden" th:field="*{id}" />
     </form>
+     </main>  
+     
+  	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
-
 </html>
+<script type="text/javascript">
+	 function  validarFormulario(){
+		 var form = document.forms.namedItem('registroForm');
+		 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		 var respuesta=true;
+		 var errorMessages = document.getElementById('errorMsg');
+		 	errorMessages.innerHTML ="";
+		 const data = {
+        nick: form.elements.namedItem('nick').value,
+        password: form.elements.namedItem('password').value,
+        nombre: form.elements.namedItem('nombre').value,
+        email: form.elements.namedItem('email').value,
+        apellido: form.elements.namedItem('apellido').value,
+        direccion: form.elements.namedItem('direccion').value,
+        telefono: form.elements.namedItem('telefono').value,
+    };
+  		 errorMessages.innerHTML ="";
+  		 
+		 
+		 if(data.nick === "" || data.password === "" || data.nombre === "" || data.email === "" || 
+		 		data.apellido === "" || data.direccion === "" || data.telefono === ""){
+			 errorMessages.innerHTML = "Llena todos los campos" ;
+				return false;
+		 }
+	
+		  if (!emailRegex.test(data.email)) {
+			errorMessages.innerHTML = "El correo electrónico no es válido";
+        	return false;
+		  }
+        	
+        
+		return true;
+	}
+</script>

@@ -97,7 +97,7 @@ public class LoginController {
 	        model.addAttribute("titulo", "Registro Usuario");
 	        return "views/login";
 	    }
-	    if (usuario.getId()>0) {
+	    if (usuario.getId() != null) {
 	    	usuarioService.saveEdit(usuario);
 	    	return "redirect:/usuario/perfil";
 	    } else {

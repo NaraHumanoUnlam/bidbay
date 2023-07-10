@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${titulo}"></title>
-   
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-     <link rel="stylesheet" href="../css/login.css">
-</head>
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+<script src="https://cdn.tailwindcss.com"></script>
+<body class="">
 
-<body class="text-black text-center text-3xl flex flex-col justify-center items-center justify-items-center">
-    <h1 th:text="${titulo}" class="mb-5 mt-5"></h1>
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
+
+	<main class="flex justify-center items-center flex-col">
+		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
     	<h2 th:text="${error}"></h2>
     
-    <form th:action="@{/usuario/agregar}" th:object="${usuario}" method="post" class="bg-gray-400 p-5 rounded border border-blue-500 drop-shadow-sm drop-shadow-sm m-auto">
-    <img alt="logo" src="../img/BidBay-Logo-New.png" class="m-auto w-28 h-18 mb-10">
+    <form th:action="@{/usuario/form}" th:object="${usuario}" method="post" class="formulario mb-5 sombra-2">
+    <img alt="logo" src="../img/BidBay-Logo-New.png" class="m-auto w-28 h-18 mb-10">    
         <table class="p-5 m-auto">
             <tr>
                 <td>Usuario:</td>
@@ -49,7 +44,8 @@
                 <td><input type="text" th:field="*{telefono}" /></td>
             </tr>
         </table>
-        <input type="submit" value="Crear Usuario" class=" hover:bg-sky-400 p-5 m-auto rounded-full border border-sky-400 m-5 text-xl bg-sky-600" />
+            
+        <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
         <input type="hidden" th:field="*{id}" />
     </form>
 </body>

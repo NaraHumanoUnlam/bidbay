@@ -9,7 +9,9 @@ public interface IUsuarioService {
 
 
 	public List <Usuario> findAll(); 
+	public Usuario findById(Long idUsuario);
 	public void save(Usuario usuario);
+	public void saveEdit(Usuario usuario);
 	public Usuario validarUsuario(String nick, String password);
 	public Usuario findByUsername(String nick);
 	public Usuario findByemail(String email);

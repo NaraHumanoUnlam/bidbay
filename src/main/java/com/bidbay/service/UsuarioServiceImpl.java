@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bidbay.models.entity.Pago;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
 
@@ -33,6 +34,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
+	public Usuario findById(Long idUsuario) {
+
+		return usuarioDao.findById(idUsuario).orElse(null);
+	}
+	
+	@Override
 	public void save(Usuario usuario) {
 		usuarioDao.save(usuario);
 		String mensaje = "¡Bienvenido a Bidbay " + usuario.getNick() + "!";
@@ -43,6 +50,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		}catch(Exception e) {
 			System.out.println("Error en inser a tabla: " + e);
 		}
+	}
+	
+	public void saveEdit(Usuario usuario) {
+		usuarioDao.save(usuario);
 	}
 	
 	@Transactional(readOnly = true)

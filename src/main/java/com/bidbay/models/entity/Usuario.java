@@ -205,30 +205,6 @@ public class Usuario implements Serializable{
 			return isDeleted;
 		}
 
-		/*public double getRating() {
-			// TODO Auto-generated method stub
-			if (ratings == null || ratings.isEmpty()) {
-	            return 0.0;
-	        }
-	        double sum = 0.0;
-	        for (Double rating : ratings) {
-	            sum += rating;
-	        }
-	        return sum / ratings.size();
-		}
-
-		public void setRatings(List<Double> ratings) {
-			// TODO Auto-generated method stub
-			this.ratings = ratings;
-		}
-		
-		public void setRating(Double rating) {
-			// TODO Auto-generated method stub
-			if (ratings == null) {
-	            ratings = new ArrayList<>();
-	        }
-	        ratings.add(rating);
-		}*/
 
 		public List<Producto> getPublicaciones() {
 			return publicaciones;
@@ -241,6 +217,26 @@ public class Usuario implements Serializable{
 
 		public Double getRating() {
 			return rating;
+		}
+
+		public List<Review> getReviewsDejadas() {
+			return reviewsDejadas;
+		}
+
+		public void setReviewsDejadas(List<Review> reviewsDejadas) {
+			this.reviewsDejadas = reviewsDejadas;
+		}
+
+		public List<Producto> getCompras() {
+			return compras;
+		}
+
+		public void setCompras(List<Producto> compras) {
+			this.compras = compras;
+		}
+
+		public void setRating(Double rating) {
+			this.rating = rating;
 		}
 		
 		

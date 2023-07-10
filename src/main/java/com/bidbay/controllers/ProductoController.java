@@ -192,6 +192,7 @@ public class ProductoController {
 	public String detalles(@PathVariable("id") Long id, @RequestParam(value = "fav", defaultValue = "false") boolean fav, Map<String, Object> model,
 			HttpSession session) {
 		Producto p = null;
+		Usuario usuarioBuscado= usuarioService.getUsuarioActualmenteLogeado(session);
 		if (id > 0) {
 			p = productoService.findOne(id);
 		} else {
@@ -200,7 +201,7 @@ public class ProductoController {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
-			Favoritos favorito = productoService.buscoFavoritoDelUsuario(usuarioService.getUsuarioActualmenteLogeado(session).getId() ,p.getId());
+			Favoritos favorito = productoService.buscoFavoritoDelUsuario(usuarioBuscado.getId() ,p.getId());
 			if (favorito != null) {
 				model.put("valheard",true);
 			} else {
@@ -208,16 +209,22 @@ public class ProductoController {
 			}
 			
 			if (fav) { 
-				productoService.clickFavoritoDelUsuario(usuarioService.getUsuarioActualmenteLogeado(session).getId(),p.getId());
+				productoService.clickFavoritoDelUsuario(usuarioBuscado.getId(),p.getId());
+				if (favorito != null) {
+					model.put("valheard",false);
+				} else {
+					model.put("valheard",true);
+				}
 			}
-			model.put("usuarioComproProducto", reviewService.usuarioHabilitado(usuarioService.getUsuarioActualmenteLogeado(session).getId(), p.getId()));
+			model.put("usuarioComproProducto", reviewService.usuarioHabilitado(usuarioBuscado.getId(), p.getId()));
 		}
 		model.put("producto", p);
 		model.put("titulo", "Detalles del Producto");
-	    model.put("reviews", reviewService.getReviewsPorProducto(id));
-	    
+	    model.put("reviews", reviewService.getReviewsPorProducto(id));    
 		model.put("categorias", categoriaService.findAll());
+		
 		return "views/productoDeatailView";
+		
 	}
 
 	// esto es por mockito. ok tonces no lo borro xd

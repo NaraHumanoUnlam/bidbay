@@ -14,7 +14,7 @@
 			<div class="p-5">
 				<div
 					class="grid grid-cols-3 text-center items-center justify-center justify-items-center gap-2 h-[250px] rounded">
-					<div th:each="producto: ${productos}" class="mb-10 mb-5 bg-white m-3 shadow"  th:if="${producto.stock != 0}">
+					<div th:each="producto: ${productos}" class="mb-10 mb-5 bg-white m-3 shadow"  th:if="${producto.stock > 0}">
 						<div class="flex flex-row m-auto w-full h-full w-full bg-white p-2 gap-2">
 							<div class="flex flex-col w-fukk m-2 items-center justify-center">
 							<a th:href="@{/producto/details/{id}(id=${producto.id})}">

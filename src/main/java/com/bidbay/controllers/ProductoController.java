@@ -209,15 +209,21 @@ public class ProductoController {
 			
 			if (fav) { 
 				productoService.clickFavoritoDelUsuario(usuarioService.getUsuarioActualmenteLogeado(session).getId(),p.getId());
+				if (favorito != null) {
+					model.put("valheard",false);
+				} else {
+					model.put("valheard",true);
+				}
 			}
 			model.put("usuarioComproProducto", reviewService.usuarioHabilitado(usuarioService.getUsuarioActualmenteLogeado(session).getId(), p.getId()));
 		}
 		model.put("producto", p);
 		model.put("titulo", "Detalles del Producto");
-	    model.put("reviews", reviewService.getReviewsPorProducto(id));
-	    
+	    model.put("reviews", reviewService.getReviewsPorProducto(id));    
 		model.put("categorias", categoriaService.findAll());
+		
 		return "views/productoDeatailView";
+		
 	}
 
 	// esto es por mockito. ok tonces no lo borro xd

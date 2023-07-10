@@ -79,11 +79,16 @@ public class PagoController {
 	    
 	    Pago respuesta = pagoService.pagarTotal(pagoNuevo, usuario.getId());
 	    
-	    if (respuesta.getAprobado()) {
-	        model.addAttribute("ticket", respuesta);
+   if (respuesta.getAprobado()) {
+	        
+	    	model.addAttribute("Idticket", respuesta.getTicket().getIdTicket());
+	        java.util.Date fechaActual = new java.util.Date();
+	        model.addAttribute("FechaDeCompra",fechaActual);
+	        model.addAttribute("MontoPagado" , respuesta.getTicket().getPrecio());
+	        
 	        return "views/ticketValidadoView";
 	    } else {
-	        model.addAttribute("error", "El pago ha sido rechazado");
+	        model.addAttribute("error", respuesta.getMensaje());
 	        return "views/ticketRechazadoView";
 	    }
 	}
@@ -122,14 +127,19 @@ public class PagoController {
 	    model.addAttribute("titulo", "Formulario de Pago");
 	    model.addAttribute("botonSubmit", "Realizar Pago");
 	    if (respuesta.getAprobado()) {
-	        model.addAttribute("ticket", respuesta);
+	        
+	    	model.addAttribute("Idticket", respuesta.getTicket().getIdTicket());
 	        java.util.Date fechaActual = new java.util.Date();
+	        model.addAttribute("FechaDeCompra",fechaActual);
+	        model.addAttribute("MontoPagado" , respuesta.getTicket().getPrecio());
+	        
 	        return "views/ticketValidadoView";
 	    } else {
-	        model.addAttribute("error", "El pago ha sido rechazado");
+	        model.addAttribute("error", respuesta.getMensaje());
 	        return "views/ticketRechazadoView";
 	    }
 	}
+
 
 
 }

@@ -1,9 +1,11 @@
 package com.bidbay.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DaoSupport;
@@ -21,6 +23,8 @@ import com.bidbay.models.entity.Compras;
 import com.bidbay.models.entity.DetalleCompras;
 import com.bidbay.models.entity.Pago;
 import com.bidbay.models.entity.Producto;
+import com.bidbay.models.entity.Ticket;
+import com.bidbay.models.entity.Usuario;
 import com.bidbay.models.entity.Notificacion;
 
 @Service
@@ -81,12 +85,12 @@ public class PagoServiceImpl implements IPagoService {
 			compraAPagar.setFecha(fecha);
 			compraDao.save(compraAPagar);
 
-			
 			this.mandarNotificacionDeReview(compraAPagar.getDetalles(), idUsuario);
 			
-
-
-			//generarTicket(); 
+			generarTicket(pagoARealizar, compraAPagar, idUsuario);
+			
+			//var temporal = generarTicket(pagoARealizar, compraAPagar, idUsuario);
+			//pagoARealizar.setTicket(temporal); 
 			descontarStockProductos(compraAPagar);
 			
 			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
@@ -113,7 +117,7 @@ public class PagoServiceImpl implements IPagoService {
 		if (validarPago(pagoARealizar).getAprobado()) {
 			save(pagoARealizar);
 			this.pagarComprasDelUsuario(pagoARealizar.getIdPago(), idUsuario);
-
+			
 			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
 			
 		} else {
@@ -128,20 +132,23 @@ public class PagoServiceImpl implements IPagoService {
 
 	private void pagarComprasDelUsuario(Long idPago, Long idUsuario) {
 		// TODO Auto-generated method stub
+		Double precioAcumulado = 0.0;
+		LocalDate currentDate = LocalDate.now();
+		Date fecha = java.sql.Date.valueOf(currentDate);
 		List<Compras> comprasDelUsuario = compraDao.comprasSinPagarDelusuario(idUsuario);
 		for (Compras compra : comprasDelUsuario) {
 			compra.setIdPago(idPago);
-			LocalDate currentDate = LocalDate.now();
-			Date fecha = java.sql.Date.valueOf(currentDate);
+			
 			compra.setFecha(fecha);
-
 			this.mandarNotificacionDeReview(compra.getDetalles(), idUsuario);
-
 			descontarStockProductos(compra);
-
+			precioAcumulado += compra.getMonto();
 			compraDao.save(compra);
 			
 		}
+		generarTicketParaTodos(idPago, precioAcumulado,fecha, idUsuario);
+		
+		
 	}
 
 	private Pago validarPago(Pago pagoAGenerar) {
@@ -186,12 +193,6 @@ public class PagoServiceImpl implements IPagoService {
 		}
 	}
 
-	@Override
-	public void generarTicket(Long idCompra, Double Precio, String nickuser) {
-		// TODO Auto-generated method stub
-
-	}
-	
 	private void descontarStockProductos(Compras compraAPagar) {
 		List<DetalleCompras>variable = compraAPagar.getDetalles();
 		for (DetalleCompras detalleCompras : variable) {
@@ -201,5 +202,30 @@ public class PagoServiceImpl implements IPagoService {
 		}
 	}
 	
+	@Override
+	public void generarTicket(Pago pagoARealizar, Compras compraAPagar, Long idUsuario) {
+		
+//		List<Producto> listaDeProductos = new ArrayList<Producto>();
+//		List<DetalleCompras>listaDetalleCompra = compraAPagar.getDetalles();
+//		for (DetalleCompras detalleCompras : listaDetalleCompra) {
+//			Producto estoMeDaUnProducto = detalleCompras.getProducto();
+//			listaDeProductos.add(estoMeDaUnProducto);
+//		},listaDeProductos
+		
+		Ticket ticket = new Ticket(pagoARealizar.getIdPago(), idUsuario, compraAPagar.getFecha(),compraAPagar.getMonto());
+		ticketDao.save(ticket);
+		pagoARealizar.setTicket(ticket);
+		pagoDao.save(pagoARealizar);	
+	}
 
+	@Override
+	public void generarTicketParaTodos(Long idPago, Double monto, Date fecha, Long idUsuario) {
+	Pago pagoARealizar = pagoDao.findById(idPago).orElse(null);
+	Ticket ticket = new Ticket(idPago, idUsuario, fecha ,monto);
+	ticketDao.save(ticket);
+	pagoARealizar.setTicket(ticket);
+	pagoDao.save(pagoARealizar);	
 }
+
+
+}//ultima

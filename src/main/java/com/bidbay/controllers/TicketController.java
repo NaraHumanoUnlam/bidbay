@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,25 +30,40 @@ public class TicketController {
 	private IUsuarioService usuarioService;
 	
 	
-	@RequestMapping(value = "/ticketValidado", method = RequestMethod.GET)
-	public String pagoAprobado(@RequestParam("idPago") Long idPago, Map<String, Object> model) {
+	@RequestMapping(value = "/ticketValidado/{ticketId}", method = RequestMethod.GET)
+	public String pagoAprobado(@PathVariable("ticketId")Long ticketCreado, Map<String, Object> model) {
 	    try {
-	        Optional<Pago> pago;
-	        Ticket ticket = new Ticket();
-	        ticket.setIdTicket(125L); // Establece el valor de idTicket correctamente
-	        model.put("ticket", ticket);
-	        pago = pagoDao.findById(idPago);
+
+	    	servicioTicket.findOne(ticketCreado);
+	    	
+	        model.put("ticket", ticketCreado);
+
+	      
 	        model.put("title", "Pago Aprobado");
 	        model.put("index", "Regresar al Inicio");
-	        model.put("pago", pago);
+
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	    return "views/ticketValidadoview";
 	}
 	
-	
-}
+}	
 
 
-//Idpago precio, productos que compro lista, nickdeUsuario, direccion, idticket
+//@RequestMapping(value = "/ticketValidado", method = RequestMethod.GET)
+//public String pagoAprobado(@RequestParam("idPago") Long idPago, Map<String, Object> model) {
+//    try {
+//        Optional<Pago> pago;
+//        Ticket ticket = new Ticket();
+//        ticket.setIdTicket(125L); // Establece el valor de idTicket correctamente
+//        model.put("ticket", ticket);
+//        pago = pagoDao.findById(idPago);
+//        model.put("title", "Pago Aprobado");
+//        model.put("index", "Regresar al Inicio");
+//        model.put("pago", pago);
+//    } catch (Exception e) {
+//        e.printStackTrace();
+//    }
+//    return "views/ticketValidadoview";
+//}

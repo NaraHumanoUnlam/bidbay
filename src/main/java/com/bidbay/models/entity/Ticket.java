@@ -1,12 +1,14 @@
 package com.bidbay.models.entity;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -25,22 +27,35 @@ public class Ticket implements Serializable {
 
 	private Long idPago;
 	
+	private Long idUser; 
+	
 	private Double precio;
 	
+	private Date fechaDeCompra;
 	//CAMBIAR
+
 	//asociado a una compra
-	private List<String> productos;
+	@OneToMany(mappedBy = "ticket" )
+	private List<Producto> productos;
 	
 	//id usuario entonces
 	private String nickUser;
-	
 
 
 
-	public Ticket () {
+
+	public Ticket (Long idPago, Long idUsuario, Date fechaDeCompra, Double MontoDeCompra) {
 		super();
+		this.idPago=idPago; 
+		this.idUser=idUsuario; 
+		this.fechaDeCompra = fechaDeCompra; 
+		this.precio = MontoDeCompra;
+	
+		
 	}
 
+	
+	
 	public Long getIdTicket() {
 		return idTicket;
 	}
@@ -71,12 +86,12 @@ public class Ticket implements Serializable {
 	}
 
 
-	public List<String> getProductos() {
+	public List<Producto> getProductos() {
 		return productos;
 	}
 
 
-	public void setProductos(List<String> productos) {
+	public void setProductos(List<Producto> productos) {
 		this.productos = productos;
 	}
 

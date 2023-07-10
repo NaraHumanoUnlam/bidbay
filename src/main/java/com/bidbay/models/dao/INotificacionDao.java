@@ -9,12 +9,15 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.bidbay.models.entity.Notificacion;
 
+import jakarta.transaction.Transactional;
+
 public interface INotificacionDao extends CrudRepository<Notificacion, Long>{
 
 	@Query(value = "select * from notificacion where id=?", nativeQuery = true)
 	public Notificacion obtenerNotificacion(Long id);
 	
 	@Modifying
+	@Transactional
 	@Query(value = "insert into notificacion (fecha, titulo, notificacion, usuarios_id,enlace) values (current_date(),?,?,?,?)", nativeQuery = true)
 	public void crearNotificacion(String titulo, String texto, Long idUsuario, String enlace);
 	

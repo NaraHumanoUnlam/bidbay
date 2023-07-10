@@ -3,7 +3,7 @@
 
 <head th:replace="views/layouts/plantilla.html :: head"></head>
 <script src="https://cdn.tailwindcss.com"></script>
-<body class="">
+	<body onload="cargaFormulario();">
 
 	<header th:replace="views/layouts/plantilla.html :: header"></header>
 
@@ -11,7 +11,7 @@
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
     	<h2 id="errorMsg" th:text="${error}"></h2> <br>
     
-    <form id="registroForm" th:action="@{/usuario/form}" th:object="${usuario}" method="post" onsubmit="return validarFormulario();" class="formulario mb-5 sombra-2">    
+    <form id="registroForm" th:action="@{/usuario/guardar}" th:object="${usuario}" method="post" onsubmit="return validarFormulario();" class="formulario mb-5 sombra-2">    
   
         <table class="p-5 m-auto">
             <tr>
@@ -47,7 +47,7 @@
         
            
         <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
-        <input type="hidden" th:field="*{id}" />
+        <input type="hidden" name="id" th:field="*{id}" />
     </form>
      </main>  
      
@@ -88,4 +88,17 @@
         
 		return true;
 	}
+	function cargaFormulario() {
+    // ...
+     var form = document.forms.namedItem('registroForm');
+    var id = form.elements.namedItem('id').value;
+    var nickField = form.elements.namedItem('nick');
+    var emailField = form.elements.namedItem('email');
+    
+    if (id !== "") {
+        nickField.disabled = true;
+        emailField.disabled = true;
+    }    
+    return true;
+}
 </script>

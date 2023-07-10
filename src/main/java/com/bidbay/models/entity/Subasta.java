@@ -3,6 +3,9 @@ package com.bidbay.models.entity;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
+
+import org.springframework.data.relational.core.mapping.Embedded.Nullable;
 
 import jakarta.persistence.*;
 
@@ -12,29 +15,32 @@ public class Subasta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "nombre")
-    private String nombre;
     
     @Column(name = "subastador")
     private Usuario subastador;
 
-//    @Column(name = "ofertante")
-//    @ManyToOne
-//    private Ofertante ofertante;
+    @Nullable
+    @Column(name = "ofertante")
+    @OneToMany(mappedBy = "subasta", cascade = CascadeType.ALL)
+    private List<Ofertante> ofertantes;
     
     @Column(name = "producto")
     private Producto producto;
 
     @Column(name = "precio_inicial")
-    private BigDecimal precioInicial;
+    private Double precioInicial;
     
     
     @Column(name = "precio_maximo")
-    private BigDecimal maximo;
+    private Double maximo;
     
     private Date fechaLimite;
     private Time horaLimite;
+
+
+	public Subasta() {
+		super();
+	}
 
 
 	public Long getId() {
@@ -44,16 +50,6 @@ public class Subasta {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 
@@ -76,23 +72,53 @@ public class Subasta {
 	}
 
 
-	public BigDecimal getPrecioInicial() {
+	public Double getPrecioInicial() {
 		return precioInicial;
 	}
 
 
-	public void setPrecioInicial(BigDecimal precioInicial) {
+	public void setPrecioInicial(Double precioInicial) {
 		this.precioInicial = precioInicial;
 	}
 
 
-	public BigDecimal getMaximo() {
+	public Double getMaximo() {
 		return maximo;
 	}
 
 
-	public void setMaximo(BigDecimal maximo) {
+	public void setMaximo(Double maximo) {
 		this.maximo = maximo;
+	}
+
+
+	public List<Ofertante> getOfertantes() {
+		return ofertantes;
+	}
+
+
+	public void setOfertantes(List<Ofertante> ofertantes) {
+		this.ofertantes = ofertantes;
+	}
+
+
+	public Date getFechaLimite() {
+		return fechaLimite;
+	}
+
+
+	public void setFechaLimite(Date fechaLimite) {
+		this.fechaLimite = fechaLimite;
+	}
+
+
+	public Time getHoraLimite() {
+		return horaLimite;
+	}
+
+
+	public void setHoraLimite(Time horaLimite) {
+		this.horaLimite = horaLimite;
 	}
     
     

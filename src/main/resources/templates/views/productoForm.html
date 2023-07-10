@@ -2,43 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="views/layouts/plantilla.html :: head"></head>
+<script src="https://cdn.tailwindcss.com"></script>
+<body class="">
 
-<body>
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
 
-    <header th:replace="views/layouts/plantilla.html :: header"></header>
-
-    <main class="mb-5">
-        <h1 th:text="${titulo}" class="h1 text-4xl mb-5 text-center"></h1>
+	<main class="flex justify-center items-center flex-col">
+		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
 
         <form th:action="@{/producto/form}" th:object="${producto}" method="POST" class="formulario mb-5 sombra-2"
             enctype="multipart/form-data">
-            <div class="formulario-div">
-                <label for="nombre">Producto:</label>
-                <input type="text" id="nombre" th:field="*{nombre}" />
-            </div>
-            <div class="formulario-div">
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" th:field="*{descripcion}"></textarea>
-            </div>
-            <div class="formulario-div">
-                <label for="precio">Precio:</label>
-                <input type="text" id="precio" th:field="*{precio}" />
-            </div>
-            <div class="formulario-div">
-                <label for="stock">Stock:</label>
-                <input type="text" id="stock" th:field="*{stock}" />
-            </div>
-            <div class="formulario-div">
-                <label for="imagen">Imagen:</label>
-                <input type="file" id="imagen" name="file" />
-            </div>
-            <div class="formulario-div">
-                <label for="categoria">Seleccione una Categoría:</label>
-                <select id="categoria" th:field="*{categoria.id}" class="select-css">
-                    <option value="" >Seleccione una opción</option>
-                    <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
-                </select>
-            </div>
+             <table class="p-4 m-auto">
+            	<tr>
+                	<td>Producto:</td>
+                	<td><input type="text" id="nombre" th:field="*{nombre}" /></td>
+            	</tr>
+            	<tr>
+                	<td>Descripción:</td>
+                	<td><textarea id="descripcion" th:field="*{descripcion}"></textarea></td>
+            	</tr>
+            	<tr>
+                	<td>Precio:</td>
+                	<td> <input type="text" id="precio" th:field="*{precio}" /></td>
+            	</tr>
+            	<tr>
+                	<td>Stock:</td>
+                	<td><input type="text" id="stock" th:field="*{stock}" /></td>
+            	</tr>
+            	<tr>
+                	<td>Imagen:</td>
+                	<td><input type="file" id="imagen" name="file" /></td>
+            	</tr>
+            	<tr>
+                	<td>Categoria:</td>
+                	<td><select id="categoria" th:field="*{categoria.id}" class="select-css">
+                    		<option value="" >Seleccione una opción</option>
+                    		<option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
+                		</select>
+                	</td>
+            	</tr>
+             </table>
+    
+          
+           
 <!--             <div class="formulario-div"> -->
 <!--                 <label for="intercambio">Seleccione una Intercambio:</label> -->
 <!--                 <select id="intercambio" th:field="*{intercambio.id}" class="select-css"> -->
@@ -49,13 +55,11 @@
             <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
             <input type="hidden" th:field="*{id}" />
         </form>
-        <!-- esto lo agregue para que se pueda scrolear para abajo :) -->
-        <div class="h-28 w-full"></div>
+      
     </main>
 
-    <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
-
-
+  	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
 
 </html>

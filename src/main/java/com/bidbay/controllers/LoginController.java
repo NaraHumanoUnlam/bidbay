@@ -87,14 +87,7 @@ public class LoginController {
 		        return "views/register";
 		    }
 		    
-		    try {
-		    	notificacionService.crearNotificacion("Bienvenida", "¡Bienvenido " + usuario.getNick() + "a BIDBAY!", usuario.getId(),"");
-		    }catch(Exception e) {
-		    	model.addAttribute("error", "Error generar notificacion para el usuario: " + e.getMessage());
-		    	return "views/register";
-		    }
-
-		    return "redirect:/login";
+		   return "redirect:/login";
 	     
 	    }
 	    model.addAttribute("titulo", "Registro Usuario");

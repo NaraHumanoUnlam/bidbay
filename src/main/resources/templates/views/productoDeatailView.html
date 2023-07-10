@@ -3,7 +3,8 @@
 
 <head th:replace="views/layouts/plantilla.html :: head"></head>
 
-<body>
+	
+	<body>
 
     <header th:replace="views/layouts/plantilla.html :: header"></header>
 
@@ -44,8 +45,9 @@
                 <a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white"
                     th:href="@{/carrito/form/{id}(id=${producto.id})}">Agregar Al Carrito</a>
                 <div>
-                     <a th:href="@{/producto/details/{id}(id=${producto.id},fav=true)}">
-                        <i class="fa fa-heart text-muted"></i>
+                     <a th:href="@{/producto/details/{id}(id=${producto.id},fav=true)}">                   
+                        <i class="fa fa-heart text-muted"  th:if="${valheard == false}"></i>
+                        <i class="fas fa-heart" style="color: red;" th:if="${valheard == true}"></i>
                     </a>
                     <a href=""><i class="fa fa-share-alt text-muted"></i></a>
                 </div>
@@ -75,3 +77,4 @@
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 	
 </body>
+

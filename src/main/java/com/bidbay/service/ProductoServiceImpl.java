@@ -157,6 +157,7 @@ public class ProductoServiceImpl implements IProductoService {
 		return (List<Favoritos>) favoritosDao.favoritosDelusuario(id_usuario);
 	}
 	
+	@Override
 	public Favoritos buscoFavoritoDelUsuario(Long id_usuario , Long id_producto) {
 		 for (Favoritos favorito : detalleFavoritosDelUsuario(id_usuario)) {
 			 if(favorito.getProducto().getId() == id_producto)

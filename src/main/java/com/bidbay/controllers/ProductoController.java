@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bidbay.excepciones.ArchivoException;
 import com.bidbay.models.entity.Categoria;
+import com.bidbay.models.entity.Favoritos;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Review;
 import com.bidbay.models.entity.Usuario;
@@ -199,6 +200,13 @@ public class ProductoController {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
+			Favoritos favorito = productoService.buscoFavoritoDelUsuario(usuarioService.getUsuarioActualmenteLogeado(session).getId() ,p.getId());
+			if (favorito != null) {
+				model.put("valheard",true);
+			} else {
+				model.put("valheard",false);
+			}
+			
 			if (fav) { 
 				productoService.clickFavoritoDelUsuario(usuarioService.getUsuarioActualmenteLogeado(session).getId(),p.getId());
 			}

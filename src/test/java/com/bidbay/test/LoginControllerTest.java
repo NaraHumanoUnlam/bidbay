@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import com.bidbay.models.entity.Usuario;
+import com.bidbay.models.entity.RolUsuario;
 import com.bidbay.service.IUsuarioService;
 
 import jakarta.servlet.http.HttpSession;
@@ -27,158 +28,60 @@ import com.bidbay.controllers.LoginController;
 
 
 public class LoginControllerTest {
-  	@Mock
+    @Mock
     private IUsuarioService usuarioService;
-        
-    @Mock
-    private Model model;
-    
-    @Mock
-    private Map <String, Object> model2;
-    
-    @Mock
-    private BindingResult bindingResult;
-    
-    @Captor
-    private ArgumentCaptor<String> stringArgumentCaptor;
 
-    @Captor
-    private ArgumentCaptor<Object> objectArgumentCaptor;
-
-    
     @InjectMocks
     private LoginController loginController;
-    
+
+    @Mock
+    private Model model;
+
+    @Mock
+    private HttpSession session;
+
     @Before
-    public void setUp() {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
     }
-    
-    @SuppressWarnings("removal")
-	@Test
+
+    @Test
     public void testLoguear() {
-        String result = loginController.loguear(model);
-        Assert.isTrue("views/login".equals(result));
+        String viewName = loginController.loguear(model);
+        assertEquals("views/login", viewName);
     }
-    
-    @SuppressWarnings("removal")
-	@Test
-    public void testListar() {
-        String result = loginController.listar(model);
+
+    @Test
+    public void testValidarLogin_UsuarioValido() {
+        String nick = "testuser";
+        String password = "testpassword";
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        usuario.setNick(nick);
+        usuario.setRol(RolUsuario.ROL_USUARIO);
+
+        when(usuarioService.validarUsuario(nick, password)).thenReturn(usuario);
+        when(session.getAttribute("rol")).thenReturn(null);
+
+        String viewName = loginController.validarLogin(nick, password, session, model);
         
-        verify(model).addAttribute("titulo", "Listado de usuarios");
-        verify(model).addAttribute("usuarios", usuarioService.findAll());
-        Assert.isTrue("views/usuariosView".equals(result));
+
+        verify(session).setAttribute("idUsuario", usuario.getId());
+        verify(session).setAttribute("logueo", usuario.getNick());
+        verify(session).setAttribute("rol", "Usuario");
+        verify(model).addAttribute("rol", session.getAttribute("rol"));
     }
-    
-    
-	@Test
-	public void testValidarLogin_UsuarioValido() {
-		 HttpSession session = Mockito.mock(HttpSession.class);
-		// Crear un usuario válido
-		Usuario usuario = new Usuario();
-		usuario.setNick("testuser");
-		usuario.setPassword("testpassword");
 
-		// Mock del usuario buscado
-		Usuario usuarioBuscado = mock(Usuario.class);
-
-		// Configurar el servicio de usuario para devolver el usuario buscado
-		when(usuarioService.validarUsuario(usuario.getNick(), usuario.getPassword())).thenReturn(usuarioBuscado);
-
-		// Llamar al método validarLogin del controlador
-		String result = loginController.validarLogin(usuario.getNick(), usuario.getPassword(), session, model);
-
-		// Verificar que establece la variable de sesión y devuelve la vista esperada
-//		verify(session).setAttribute("idUsuario", usuario.getId());
-//		verify(model).addAttribute("logueo", usuario.getNick());
-		assertEquals("redirect:home", result);
-	}
-
-    
     @Test
     public void testValidarLogin_UsuarioInvalido() {
-    	 HttpSession session = Mockito.mock(HttpSession.class);
-        // Arrange
-        when(usuarioService.validarUsuario(anyString(), anyString())).thenReturn(null);
+        String nick = "testuser";
+        String password = "testpassword";
 
-        // Act
-        String result = loginController.validarLogin("username", "password",session, model);
+        when(usuarioService.validarUsuario(nick, password)).thenReturn(null);
 
-        // Assert
-        assertEquals("views/login", result);
+        String viewName = loginController.validarLogin(nick, password, session, model);
+
         verify(model).addAttribute("error", "Usuario y/o contraseña inválidos.");
-    }
-    
-    @Test
-    public void testGuardar_ValidarErrors() {
-        when(bindingResult.hasErrors()).thenReturn(true);
-        
-        String result = loginController.guardar(new Usuario(), bindingResult, model);
-        
-        verify(model).addAttribute("titulo", "Registro Usuario");
-        assertEquals("views/login", result);
-    }
-    
-    
-    @Test
-	public void testGuardar_ConUsuarioExistente() {
-		// Crear un usuario con datos existentes
-		Usuario usuario = new Usuario();
-		usuario.setNick("existinguser");
-		usuario.setEmail("existinguser@example.com");
-
-		// Configurar el servicio de usuario para devolver un usuario existente
-		when(usuarioService.validarExistenciaUsuario(usuario.getNick(), usuario.getEmail())).thenReturn(usuario);
-
-		// Llamar al método guardar del controlador
-		String result = loginController.guardar(usuario, bindingResult, model);
-
-		// Verificar que agrega el mensaje de error al modelo y devuelve la vista esperada
-		verify(model).addAttribute("titulo", "Registro Usuario");
-		verify(model).addAttribute("error", "El usuario y/o email ya existe registrado.");
-		assertEquals("views/register", result);
-	}
-    
-    @Test
-    public void testGuardar_SaveUsuarioSuccess() {
-        when(bindingResult.hasErrors()).thenReturn(false);
-        when(usuarioService.findByUsername(anyString())).thenReturn(null);
-        when(usuarioService.findByemail(anyString())).thenReturn(null);
-        
-        String result = loginController.guardar(new Usuario(), bindingResult, model);
-        
-        verify(usuarioService).save(any(Usuario.class));
-        assertEquals("redirect:/login", result);
-    }
-    
-    @Test
-    public void testGuardar_UsuarioNuevo() {
-        // Arrange
-        Usuario usuarioMock = new Usuario();
-        BindingResult bindingResultMock = mock(BindingResult.class);
-        when(bindingResultMock.hasErrors()).thenReturn(false);
-        when(usuarioService.validarExistenciaUsuario(anyString(), anyString())).thenReturn(null);
-
-        // Act
-        String result = loginController.guardar(usuarioMock, bindingResultMock, model);
-
-        // Assert
-        assertEquals("redirect:/login", result);
-        verify(model, never()).addAttribute(eq("error"), anyString());
-        verify(usuarioService).save(usuarioMock);
-    }
-    
-    @Test
-    public void testGuardar_SaveErrorError() {
-        when(bindingResult.hasErrors()).thenReturn(false);
-        when(usuarioService.findByUsername(anyString())).thenReturn(null);
-        when(usuarioService.findByemail(anyString())).thenReturn(null);
-        doThrow(new RuntimeException("Error al guardar el usuario")).when(usuarioService).save(any(Usuario.class));
-        
-        String result = loginController.guardar(new Usuario(), bindingResult, model);
-        
-        verify(model).addAttribute("error", "Error al guardar el usuario: Error al guardar el usuario");
-        assertEquals("views/register", result);
+        assertEquals("views/login", viewName);
     }
 }

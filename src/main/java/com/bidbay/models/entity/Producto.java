@@ -54,6 +54,10 @@ public class Producto implements Serializable{
 	@ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario vendedor;
+	
+	@Nullable
+	@ManyToOne
+	private Ticket ticket;
 
 	public Usuario getVendedor() {
 		return vendedor;

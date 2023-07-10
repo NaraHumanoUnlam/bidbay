@@ -7,8 +7,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;//
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
@@ -57,9 +61,11 @@ public class Pago implements Serializable {
 
 	private String nombreUsario; 
 	
+	@OneToOne
+	@JoinColumn(name = "ticket", referencedColumnName = "idTicket" )
 	private Ticket ticket;
 
-	
+		
 	public Pago ()
 	{
 		super();

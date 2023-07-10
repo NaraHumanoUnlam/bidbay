@@ -77,6 +77,8 @@ public class PagoServiceImpl implements IPagoService {
 	@Override
 	public Pago pagarParticular(Pago pagoARealizar, Long idCompra, Long idUsuario) {
 		Compras compraAPagar = compraDao.findById(idCompra).orElse(null);
+		
+		
 		if (validarPago(pagoARealizar).getAprobado() && compraAPagar != null) {
 			save(pagoARealizar);
 			compraAPagar.setIdPago(pagoARealizar.getIdPago());
@@ -89,10 +91,9 @@ public class PagoServiceImpl implements IPagoService {
 			
 			generarTicket(pagoARealizar, compraAPagar, idUsuario);
 			
-			//var temporal = generarTicket(pagoARealizar, compraAPagar, idUsuario);
-			//pagoARealizar.setTicket(temporal); 
+
 			descontarStockProductos(compraAPagar);
-			
+
 			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
 
 		}
@@ -141,7 +142,7 @@ public class PagoServiceImpl implements IPagoService {
 			
 			compra.setFecha(fecha);
 			this.mandarNotificacionDeReview(compra.getDetalles(), idUsuario);
-			descontarStockProductos(compra);
+
 			precioAcumulado += compra.getMonto();
 			compraDao.save(compra);
 			
@@ -197,20 +198,27 @@ public class PagoServiceImpl implements IPagoService {
 		List<DetalleCompras>variable = compraAPagar.getDetalles();
 		for (DetalleCompras detalleCompras : variable) {
 			for (int i = 0; i < detalleCompras.getCantidad(); i++) {
-				productoServicio.actualizarStock(1, detalleCompras.getProducto().getId());
+				productoServicio.descontarStock(1, detalleCompras.getProducto().getId());
 			}
 		}
 	}
 	
+
+	private Boolean validarStock (Compras compraAPagar) {
+		Boolean validacionDeStock=false; 
+		List<DetalleCompras>variable = compraAPagar.getDetalles();
+		for (DetalleCompras detalleCompras : variable) {
+			
+			validacionDeStock = productoServicio.validarStock(detalleCompras.getProducto().getId(), detalleCompras.getCantidad());
+		}
+		
+		return validacionDeStock; 
+	}
+	
+
 	@Override
 	public void generarTicket(Pago pagoARealizar, Compras compraAPagar, Long idUsuario) {
-		
-//		List<Producto> listaDeProductos = new ArrayList<Producto>();
-//		List<DetalleCompras>listaDetalleCompra = compraAPagar.getDetalles();
-//		for (DetalleCompras detalleCompras : listaDetalleCompra) {
-//			Producto estoMeDaUnProducto = detalleCompras.getProducto();
-//			listaDeProductos.add(estoMeDaUnProducto);
-//		},listaDeProductos
+
 		
 		Ticket ticket = new Ticket(pagoARealizar.getIdPago(), idUsuario, compraAPagar.getFecha(),compraAPagar.getMonto());
 		ticketDao.save(ticket);

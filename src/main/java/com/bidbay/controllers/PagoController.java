@@ -120,8 +120,9 @@ public class PagoController {
 	                   @PathVariable("idCompra") Long idCompra,
 	                   BindingResult result,
 	                   Model model, HttpSession session) {
-		 Pago pagoNuevo = new Pago(DNI, numeroTarjeta, mes, anio, nombreDeCliente, cvc);
-		 Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+		Pago pagoNuevo = new Pago(DNI, numeroTarjeta, mes, anio, nombreDeCliente, cvc);
+		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+		
 	    Pago respuesta = pagoService.pagarParticular(pagoNuevo, idCompra, usuario.getId() );
 	    
 	    model.addAttribute("titulo", "Formulario de Pago");

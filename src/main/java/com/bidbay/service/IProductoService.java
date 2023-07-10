@@ -29,9 +29,12 @@ public interface IProductoService {
 	public List<Favoritos>  detalleFavoritosDelUsuario(Long id_usuario);
 	public Boolean clickFavoritoDelUsuario(Long id_usuario , Long id_producto);
 
-	public void actualizarStock (Integer cantidad, Long id); 
 	public List<OperacionCV> findAllComprasVentas();
 	public Integer cantidadComprasVentas();
 	boolean productoEsVendidoPorUsuario(Long idUsuario, Long idProducto);
 
+	Boolean validarStock(Long idProducto, Integer cantidad);
+	void descontarStock(Integer cantidad, Long id);
+	public void restituirStock(Integer i, Long id);
+	
 }

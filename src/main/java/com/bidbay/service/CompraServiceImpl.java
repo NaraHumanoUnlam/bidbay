@@ -30,7 +30,10 @@ public class CompraServiceImpl implements IComprasService{
 	
 	@Autowired
 	private IUsuarioDao usuarioDao;
-
+	
+	@Autowired
+	private IProductoService productoServicio;
+	
 	@Override
 	public List<Compras> findAll() {
 		return (List<Compras>)compraDao.findAll();
@@ -48,6 +51,10 @@ public class CompraServiceImpl implements IComprasService{
 
 	@Override
 	public void delete(Long id) {
+		Compras auxiliar = compraDao.findById(id).orElse(null);
+		if(auxiliar!=null) {
+		restituirStockProductos(auxiliar);
+		}
 		compraDao.deleteById(id);
 	}
 
@@ -73,11 +80,14 @@ public class CompraServiceImpl implements IComprasService{
 			detalle.setPrecioCompra(carritoItem.getProducto().getPrecio()*carritoItem.getCantidadProductos());
 			detalle.setPrecioUnitario(carritoItem.getProducto().getPrecio());
 			detalles.add(detalle);
+			
 			montoTotal += detalle.getPrecioCompra();
 			carritoItemDao.delete(carritoItem);
 		}
 		
+		
 		compras.setDetalles(detalles);
+		descontarStockProductos(compras);
 		compras.setMonto(montoTotal);
 		compraDao.save(compras);
 	}
@@ -105,6 +115,24 @@ public class CompraServiceImpl implements IComprasService{
 		
 		compraDao.actualizarFechaYidPago(fecha, idPago, idCompra);
 		
+	}
+	
+	private void descontarStockProductos(Compras compraAPagar) {
+		List<DetalleCompras>variable = compraAPagar.getDetalles();
+		for (DetalleCompras detalleCompras : variable) {
+			for (int i = 0; i < detalleCompras.getCantidad(); i++) {
+				productoServicio.descontarStock(1, detalleCompras.getProducto().getId());
+			}
+		}
+	}
+	
+	private void restituirStockProductos(Compras compraAPagar) {
+		List<DetalleCompras>variable = compraAPagar.getDetalles();
+		for (DetalleCompras detalleCompras : variable) {
+			for (int i = 0; i < detalleCompras.getCantidad(); i++) {
+				productoServicio.restituirStock(1, detalleCompras.getProducto().getId());
+			}
+		}
 	}
 	
 	

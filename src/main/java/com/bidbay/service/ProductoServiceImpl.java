@@ -179,10 +179,15 @@ public class ProductoServiceImpl implements IProductoService {
 			return false;
 		}
 	}
-
+	@Transactional
 	@Override
-	public void actualizarStock(Integer cantidad, Long id) {
-		productoDao.actualizarStock(cantidad, id);
+	public void descontarStock(Integer cantidad, Long id) {
+		productoDao.descontarStock(cantidad, id);
+	}
+	@Transactional
+	@Override
+	public void restituirStock(Integer cantidad, Long id) {
+		productoDao.restituirStock(cantidad, id);	
 	}
 	
 	@Override
@@ -205,6 +210,24 @@ public class ProductoServiceImpl implements IProductoService {
 		}
 		return true;
 	}
+	
+	@Transactional
+	@Override
+	public Boolean validarStock(Long idProducto,Integer cantidad) {
+		Boolean validacionDeStock = false;
+		
+		Integer stockPermitido = productoDao.traerStockDisponible(idProducto);
+		
+		if(stockPermitido >= cantidad) {
+			validacionDeStock = true; 
+		}else {
+			validacionDeStock = false;
+		}
+		
+		return validacionDeStock;
+	}
+
+
 
 
 }

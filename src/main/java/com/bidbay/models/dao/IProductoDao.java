@@ -15,12 +15,22 @@ public interface IProductoDao extends CrudRepository<Producto, Long>{
 	public List<Producto> detallesProducto(Long idUsuario);
 	
 	@Modifying
-	 @Query(value = "UPDATE productos "
+	@Query(value = "UPDATE productos "
 	 		+ "SET Stock = Stock-? " 
 	 		+ "WHERE id = ? ",nativeQuery = true )
-	 public void actualizarStock(Integer cantidad, Long id);
+	 public void descontarStock(Integer cantidad, Long id);
+	
+	
+	@Modifying
+	@Query(value = "UPDATE productos "
+	 		+ "SET Stock = Stock+? " 
+	 		+ "WHERE id = ? ",nativeQuery = true )
+	 public void restituirStock(Integer cantidad, Long id);
+	
 	
 	@Query(value = "select count(*) from productos where usuario_id =? and id=?", nativeQuery = true)
 	public int productoEsVendidoPorUsuario(Long idUsuario, Long idProducto);
 	
+	@Query(value = "select stock from productos where id=?", nativeQuery = true)
+	public Integer traerStockDisponible(Long idProducto);
 }

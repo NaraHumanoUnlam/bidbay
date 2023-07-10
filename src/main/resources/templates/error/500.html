@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Error 500</title>
 <script src="https://cdn.tailwindcss.com"></script>
-
 <link rel="stylesheet" href="../../css/error.css">
 </head>
 
 <body>
-<main>
-  <h1 class="error"> Error 500</h1>
-  <p th:text="${error}"></p>
- <a th:href="@{/home}" class="bg-sky-500 p-5 rounded-xl m-5 text-center hover:bg-sky-700">Home</a>
+<main class="error">
+  <h1> Error 500</h1>
+  <p class="m-5" th:text="${error}"></p>
+  <a th:href="@{/home}" class="bg-sky-500 p-5 rounded-xl m-5 text-center hover:bg-sky-700">Home</a>
 </main>
 </body>
 </html>

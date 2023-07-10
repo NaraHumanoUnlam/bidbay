@@ -36,10 +36,6 @@ public class Producto implements Serializable{
 	@ManyToOne
 	private Categoria categoria;
 	
-	@Nullable
-	@ManyToOne
-	private Intercambio intercambio;
-	
 	@NotNull
 	private Double precio;
 
@@ -201,13 +197,6 @@ public class Producto implements Serializable{
 	    reviews.add(reviewNueva);
 	}
 
-	public Intercambio getTipoIntercambio() {
-		return intercambio;
-	}
-
-	public void setTipoIntercambio(Intercambio tipoIntercambio) {
-		this.intercambio = tipoIntercambio;
-	}
 
 	public List<Review> getReviews() {
 		return reviews;

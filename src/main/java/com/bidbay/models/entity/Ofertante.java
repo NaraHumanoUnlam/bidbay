@@ -11,9 +11,11 @@ public class Ofertante {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	//@Column(name = "usuario")
-	//@OneToOne
-	//private Usuario usuario;
+	@OneToOne
+	@JoinColumn(name = "usuarios", referencedColumnName = "id" )
+	private Usuario usuario;
+	@ManyToOne
+	private Subasta subasta;
 	@Column(name = "oferta")
 	private BigDecimal oferta;
 	public Long getId() {

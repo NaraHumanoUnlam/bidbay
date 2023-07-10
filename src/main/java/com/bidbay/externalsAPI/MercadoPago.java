@@ -1,4 +1,4 @@
-package com.bidbay;
+package com.bidbay.externalsAPI;
 import com.mercadopago.*;
 
 import com.mercadopago.client.payment.PaymentClient;

@@ -35,9 +35,14 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/dejarReview/{id}", method = RequestMethod.GET)
 	public String mostrarFormularioReview(@PathVariable("id") Long idProducto, @RequestParam("notificacionId") Long notificacionId, HttpSession session, Model model) {
-		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
+		}
+		else {
 			return "redirect:/login";
 		}
+		
 		Producto producto = productoService.findOne(idProducto);
 		model.addAttribute("producto", producto);
 		model.addAttribute("notificacionId", notificacionId);
@@ -46,8 +51,12 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value = "/dejarReview/{id}", method = RequestMethod.POST)
-	public String guardarReview(@PathVariable("id") Long idProducto, @RequestParam("mensaje") String mensaje, @RequestParam("notificacionId") Long notificacionId, @RequestParam("puntaje") int puntaje, HttpSession session) {
-		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+	public String guardarReview(@PathVariable("id") Long idProducto, @RequestParam("mensaje") String mensaje, @RequestParam("notificacionId") Long notificacionId, @RequestParam("puntaje") int puntaje, HttpSession session , Model model) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
+		}
+		else {
 			return "redirect:/login";
 		}
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
@@ -58,7 +67,11 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/verReview/{id}", method = RequestMethod.GET)
 	public String mostrarReviewsDelUser(@PathVariable("id") Long idUsuario, HttpSession session, Model model) {
-		if (!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
+		}
+		else {
 			return "redirect:/login";
 		}
 		model.addAttribute("reviews", reviewService.getReviewsPorUsuario(idUsuario));

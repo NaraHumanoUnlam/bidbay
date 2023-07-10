@@ -92,13 +92,13 @@
                             <p class="popup-producto_titulo" th:if="${listaVentas.size() == 0 }">Aún no has vendido
                                 ningún producto</p>
                             <p class="popup-producto_titulo" th:if="${listaVentas.size() > 0 }">Lista de Ventas</p>
-                            <a th:each="producto: ${listaVentas}">
+                            <a th:each="ventas: ${listaVentas}">
                                 <div class="usuario-producto_list ">
-                                    <img th:src="@{'../imagenes/'+${producto.imagenProducto}}"
-                                        th:alt="${producto.imagenProducto}">
+                                    <img th:src="@{'../imagenes/'+${ventas.imagenProducto}}"
+                                        th:alt="${ventas.imagenProducto}">
                                     <div>
-                                        <p th:text="${producto.descripcionProducto}"></p>
-                                        <p th:text="'$' + ${producto.precioCompra}"></p>
+                                        <p th:text="${ventas.descripcionProducto}"></p>
+                                        <p th:text="'$' + ${ventas.precioCompra}"></p>
                                     </div>
                                 </div>
                             </a>
@@ -151,11 +151,11 @@
                             <p class="popup-producto_titulo" th:if="${listaCompras.size() > 0}">Lista de Compras</p>
                             <a th:each="compra: ${listaCompras}">
                                 <div class="usuario-producto_list ">
-                                    <img th:src="@{'../imagenes/'+${producto.imagenProducto}}"
-                                    th:alt="${producto.imagenProducto}">
+                                    <img th:src="@{'../imagenes/'+${compra.imagenProducto}}"
+                                    th:alt="${compra.imagenProducto}">
                                     <div>
-                                        <p th:text="${producto.descripcionProducto}"></p>
-                                        <p th:text="'$' + ${producto.precioCompra}"></p>
+                                        <p th:text="${compra.descripcionProducto}"></p>
+                                        <p th:text="'$' + ${compra.precioCompra}"></p>
                                     </div>
                                 </div>
                             </a>

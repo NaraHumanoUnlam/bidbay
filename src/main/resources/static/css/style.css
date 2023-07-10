@@ -228,14 +228,14 @@ a.rainbow-link {
 .detalle-precio p:first-of-type{
   font-weight: 700;
   font-size: 1.8rem;
-  color: rgb(0, 167, 25);
+  color: #1943AC;
 }
 
 
 .detalle-precio p:nth-child(2){
   font-weight: 500;
   font-size: 1.3rem;
-  color: rgb(120, 234, 139);
+  color:#1943AC;
 }
 
 .col-md-6 .card:nth-of-type(1) .perfil-card {

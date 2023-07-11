@@ -19,4 +19,6 @@ public interface IReviewService {
 
 	public List<Review> getReviewsPorUsuario(Long idUsuario);
 
+	public void borrarReview(Long id);
+
 }

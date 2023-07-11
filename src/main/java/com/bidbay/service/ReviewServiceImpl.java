@@ -115,4 +115,11 @@ public class ReviewServiceImpl implements IReviewService{
 		return reviewDao.filtrarReviewsPorUsuario(idUsuario);
 	}
 
+
+	@Override
+	public void borrarReview(Long id) {
+		// TODO Auto-generated method stub
+		this.reviewDao.deleteById(id);
+	}
+
 }

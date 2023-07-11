@@ -41,16 +41,7 @@
 	</main>
 
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
-<script type="text/javascript">
-
-function mostrarPopUpNotificacion() {
-
-    let popupNotificacion = document.getElementById('conteiner-notificacion');
-	let btn_notifi = document.getElementById('btn-notificaciones');
-    popupNotificacion.classList.toggle('hidden');
-   
-}
-</script>
+	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
 
 </html>

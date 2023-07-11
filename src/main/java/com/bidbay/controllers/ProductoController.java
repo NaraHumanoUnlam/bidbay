@@ -83,9 +83,13 @@ public class ProductoController {
 
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public String crear(HttpSession session, Map<String, Object> model) throws Exception {
-		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.put("logueo",session.getAttribute("logueo"));
+			model.put("rol",session.getAttribute("rol"));
+			model.put("idUsuario",session.getAttribute("idUsuario"));
+		}else {
 			return "redirect:/login";
-		} else {
+		}
 			Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 			Producto producto = new Producto();
 			producto.setCategoria(categoriaService.findOne(1L));
@@ -94,17 +98,12 @@ public class ProductoController {
 			model.put("titulo", "¿Qué querés vender?");
 			model.put("botonSubmit", "Vender");
 			model.put("categorias", categoriaService.findAll());
-			model.put("logueo",session.getAttribute("logueo"));
-			model.put("rol",session.getAttribute("rol"));
-
 			return "views/productoForm";
-		}
 	}
 
-	@PostMapping("/form")
+	@PostMapping("/guardar")
 	public String guardar(@Valid @ModelAttribute Producto producto, BindingResult result, Model model,
 			@RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
-
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de Producto");
 			return "views/productoForm";
@@ -130,7 +129,14 @@ public class ProductoController {
 	}
 
 	@RequestMapping(value = "/form/{id}")
-	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
+	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, HttpSession session) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.put("logueo",session.getAttribute("logueo"));
+			model.put("rol",session.getAttribute("rol"));
+			model.put("idUsuario",session.getAttribute("idUsuario"));
+		}else {
+			return "redirect:/login";
+		}
 		Producto p = null;
 		if (id > 0) {
 			p = productoService.findOne(id);

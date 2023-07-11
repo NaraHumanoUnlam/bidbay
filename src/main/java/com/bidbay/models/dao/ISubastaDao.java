@@ -20,8 +20,8 @@ public interface ISubastaDao extends CrudRepository<Subasta, Long>{
 	
 	@Modifying
 	@Transactional
-	@Query(value = "insert into subastas (precio_inicial,fecha_limite,hora_limite,subastador,precio_maximo) VALUES (?,?,?,?,?)", nativeQuery = true)
-	public Subasta crearSubasta(Double precioInicial, Date fecha_limite, Time hora_limite, Usuario subastador, Double precio_maximo);
+	@Query(value = "insert into subastas (id,precio_inicial,fecha_limite,hora_limite,subastador,precio_maximo) VALUES (?,?,?,?,?)", nativeQuery = true)
+	public void crearSubasta(Long id,Double precioInicial, String fecha, String hora, Usuario subastador, Double precio_maximo);
 	
 	@Modifying
 	@Transactional

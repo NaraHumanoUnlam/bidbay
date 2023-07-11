@@ -142,9 +142,20 @@
 			console.log(compra);
 			console.log(idVendedor);
 			console.log(idUsuario);
-			if(idUsuario == null || idUsuario == undefined){
+			if(idUsuario = "" || idUsuario == null || idUsuario == undefined){
 				indicacionLogeo();
-			} else if (idVendedor !== idUsuario) {
+			}else if(idVendedor = "" || idVendedor == null || idVendedor == undefined){
+				Swal.fire({
+	                icon: 'question',
+	                title: 'Oops!',
+	                text: 'Intentalo más tarde',
+	                showCloseButton: true,
+	                confirmButtonColor: '#348214',
+	                confirmButtonText: 'Entendido',
+	                cancelButtonText: '<i class="fa fa-thumbs-down"></i>'
+	            })
+			}
+			else if (idVendedor !== idUsuario) {
                 window.location.href = "/carrito/form/" + compra;
             } else {
             Swal.fire({

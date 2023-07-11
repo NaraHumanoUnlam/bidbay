@@ -28,5 +28,8 @@
 			</tbody>
 		</table>
 		<p th:text="${mensaje}" th:if="${mensaje}"></p>
+		<a href="#" onClick="goBack()">Volver</a>
 </body>
+<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+<script th:replace="views/layouts/plantilla.html :: script"></script>
 </html>

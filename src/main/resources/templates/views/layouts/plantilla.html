@@ -53,8 +53,8 @@
 					<i class="fa fa-search"></i>
 				</button>
 			</form>
-			<a th:href=@{/subasta/crear} class="text-md mr-2 text-uppercase text-white hover:border-white hover:border p-2 rounded" th:if="${rol != 'Moderador'}">Subastar</a>
-			<a th:href=@{/producto/form} class="text-md mr-2 text-uppercase text-white hover:border-white hover:border p-2 rounded" th:if="${rol != 'Moderador'}">Vender</a>
+			<a th:attr="data-id-usuario=${idUsuario}, data-href=@{/subasta/crear}" onClick="validarAccion(this)" class="text-md mr-2 text-uppercase text-white hover:border-white hover:border p-2 rounded" th:if="${rol != 'Moderador'}">Subastar</a>
+			<a th:attr="data-id-usuario=${idUsuario}, data-href=@{/producto/form}" onClick="validarAccion(this)" class="text-md mr-2 text-uppercase text-white hover:border-white hover:border p-2 rounded" th:if="${rol != 'Moderador'}">Vender</a>
 		</div>
 		
 		<div id="divCarrito" class="header-icons header-col text-gray-100">
@@ -142,17 +142,7 @@
 			console.log(idVendedor);
 			console.log(idUsuario);
 			if(idUsuario == null || idUsuario == undefined){
-				Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Logeate para empezar a comprar',
-                    showCloseButton: false,
-                    confirmButtonColor: '#348214',
-                    confirmButtonText: 'Continuar',
-                    cancelButtonText: '<i class="fa fa-thumbs-down"></i>'
-                }).then(function() {
-                    window.location.href = "/login";
-                });
+				indicacionLogeo();
 			} else if (idVendedor !== idUsuario) {
                 window.location.href = "/carrito/form/" + compra;
             } else {
@@ -165,7 +155,31 @@
                 confirmButtonText: 'Entendido',
                 cancelButtonText: '<i class="fa fa-thumbs-down"></i>'
             })
-        }} 
+        }}
+		
+		function validarAccion(element){
+			var href = element.dataset.href;
+			var idUsuario = event.target.getAttribute("data-id-usuario");
+			if(idUsuario == null || idUsuario == undefined){
+				indicacionLogeo();
+			} else{
+				window.location.href = href;
+			}
+		}
+		
+		function indicacionLogeo(){
+			Swal.fire({
+                icon: 'error',
+                title: 'Oops',
+                text: 'Necesitas una cuenta para hacer eso',
+                showCloseButton: false,
+                confirmButtonColor: '#348214',
+                confirmButtonText: 'Continuar',
+                cancelButtonText: '<i class="fa fa-thumbs-down"></i>'
+            }).then(function() {
+                window.location.href = "/login";
+            });
+		}
 	</script>
 </body>
 

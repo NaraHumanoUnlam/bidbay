@@ -16,6 +16,7 @@
 					<th>Producto</th>
 					<th>Mensaje</th>
 					<th>Puntaje</th>
+					<th></th>
 				</tr>
 			</thead>
 
@@ -25,9 +26,11 @@
 					<td th:text="${review.producto.nombre}"></td>
 					<td th:text="${review.mensaje}"></td>
 					<td th:text="${review.puntaje}"></td>
-					<td></td>
+					<td><a th:href="@{/review/reviewDel/} + ${review.idReview}">Borrar</a></td>
 				</tr>
 			</tbody>
 		</table>
 </body>
+<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+<script th:replace="views/layouts/plantilla.html :: script"></script>
 </html>

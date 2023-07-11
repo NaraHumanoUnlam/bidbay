@@ -12,7 +12,7 @@ public interface ITicketDao extends CrudRepository<Ticket, Long>{
 	@Query(value = "select * from ticket  where id_user=?1", nativeQuery = true)
 	public List<Ticket> detallesTicket(Long id_usuario);
 	
-	@Query(value = "select c.id   from    ticket t join compras c on t.id_pago = c.id_pago   where id_ticket =?", nativeQuery = true)
+	@Query(value = "select c.id from compras c join pago p on c.id_pago = p.id_pago where p.ticket =?", nativeQuery = true)
 	public List<Long> detallesProductosxTicket(Long id_ticket);
 	
 	

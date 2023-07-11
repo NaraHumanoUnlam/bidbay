@@ -8,20 +8,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;//
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashSet;
+
 
 @Entity
 @Table(name="pago")
@@ -33,8 +24,6 @@ public class Pago implements Serializable {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long idPago;
 	
-	//@NotEmpty
-	private String mailCliente; 
 	//@NotEmpty
 	private String DNI;
 	//@NotEmpty
@@ -58,11 +47,9 @@ public class Pago implements Serializable {
 	private String mensaje;
 	
 	private Boolean aprobado;
-
-	private String nombreUsario; 
 	
 	@OneToOne
-	@JoinColumn(name = "ticket", referencedColumnName = "idTicket" )
+	@JoinColumn(name = "ticket")
 	private Ticket ticket;
 
 		
@@ -72,10 +59,8 @@ public class Pago implements Serializable {
 	}
 
 
-	public Pago( String Dni, String mail, String tarjeta,String clave, String nombre, String mes, String anio, Double precioTotal) {
+	public Pago( String Dni, String tarjeta,String clave, String nombre, String mes, String anio, Double precioTotal) {
 
-
-		this.mailCliente = mailCliente;
 		this.nombreDeCliente = nombre; 
 		this.DNI = Dni;
 		this.numeroTarjeta = tarjeta;
@@ -110,13 +95,6 @@ public class Pago implements Serializable {
 		this.idPago = idPago;
 	}
 
-	public String getMailCliente() {
-		return mailCliente;
-	}
-
-	public void setMailCliente(String mailCliente) {
-		this.mailCliente = mailCliente;
-	}
 
 	public String getDNI() {
 		return DNI;
@@ -150,13 +128,6 @@ public class Pago implements Serializable {
 		this.fechaVencimiento = fechaDeVencimiento;
 	}
 
-	public String getUsario() {
-		return nombreUsario;
-	}
-
-	public void setUsario(String usario) {
-		this.nombreUsario = usario;
-	}
 
 	public Double getPrecio() {
 		return precio;

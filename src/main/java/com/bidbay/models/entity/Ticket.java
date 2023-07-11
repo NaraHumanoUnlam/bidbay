@@ -2,13 +2,14 @@ package com.bidbay.models.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.List;
 
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
@@ -23,25 +24,25 @@ public class Ticket implements Serializable {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long idTicket;
 
-
-	private Long idPago;
+	@OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
+	private Pago pago;
 	
 	private Long idUser; 
 	
 	private Double precio;
 	
-	private Date fechaDeCompra;
+	private Date fechaDePago;
 	//CAMBIAR
 
 
 	public Ticket() {	}
 
 
-	public Ticket (Long idPago, Long idUsuario, Date fechaDeCompra, Double MontoDeCompra) {
+	public Ticket (Pago pago, Long idUsuario, Date fechaDeCompra, Double MontoDeCompra) {
 		super();
-		this.idPago=idPago; 
+		this.pago=pago; 
 		this.idUser=idUsuario; 
-		this.fechaDeCompra = fechaDeCompra; 
+		this.fechaDePago = fechaDeCompra; 
 		this.precio = MontoDeCompra;
 	
 		
@@ -59,13 +60,25 @@ public class Ticket implements Serializable {
 	}
 
 
-	public Date getFechaDeCompra() {
-		return fechaDeCompra;
+
+
+	public Pago getPago() {
+		return pago;
 	}
 
 
-	public void setFechaDeCompra(Date fechaDeCompra) {
-		this.fechaDeCompra = fechaDeCompra;
+	public void setPago(Pago pago) {
+		this.pago = pago;
+	}
+
+
+	public Date getFechaDePago() {
+		return fechaDePago;
+	}
+
+
+	public void setFechaDePago(Date fechaDePago) {
+		this.fechaDePago = fechaDePago;
 	}
 
 
@@ -76,16 +89,6 @@ public class Ticket implements Serializable {
 
 	public void setIdTicket(Long idTicket) {
 		this.idTicket = idTicket;
-	}
-
-
-	public Long getIdPago() {
-		return idPago;
-	}
-
-
-	public void setIdPago(Long idPago) {
-		this.idPago = idPago;
 	}
 
 

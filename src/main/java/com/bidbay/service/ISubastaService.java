@@ -18,8 +18,12 @@ public interface ISubastaService {
 
 	public void eliminarUna(Long id);
 
-	void crearSubasta(Double precio_inicial, Date fecha, Time hora, Usuario usuario);
+	void crearSubasta(Long id,Double precio_inicial, String fechaSQLString, String string, Usuario usuario);
 
 	public void agregarProducto(@Valid Producto producto, Long id);
+
+	public void save(@Valid Subasta subasta);
+
+	public Subasta findById(@Valid Long idSubasta);
 
 }

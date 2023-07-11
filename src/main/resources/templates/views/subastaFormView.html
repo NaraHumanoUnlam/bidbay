@@ -11,22 +11,22 @@
 		<h1 th:text="${titulo}" class="h1 text-4xl mb-5 text-center"></h1>
 
 		<form th:action="@{/subasta/crear}" th:object="${subasta}"
-			method="POST" class="formulario mb-5 sombra-2"
+			method="POST" class="shadow bg-white m-auto w-[50%] p-5 font-bold text-xl"
 			enctype="multipart/form-data">
-			<div class="formulario-div">
-				<label for="fecha">Fecha:</label> <input type="text" id="fecha"
-					th:field="*{fechaLimite}" />
+			<div>
+				<label for="fecha" class="block text-[1.3rem] mb-[5px] ">Fecha:</label> <input type="date" id="fecha"
+					th:field="*{fechaLimite}"  class="h-[45px]"/>
 			</div>
-			<div class="formulario-div">
-				<label for="hora">Hora:</label> <input type="text" id="hora"
-					th:field="*{horaLimite}" />
+			<div>
+				<label for="hora">Hora:</label> <input type="time" id="hora"
+					th:field="*{horaLimite}" class="h-[35px]" />
 			</div>
-			<div class="formulario-div">
+			<div>
 				<label for="precioInicial">Precio Inicial:</label> <input
-					type="text" id="precioInicial" th:field="*{precioInicial}" />
+					type="number" id="precioInicial" th:field="*{precioInicial}" class="h-[35px]"/>
 			</div>
 			<input type="submit" th:value="${botonSubmit}"
-				class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
+				class="bg-yellow-500 hover:bg-yellow-700 mt-4 w-100 p-2 text-xl fond-bold text-white rounded" />
 			<input type="hidden" th:field="*{id}" />		
 		</form>
 		<!-- esto lo agregue para que se pueda scrolear para abajo :) -->
@@ -34,7 +34,6 @@
 	</main>
 
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
-
 
 </body>
 

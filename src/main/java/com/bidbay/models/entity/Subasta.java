@@ -16,7 +16,9 @@ public class Subasta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name = "subastador")
+    
+    @OneToOne
+	@JoinColumn(name = "usuarios", referencedColumnName = "id" )
     private Usuario subastador;
 
     @Nullable
@@ -24,18 +26,19 @@ public class Subasta {
     @OneToMany(mappedBy = "subasta", cascade = CascadeType.ALL)
     private List<Ofertante> ofertantes;
     
+    @Nullable
     @Column(name = "producto")
     private Producto producto;
 
     @Column(name = "precio_inicial")
     private Double precioInicial;
     
-    
+    @Nullable
     @Column(name = "precio_maximo")
     private Double maximo;
     
-    private Date fechaLimite;
-    private Time horaLimite;
+    private String fechaLimite;
+    private String horaLimite;
 
 
 	public Subasta() {
@@ -102,22 +105,22 @@ public class Subasta {
 	}
 
 
-	public Date getFechaLimite() {
+	public String getFechaLimite() {
 		return fechaLimite;
 	}
 
 
-	public void setFechaLimite(Date fechaLimite) {
+	public void setFechaLimite(String fechaLimite) {
 		this.fechaLimite = fechaLimite;
 	}
 
 
-	public Time getHoraLimite() {
+	public String getHoraLimite() {
 		return horaLimite;
 	}
 
 
-	public void setHoraLimite(Time horaLimite) {
+	public void setHoraLimite(String horaLimite) {
 		this.horaLimite = horaLimite;
 	}
     

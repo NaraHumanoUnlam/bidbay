@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bidbay.excepciones.ArchivoException;
+import com.bidbay.models.dao.IModalidadDao;
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Favoritos;
 import com.bidbay.models.entity.Producto;
@@ -23,6 +24,7 @@ import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
 import com.bidbay.service.IReviewService;
+import com.bidbay.service.ModalidadServiceImpl;
 import com.bidbay.service.UsuarioServiceImpl;
 
 import org.springframework.lang.Nullable;
@@ -52,6 +54,9 @@ public class ProductoController {
 
 	@Autowired
 	private UsuarioServiceImpl usuarioService;
+	
+	@Autowired
+	private ModalidadServiceImpl modalidadService;
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
@@ -93,11 +98,13 @@ public class ProductoController {
 			Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 			Producto producto = new Producto();
 			producto.setCategoria(categoriaService.findOne(1L));
+			producto.setModalidad(modalidadService.findOne(1L));
 			producto.setVendedor(user);
 			model.put("producto", producto);
 			model.put("titulo", "¿Qué querés vender?");
 			model.put("botonSubmit", "Vender");
 			model.put("categorias", categoriaService.findAll());
+			model.put("modalidades", modalidadService.findAll());
 			return "views/productoForm";
 	}
 
@@ -147,6 +154,7 @@ public class ProductoController {
 		model.put("titulo", "Editar Producto");
 		model.put("botonSubmit", "Editar");
 		model.put("categorias", categoriaService.findAll());
+		model.put("modalidades", modalidadService.findAll());
 		return "views/productoForm";
 	}
 
@@ -166,6 +174,7 @@ public class ProductoController {
 		model.addAttribute("titulo", "Búsqueda de Productos");
 		model.addAttribute("inputValue", search);
 		model.addAttribute("categorias", categoriaService.findAll());
+		model.addAttribute("modalidades", modalidadService.findAll());
 		
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
@@ -239,6 +248,7 @@ public class ProductoController {
 		model.put("titulo", "Detalles del Producto");
 	    model.put("reviews", reviewService.getReviewsPorProducto(id));    
 		model.put("categorias", categoriaService.findAll());
+		model.put("modalidades", modalidadService.findAll());
 		
 		return "views/productoDeatailView";
 		

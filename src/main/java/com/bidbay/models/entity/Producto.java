@@ -34,6 +34,10 @@ public class Producto implements Serializable{
 	
 	@Nullable
 	@ManyToOne
+	private Modalidad modalidad;
+	
+	@Nullable
+	@ManyToOne
 	private Categoria categoria;
 	
 	@NotNull
@@ -41,6 +45,7 @@ public class Producto implements Serializable{
 
 	@NotNull
 	private Integer stock;
+	
 	
 	private String imagen;
 	
@@ -51,9 +56,6 @@ public class Producto implements Serializable{
     @JoinColumn(name = "usuario_id")
     private Usuario vendedor;
 	
-	@Nullable
-	@ManyToOne
-	private Ticket ticket;
 
 	public Usuario getVendedor() {
 		return vendedor;
@@ -118,6 +120,16 @@ public class Producto implements Serializable{
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+	
+	
+
+	public Modalidad getModalidad() {
+		return modalidad;
+	}
+
+	public void setModalidad(Modalidad modalidad) {
+		this.modalidad = modalidad;
 	}
 
 	@Override

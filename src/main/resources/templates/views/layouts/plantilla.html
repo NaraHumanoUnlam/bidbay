@@ -30,6 +30,8 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/regular.min.css"
 	integrity="sha512-WidMaWaNmZqjk3gDE6KBFCoDpBz9stTsTZZTeocfq/eDNkLfpakEd7qR0bPejvy/x0iT0dvzIq4IirnBtVer5A=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 <link rel="stylesheet" href="../../css/style.css">
 <link rel="stylesheet" href="../../css/productoSearhView.css">
@@ -127,6 +129,43 @@
 			popupNotificacion.classList.toggle('hidden');
 			
 		}
+		
+		function goBack() {
+		    window.history.go(-1);
+		}
+		
+		function validarCompra() {
+			var idVendedor = event.target.getAttribute("data-id-vendedor");
+			var idUsuario = event.target.getAttribute("data-id-usuario");
+			var compra = event.target.getAttribute("data-id-compra");
+			console.log(compra);
+			console.log(idVendedor);
+			console.log(idUsuario);
+			if(idUsuario == null || idUsuario == undefined){
+				Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Logeate para empezar a comprar',
+                    showCloseButton: false,
+                    confirmButtonColor: '#348214',
+                    confirmButtonText: 'Continuar',
+                    cancelButtonText: '<i class="fa fa-thumbs-down"></i>'
+                }).then(function() {
+                    window.location.href = "/login";
+                });
+			} else if (idVendedor !== idUsuario) {
+                window.location.href = "/carrito/form/" + compra;
+            } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No podés comprar tus propios productos',
+                showCloseButton: true,
+                confirmButtonColor: '#348214',
+                confirmButtonText: 'Entendido',
+                cancelButtonText: '<i class="fa fa-thumbs-down"></i>'
+            })
+        }} 
 	</script>
 </body>
 

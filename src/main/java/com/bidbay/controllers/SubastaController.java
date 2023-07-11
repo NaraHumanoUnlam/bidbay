@@ -4,16 +4,20 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +33,7 @@ import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
 import com.bidbay.service.ISubastaService;
 import com.bidbay.service.IUsuarioService;
+import com.bidbay.utils.MyTimer;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -37,6 +42,10 @@ import jakarta.validation.Valid;
 @RequestMapping("/subasta")
 @Controller
 public class SubastaController {
+	
+	private Timer timer;
+    private MyTimer timerTask;
+    
 	@Autowired
 	private ISubastaService subastaServ;
 	
@@ -50,36 +59,21 @@ public class SubastaController {
 	private IProductoService productoService;
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public String listaSubastas(Model model,HttpSession session) {
+	public String listaSubastas(Model model) {
 		List<Subasta> subastas = subastaServ.findAll();
-		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
-			return "redirect:/login";
-		} 
-		model.addAttribute("logueo",session.getAttribute("logueo"));
-		model.addAttribute("rol",session.getAttribute("rol"));
 		model.addAttribute("subastas", subastas);
 		return "views/subastaView";
 	}
 	
 	@RequestMapping(value = "/mostrar/{id}", method = RequestMethod.GET)
-	public String mostrarSubasta(@PathVariable(value = "id") Long id,Model model,HttpSession session) {
-		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
-			return "redirect:/login";
-		} 
-		model.addAttribute("logueo",session.getAttribute("logueo"));
-		model.addAttribute("rol",session.getAttribute("rol"));
+	public String mostrarSubasta(@PathVariable(value = "id") Long id,Model model) {
 		Subasta subasta = subastaServ.obtenerSubasta(id);
 		model.addAttribute("subasta", subasta);
 		return "views/subastaView";
 	}
 	
 	@RequestMapping(value = "/eliminar/{id}", method = RequestMethod.GET)
-	public String eliminarSubasta(@PathVariable(value = "id") Long id,Model model,HttpSession session) {
-		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
-			return "redirect:/login";
-		} 
-		model.addAttribute("logueo",session.getAttribute("logueo"));
-		model.addAttribute("rol",session.getAttribute("rol"));
+	public String eliminarSubasta(@PathVariable(value = "id") Long id,Model model) {
 		subastaServ.eliminarUna(id);
 		model.addAttribute("mensaje", "Se elimino la subasta");
 		return "views/subastaView";
@@ -108,15 +102,29 @@ public class SubastaController {
 	}
 	
 	@RequestMapping(value = "/crear", method = RequestMethod.POST)
-	public String guardar(@Valid @ModelAttribute Subasta subasta, BindingResult result, Model model,
-			@RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
+	public String guardar(@Valid @ModelAttribute Subasta subasta, BindingResult result, Model model,RedirectAttributes attibute) {
+		
+		String formatoFechaHTML = "yyyy-MM-dd";
 
-		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario de subasta");
-			return "views/productoForm";
-		}
+	    String formatoFechaSQL = "yyyy-MM-dd";
 
-		subastaServ.crearSubasta(subasta.getPrecioInicial(),subasta.getFechaLimite(),subasta.getHoraLimite() ,subasta.getSubastador());
+	    try {
+	      SimpleDateFormat sdfHTML = new SimpleDateFormat(formatoFechaHTML);
+
+	      SimpleDateFormat sdfSQL = new SimpleDateFormat(formatoFechaSQL);
+
+	      Date fecha = sdfHTML.parse(subasta.getFechaLimite().toString());
+
+	      String fechaSQLString = sdfSQL.format(fecha);
+
+	      java.sql.Date fechaSQL = java.sql.Date.valueOf(fechaSQLString);
+	      subastaServ.crearSubasta(subasta.getPrecioInicial(),fechaSQL,subasta.getHoraLimite() ,subasta.getSubastador());
+
+	    } catch (ParseException e) {
+	      e.printStackTrace();
+	    }
+		
+		
 		return "redirect:/crear/producto";
 	}
 	
@@ -180,6 +188,20 @@ public class SubastaController {
 		model.put("categorias", categoriaService.findAll());
 		return "views/productoForm";
 	}
+	
+	@RequestMapping(value ="/start-timer", method = RequestMethod.GET)
+    public String startTimer(Model model){
+		   
+        return "views/TimerTest";
+    }
+
+    @GetMapping("/stop-timer")
+    public String stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+        }
+        return "timer-stopped";
+    }
 	
 
 }

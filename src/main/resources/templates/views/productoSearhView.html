@@ -56,7 +56,7 @@
 				</div>
 
 				<div th:each="producto: ${productos}" class="card link sombra mb-3">
-					<div th:if="${productos.size() > 0}" class="row no-gutters">
+					<div th:if="${productos.size() > 0 and producto.stock > 0}" class="row no-gutters">
 						<div class="col-sm-3">
 							<a th:href="@{/producto/details/{id}(id=${producto.id})}">
 								<img th:src="@{'../imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}"
@@ -70,13 +70,14 @@
 								</a>
 								<p class="card-text" th:text="'$' + ${producto.precio}"></p>
 								<a class="btn btn-warning btn-sombra mt-4"
-									th:href="@{/carrito/form/{id}(id=${producto.id})}">Agregar Al
+									onClick="validarCompra(this)" th:attr="data-id-vendedor=${producto.vendedor.id}, 
+									data-id-compra=${producto.id}, data-id-usuario=${idUsuario}">Agregar Al
 									Carrito</a>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="text-center" th:if="${productos.size() == 0}">
+				<div class="text-center" th:if="${productos.size() == 0 || productos.?[stock > 0].size() == 0}">
 					<p class="text-muted h3">No se han encontrado productos buscando: <b class="text-danger"
 							th:text="${inputValue}"></b>
 				</div>
@@ -88,7 +89,7 @@
 	</main>
 
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
-
+	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
 
 </html>

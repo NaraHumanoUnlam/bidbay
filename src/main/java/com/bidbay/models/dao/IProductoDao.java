@@ -11,7 +11,7 @@ import com.bidbay.models.entity.Producto;
 
 
 public interface IProductoDao extends CrudRepository<Producto, Long>{
-	@Query(value = "select * from productos where usuario_id =?1", nativeQuery = true)
+	@Query(value = "select * from productos where usuario_id =?", nativeQuery = true)
 	public List<Producto> detallesProducto(Long idUsuario);
 	
 	@Modifying

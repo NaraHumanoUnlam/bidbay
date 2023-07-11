@@ -138,27 +138,26 @@
                     icon: 'error',
                     title: 'Error',
                     text: 'Logeate para empezar a comprar',
-                    showCloseButton: true,
+                    showCloseButton: false,
                     confirmButtonColor: '#348214',
                     confirmButtonText: 'Continuar',
                     cancelButtonText: '<i class="fa fa-thumbs-down"></i>'
                 }).then(function() {
                     window.location.href = "/login";
                 });
-			}
-            if (idVendedor !== idUsuario) {
-                   window.location.href = "/carrito/form/" + compra;
-                } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'No podés comprar tus propios productos',
-                    showCloseButton: true,
-                    confirmButtonColor: '#348214',
-                    confirmButtonText: 'Continuar',
-                    cancelButtonText: '<i class="fa fa-thumbs-down"></i>'
-                })
-            }}
+			} else if (idVendedor !== idUsuario) {
+                window.location.href = "/carrito/form/" + compra;
+            } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No podés comprar tus propios productos',
+                showCloseButton: true,
+                confirmButtonColor: '#348214',
+                confirmButtonText: 'Entendido',
+                cancelButtonText: '<i class="fa fa-thumbs-down"></i>'
+            })
+        }} 
 	</script>
 </body>
 

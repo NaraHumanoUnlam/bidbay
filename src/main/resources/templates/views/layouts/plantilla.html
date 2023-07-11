@@ -60,10 +60,11 @@
 		<div id="divCarrito" class="header-icons header-col text-gray-100">
 			<div th:if="${logueo != null}" class="flex justify-center items-center content-center mr-5">
 				<div class="flex flex-row text-center items-center">
+					<a th:href=@{/moderador/perfilModerador} class="text-2xl mr-2" th:if="${rol == 'Moderador'}"><i class="fa-regular fa-user"></i></a>
 					<a th:href=@{/usuario/perfil} class="text-2xl" th:if="${rol != 'Moderador'}"><i class="fa-solid fa-user"></i></a>
 					<p th:text="${logueo}" class="text-capitalize text-md font-regular"></p>
 				</div>
-				<a th:href=@{/moderador/perfilModerador} class="text-2xl mr-2" th:if="${rol == 'Moderador'}"><i class="fa-regular fa-user"></i></a>
+				
 				<a href="#" id="btn-notificaciones" onclick="mostrarPopUpNotificacion()" class="text-white text-2xl"><i class="fa-solid fa-bell" th:if="${rol != 'Moderador'}"></i></a>  
 			</div>
 			<div th:if="${logueo == null}" class="flex flex-col">

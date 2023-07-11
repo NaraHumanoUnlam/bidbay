@@ -50,21 +50,36 @@ public class SubastaController {
 	private IProductoService productoService;
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public String listaSubastas(Model model) {
+	public String listaSubastas(Model model,HttpSession session) {
 		List<Subasta> subastas = subastaServ.findAll();
+		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+			return "redirect:/login";
+		} 
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
 		model.addAttribute("subastas", subastas);
 		return "views/subastaView";
 	}
 	
 	@RequestMapping(value = "/mostrar/{id}", method = RequestMethod.GET)
-	public String mostrarSubasta(@PathVariable(value = "id") Long id,Model model) {
+	public String mostrarSubasta(@PathVariable(value = "id") Long id,Model model,HttpSession session) {
+		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+			return "redirect:/login";
+		} 
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
 		Subasta subasta = subastaServ.obtenerSubasta(id);
 		model.addAttribute("subasta", subasta);
 		return "views/subastaView";
 	}
 	
 	@RequestMapping(value = "/eliminar/{id}", method = RequestMethod.GET)
-	public String eliminarSubasta(@PathVariable(value = "id") Long id,Model model) {
+	public String eliminarSubasta(@PathVariable(value = "id") Long id,Model model,HttpSession session) {
+		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+			return "redirect:/login";
+		} 
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
 		subastaServ.eliminarUna(id);
 		model.addAttribute("mensaje", "Se elimino la subasta");
 		return "views/subastaView";

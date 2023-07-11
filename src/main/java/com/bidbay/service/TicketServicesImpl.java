@@ -1,12 +1,14 @@
 package com.bidbay.service;
 
 import java.util.List;
+import java.util.ArrayList;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.bidbay.models.dao.IDetalleCompra;
 import com.bidbay.models.dao.ITicketDao;
 import com.bidbay.models.entity.Ticket;
 import com.bidbay.models.entity.DetalleCompras;
@@ -18,6 +20,9 @@ public class TicketServicesImpl implements ITicketServices {
 
 	@Autowired
 	private ITicketDao ticketDao; 
+	
+	@Autowired
+	private IDetalleCompra detalleCompraDao; 
 	
 	@Override
 	@Transactional
@@ -50,7 +55,12 @@ public class TicketServicesImpl implements ITicketServices {
 	
 	@Override
 	public List<DetalleCompras> detallesProductosPorTicket(Long id_ticket) {
-		return (List<DetalleCompras>) ticketDao.detallesProductosxTicket(id_ticket);
+		List<Long> idsDetalles = ticketDao.detallesProductosxTicket(id_ticket);
+	    List<DetalleCompras> detallesCompras = new ArrayList<>();
+	    for (Long idDetalle : idsDetalles) {
+	        detallesCompras.addAll(this.detalleCompraDao.detallesCompras(idDetalle));
+	    }
+	    return detallesCompras;
 	}
 	
 	

@@ -220,8 +220,9 @@ public class PagoServiceImpl implements IPagoService {
 	public void generarTicket(Pago pagoARealizar, Compras compraAPagar, Long idUsuario) {
 
 		
-		Ticket ticket = new Ticket(pagoARealizar.getIdPago(), idUsuario, compraAPagar.getFecha(),compraAPagar.getMonto());
+		Ticket ticket = new Ticket(pagoARealizar, idUsuario, compraAPagar.getFecha(),compraAPagar.getMonto());
 		ticketDao.save(ticket);
+		pagoARealizar.setPrecio(compraAPagar.getMonto());
 		pagoARealizar.setTicket(ticket);
 		pagoDao.save(pagoARealizar);	
 	}
@@ -230,11 +231,12 @@ public class PagoServiceImpl implements IPagoService {
 	@Override
 	public void generarTicketParaTodos(Long idPago, Double monto, Date fecha, Long idUsuario) {
 		Pago pagoARealizar = pagoDao.findById(idPago).orElse(null);
-		Ticket ticket = new Ticket(idPago, idUsuario, fecha ,monto);
+		Ticket ticket = new Ticket(pagoARealizar, idUsuario, fecha ,monto);
 		ticketDao.save(ticket);
 		pagoARealizar.setTicket(ticket);
+		pagoARealizar.setPrecio(monto);
 		pagoDao.save(pagoARealizar);	
 	}
 
 
-}//ultima
+}

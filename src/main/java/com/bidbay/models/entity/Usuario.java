@@ -41,6 +41,7 @@ public class Usuario implements Serializable{
 		@NotEmpty
 		private String telefono;
 		
+		
 		private RolUsuario rol;
 		
 		@OneToMany(mappedBy = "usuarios", cascade = CascadeType.ALL)
@@ -129,6 +130,7 @@ public class Usuario implements Serializable{
 		public void setTelefono(String telefono) {
 			this.telefono = telefono;
 		}
+		
 
 		public static long getSerialversionuid() {
 			return serialVersionUID;

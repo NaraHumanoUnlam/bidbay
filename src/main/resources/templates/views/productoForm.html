@@ -41,6 +41,14 @@
                 		</select>
                 	</td>
             	</tr>
+            	<tr>
+                	<td>Modalidad:</td>
+                	<td><select id="modalida" th:field="*{modalidad.id}" class="select-css">
+                    		<option value="" >Seleccione una opción</option>
+                    		<option th:each="modalidad : ${modalidades}" th:value="${modalidad.id}" th:text="${modalidad.nombre}"></option>
+                		</select>
+                	</td>
+            	</tr>
              </table>
     
           

@@ -90,6 +90,7 @@ public class SubastaController {
 			producto.setCategoria(categoriaService.findOne(1L));
 			producto.setVendedor(user);
 			subasta.setSubastador(user);
+			subastaServ.save(subasta);
 			model.put("subasta", subasta);
 			model.put("titulo", "Formulario de Subasta");
 			model.put("botonSubmit", "Continuar");
@@ -103,39 +104,32 @@ public class SubastaController {
 	
 	@RequestMapping(value = "/crear", method = RequestMethod.POST)
 	public String guardar(@Valid @ModelAttribute Subasta subasta, BindingResult result, Model model,RedirectAttributes attibute) {
-		
-		String formatoFechaHTML = "yyyy-MM-dd";
-
-	    String formatoFechaSQL = "yyyy-MM-dd";
 
 	    try {
-	      SimpleDateFormat sdfHTML = new SimpleDateFormat(formatoFechaHTML);
 
-	      SimpleDateFormat sdfSQL = new SimpleDateFormat(formatoFechaSQL);
-
-	      Date fecha = sdfHTML.parse(subasta.getFechaLimite().toString());
-
-	      String fechaSQLString = sdfSQL.format(fecha);
-
-	      java.sql.Date fechaSQL = java.sql.Date.valueOf(fechaSQLString);
-	      subastaServ.crearSubasta(subasta.getPrecioInicial(),fechaSQL,subasta.getHoraLimite() ,subasta.getSubastador());
-
-	    } catch (ParseException e) {
+	      String fechaSQLString = subasta.getFechaLimite().toString();
+	      subasta.setMaximo(subasta.getMaximo());
+	      subasta.setSubastador(subasta.getSubastador());
+	      System.out.println("id: " + subasta.getId() + " precio inicial: " + subasta.getPrecioInicial() + " fecha limite: " + subasta.getFechaLimite()+ " hora: " + subasta.getHoraLimite()+ " id usuario = " + subasta.getSubastador().getId());
+	     subastaServ.save(subasta);
+	    } catch (Exception e) {
 	      e.printStackTrace();
 	    }
 		
+	    model.addAttribute("idsubasta", subasta.getId());
 		
-		return "redirect:/crear/producto";
+		return "redirect:/subasta/crear/producto";
 	}
 	
 	@RequestMapping(value = "/crear/producto", method = RequestMethod.GET)
-	public String formularioProdcuto(HttpSession session, Map<String, Object> model) throws Exception {
+	public String formularioProdcuto(HttpSession session,Map<String, Object> model) throws Exception {
 		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
 			return "redirect:/login";
 		} else {
 			Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 			Producto producto = new Producto();
 			producto.setCategoria(categoriaService.findOne(1L));
+			producto.setPrecio(0.00);
 			producto.setVendedor(user);
 			model.put("producto", producto);
 			model.put("titulo", "¿Qué querés vender?");

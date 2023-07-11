@@ -38,14 +38,24 @@ public class SubastaService implements ISubastaService{
 	}
 
 	@Override
-	public void crearSubasta(Double precio_inicial,Date fecha,Time hora, Usuario usuario) {
-		subastaDao.crearSubasta(precio_inicial, fecha, hora, usuario,precio_inicial);
+	public void crearSubasta(Long id,Double precio_inicial,String fecha,String hora, Usuario usuario) {
+		subastaDao.crearSubasta(id,precio_inicial, fecha, hora, usuario,precio_inicial);
 		
 	}
 
 	@Override
-	public void agregarProducto(@Valid Producto producto, Long id) {
+	public void agregarProducto(Producto producto, Long id) {
 		subastaDao.agregarProductoSubasta(producto, id);
+	}
+
+	@Override
+	public void save(Subasta subasta) {
+		subastaDao.save(subasta);
 		
+	}
+
+	@Override
+	public Subasta findById(@Valid Long idSubasta) {
+		return subastaDao.findById(idSubasta).orElse(null);
 	}
 }

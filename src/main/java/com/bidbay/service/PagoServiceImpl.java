@@ -225,15 +225,16 @@ public class PagoServiceImpl implements IPagoService {
 		pagoARealizar.setTicket(ticket);
 		pagoDao.save(pagoARealizar);	
 	}
+	
 
 	@Override
 	public void generarTicketParaTodos(Long idPago, Double monto, Date fecha, Long idUsuario) {
-	Pago pagoARealizar = pagoDao.findById(idPago).orElse(null);
-	Ticket ticket = new Ticket(idPago, idUsuario, fecha ,monto);
-	ticketDao.save(ticket);
-	pagoARealizar.setTicket(ticket);
-	pagoDao.save(pagoARealizar);	
-}
+		Pago pagoARealizar = pagoDao.findById(idPago).orElse(null);
+		Ticket ticket = new Ticket(idPago, idUsuario, fecha ,monto);
+		ticketDao.save(ticket);
+		pagoARealizar.setTicket(ticket);
+		pagoDao.save(pagoARealizar);	
+	}
 
 
 }//ultima

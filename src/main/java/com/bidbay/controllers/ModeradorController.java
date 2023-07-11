@@ -17,6 +17,7 @@ import com.bidbay.models.dao.IReviewDao;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.IProductoService;
+import com.bidbay.service.TicketServicesImpl;
 import com.bidbay.service.IComprasService;
 import com.bidbay.service.IDetalleCompraService;
 import com.bidbay.service.IFavoritosService;
@@ -43,6 +44,9 @@ public class ModeradorController {
 	
 	@Autowired
 	private IDetalleCompraService  detalleServices;
+	
+	@Autowired
+	private TicketServicesImpl servicioTicket;
 	
 	@Autowired
 	private IReviewDao reviewDao;
@@ -106,6 +110,38 @@ public class ModeradorController {
 		model.addAttribute("detalles", detalleServices.listarDetallePorId(id));
 		return "views/detalleMisComprasView";
 	}
+	
+	@RequestMapping(value = "/tickets", method = RequestMethod.GET)
+	public String listar(HttpSession session,Model model) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
+		}else {
+			return "redirect:/login";
+		} 
+		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
+		model.addAttribute("titulo", "Listado de Pagos");
+		model.addAttribute("tickets", servicioTicket.findAll());
+		//model.addAttribute("precioTotal", pagoDao.calcularMontoTotalDePagos(usuario.getId()));
+		return "views/misPagosView";
+	}
+	
+	@RequestMapping(value = "/ticketdet/{id}")
+	public String detalleProductoTicket(@PathVariable(value = "id") Long id,HttpSession session,Model model) {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			if (!session.getAttribute("rol").equals("Moderador")) {
+				return "redirect:/home";
+			}
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
+		}else {
+			return "redirect:/login";
+		} 
+		model.addAttribute("titulo", "Listado Productos del Ticket: " + id);
+		model.addAttribute("detalles", servicioTicket.detallesProductosPorTicket(id));
+		return "views/detalleMisComprasView";
+	}
+
 	
 	@RequestMapping(value = "/productos", method = RequestMethod.GET)
 	public String listar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,

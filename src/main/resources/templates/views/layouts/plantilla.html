@@ -192,6 +192,25 @@
                 window.location.href = "/login";
             });
 		}
+		
+		function confirmacionBorrado(element){
+			var href = element.dataset.href;
+			var idProd = event.target.getAttribute("data-id-producto");
+			Swal.fire({
+				  title: 'Estas seguro de borrar este producto?',
+				  text: 'Esta acción no se puede deshacer',
+				  icon: 'warning',
+				  showCancelButton: true,
+				  confirmButtonText: 'Borrar',
+				  cancelButtonText: 'Cancelar',
+				}).then((result) => {
+				  /* Read more about isConfirmed, isDenied below */
+				  if (result.isConfirmed) {
+				    Swal.fire('Borrado!', '', 'Se borro el producto').then(() => {
+		                window.location.href = href + idProd;
+		            });
+				  }})
+		}
 	</script>
 </body>
 

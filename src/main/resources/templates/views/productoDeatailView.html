@@ -18,9 +18,9 @@
                     <i class="fa fa-long-arrow-left"></i>
                     <span class="ml-1">Volver</span>
                 </a>
-                <a th:href="@{/carrito/form/{id}(id=${producto.id})}">
+                <!-- <a th:href="@{/carrito/form/{id}(id=${producto.id})}">
                     <i class="fa-sharp fa-solid fa-cart-plus"></i>
-                </a>
+                </a>-->
             </div>
             <div class="row-line"></div>
             <div class="detalle-row">
@@ -43,7 +43,8 @@
             <div class="row-line"></div>
             <div class="detalle-row">
                 <a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white"
-                    th:href="@{/carrito/form/{id}(id=${producto.id})}">Agregar Al Carrito</a>
+                   onClick="validarCompra(this)" th:attr="data-id-vendedor=${producto.vendedor.id}, 
+									data-id-compra=${producto.id}, data-id-usuario=${idUsuario}">Agregar Al Carrito</a>
                 <div>
                      <a th:href="@{/producto/details/{id}(id=${producto.id},fav=true)}">                   
                         <i class="fa fa-heart text-muted"  th:if="${valheard == false}"></i>
@@ -75,6 +76,6 @@
 
 
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
-	
+	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
 

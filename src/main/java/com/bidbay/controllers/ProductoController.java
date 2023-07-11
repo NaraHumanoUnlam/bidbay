@@ -154,10 +154,16 @@ public class ProductoController {
 	public String buscar(@RequestParam(value = "categoria", required = false) Long id,
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "order", required = false) String order,
-			@RequestParam(value = "search", required = false) String search, Model model) {
+			@RequestParam(value = "search", required = false) String search, Model model, HttpSession session) {
 		model.addAttribute("titulo", "Búsqueda de Productos");
 		model.addAttribute("inputValue", search);
 		model.addAttribute("categorias", categoriaService.findAll());
+		
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("rol",session.getAttribute("rol"));
+			model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+		}
 
 		List<Producto> productos;
 
@@ -202,6 +208,7 @@ public class ProductoController {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
+			model.put("idUsuario",session.getAttribute("idUsuario"));
 			Favoritos favorito = productoService.buscoFavoritoDelUsuario(usuarioBuscado.getId() ,p.getId());
 			if (favorito != null) {
 				model.put("valheard",true);

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.bidbay.models.dao.ITicketDao;
 import com.bidbay.models.entity.Ticket;
+import com.bidbay.models.entity.DetalleCompras;
 
 import jakarta.transaction.Transactional;
 
@@ -41,5 +42,17 @@ public class TicketServicesImpl implements ITicketServices {
 	public List<Ticket> findAll() {
 		return (List<Ticket>)ticketDao.findAll();
 	}
+	
+	@Override
+	public List<Ticket> detallesTicketPorUsuario(Long id_usuario) {
+		return ticketDao.detallesTicket(id_usuario);
+	}
+	
+	@Override
+	public List<DetalleCompras> detallesProductosPorTicket(Long id_ticket) {
+		return (List<DetalleCompras>) ticketDao.detallesProductosxTicket(id_ticket);
+	}
+	
+	
 	
 }

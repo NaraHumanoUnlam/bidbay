@@ -19,8 +19,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				
-				<tr th:each="detalle: ${detalles}">
+					<tr th:if="${detalles != null}" th:each="detalle: ${detalles}">
 					<td th:text="${detalle.producto.nombre}"></td>
 					<td th:text="${detalle.cantidad}"></td>
 					<td th:text="${detalle.precioUnitario}"></td>

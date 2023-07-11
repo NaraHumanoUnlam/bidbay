@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body class="">
+
+	<header th:replace="views/layouts/plantilla.html :: header"></header>
+
+	<main class="flex justify-center items-center flex-col">
+		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
+		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
+			<thead>
+				<tr>
+					<th>Ticket</th>
+					<th>Pago </th>
+					<th>Fecha de pago</th>
+					<th>Monto</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+					<tr th:if="${tickets != null}" th:each="ticket: ${tickets}">
+						<td th:text="${ticket.idTicket}"></td>
+						<td th:text="${ticket.idPago}"></td>
+						<td th:text="${ticket.fechaDeCompra}"></td>
+						<td th:text="${ticket.precio}"></td>
+						<td class="btn btn-secondary text-light" th:if="${rol == 'Moderador'}"><a th:href="@{/moderador/ticketdet/} + ${ticket.idTicket}">View</a></td>
+						<td class="btn btn-secondary text-light" th:if="${rol != 'Moderador'}"><a th:href="@{/tickets/ticketdet/} + ${ticket.idTicket}">View</a></td>
+					</tr>
+			</tbody>
+		</table>
+		
+</body>
+</html>

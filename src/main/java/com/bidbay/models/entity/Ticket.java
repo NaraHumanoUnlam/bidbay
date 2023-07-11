@@ -15,7 +15,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name="ticket")
-
 public class Ticket implements Serializable {
 
 	private static final long serialVersionUID = 1L; 
@@ -34,14 +33,8 @@ public class Ticket implements Serializable {
 	private Date fechaDeCompra;
 	//CAMBIAR
 
-	//asociado a una compra
-	@OneToMany(mappedBy = "ticket" )
-	private List<Producto> productos;
-	
-	//id usuario entonces
-	private String nickUser;
 
-
+	public Ticket() {	}
 
 
 	public Ticket (Long idPago, Long idUsuario, Date fechaDeCompra, Double MontoDeCompra) {
@@ -56,6 +49,26 @@ public class Ticket implements Serializable {
 
 	
 	
+	public Long getIdUser() {
+		return idUser;
+	}
+
+
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
+	}
+
+
+	public Date getFechaDeCompra() {
+		return fechaDeCompra;
+	}
+
+
+	public void setFechaDeCompra(Date fechaDeCompra) {
+		this.fechaDeCompra = fechaDeCompra;
+	}
+
+
 	public Long getIdTicket() {
 		return idTicket;
 	}
@@ -84,28 +97,4 @@ public class Ticket implements Serializable {
 	public void setPrecio(Double precio) {
 		this.precio = precio;
 	}
-
-
-	public List<Producto> getProductos() {
-		return productos;
-	}
-
-
-	public void setProductos(List<Producto> productos) {
-		this.productos = productos;
-	}
-
-
-	public String getNickUser() {
-		return nickUser;
-	}
-
-
-	public void setNickUser(String nickUser) {
-		this.nickUser = nickUser;
-	}
-
-
-
-
 }

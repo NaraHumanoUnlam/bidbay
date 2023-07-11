@@ -53,6 +53,7 @@ public class LoginControllerTest {
 
     @Test
     public void testValidarLogin_UsuarioValido() {
+    	// Configurar el escenario de prueba
         String nick = "testuser";
         String password = "testpassword";
         Usuario usuario = new Usuario();

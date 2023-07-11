@@ -110,7 +110,9 @@ public class ProductoController {
 			return "views/productoForm";
 		}
 
-		if (!imagen.isEmpty()) {
+		if (imagen.isEmpty()) {
+	        producto.setImagen("imagen-placeholder.jpg");
+	    } else {
 			Path directorioImagenes = Paths.get("src//main//resources//static//imagenes");
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
 			try {
@@ -199,7 +201,7 @@ public class ProductoController {
 	public String detalles(@PathVariable("id") Long id, @RequestParam(value = "fav", defaultValue = "false") boolean fav, Map<String, Object> model,
 			HttpSession session) {
 		Producto p = null;
-		Usuario usuarioBuscado= usuarioService.getUsuarioActualmenteLogeado(session);
+		
 		if (id > 0) {
 			p = productoService.findOne(id);
 		} else {
@@ -209,6 +211,7 @@ public class ProductoController {
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
 			model.put("idUsuario",session.getAttribute("idUsuario"));
+			Usuario usuarioBuscado= usuarioService.getUsuarioActualmenteLogeado(session);
 			Favoritos favorito = productoService.buscoFavoritoDelUsuario(usuarioBuscado.getId() ,p.getId());
 			if (favorito != null) {
 				model.put("valheard",true);

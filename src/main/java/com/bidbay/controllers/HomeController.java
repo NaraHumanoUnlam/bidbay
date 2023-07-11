@@ -35,6 +35,7 @@ public class HomeController {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("rol",session.getAttribute("rol"));
+			model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
 			Long userID = usuarioService.getUsuarioActualmenteLogeado(session).getId();
 			notificaciones = servNoti.findAllByUser(userID);
 		}

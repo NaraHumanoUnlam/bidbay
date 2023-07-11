@@ -126,6 +126,10 @@
 			
 		}
 		
+		function goBack() {
+		    window.history.go(-1);
+		}
+		
 		function validarCompra() {
 			var idVendedor = event.target.getAttribute("data-id-vendedor");
 			var idUsuario = event.target.getAttribute("data-id-usuario");

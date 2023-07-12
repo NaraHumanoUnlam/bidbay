@@ -70,7 +70,7 @@
 								</a>
 								<p class="card-text" th:text="'$' + ${producto.precio}"></p>
 								<a class="btn btn-warning btn-sombra mt-4"
-									onClick="validarCompra(this)" th:attr="data-id-vendedor=${producto.vendedor.id}, 
+									onClick="validarCompra(this)" th:attr="data-id-vendedor=${producto.vendedor != null ? producto.vendedor.id : ''}, 
 									data-id-compra=${producto.id}, data-id-usuario=${idUsuario}">Agregar Al
 									Carrito</a>
 							</div>

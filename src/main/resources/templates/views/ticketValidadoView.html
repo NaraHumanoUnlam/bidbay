@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Ticket</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<title>Ticket</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+	crossorigin="anonymous"></script>
 </head>
-<body>
-   <div class="bg-zinc-100 flex flex-col text-center m-auto gap-2 shadow">
-<div class="text-black text-[32px] font-bold">Ticket </div>
-<div class="flex flex-row gap-10 justify-center">
-<div class="text-black text-[15px] font-normal" th:text="${Idticket}"></div>
-<div class="text-black text-[15px] font-normal" th:text="${FechaDeCompra}">Fecha: dd/mm/yyyy</div>
-</div>
-<div class="text-black text-[32px] font-normal" th:text="${MontoPagado}">Monto: $ ---</div>
-</div>
-<br>
-<a type="button" th:href="@{/}" class="btn btn-success">Inicio</a>
-
+<body class="text-bg-dark">
+	<div class="d-flex justify-content-center mt-5 shadow mb-5 border border-primary flex-column text-center w-50 p-3 m-auto text-bg-light ">
+		<h1>Ticket</h1>
+			<p class="" th:text="@{'Número de ticket: ' +${Idticket}}"></p>
+			<p class="" th:text="@{'Fecha de pago: ' +${FechaDeCompra}}">Fecha: dd/mm/yyyy</p>
+			<p class="" th:text="@{'Monto: ' +${MontoPagado}}">Monto: $ ---</p>
+			<a th:href="@{/}" class="btn btn-primary">Inicio</a>
+	</div>
 </body>
 </html>

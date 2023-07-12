@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.bidbay.models.dao.ISubastaDao;
+import com.bidbay.models.entity.Ofertante;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Subasta;
 import com.bidbay.models.entity.Usuario;
@@ -44,8 +45,8 @@ public class SubastaService implements ISubastaService{
 	}
 
 	@Override
-	public void agregarProducto(Producto producto, Long id) {
-		subastaDao.agregarProductoSubasta(producto, id);
+	public void agregarProducto(Long idProducto, Long id) {
+		subastaDao.agregarProductoSubasta(idProducto, id);
 	}
 
 	@Override
@@ -57,5 +58,10 @@ public class SubastaService implements ISubastaService{
 	@Override
 	public Subasta findById(@Valid Long idSubasta) {
 		return subastaDao.findById(idSubasta).orElse(null);
+	}
+
+	@Override
+	public void agregarOfertante(Ofertante ofertante, Long idsubasta) {
+		subastaDao.agregarOfertante(ofertante.getOferta(),idsubasta,ofertante.getUsuario().getId());		
 	}
 }

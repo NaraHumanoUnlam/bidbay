@@ -17,23 +17,23 @@ public class Ofertante {
 	@ManyToOne
 	private Subasta subasta;
 	@Column(name = "oferta")
-	private BigDecimal oferta;
+	private Double oferta;
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-//	public Usuario getUsuario() {
-//		return usuario;
-//	}
-//	public void setUsuario(Usuario usuario) {
-//		this.usuario = usuario;
-//	}
-	public BigDecimal getOferta() {
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	public Double getOferta() {
 		return oferta;
 	}
-	public void setOferta(BigDecimal oferta) {
+	public void setOferta(Double oferta) {
 		this.oferta = oferta;
 	}
 	

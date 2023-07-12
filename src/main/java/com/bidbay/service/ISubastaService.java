@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 
+import com.bidbay.models.entity.Ofertante;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Subasta;
 import com.bidbay.models.entity.Usuario;
@@ -20,10 +21,12 @@ public interface ISubastaService {
 
 	void crearSubasta(Long id,Double precio_inicial, String fechaSQLString, String string, Usuario usuario);
 
-	public void agregarProducto(@Valid Producto producto, Long id);
+	public void agregarProducto(Long producto, Long id);
 
 	public void save(@Valid Subasta subasta);
 
 	public Subasta findById(@Valid Long idSubasta);
+
+	public void agregarOfertante(Ofertante ofertante, Long idSubasta);
 
 }

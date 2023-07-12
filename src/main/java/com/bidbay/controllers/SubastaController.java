@@ -243,5 +243,18 @@ public class SubastaController {
 		return "redirect:/subasta/details/"+miSubasta.getId();
 	}
 	
+	@RequestMapping(value = "/comprar/{id}", method = RequestMethod.POST)
+	public String asignarProductoACompra(@PathVariable(value = "id") Long idSubasta,@ModelAttribute Ofertante ofertante,BindingResult result, Model model) {
+		Subasta miSubasta = subastaServ.obtenerSubasta(idSubasta);
+		if(ofertante.getOferta() > miSubasta.getMaximo()) {
+			miSubasta.setMaximo(ofertante.getOferta());
+		}
+		subastaServ.save(miSubasta);
+		subastaServ.agregarOfertante(ofertante,idSubasta);
+		model.addAttribute("botonSubmit", "Ofertar");
+		model.addAttribute("subasta",miSubasta);
+		return "redirect:/subasta/details/"+miSubasta.getId();
+	}
+	
 
 }

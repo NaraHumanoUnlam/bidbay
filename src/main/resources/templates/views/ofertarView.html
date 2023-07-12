@@ -17,7 +17,7 @@
             </div>
             <div class="formulario-div">
                 <label for="oferta">Oferta:</label>
-                <input type="text" id="oferta" th:field="*{oferta}" class="h-[25px] p-2">
+                <input type="number" id="oferta" th:field="*{oferta}" class="h-[25px] p-2" min="0">
             </div>
             <div class="formulario-div">
                 <input type="hidden" id="usuario"th:field="*{usuario}" />

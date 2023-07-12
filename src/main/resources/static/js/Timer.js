@@ -62,6 +62,7 @@ function Timer(fecha, horaFin) {
 				}
 			}
 		}, 10);
+		//agregar logica para agregar el pago al ofertante
 	}
 }
 

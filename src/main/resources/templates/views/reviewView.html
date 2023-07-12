@@ -27,7 +27,7 @@
 					<td th:text="${review.producto.nombre}"></td>
 					<td th:text="${review.mensaje}"></td>
 					<td th:text="${review.puntaje}"></td>
-					<td><a  class="btn btn-danger bg-red-500" th:href="@{/moderador/reviewDel/} + ${review.idReview}">Eliminar</a>
+					<td><a  class="btn btn-danger bg-red-500" onClick="confirmacionBorrado(this)" th:attr="data-id-review=${review.idReview}, data-href=@{/moderador/reviewDel/}">Eliminar</a>
 					</td>
 				</tr>
 			</tbody>

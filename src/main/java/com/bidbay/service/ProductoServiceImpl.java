@@ -9,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bidbay.models.dao.ICarritoItemDao;
 import com.bidbay.models.dao.ICategoriaDao;
 import com.bidbay.models.dao.IFavoritosDao;
 import com.bidbay.models.dao.IOperacionCV;
 import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.dao.IUsuarioDao;
 import com.bidbay.models.entity.*;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 @Service
 public class ProductoServiceImpl implements IProductoService {
@@ -24,6 +28,9 @@ public class ProductoServiceImpl implements IProductoService {
     
     @Autowired
     private ICategoriaDao categoriaDao;
+    
+    @Autowired
+    private ICarritoItemDao carritoItemDao;
     
     @Autowired
     private IUsuarioDao usuarioDao;
@@ -55,6 +62,8 @@ public class ProductoServiceImpl implements IProductoService {
     @Override
     @Transactional
     public void delete(Long id) {
+    	carritoItemDao.deleteByProductoId(id);
+    	
     	productoDao.deleteById(id);
     }
 

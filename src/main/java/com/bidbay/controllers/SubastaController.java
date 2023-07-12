@@ -63,7 +63,14 @@ public class SubastaController {
 
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public String listaSubastas(Model model) {
+	public String listaSubastas(HttpSession session, Model model) {
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+    		return "redirect:/login";
+    	}
+		
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
 		List<Subasta> subastas = subastaServ.findAll();
 		model.addAttribute("subastas", subastas);
 		return "views/subastaView";
@@ -190,10 +197,20 @@ public class SubastaController {
 	
 	
 	@RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
-	public String mostrar(@PathVariable(value = "id") Long idSubasta, Model model) {
+	public String mostrar(HttpSession session,@PathVariable(value = "id") Long idSubasta, Model model) {
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+    		return "redirect:/login";
+    	}
+		
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
 		Subasta miSubasta = subastaServ.obtenerSubasta(idSubasta);
 		Producto product = miSubasta.getProducto();
-		
+		Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
+		Ofertante ofertante = new Ofertante();
+		ofertante.setUsuario(user);
+		model.addAttribute("ofertante", ofertante );
 		model.addAttribute("producto",product);
 		model.addAttribute("subasta",miSubasta);
 		return "views/subastaDetailView";

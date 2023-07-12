@@ -7,7 +7,7 @@
   }
   
   .formulario-div {
-    margin-bottom: 20px;
+    <!--margin-bottom: 20px;-->
   }
   
   .formulario-div label {
@@ -18,6 +18,7 @@
   }
   
   .formulario-div input[type="text"],
+   .formulario-div input[type="password"],
   .formulario-div textarea,
   .formulario-div input[type="file"],
   .formulario-div select {

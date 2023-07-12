@@ -239,7 +239,7 @@ public class ModeradorController {
 	@RequestMapping(value = "producto/delete/{id}")
 	public String eliminar(@PathVariable(value = "id") Long id) {
 		if (id > 0) {
-			productoService.delete(id);
+			productoService.deleteFromView(id);
 		}
 		return "redirect:/moderador/productos";
 	}

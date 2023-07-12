@@ -29,7 +29,8 @@ public class HomeController {
 	@GetMapping(value = { "/", "/home","/index" })
 	public String listar(Model model, HttpSession session) {
 		model.addAttribute("titulo", "Bidbay");
-		model.addAttribute("productos", productoService.findAll());
+		//filtra por modalidad 'Venta' por favor mantener con el id de modalidad venta
+		model.addAttribute("productos", productoService.obtenerPorModalidad(1l));
 		
 		List<Notificacion> notificaciones = new ArrayList<Notificacion>();
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {

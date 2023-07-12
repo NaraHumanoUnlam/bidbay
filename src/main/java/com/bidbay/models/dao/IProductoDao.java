@@ -33,4 +33,7 @@ public interface IProductoDao extends CrudRepository<Producto, Long>{
 	
 	@Query(value = "select stock from productos where id=?", nativeQuery = true)
 	public Integer traerStockDisponible(Long idProducto);
+	
+	@Query(value = "select * from productos where modalidad_id=?", nativeQuery = true)
+	public List<Producto> obtenerPorModalidad(Long i);
 }

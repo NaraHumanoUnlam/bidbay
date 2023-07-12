@@ -17,3 +17,13 @@ where c.id_pago is not null;
 
 insert into modalidad (nombre) values ('Venta');
 insert into modalidad (nombre) values ('Subasta');
+
+INSERT INTO categorias (nombre) values('accesorios'),('ropa de verano'),('ropa de invierno'),('pantalones'),('zapatilla');
+
+INSERT INTO productos (descripcion, imagen, nombre, precio, stock, categoria_id, usuario_id)
+VALUES
+    ('Camiseta de algodón', 'negro.jpg', 'Camiseta Azul', 19.99, 10, 2, 1),
+    ('Pantalón vaquero', 'negro.jpg', 'Pantalón Negro', 39.99, 5, 4, 1),
+    ('Vestido estampado', 'negro.jpg', 'Vestido Floral', 49.99, 8, 2, 1),
+    ('Zapatillas deportivas', 'negro.jpg', 'Zapatillas Nike', 79.99, 3, 5, 1),
+    ('Bolso de cuero', 'negro.jpg', 'Bolso Marrón', 59.99, 2, 2, 1);

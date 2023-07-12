@@ -15,7 +15,9 @@
 				<div
 					class="grid grid-cols-3 text-center items-center justify-center justify-items-center gap-2 h-[250px] rounded">
 					<div th:each="producto : ${productos}" class="mb-10 mb-5 bg-gray-100 m-3 shadow"  th:if="${producto.stock > 0 && producto != null}">
-						<div class="flex flex-row m-auto w-full h-full w-full bg-white p-2 gap-2">
+					<div  th:each=" modalidad : ${producto.modalidad}" >
+						<div  th:if="${modalidad.nombre != 'Subasta'}" class="flex flex-row m-auto w-full h-full w-full bg-white p-2 gap-2">
+						
 							<div class="flex flex-col w-fukk m-2 items-center justify-center">
 							<a th:href="@{/producto/details/{id}(id=${producto.id})}">
 								<img th:src="@{'/imagenes/'+${producto.imagen}}"
@@ -39,6 +41,7 @@
 									<a class="bg-blue-500 hover:bg-blue-700 text-uppercase p-2 text-white font-bold rounded"
                     				onClick="validarCompra(this)" th:attr="data-id-vendedor=${producto.vendedor != null ? producto.vendedor.id : ''}, data-id-compra=${producto.id}, data-id-usuario=${idUsuario}">Agregar Al Carrito</a>
 								</div>
+							</div>
 							</div>
 						</div>
 					</div>

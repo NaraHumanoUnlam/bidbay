@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+
+<body>
+
+    <header th:replace="views/layouts/plantilla.html :: header"></header>
+
+    <main class="mb-5">
+        <h1 th:text="${titulo}" class="h1 text-4xl mb-5 text-center"></h1>
+
+        <form th:action="@{'/subasta/ofertar/'+${subasta.id}}" th:object="${ofertante}" method="POST" class="formulario mb-5 sombra-2"
+            enctype="multipart/form-data">
+            <div class="formulario-div">
+                <input type="hidden" id="idOfertante" th:field="*{id}" />
+            </div>
+            <div class="formulario-div">
+                <label for="oferta">Oferta:</label>
+                <input type="text" id="oferta" th:field="*{oferta}" class="h-[25px] p-2">
+            </div>
+            <div class="formulario-div">
+                <input type="hidden" id="usuario"th:field="*{usuario}" />
+            </div>
+            
+            <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
+        </form>
+        <!-- esto lo agregue para que se pueda scrolear para abajo :) -->
+        <div class="h-28 w-full"></div>
+    </main>
+
+    <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+
+
+</body>
+
+</html>

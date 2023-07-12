@@ -27,7 +27,8 @@ public class Subasta {
     private List<Ofertante> ofertantes;
     
     @Nullable
-    @Column(name = "producto")
+    @OneToOne
+	@JoinColumn(name = "productos", referencedColumnName = "id" )
     private Producto producto;
 
     @Column(name = "precio_inicial")

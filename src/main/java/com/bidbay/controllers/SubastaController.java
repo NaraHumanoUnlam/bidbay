@@ -1,6 +1,7 @@
 package com.bidbay.controllers;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bidbay.excepciones.ArchivoException;
+import com.bidbay.models.entity.Ofertante;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Subasta;
 import com.bidbay.models.entity.Usuario;
@@ -33,7 +35,7 @@ import com.bidbay.service.ICategoriaService;
 import com.bidbay.service.IProductoService;
 import com.bidbay.service.ISubastaService;
 import com.bidbay.service.IUsuarioService;
-import com.bidbay.utils.MyTimer;
+import com.bidbay.service.ModalidadServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -42,9 +44,6 @@ import jakarta.validation.Valid;
 @RequestMapping("/subasta")
 @Controller
 public class SubastaController {
-	
-	private Timer timer;
-    private MyTimer timerTask;
     
 	@Autowired
 	private ISubastaService subastaServ;
@@ -57,6 +56,11 @@ public class SubastaController {
 	
 	@Autowired
 	private IProductoService productoService;
+	
+	@Autowired
+	private ModalidadServiceImpl modalidadService;
+
+
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listaSubastas(Model model) {
@@ -107,8 +111,7 @@ public class SubastaController {
 
 	    try {
 
-	      String fechaSQLString = subasta.getFechaLimite().toString();
-	      subasta.setMaximo(subasta.getMaximo());
+	      subasta.setMaximo(subasta.getPrecioInicial());
 	      subasta.setSubastador(subasta.getSubastador());
 	      System.out.println("id: " + subasta.getId() + " precio inicial: " + subasta.getPrecioInicial() + " fecha limite: " + subasta.getFechaLimite()+ " hora: " + subasta.getHoraLimite()+ " id usuario = " + subasta.getSubastador().getId());
 	     subastaServ.save(subasta);
@@ -118,38 +121,35 @@ public class SubastaController {
 		
 	    model.addAttribute("idsubasta", subasta.getId());
 		
-		return "redirect:/subasta/crear/producto";
+		return "redirect:/subasta/crear/producto/"+subasta.getId();
 	}
 	
-	@RequestMapping(value = "/crear/producto", method = RequestMethod.GET)
-	public String formularioProdcuto(HttpSession session,Map<String, Object> model) throws Exception {
-		if (usuarioService.chequearQueElUsuarioEsteLogeado(session) == false) {
+	@RequestMapping(value = "/crear/producto/{idSubasta}", method = RequestMethod.GET)
+	public String formularioProdcuto(HttpSession session, @PathVariable(value = "idSubasta") Long id,Map<String, Object> model) throws Exception {
+		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			model.put("logueo",session.getAttribute("logueo"));
+			model.put("rol",session.getAttribute("rol"));
+			model.put("idUsuario",session.getAttribute("idUsuario"));
+		}else {
 			return "redirect:/login";
-		} else {
+		}
 			Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 			Producto producto = new Producto();
 			producto.setCategoria(categoriaService.findOne(1L));
-			producto.setPrecio(0.00);
+			producto.setModalidad(modalidadService.findOne(2L));
 			producto.setVendedor(user);
 			model.put("producto", producto);
-			model.put("titulo", "¿Qué querés vender?");
-			model.put("botonSubmit", "Vender");
+			model.put("titulo", "¿Qué querés subastar?");
+			model.put("botonSubmit", "Subastar");
 			model.put("categorias", categoriaService.findAll());
-			model.put("logueo",session.getAttribute("logueo"));
-			model.put("rol",session.getAttribute("rol"));
-
+			model.put("modalidades", modalidadService.findAll());
 			return "views/subastaProductoForm";
-		}
-	}
-	
-	@RequestMapping(value = "/crear/producto", method = RequestMethod.POST)
-	public String guardarProdcuto(@Valid @ModelAttribute Producto producto, BindingResult result,@PathVariable(value = "id") Long id, Model model,
-			@RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
-		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario de Producto");
-			return "views/productoForm";
-		}
 
+		}
+	
+	@RequestMapping(value = "/crear/producto/{idSubasta}", method = RequestMethod.POST)
+	public String guardarProdcuto(@Valid @ModelAttribute Producto producto, BindingResult result,@PathVariable(value = "idSubasta") Long idSubasta, Model model,
+			@RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
 		if (!imagen.isEmpty()) {
 			Path directorioImagenes = Paths.get("src//main//resources//static//imagenes");
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
@@ -163,12 +163,17 @@ public class SubastaController {
 				throw new ArchivoException("Error al escribir archivo", e);
 			}
 		}
+		System.out.println("id producto: " + producto.getId());
+		producto.setPrecio(subastaServ.obtenerSubasta(idSubasta).getPrecioInicial());
+		producto.setStock(1);
 		productoService.save(producto);
-		subastaServ.agregarProducto(producto,id);
+		Subasta miSubastaGuardada = subastaServ.findById(idSubasta);
+		miSubastaGuardada.setProducto(producto);
+		subastaServ.save(miSubastaGuardada);
 		return "redirect:/subasta/listar";
 	}
 	
-	@RequestMapping(value = "/subasta/poducto/{id}")
+	@RequestMapping(value = "/editar/poducto/{id}")
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model) {
 		Producto p = null;
 		if (id > 0) {
@@ -183,19 +188,41 @@ public class SubastaController {
 		return "views/productoForm";
 	}
 	
-	@RequestMapping(value ="/start-timer", method = RequestMethod.GET)
-    public String startTimer(Model model){
-		   
-        return "views/TimerTest";
-    }
-
-    @GetMapping("/stop-timer")
-    public String stopTimer() {
-        if (timer != null) {
-            timer.cancel();
-        }
-        return "timer-stopped";
-    }
+	
+	@RequestMapping(value = "/details/{id}", method = RequestMethod.GET)
+	public String mostrar(@PathVariable(value = "id") Long idSubasta, Model model) {
+		Subasta miSubasta = subastaServ.obtenerSubasta(idSubasta);
+		Producto product = miSubasta.getProducto();
+		
+		model.addAttribute("producto",product);
+		model.addAttribute("subasta",miSubasta);
+		return "views/subastaDetailView";
+	}
+	
+	@RequestMapping(value = "/ofertar/{id}", method = RequestMethod.GET)
+	public String ofertarView(HttpSession session,@PathVariable(value = "id") Long idSubasta, Model model) {
+		Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
+		Subasta miSubasta = subastaServ.obtenerSubasta(idSubasta);
+		Ofertante ofertante = new Ofertante();
+		ofertante.setUsuario(user);
+		model.addAttribute("ofertante",ofertante);
+		model.addAttribute("subasta",miSubasta);
+		model.addAttribute("botonSubmit", "Ofertar");
+		return "views/ofertarView";
+	}
+	
+	@RequestMapping(value = "/ofertar/{id}", method = RequestMethod.POST)
+	public String ofertar(@PathVariable(value = "id") Long idSubasta,@ModelAttribute Ofertante ofertante,BindingResult result, Model model) {
+		Subasta miSubasta = subastaServ.obtenerSubasta(idSubasta);
+		if(ofertante.getOferta() > miSubasta.getMaximo()) {
+			miSubasta.setMaximo(ofertante.getOferta());
+		}
+		subastaServ.save(miSubasta);
+		subastaServ.agregarOfertante(ofertante,idSubasta);
+		model.addAttribute("botonSubmit", "Ofertar");
+		model.addAttribute("subasta",miSubasta);
+		return "redirect:/subasta/details/"+miSubasta.getId();
+	}
 	
 
 }

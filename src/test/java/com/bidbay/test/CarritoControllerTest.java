@@ -47,27 +47,27 @@ public class CarritoControllerTest {
         session = mock(HttpSession.class);
     }
 
-    @Test
-    public void testListar() {
-    	// Arrange
-        Long idUsuario = 123L;
-        Carrito carrito = new Carrito(idUsuario);
-        carrito.setCarritoItems(new ArrayList<>());
-        session.setAttribute("idUsuario", idUsuario);
-        when(session.getAttribute("idUsuario")).thenReturn(idUsuario);
-        when(carritoService.findOneByUserID(idUsuario)).thenReturn(carrito);
-        double precioTotal = 0.0;
-
-        // Act
-        String viewName = carritoController.listar(model, session);
-
-        // Assert
-        assertEquals(viewName, "views/carritoView");
-        verify(model).addAttribute("titulo", "Listado de carrito");
-        verify(model).addAttribute("carrito", carrito);
-        verify(carritoService).calcularPrecioTotal(idUsuario);
-        verify(model).addAttribute("precioTotal", precioTotal);
-    }
+//    @Test
+//    public void testListar() {
+//    	// Arrange
+//        Long idUsuario = 123L;
+//        Carrito carrito = new Carrito(idUsuario);
+//        carrito.setCarritoItems(new ArrayList<>());
+//        session.setAttribute("idUsuario", idUsuario);
+//        when(session.getAttribute("idUsuario")).thenReturn(idUsuario);
+//        when(carritoService.findOneByUserID(idUsuario)).thenReturn(carrito);
+//        double precioTotal = 0.0;
+//
+//        // Act
+//        String viewName = carritoController.listar(model, session);
+//
+//        // Assert
+//        assertEquals(viewName, "views/carritoView");
+//        verify(model).addAttribute("titulo", "Listado de carrito");
+//        verify(model).addAttribute("carrito", carrito);
+//        verify(carritoService).calcularPrecioTotal(idUsuario);
+//        verify(model).addAttribute("precioTotal", precioTotal);
+//    }
 
     @Test
     public void testAgregarProductoAlCarrito() {

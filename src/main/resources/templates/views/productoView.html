@@ -53,8 +53,8 @@
 					<th>Descripcion</th>
 					<th>Precio</th>
 					<th>Stock</th>
-					<th th:if="${rol != 'Moderador'}"></th>
-					<th th:if="${rol != 'Moderador'}"></th>
+					<th></th>
+					<th></th>
 					
 				</tr>
 			</thead>
@@ -65,14 +65,15 @@
 					<td th:text="${producto.descripcion}"></td>
 					<td th:text="${producto.precio}"></td>
 					<td th:text="${producto.stock}"></td>
-					<td th:if="${rol != 'Moderador'}"><a class="btn btn-secondary text-light" th:href="@{/producto/form/} + ${producto.id}">Edit</a></td>
-					<td th:if="${rol != 'Moderador'}"><a class="btn btn-secondary text-light" th:href="@{/producto/delete/} + ${producto.id}"
-							onclick="return confirm('¿Estás seguro que querés eliminar esta Producto?')">Del</a>
-					</td>
-					
+					<td th:if="${rol != 'Moderador'}"><a class="btn btn-secondary text-light" th:href="@{/producto/form/} + ${producto.id}">Editar</a></td>
+					<td th:if="${rol != 'Moderador'}"><a class="btn btn-secondary text-light" onClick="confirmacionBorrado(this)" th:attr="data-id-producto=${producto.id}, data-href=@{/producto/delete/}">Borrar</a></td>
+					<td th:if="${rol == 'Moderador'}"><a class="btn btn-secondary text-light" th:href="@{/producto/form/} + ${producto.id}">Editar</a></td>
+					<td th:if="${rol == 'Moderador'}"><a class="btn btn-secondary text-light" onClick="confirmacionBorrado(this)" th:attr="data-id-producto=${producto.id}, data-href=@{/moderador/producto/delete/}">Borrar</a></td>
 				</tr>
 			</tbody>
 		</table>
 		<p th:text="${mensaje}" th:if="${mensaje}"></p>
 </body>
+<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+<script th:replace="views/layouts/plantilla.html :: script"></script>
 </html>

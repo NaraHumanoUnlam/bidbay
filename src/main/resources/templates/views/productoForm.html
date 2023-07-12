@@ -10,7 +10,7 @@
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
 
-        <form th:action="@{/producto/guardar}" th:object="${producto}" method="POST" class="formulario mb-5 sombra-2"
+        <form th:action="@{( ${rol} == 'Moderador' ? '/moderador/producto/guardar' : '/producto/guardar' )}" th:object="${producto}" method="POST" class="formulario mb-5 sombra-2"
             enctype="multipart/form-data">
              <table class="p-4 m-auto">
             	<tr>

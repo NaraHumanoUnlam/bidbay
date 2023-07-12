@@ -26,12 +26,12 @@
 					<div class="col-span-1">
 						<form th:action="@{/carrito/editar/{id}(id=${carritoItem.getIdItem()})}" method="post" class="flex flex-row gap-5">
 							<input type="number" name="cantidadProductos" th:value="${carritoItem.getStock()}" min="1" 	class="border border-gray-400 rounded py-2 px-3">
-							<button type="submit">Guardar</button>
+							<button class="bg-blue-500 hover:bg-blue-700 m-2 text-white p-2 rounded" type="submit">Guardar</button>
 						</form>
 					</div>
 					<div class="col-span-1">
 						<form th:action="@{/carrito/eliminar/{id}(id=${carritoItem.getIdItem()})}" method="post">
-							<button type="submit">Eliminar</button>
+							<button class="bg-red-500 hover:bg-blue-700 m-2 text-white p-2 rounded" type="submit">Eliminar</button>
 						</form>
 					</div>
 				</div>

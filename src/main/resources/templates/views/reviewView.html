@@ -9,29 +9,26 @@
 
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
-			<thead>
-				<tr>
-					<th>Fecha</th>
-					<th>Producto</th>
-					<th>Usuario</th>
-					<th>Mensaje</th>
-					<th>Puntaje</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<tr th:if="${review != null}" th:each="review: ${reviews}">
-					<td th:text="${review.fecha}"></td>
-					<td th:text="${review.usuario.nick}"></td>
-					<td th:text="${review.producto.nombre}"></td>
-					<td th:text="${review.mensaje}"></td>
-					<td th:text="${review.puntaje}"></td>
-					<td><a  class="btn btn-danger bg-red-500" onClick="confirmacionBorrado(this)" th:attr="data-id-review=${review.idReview}, data-href=@{/moderador/reviewDel/}">Eliminar</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<div id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-4 rounded w-6/12 mb-10">
+			<div class="grid grid-cols-6 gap-2 p-2 rounded text-white font-semibold text-xlg bg-gray-500">
+					<p>Fecha</p>
+					<p>Producto</p>
+					<p>Usuario</p>
+					<p>Mensaje</p>
+					<p>Puntaje</p>
+					<p> </p>
+			</div>
+			<div class="p-2 ">
+				<div class="grid grid-cols-6 gap-2 gap-y-3 items-center justify-center text-center" th:if="${review != null}" th:each="review: ${reviews}">
+					<p th:text="${review.fecha}"></p>
+					<p th:text="${review.usuario.nick}"></p>
+					<p th:text="${review.producto.nombre}"></p>
+					<p th:text="${review.mensaje}"></p>
+					<p th:text="${review.puntaje}"></p>
+					<a  class="btn btn-danger bg-red-500" onClick="confirmacionBorrado(this)" th:attr="data-id-review=${review.idReview}, data-href=@{/moderador/reviewDel/}">Eliminar</a>
+				</div>
+			</div>
+		</div>
 </body>
 <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 <script th:replace="views/layouts/plantilla.html :: script"></script>

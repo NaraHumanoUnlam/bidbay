@@ -62,7 +62,7 @@ public class ProductoServiceImpl implements IProductoService {
     @Override
     @Transactional
     public void delete(Long id) {
-    	carritoItemDao.deleteByProductoId(id);
+    	//carritoItemDao.deleteByProductoId(id);
     	
     	productoDao.deleteById(id);
     }

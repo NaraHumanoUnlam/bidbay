@@ -4,38 +4,32 @@
 <head th:replace="views/layouts/plantilla.html :: head"></head>
 <body>
 <header th:replace="views/layouts/plantilla.html :: header"></header>
-	<main class="w-[50%] flex flex-row justify-center items-center content-center text-center bg-sky-100 m-auto shadow">
+	<main th:each="subasta: ${subastas}">
+	<div th:each="producto: ${subasta.producto}"  class="w-[50%] flex flex-row justify-center items-center content-center text-center bg-sky-100 m-auto shadow">
 		<div
-			class="flex justify-center items-center inline-flex">
-			<div class="w-[500px] h-[500px] bg-white">
-				<img src="/img/producto.png">
+			class="flex justify-center items-center inline-flex p-2">
+			<div class="m-auto w-[300px] h-[400px]">
+				<a th:href="@{/subasta/details/{id}(id=${subasta.id})}">
+								<img th:src="@{'/imagenes/'+${producto.imagen}}"
+									th:alt="${producto.imagen}" class="h-auto w-full" />
+									</a>
 			</div>
 		</div>
-		<div
+		<div 
 			class="w-[500px] h-[600px] p-2 justify-center items-center inline-flex">
 				<div class="w-full h-full bg-sky-100 flex flex-col justify-center items-center content-center rounded border-current border-solid">
 				<p
-					class="text-black text-[24px] font-bold">Nombre
-					producto</p>
+					class="text-black text-2xl font-bold text-uppercase" th:text="${producto.nombre}"></p>
 				<p
-					class="text-black text-[16px] font-normal">Descripcion</p>
+					class="text-black text-[16px] font-normal" th:text="${producto.descripcion}"></p>
 				<p
-					class="text-black text-[16px] font-normal">precio
-					inicial</p>
+					class="text-black text-[16px] font-normal"  th:text="@{'Precio inicial: ' + ${producto.precio}}"></p>
 				<p
-					class="text-black text-[20px] font-bold">ultima
-					oferta</p>
-					<p
-					class="text-black text-3xl font-bold mb-10" id="reloj">Tiempo</p>
-				<div class="w-[213px] h-[60px]">
-					<button
-						class="w-[213px] h-[60px]  bg-sky-500 rounded-2xl">
-					<p
-						class="text-white text-[20px] font-bold">Ofertar</p></button>
-				</div>
-				</div>
+					class="text-black text-[20px] font-bold" th:text="@{'Ofera máxima: ' + ${subasta.maximo}}"></p>
+					
+			</div>
+			</div>
 			</div>
 	</main>
-	<script type="text/javascript" src="/js/Timer.js"></script>
 </body>
 </html>

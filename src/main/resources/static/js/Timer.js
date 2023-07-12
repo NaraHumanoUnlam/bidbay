@@ -8,14 +8,17 @@ function Timer(fecha, horaFin) {
 	let centesimos = 99;
 	console.log(horas);
 	let pantalla = document.getElementById('reloj');
-	let fechaActual = new Date();;
+	let fechaActual = new Date();
+	
+	console.log("fecha actual: " + fechaActual + "fecha: " + fecha);
 	var fechaInicio = fecha;
 	var fechaFin = fechaActual;
-	var diff = fechaFin.getTime() - fechaInicio.getTime();
-	dias = diff / (1000 * 60 * 60 * 24);
+	var diff = fechaInicio.getTime() - fechaFin.getTime();
+	dias = diff/(1000*60*60*24*31);
 	var horasActuales = fechaActual.getHours();
 	var minutosActuales = fechaActual.getMinutes();
 	var segundosActuales = fechaActual.getSeconds();
+	console.log(segundosActuales);
 	var partesHora = horaFin.split(":");
 	var horas = partesHora[0];
 	var minutos = partesHora[1];
@@ -63,11 +66,13 @@ function Timer(fecha, horaFin) {
 }
 
 window.addEventListener('load', () => {
-	var fechaObjetivo = '12/07/2023'; // Aquí debes establecer la fecha objetivo
-	var horaObjetivo = "23:59:59"; // Aquí debes establecer la hora objetivo
-
-	var partesFecha = fechaObjetivo.split('/');
-	var fecha = new Date(partesFecha[2], partesFecha[1] - 1, partesFecha[0]);
+	var fechaHTML = document.getElementById('fecha'); // Aquí debes establecer la fecha objetivo
+	var hora = document.getElementById('hora'); ; // Aquí debes establecer la hora objetivo
+	
+	let fechaObjetivo = fechaHTML.innerText;
+	let horaObjetivo = hora.innerText+":59";
+	var partesFecha = fechaObjetivo.split('-');
+	var fecha = new Date(partesFecha[0], partesFecha[1], partesFecha[2]);
 
 	Timer(fecha, horaObjetivo);
 })

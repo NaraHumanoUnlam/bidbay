@@ -10,7 +10,7 @@
     <main class="mb-5">
         <h1 th:text="${titulo}" class="h1 text-4xl mb-5 text-center"></h1>
 
-        <form th:action="@{/subasta/crear/producto}" th:object="${producto}" method="POST" class="formulario mb-5 sombra-2"
+        <form th:action="@{'/subasta/crear/producto/'+${idSubasta}}" th:object="${producto}" method="POST" class="formulario mb-5 sombra-2"
             enctype="multipart/form-data">
             <div class="formulario-div">
                 <label for="nombre">Producto:</label>
@@ -31,6 +31,13 @@
                     <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
                 </select>
             </div>
+            <div>
+                	<label for="modalidad">Modalidad:</td>
+                	<select  id="modalidad" th:field="*{modalidad.id}" class="select-css">
+                    		<option value="" >Seleccione una opción</option>
+                    		<option th:each="modalidad : ${modalidades}" th:value="${modalidad.id}" th:text="${modalidad.nombre}"></option>
+                	</select>
+            	</div>
             <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
             <input type="hidden" th:field="*{id}" />
         </form>

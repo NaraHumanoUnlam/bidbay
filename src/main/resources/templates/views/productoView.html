@@ -9,42 +9,44 @@
 
 <main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-		<form th:action="@{/producto/listar}" th:if="${rol != 'Moderador'}">
-				<input name="search" type="text" placeholder="Buscar">
-				<input type="submit" value="Buscar" class="btn btn-secondary text-light">
-		</form>
-		<form th:action="@{/moderador/productos}" th:if="${rol == 'Moderador'}">
+		<div class="flex flex-row gap-3">
+			<form th:action="@{/producto/listar}" th:if="${rol != 'Moderador'}" class="flex flex-row gap-4">
+				<input name="search" type="text" placeholder="Buscar" class="rounded px-2">
+				<input type="submit" value="Buscar" class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center">
+			</form>
+			<form th:action="@{/moderador/productos}" th:if="${rol == 'Moderador'}" class="flex flex-row gap-4">
+					<input name="search" type="text" placeholder="Buscar" class="rounded px-2">
+					<input type="submit" value="Buscar" class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center">
+			</form>
 			
-				<input name="search" type="text" placeholder="Buscar">
-				<input type="submit" value="Buscar" class="btn btn-secondary text-light">
-		</form>
-		
 			<p th:if="${inputValue != null}" th:text="'Resultado de buscar: ' + ${inputValue}"></p>
-			<a th:if="${rol != 'Moderador'}" class="btn btn-secondary text-light" th:text="Volver" th:href="@{/producto/listar}"></a>
-			<a th:if="${rol == 'Moderador'}" class="btn btn-secondary text-light" th:text="Volver" th:href="@{/moderador/productos}"></a>
-			<br>
-
-				<p  th:if="${rol != 'Moderador'}">
-					<a class="btn btn-secondary text-light"
-					th:href="@{/producto/form}">Agregar Producto</a>
-				</p>
+			<a th:if="${rol != 'Moderador'}" class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center" th:text="Volver" th:href="@{/producto/listar}"></a>
+			<a th:if="${rol == 'Moderador'}" class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center" th:text="Volver" th:href="@{/moderador/productos}"></a>
+		</div>
 		
-			<div>
-				<h4>Ordenar: </h4>
-				<div th:if="${rol != 'Moderador'}">
-					<a class="" th:href="@{/producto/listar?order=asc}"><b>Ascendente</b></a>
-					<a class="" th:href="@{/producto/listar?order=desc}"><b>Descendente</b></a>
-					<a class="" th:href="@{/producto/listar}"><b>Default</b> </a>
+			<div class="p-5">
+				<p th:if="${rol != 'Moderador'}">
+				<a class="bg-gray-600 hover:bg-gray-700 p-2 text-mb text-white rounded boton-submit text-center" th:href="@{/producto/form}">Vender nuevo producto</a>
+				</p>
+			</div>
+			
+		
+			<div class="flex flex-col text-center justify-center items-center">
+				<h4 class="text-semibold m-2 text-semibold text-xl p-2">Ordenar por</h4>
+				<div th:if="${rol != 'Moderador'}" class="flex flex-row gap-4">
+					<a class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center" th:href="@{/producto/listar?order=asc}"><b>Ascendente</b></a>
+					<a class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center" th:href="@{/producto/listar?order=desc}"><b>Descendente</b></a>
+					<a class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center" th:href="@{/producto/listar}"><b>Default</b> </a>
 				</div>
 				<div th:if="${rol == 'Moderador'}">
-					<a class="" th:href="@{/moderador/productos?order=asc}"><b>Ascendente</b></a>
-					<a class="" th:href="@{/moderador/productos?order=desc}"><b>Descendente</b></a>
-					<a class="" th:href="@{/moderador/productos}"><b>Default</b> </a>
+					<a class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center" th:href="@{/moderador/productos?order=asc}"><b>Ascendente</b></a>
+					<a class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center" th:href="@{/moderador/productos?order=desc}"><b>Descendente</b></a>
+					<a class="bg-violet-400 hover:bg-violet-500 p-2 text-white rounded boton-submit text-center" th:href="@{/moderador/productos}"><b>Default</b> </a>
 				</div>
 			</div>
 			<br>
 		
-		<div id="lista" class="flex flex-col text-center bg-white mt-10 p-4 rounded w-9/12 mb-10">
+		<div id="lista" class="flex flex-col text-center bg-white mt-8 p-4 rounded w-9/12 mb-10">
 			<div class="flex flex-col gap-2 text-lg">
 				<div class="grid grid-cols-7 gap-2 p-2 rounded text-white font-semibold text-xlg bg-gray-500">
 					<p>Id</p>

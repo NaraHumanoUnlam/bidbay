@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head th:replace="/views/layouts/plantilla.html :: head"></head>
-
+<head th:replace="views/layouts/plantilla.html :: head"></head>
+<script src="https://cdn.tailwindcss.com"></script>
 <body>
 
-    <header th:replace="/views/layouts/plantilla.html :: header"></header>
+   <header th:replace="views/layouts/plantilla.html :: header"></header>
 
     <main class="mb-5">
         <h1 th:text="${titulo}" class="h1 text-4xl mb-5 text-center"></h1>
@@ -47,7 +46,7 @@
 
     <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 
-
+<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
 
 </html>

@@ -34,4 +34,6 @@ public interface ISubastaDao extends CrudRepository<Subasta, Long>{
 	@Transactional
 	@Query(value = "insert into ofertante (oferta,subasta_id,usuarios) VALUES (?,?,?)", nativeQuery = true)
 	public void agregarOfertante(Double bigDecimal, Long subasta, Long idUsuario);
+	
+	
 }

@@ -72,10 +72,14 @@
 	    var modalidad = document.getElementById('modalida').value;
 	    var errorMsg = document.getElementById('errorMsg');
 	
-	    if (nombre === '' || descripcion === '' || precio === '' || stock === '' || imagen === '' || categoria === '' || modalidad === '') {
+	    if (nombre === '' || descripcion === '' || precio === '' || stock === '' || categoria === '' || modalidad === '') {
 	      errorMsg.innerHTML = "Por favor, completa todos los campos.";
 	      return false; 
 	    }
+	    if (stock <= 0) {
+		      errorMsg.innerHTML = "El stock debe ser mayor a 0";
+		      return false; 
+		    }
 	
 	    return true;
   }

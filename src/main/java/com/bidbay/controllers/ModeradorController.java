@@ -1,5 +1,9 @@
 package com.bidbay.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,12 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.bidbay.excepciones.ArchivoException;
 import com.bidbay.models.dao.IReviewDao;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
@@ -25,6 +35,7 @@ import com.bidbay.service.UsuarioServiceImpl;
 
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/moderador")
@@ -196,6 +207,41 @@ public class ModeradorController {
 			reviewDao.deleteById(id);
 		}
 		return "redirect:/moderador/review";
+	}
+	
+	@PostMapping("producto/guardar")
+	public String guardar(@Valid @ModelAttribute Producto producto, BindingResult result, Model model,
+			@RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
+		if (result.hasErrors()) {
+			model.addAttribute("titulo", "Formulario de Producto");
+			return "views/productoForm";
+		}
+
+		if (imagen.isEmpty()) {
+	        producto.setImagen("imagen-placeholder.jpg");
+	    } else {
+			Path directorioImagenes = Paths.get("src//main//resources//static//imagenes");
+			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+			try {
+				byte[] bytesImg = imagen.getBytes();
+				Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+				Files.write(rutaCompleta, bytesImg);
+				producto.setImagen(imagen.getOriginalFilename());
+
+			} catch (IOException e) {
+				throw new ArchivoException("Error al escribir archivo", e);
+			}
+		}
+		productoService.save(producto);
+		return "redirect:/moderador/productos";
+	}
+	
+	@RequestMapping(value = "producto/delete/{id}")
+	public String eliminar(@PathVariable(value = "id") Long id) {
+		if (id > 0) {
+			productoService.delete(id);
+		}
+		return "redirect:/moderador/productos";
 	}
 
 }

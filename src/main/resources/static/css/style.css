@@ -40,6 +40,10 @@ body {
   background-color: #212529;
 }
 
+.header-color{
+	background-color: #212529;
+}
+
 .header-col {
   display: flex;
   justify-content: center;

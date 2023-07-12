@@ -18,8 +18,11 @@ where c.id_pago is not null;
 insert into modalidad (nombre) values ('Venta');
 insert into modalidad (nombre) values ('Subasta');
 
-INSERT INTO categorias (nombre) values('accesorios'),('ropa de verano'),('ropa de invierno'),('pantalones'),('zapatilla');
+INSERT INTO categorias (nombre) values('Accesorios'),('Ropa de verano'),('Ropa de invierno'),('Pantalones'),('Calzado');
+insert into modalidad (nombre) values ('Venta');
+insert into modalidad (nombre) values ('Subasta');
 
+insert into usuarios(apellido, nombre, direccion, nick, password, rating, rol, telefono, mail) values ('Moderador', 'Moderador', 'Calle Falsa 123', 'Moderador', 123,0.0, 1, '123456789', 'algo@mail.com');
 INSERT INTO productos (descripcion, imagen, nombre, precio, stock, categoria_id, usuario_id)
 VALUES
     ('Camiseta de algodón', 'negro.jpg', 'Camiseta Azul', 19.99, 10, 2, 1),

@@ -3,58 +3,65 @@
 
 <head th:replace="views/layouts/plantilla.html :: head"></head>
 <script src="https://cdn.tailwindcss.com"></script>
-	<body onload="cargaFormulario();">
+	<body onload="cargaFormulario();" class="header-color h-full w-full flex justify-center mt-10">
 
-	<header th:replace="views/layouts/plantilla.html :: header"></header>
+	<main class=" flex flex-col w-full h-full text-center justify-center items-center justify-items-center">
+	<div class="flex flex-row justify-center justify-items-center items-center">
+	<div class="w-[20%]">
+		<img src="../../../img/BidBay-Logo-New.png" alt="LOGO" class="">
+		</div>
+	</div>
+	<div class="flex flex-col text-center gap-2">
+		<h1 th:text="${titulo}" class="text-3xl text-white font-semibold"></h1>
+    	<h2 id="errorMsg" th:text="${error}" class="text-white text-mb mt-2"></h2>
+    </div>
+    <form id="registroForm" th:action="@{/usuario/guardar}" th:object="${usuario}" method="post" onsubmit="return validarFormulario();" class="formulario w-[750px] m-4 gap-2 sombra-2">    
 
-	<main class="flex justify-center items-center flex-col">
-		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-    	<h2 id="errorMsg" th:text="${error}"></h2> <br>
-    
-    <form id="registroForm" th:action="@{/usuario/guardar}" th:object="${usuario}" method="post" onsubmit="return validarFormulario();" class="formulario mb-5 sombra-2">    
-  
-        <table class="p-5 m-auto">
-            <tr>
-                <td>Usuario:</td>
-                <td><input type="text" name="nick" th:field="*{nick}"  /></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input type="password" name="password" th:field="*{password}"  /></td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td><input type="text" name="email" th:field="*{email}" /></td>
-            </tr>
-            <tr>
-                <td>Nombre:</td>
-                <td><input type="text" name="nombre" th:field="*{nombre}"  /></td>
-            </tr>
-            <tr>
-                <td>Apellido:</td>
-                <td><input type="text" name="apellido" th:field="*{apellido}" /></td>
-            </tr>
-            <tr>
-                <td>Direccion:</td>
-                <td><input type="text" name="direccion" th:field="*{direccion}"  /></td>
-            </tr>
+        <div class="w-full flex flex-col gap-2">
+            <div class="formulario-div">
+                <label for="nick">Usuario:</label>
+                <input type="text" name="nick" th:field="*{nick}"/>
+            </div>
+            <div class="formulario-div">
+                <label for="password">Password:</label>
+                <input type="password" name="password" th:field="*{password}"/>
+            </div>
+            <div class="formulario-div">
+                <label for="email">Email:</label>
+                <input type="text" name="email" th:field="*{email}"/>
+            </div>
+            <div class="formulario-div">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" th:field="*{nombre}"/>
+            </div>
+            <div class="formulario-div">
+                <label for="apellido">Apellido:</label>
+                <input type="text" name="apellido" th:field="*{apellido}"/>
+            </div>
+            <div class="formulario-div">
+                <label for="direccion">Direccion:</label>
+                <input type="text" name="direccion" th:field="*{direccion}"/>
+            </div>
         
-            <tr>
-                <td>Telefono:</td>
-                <td><input type="text" name="telefono" th:field="*{telefono}" /></td>
-            </tr>
-        </table>
+            <div class="formulario-div">
+                <label for="telefono">Telefono:</label>
+                <input type="text" name="telefono" th:field="*{telefono}"/>
+            </div>
+            <div class="mt-3">
+	            <input type="submit" th:value="${botonSubmit}" class="bg-blue-500 hover:bg-blue-700 p-2 text-white font-bold rounded w-100 boton-submit" />
+	        	<input type="hidden" name="id" th:field="*{id}" />
+            
+            </div>
+        </div>
         
-           
-        <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
-        <input type="hidden" name="id" th:field="*{id}" />
+         
+        
     </form>
      </main>  
      
-  	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+  	
 	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
-</html>
 <script type="text/javascript">
 	 function  validarFormulario(){
 		 var form = document.forms.namedItem('registroForm');
@@ -102,3 +109,4 @@
     return true;
 }
 </script>
+</html>

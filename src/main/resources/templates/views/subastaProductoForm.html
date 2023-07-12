@@ -35,7 +35,7 @@
                 	<label for="modalidad">Modalidad:</td>
                 	<select  id="modalidad" th:field="*{modalidad.id}" class="select-css">
                     		<option value="" >Seleccione una opción</option>
-                    		<option th:each="modalidad : ${modalidades}" th:value="${modalidad.id}" th:text="${modalidad.nombre}"></option>
+                    		<option th:each="modalidad : ${modalidades[1]}" th:value="${modalidad.id}" th:text="${modalidad.nombre}"></option>
                 	</select>
             	</div>
             <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />

@@ -4,10 +4,10 @@
 <head th:replace="views/layouts/plantilla.html :: head"></head>
 <body>
 <header th:replace="views/layouts/plantilla.html :: header"></header>
-	<main th:each="subasta: ${subastas}">
+	<main th:each="subasta: ${subastas}" class="m-5">
 	<div th:each="producto: ${subasta.producto}"  class="w-[50%] flex flex-row justify-center items-center content-center text-center bg-sky-100 m-auto shadow">
 		<div
-			class="flex justify-center items-center inline-flex p-2">
+			class="flex justify-center items-center inline-flex p-2 m-5">
 			<div class="m-auto w-[300px] h-[400px]">
 				<a th:href="@{/subasta/details/{id}(id=${subasta.id})}">
 								<img th:src="@{'/imagenes/'+${producto.imagen}}"

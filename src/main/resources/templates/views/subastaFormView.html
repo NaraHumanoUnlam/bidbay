@@ -14,8 +14,7 @@
 			method="POST" class="shadow bg-white m-auto w-[50%] p-5 font-bold text-xl"
 			enctype="multipart/form-data">
 			<div>
-				<label for="fecha" class="block text-[1.3rem] mb-[5px] ">Fecha:</label> <input type="date" id="fecha"
-					th:field="*{fechaLimite}"  class="h-[45px]"/>
+				<label for="fecha" class="block text-[1.3rem] mb-[5px] ">Fecha fin de la subasta::</label> <input type="date" id="fecha" th:field="*{fechaLimite}" class="h-[45px]"/>
 			</div>
 			<div>
 				<label for="hora">Hora:</label> <input type="time" id="hora"
@@ -34,7 +33,15 @@
 	</main>
 
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
+<script type="text/javascript">
+var fechaActual = new Date().toISOString().split("T")[0];
 
+// Obtener el elemento del campo de fecha
+var campoFecha = document.getElementById("fecha");
+
+// Establecer el atributo 'min' al valor de la fecha actual
+	campoFecha.setAttribute("min", fechaActual);
+</script>
 </body>
 
 </html>

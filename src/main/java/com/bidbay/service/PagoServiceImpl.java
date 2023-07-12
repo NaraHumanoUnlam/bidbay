@@ -167,7 +167,6 @@ public class PagoServiceImpl implements IPagoService {
 					validacion++;
 					pagoAGenerar.setMensaje("validaciones exitosas, su pago fue aprobado! ");
 					pagoAGenerar.setAprobado(true);
-					System.out.println(pagoAGenerar.getAprobado());
 
 					String primerosCuatroDigitos = pagoAGenerar.getNumeroTarjeta().substring(0, 4);
 					if (primerosCuatroDigitos.equals("4517")) {

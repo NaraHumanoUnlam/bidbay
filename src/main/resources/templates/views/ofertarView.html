@@ -7,7 +7,7 @@
 
     <header th:replace="views/layouts/plantilla.html :: header"></header>
 
-    <main class="mb-5">
+    <main class="mb-5 flex flex-col justify-center items-center content-center text-center">
         <h1 th:text="${titulo}" class="h1 text-4xl mb-5 text-center"></h1>
 
         <form th:action="@{'/subasta/ofertar/'+${subasta.id}}" th:object="${ofertante}" method="POST" class="formulario mb-5 sombra-2"
@@ -17,13 +17,13 @@
             </div>
             <div class="formulario-div">
                 <label for="oferta">Oferta:</label>
-                <input type="text" id="oferta" th:field="*{oferta}" class="h-[25px] p-2">
+                <input type="number" id="oferta" th:field="*{oferta}" class="h-[30px] w-[200px] border-lime-700 border-e border p-2" min="0">
             </div>
             <div class="formulario-div">
                 <input type="hidden" id="usuario"th:field="*{usuario}" />
             </div>
             
-            <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
+            <input type="submit" th:value="${botonSubmit}" class="mt-4 bg-yellow-500 hover:bg-yellow-200 p-2 px-10 text-white font-bold text-center rounded" />
         </form>
         <!-- esto lo agregue para que se pueda scrolear para abajo :) -->
         <div class="h-28 w-full"></div>
@@ -31,7 +31,7 @@
 
     <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 
-
+<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
 
 </html>

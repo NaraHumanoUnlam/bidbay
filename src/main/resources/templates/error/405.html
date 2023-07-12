@@ -2,15 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Error 500</title>
+<title>Error 405</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="../../css/error.css">
 </head>
 
 <body>
 <main class="error">
-  <div class="h-full flex flex-col gap-2 justify-center items-center">
-		<h1 class=""> Error 500 </h1>
+	<div class="h-full flex flex-col gap-2 justify-center items-center">
+		<h1 class=""> Error 405 </h1>
   		<p class="m-5" th:text="${error}"></p>
   		<a th:href="@{/home}" class="bg-sky-500 p-5 rounded-xl m-5 text-center hover:bg-sky-700 text-white">Volver al home</a>
 	</div>

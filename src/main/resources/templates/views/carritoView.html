@@ -9,51 +9,42 @@
 	<aside th:replace="views/layouts/plantilla.html :: aside"></aside>
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
-			<thead>
-				<tr>
-					<th>Producto</th>
-					<th>Stock</th>
-					<th>Precio</th>
-					<th>Cantidad</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="carritoItem: ${carrito?.getCarritoItems()}" th:if="${carrito?.getCarritoItems()}">
-					<td th:text="${carritoItem.getProducto().getNombre()}"></td>
-					<td th:text="${carritoItem.getStock()}"></td>
-					<td th:text="${carritoItem.getProducto().getPrecio()}"></td>
-					<td>
+		<div id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-4 rounded w-9/12 mb-10">
+			<div class="grid grid-cols-6 gap-2 p-2 rounded text-white font-semibold text-xlg bg-gray-500">
+				<p>Producto</p>
+				<p>Stock</p>
+				<p>Precio</p>
+				<p>Cantidad</p>
+				<p></p>
+				<p></p>
+			</div>
+			<div class="p-2 ">
+				<div class="grid grid-cols-6 gap-2" th:each="carritoItem: ${carrito?.getCarritoItems()}" th:if="${carrito?.getCarritoItems()}">
+					<p th:text="${carritoItem.getProducto().getNombre()}"></p>
+					<p th:text="${carritoItem.getStock()}"></p>
+					<p th:text="${carritoItem.getProducto().getPrecio()}"></p>
+					<div class="col-span-1">
 						<form th:action="@{/carrito/editar/{id}(id=${carritoItem.getIdItem()})}" method="post">
 							<input type="number" name="cantidadProductos" th:value="${carritoItem.getStock()}" min="1"
 								class="border border-gray-400 rounded py-2 px-3">
 							<button type="submit">Guardar</button>
 						</form>
-					</td>
-					<td>
+					</div>
+					<div class="col-span-1">
 						<form th:action="@{/carrito/eliminar/{id}(id=${carritoItem.getIdItem()})}" method="post">
 							<button type="submit">Eliminar</button>
 						</form>
-					</td>
-				</tr>
-				<tr th:unless="${carrito != null and not #lists.isEmpty(carrito.carritoItems)}">
-					<td colspan="5">No hay elementos en el carrito</td>
-				</tr>
-			</tbody>
-		</table>
-		<table>
-			<thead>
-				<tr>
-					<td>Precio total</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td id=precioTotalId th:text="${precioTotal}"></td>
-				
-				</tr>
-			</tbody>
-		</table>
+					</div>
+				</div>
+				<div class="flex justify-center items-center justify-center text-center" th:unless="${carrito != null and not #lists.isEmpty(carrito.carritoItems)}">
+					<p class="text-mb font-semibold">No hay elementos en el carrito</p>
+				</div>
+			</div>
+		</div>
+		<div class="flex flex-col gap-2 text-center items-center p-2">
+			<p class="font-semibold text-xl">Precio total</p>
+			<p id=precioTotalId th:text="${precioTotal}"></p>
+		</div>
 		<div th:if="${precioTotal != 0}">
 			<form th:action="@{/miscompras/agregar}" method="post">
 				<input type="submit" value="Generar orden de compra" class="text-black text-2xl bg-green-200 p-2 mt-10 "> 
@@ -71,5 +62,5 @@
 		form.submit();
 	}
 </script>
-
+<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 </html>

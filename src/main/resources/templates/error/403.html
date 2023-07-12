@@ -9,9 +9,11 @@
 
 <body>
 <main class="error">
-  <h1> Error 403</h1>
-  <p class="m-5" th:text="${error}"></p>
-  <a th:href="@{/home}" class="bg-sky-500 p-5 rounded-xl m-5 text-center hover:bg-sky-700">Home</a>
+	<div class="h-full flex flex-col gap-2 justify-center items-center">
+		<h1 class=""> Error 403 </h1>
+  		<p class="m-5" th:text="${error}"></p>
+  		<a th:href="@{/home}" class="bg-sky-500 p-5 rounded-xl m-5 text-center hover:bg-sky-700 text-white">Volver al home</a>
+	</div>
 </main>
 </body>
 </html>

@@ -5,7 +5,7 @@
 	padding:0;
 }
 .error {
-	color: #fff;
+	<!--color: #fff;-->
 	text-align: center;
 	font-size: 2rem;
 	background-image:url("../../img/Cat.jpg");

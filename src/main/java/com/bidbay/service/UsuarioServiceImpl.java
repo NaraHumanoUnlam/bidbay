@@ -1,5 +1,6 @@
 package com.bidbay.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.bidbay.models.entity.Usuario;
 
 import jakarta.servlet.http.HttpSession;
 
+import com.bidbay.excepciones.ArchivoException;
 import com.bidbay.models.dao.INotificacionDao;
 import com.bidbay.models.dao.IProductoDao;
 import com.bidbay.models.dao.IUsuarioDao;
@@ -47,8 +49,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		try {
 
 			notificacionDao.crearNotificacion("Bienvenida", mensaje,idUser, "");
-		}catch(Exception e) {
-			System.out.println("Error en inser a tabla: " + e);
+		 } catch (Exception e) {
+		      e.printStackTrace();
 		}
 	}
 	

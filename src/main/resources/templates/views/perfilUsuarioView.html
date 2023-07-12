@@ -71,6 +71,7 @@
                                     <div>
                                         <p th:text="${producto.nombre}"></p>
                                         <p th:text="'$' + ${producto.precio}"></p>
+                                        <p th:text="'Vendedor: ' +${producto.vendedor.nick}" th:if="${rol == 'Moderador'}"></p>
                                        
                                     </div>
                                 </div>
@@ -100,7 +101,9 @@
                                         th:alt="${ventas.imagenProducto}">
                                     <div>
                                         <p th:text="${ventas.descripcionProducto}"></p>
+                                        <p th:text="'Cantidad: ' +${ventas.cantidad}"></p>
                                         <p th:text="'$' + ${ventas.precioCompra}"></p>
+                                       
                                     </div>
                                 </div>
                             </a>
@@ -133,6 +136,7 @@
                                     <div>
                                         <p th:text="${favorito.producto.nombre}"></p>
                                         <p th:text="'$' + ${favorito.producto.precio}"></p>
+                                        <p th:text="'Usuario: ' +${favorito.usuario.nick}" th:if="${rol == 'Moderador'}"></p>
                                     </div>
                                 </div>
                             </a>
@@ -158,6 +162,7 @@
                                     th:alt="${compra.imagenProducto}">
                                     <div>
                                         <p th:text="${compra.descripcionProducto}"></p>
+                                        <p th:text="'Cantidad: ' +${compra.cantidad}"></p>
                                         <p th:text="'$' + ${compra.precioCompra}"></p>
                                     </div>
                                 </div>

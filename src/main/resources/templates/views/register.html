@@ -12,7 +12,7 @@
 		</div>
 	</div>
 	<div class="flex flex-col text-center gap-2">
-		<h1 th:text="${titulo}" class="text-3xl text-white font-bold"></h1>
+		<h1 th:text="${titulo}" class="text-3xl text-white font-semibold"></h1>
     	<h2 id="errorMsg" th:text="${error}" class="text-white text-mb mt-2"></h2>
     </div>
     <form id="registroForm" th:action="@{/usuario/guardar}" th:object="${usuario}" method="post" onsubmit="return validarFormulario();" class="formulario w-[750px] m-4 gap-2 sombra-2">    
@@ -20,32 +20,32 @@
         <div class="w-full flex flex-col gap-2">
             <div class="formulario-div">
                 <label for="nick">Usuario:</label>
-                <input type="text" name="nick" th:field="*{nick}"  />
+                <input type="text" name="nick" th:field="*{nick}"/>
             </div>
             <div class="formulario-div">
                 <label for="password">Password:</label>
-                <input type="password" name="password" th:field="*{password}"  />
+                <input type="password" name="password" th:field="*{password}"/>
             </div>
             <div class="formulario-div">
                 <label for="email">Email:</label>
-                <input type="text" name="email" th:field="*{email}" />
+                <input type="text" name="email" th:field="*{email}"/>
             </div>
             <div class="formulario-div">
                 <label for="nombre">Nombre:</label>
-                <input type="text" name="nombre" th:field="*{nombre}"  />
+                <input type="text" name="nombre" th:field="*{nombre}"/>
             </div>
             <div class="formulario-div">
                 <label for="apellido">Apellido:</label>
-                <input type="text" name="apellido" th:field="*{apellido}" />
+                <input type="text" name="apellido" th:field="*{apellido}"/>
             </div>
             <div class="formulario-div">
                 <label for="direccion">Direccion:</label>
-                <input type="text" name="direccion" th:field="*{direccion}"  />
+                <input type="text" name="direccion" th:field="*{direccion}"/>
             </div>
         
             <div class="formulario-div">
                 <label for="telefono">Telefono:</label>
-                <input type="text" name="telefono" th:field="*{telefono}" />
+                <input type="text" name="telefono" th:field="*{telefono}"/>
             </div>
             <div class="mt-3">
 	            <input type="submit" th:value="${botonSubmit}" class="bg-blue-500 hover:bg-blue-700 p-2 text-white font-bold rounded w-100 boton-submit" />

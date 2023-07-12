@@ -18,7 +18,7 @@ public class CarritoItem implements Serializable{
 	
 	
 	@NotNull
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToOne
 	@JoinColumn(name = "productos", referencedColumnName = "id")
 	private Producto producto;
 	

@@ -18,10 +18,10 @@ public interface ICarritoItemDao extends CrudRepository<CarritoItem, Long> {
     @Query(value = "SELECT * FROM carrito_item WHERE carrito_id = ?1", nativeQuery = true)
     public List<CarritoItem> findCarritoItemsFromCarrito(Long id_carrito);
     
-    @Modifying
+    /*@Modifying
     @Transactional
     @Query(value = "DELETE FROM carrito_item WHERE productos = ?1", nativeQuery = true)
-	public void deleteByProductoId(Long id);
+	public void deleteByProductoId(Long id);*/
 
 
 

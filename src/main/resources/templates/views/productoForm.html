@@ -8,58 +8,46 @@
 	<header th:replace="views/layouts/plantilla.html :: header"></header>
 
 	<main class="flex justify-center items-center flex-col">
-		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
+		<h1 th:text="${titulo}" class="text-3xl mb-10 font-semibold"></h1>
 
         <form th:action="@{( ${rol} == 'Moderador' ? '/moderador/producto/guardar' : '/producto/guardar' )}" th:object="${producto}" method="POST" class="formulario mb-5 sombra-2"
             enctype="multipart/form-data">
-             <table class="p-4 m-auto">
-            	<tr>
-                	<td>Producto:</td>
-                	<td><input type="text" id="nombre" th:field="*{nombre}" /></td>
-            	</tr>
-            	<tr>
-                	<td>Descripción:</td>
-                	<td><textarea id="descripcion" th:field="*{descripcion}"></textarea></td>
-            	</tr>
-            	<tr>
-                	<td>Precio:</td>
-                	<td> <input type="text" id="precio" th:field="*{precio}" /></td>
-            	</tr>
-            	<tr>
-                	<td>Stock:</td>
-                	<td><input type="text" id="stock" th:field="*{stock}" /></td>
-            	</tr>
-            	<tr>
-                	<td>Imagen:</td>
-                	<td><input type="file" id="imagen" name="file" /></td>
-            	</tr>
-            	<tr>
-                	<td>Categoria:</td>
-                	<td><select id="categoria" th:field="*{categoria.id}" class="select-css">
+             <div class="p-4 m-auto text-center">
+            	<div class="formulario-div">
+                	<label for="nombre">Producto</label>
+                	<input type="text" id="nombre" th:field="*{nombre}" />
+            	</div>
+            	<div class="formulario-div">
+                	<label for="descripcion">Descripción</label>
+                	<textarea id="descripcion" th:field="*{descripcion}"></textarea>
+            	</div>
+            	<div class="formulario-div">
+                	<label for="precio">Precio</label>
+                	<input type="text" id="precio" th:field="*{precio}" />
+            	</div>
+            	<div class="formulario-div">
+                	<label for="stock">Stock</label>
+                	<input type="text" id="stock" th:field="*{stock}" />
+            	</div>
+            	<div class="formulario-div">
+                	<label for="imagen">Imagen</label>
+                	<input type="file" id="imagen" name="file" />
+            	</div>
+            	<div class="formulario-div">
+                	<label for="categoria">Categoria</label>
+                	<select id="categoria" th:field="*{categoria.id}" class="select-css">
                     		<option value="" >Seleccione una opción</option>
                     		<option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nombre}"></option>
-                		</select>
-                	</td>
-            	</tr>
-            	<tr>
-                	<td>Modalidad:</td>
-                	<td><select id="modalida" th:field="*{modalidad.id}" class="select-css">
+                	</select>
+            	</div>
+            	<div class="formulario-div">
+                	<label for="modalidad">Modalidad</label>
+                	<select id="modalida" th:field="*{modalidad.id}" class="select-css">
                     		<option value="" >Seleccione una opción</option>
                     		<option th:each="modalidad : ${modalidades}" th:value="${modalidad.id}" th:text="${modalidad.nombre}"></option>
-                		</select>
-                	</td>
-            	</tr>
-             </table>
-    
-          
-           
-<!--             <div class="formulario-div"> -->
-<!--                 <label for="intercambio">Seleccione una Intercambio:</label> -->
-<!--                 <select id="intercambio" th:field="*{intercambio.id}" class="select-css"> -->
-<!--                     <option value="" >Seleccione una opción</option> -->
-<!--                     <option th:each="intercambio : ${intercambios}" th:value="${intercambio.id}" th:text="${intercambio.nombre}"></option> -->
-<!--                 </select> -->
-<!--             </div> -->
+                	</select>
+            	</div>
+             </div>
             <input type="submit" th:value="${botonSubmit}" class="btn bg-warning btn-warning btn-sombra mt-4 w-100 boton-submit" />
             <input type="hidden" th:field="*{id}" />
         </form>

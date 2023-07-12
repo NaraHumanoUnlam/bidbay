@@ -66,6 +66,14 @@ public class ProductoServiceImpl implements IProductoService {
     	
     	productoDao.deleteById(id);
     }
+    
+    @Override
+    @Transactional
+    public void deleteFromView(Long id) {
+    	//carritoItemDao.deleteByProductoId(id);
+    	
+    	productoDao.deleteFromView(id);
+    }
 
     @Override
     @Transactional(readOnly = true)

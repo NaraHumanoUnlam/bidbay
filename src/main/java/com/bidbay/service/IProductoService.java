@@ -37,5 +37,6 @@ public interface IProductoService {
 	void descontarStock(Integer cantidad, Long id);
 	public void restituirStock(Integer i, Long id);
 	public List<Producto> obtenerPorModalidad(Long i);
+	void deleteFromView(Long id);
 	
 }

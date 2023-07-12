@@ -92,7 +92,6 @@ public class PagoServiceImpl implements IPagoService {
 			generarTicket(pagoARealizar, compraAPagar, idUsuario);
 			
 
-			descontarStockProductos(compraAPagar);
 
 			notificacionDao.crearNotificacion("Transaccion", pagoARealizar.getMensaje(), idUsuario,"");
 
@@ -194,26 +193,7 @@ public class PagoServiceImpl implements IPagoService {
 		}
 	}
 
-	private void descontarStockProductos(Compras compraAPagar) {
-		List<DetalleCompras>variable = compraAPagar.getDetalles();
-		for (DetalleCompras detalleCompras : variable) {
-			for (int i = 0; i < detalleCompras.getCantidad(); i++) {
-				productoServicio.descontarStock(1, detalleCompras.getProducto().getId());
-			}
-		}
-	}
 	
-
-	private Boolean validarStock (Compras compraAPagar) {
-		Boolean validacionDeStock=false; 
-		List<DetalleCompras>variable = compraAPagar.getDetalles();
-		for (DetalleCompras detalleCompras : variable) {
-			
-			validacionDeStock = productoServicio.validarStock(detalleCompras.getProducto().getId(), detalleCompras.getCantidad());
-		}
-		
-		return validacionDeStock; 
-	}
 	
 
 	@Override

@@ -155,7 +155,7 @@ public class SubastaController {
 		}
 	
 	@RequestMapping(value = "/crear/producto/{idSubasta}", method = RequestMethod.POST)
-	public String guardarProdcuto(@Valid @ModelAttribute Producto producto, BindingResult result,@PathVariable(value = "idSubasta") Long idSubasta, Model model,
+	public String guardarProdcuto(@Valid @ModelAttribute Producto producto, BindingResult result,@PathVariable(value = "idSubasta") Long idSubasta, HttpSession session, Model model,
 			@RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
 		if (!imagen.isEmpty()) {
 			Path directorioImagenes = Paths.get("src//main//resources//static//imagenes");
@@ -170,9 +170,10 @@ public class SubastaController {
 				throw new ArchivoException("Error al escribir archivo", e);
 			}
 		}
-		System.out.println("id producto: " + producto.getId());
+		Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 		producto.setPrecio(subastaServ.obtenerSubasta(idSubasta).getPrecioInicial());
 		producto.setStock(1);
+		producto.setVendedor(user);
 		productoService.save(producto);
 		Subasta miSubastaGuardada = subastaServ.findById(idSubasta);
 		miSubastaGuardada.setProducto(producto);
@@ -210,6 +211,7 @@ public class SubastaController {
 		Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 		Ofertante ofertante = new Ofertante();
 		ofertante.setUsuario(user);
+		System.out.println(ofertante.getUsuario().getId() + " " + miSubasta.getSubastador().getId() );
 		model.addAttribute("ofertante", ofertante );
 		model.addAttribute("producto",product);
 		model.addAttribute("subasta",miSubasta);

@@ -18,7 +18,7 @@ public class MercadoPago {
 		    PaymentCreateRequest createRequest =
 		        PaymentCreateRequest.builder()
 		            .transactionAmount(new BigDecimal(1000))
-		            .token("your_cardtoken")
+		            .token("9b2d63e00d66a8c721607214ceda233a")
 		            .description("description")
 		            .installments(1)
 		            .paymentMethodId("visa")

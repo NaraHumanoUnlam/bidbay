@@ -10,7 +10,6 @@
 <main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
 		<form th:action="@{/producto/listar}" th:if="${rol != 'Moderador'}">
-			
 				<input name="search" type="text" placeholder="Buscar">
 				<input type="submit" value="Buscar" class="btn btn-secondary text-light">
 		</form>

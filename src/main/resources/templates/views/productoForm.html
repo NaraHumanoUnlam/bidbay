@@ -9,9 +9,11 @@
 
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10 font-semibold"></h1>
-
+		<h2 id="errorMsg" class="text-lg p-2"></h2>
+		
         <form th:action="@{( ${rol} == 'Moderador' ? '/moderador/producto/guardar' : '/producto/guardar' )}" th:object="${producto}" method="POST" class="formulario mb-5 sombra-2"
-            enctype="multipart/form-data">
+            enctype="multipart/form-data"
+            onSubmit="return validarFormulario()">
              <div class="p-4 m-auto text-center">
             	<div class="formulario-div">
                 	<label for="nombre">Producto</label>
@@ -32,6 +34,7 @@
             	<div class="formulario-div">
                 	<label for="imagen">Imagen</label>
                 	<input type="file" id="imagen" name="file" />
+                	<p class="text-sm text-blue">*La imagen no es obligatoria</p>
             	</div>
             	<div class="formulario-div">
                 	<label for="categoria">Categoria</label>
@@ -57,5 +60,25 @@
   	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
+<script>
+  function validarFormulario() {
+	  	
+	    var nombre = document.getElementById('nombre').value;
+	    var descripcion = document.getElementById('descripcion').value;
+	    var precio = document.getElementById('precio').value;
+	    var stock = document.getElementById('stock').value;
+	    var imagen = document.getElementById('imagen').value;
+	    var categoria = document.getElementById('categoria').value;
+	    var modalidad = document.getElementById('modalida').value;
+	    var errorMsg = document.getElementById('errorMsg');
+	
+	    if (nombre === '' || descripcion === '' || precio === '' || stock === '' || imagen === '' || categoria === '' || modalidad === '') {
+	      errorMsg.innerHTML = "Por favor, completa todos los campos.";
+	      return false; 
+	    }
+	
+	    return true;
+  }
+</script>
 
 </html>

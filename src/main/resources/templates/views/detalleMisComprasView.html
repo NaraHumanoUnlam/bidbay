@@ -9,28 +9,26 @@
 
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
-			<thead>
-				<tr>
-					<th >Compra</th>
-					<th >Producto</th>
-					<th >Cantidad</th>
-					<th >Precio Unitario</th>
-					<th >Total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:if="${detalles != null}" th:each="detalle: ${detalles}">
-					<td th:text="${detalle.compra.id}"></td>
-					<td th:text="${detalle.producto.nombre}"></td>
-					<td th:text="${detalle.cantidad}"></td>
-					<td th:text="${detalle.precioUnitario}"></td>
-					<td th:text="${detalle.precioCompra}"></td>
-				</tr>
-			</tbody>
-		</table>
+		<div id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-4 rounded w-9/12 mb-10">
+			<div class="grid grid-cols-5 gap-2 p-2 rounded text-white font-semibold text-xlg bg-gray-500">
+					<p>Compra</p>
+					<p>Producto</p>
+					<p>Cantidad</p>
+					<p>Precio Unitario</p>
+					<p>Total</p>
+			</div>
+			<div class="p-2 ">
+				<div class="grid grid-cols-5 gap-2 items-center" th:if="${detalles != null}" th:each="detalle: ${detalles}">
+					<p th:text="${detalle.compra.id}"></p>
+					<p th:text="${detalle.producto.nombre}"></p>
+					<p th:text="${detalle.cantidad}"></p> 
+					<p th:text="${detalle.precioUnitario}"></p>
+					<p th:text="${detalle.precioCompra}"></p>
+				</div>
+			</div>
+		</div>
 		<p th:text="${mensaje}" th:if="${mensaje}"></p>
-		<a href="#" onClick="goBack()">Volver</a>
+		<a class="bg-blue-500 hover:bg-blue-700 m-2 text-white p-2" href="#" onClick="goBack()">Volver</a>
 </body>
 <footer th:replace="views/layouts/plantilla.html :: footer"></footer>
 <script th:replace="views/layouts/plantilla.html :: script"></script>

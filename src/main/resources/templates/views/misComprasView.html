@@ -9,35 +9,34 @@
 
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
-			<thead>
-				<tr>
-					<th>Compra</th>
-					<th>Pago</th>
-					<th>Monto</th>
-					<th>Fecha de pago</th>
-					<th></th>
-					<th th:if="${rol != 'Moderador'}"></th>
-					<th th:if="${rol != 'Moderador'}"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:if="${compras != null}" th:each="compra: ${compras}">
-					<td th:text="${compra.id}"></td>
-					<td th:text="${compra.IdPago != null ? compra.IdPago : 'Pendiente'}"></td>
-					<td th:text="${compra.monto}"></td>
-					<td th:text="${compra.fecha} ?: 'Pendiente de pago'"></td>
-					
-					<td class="btn btn-secondary text-light" th:if="${rol == 'Moderador'}"><a th:href="@{/moderador/detalle/} + ${compra.id}">View</a></td>
-					<td class="btn btn-secondary text-light" th:if="${rol != 'Moderador'}"><a th:href="@{/miscompras/detalle/} + ${compra.id}">View</a></td>
-					<td th:if="${rol != 'Moderador'}"><a th:if="${compra.idPago == null}" th:href="@{/pago/form/} + ${compra.id} + '/' + ${compra.monto}">Pagar</a></td>
-					<td th:if="${rol != 'Moderador'}">
-						<form th:if="${compra.idPago == null}" th:action="@{/miscompras/eliminar/} + ${compra.id}" method="post" class="d-inline">
-	                    <button type="submit" class="btn btn-danger bg-red-500">Eliminar</button>
-	                	</form></td>
-				</tr>
-			</tbody>
-		</table>
+		
+		<div id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-4 rounded w-9/12 mb-10">
+			<div class="grid grid-cols-7 gap-2 p-2 rounded text-white font-semibold text-xlg bg-gray-500">
+				<p>Compra</p>
+				<p>Pago</p>
+				<p>Monto</p>
+				<p>Fecha de pago</p>
+				<p></p>
+				<p th:if="${rol != 'Moderador'}"></p>
+				<p th:if="${rol != 'Moderador'}"></p>
+			</div>
+			<div class="p-2 ">
+				<div class="grid grid-cols-7 gap-2 items-center justify-center text-center mb-4" th:if="${compras != null}" th:each="compra: ${compras}">					
+					<p th:text="${compra.id}"></p>
+					<p th:text="${compra.IdPago != null ? compra.IdPago : 'Pendiente'}"></p>
+					<p th:text="${compra.monto}"></p>
+					<p th:text="${compra.fecha} ?: 'Pendiente de pago'"></p>
+					<a class="bg-gray-500 hover:bg-blue-700 m-2 text-white" th:href="@{/moderador/detalle/} + ${compra.id}" th:if="${rol == 'Moderador'}">View</a>
+					<p th:if="${rol != 'Moderador'}"><a class="bg-gray-500 hover:bg-blue-700 m-2 text-white p-2" th:href="@{/miscompras/detalle/} + ${compra.id}">View</a></p>
+					<p th:if="${rol != 'Moderador'}"><a class="bg-blue-500 hover:bg-blue-700 m-2 text-white p-2" th:if="${compra.idPago == null}" th:href="@{/pago/form/} + ${compra.id} + '/' + ${compra.monto}">Pagar</a></p>
+					<div class="col-span-1" th:if="${rol != 'Moderador'}">
+						<form th:if="${compra.idPago == null}" th:action="@{/miscompras/eliminar/} + ${compra.id}" method="post">
+	                    <button type="submit" class="bg-red-500 hover:bg-blue-700 m-2 text-white p-2">Eliminar</button>
+	                	</form>
+	                </div>
+				</div>
+			</div>
+		</div>
 		<div th:if="${rol != 'Moderador'}">
 			<p  th:text="${mensaje}" th:if="${mensaje}"></p>
 		</div>

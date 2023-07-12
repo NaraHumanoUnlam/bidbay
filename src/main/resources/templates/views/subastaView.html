@@ -4,6 +4,10 @@
 <head th:replace="views/layouts/plantilla.html :: head"></head>
 <body>
 <header th:replace="views/layouts/plantilla.html :: header"></header>
+	<aside class="flex flex-row justify-center items-center">
+		<div>
+			<a th:href="@{/subasta/crear}" class="bg-gray-100 text-md mr-2 text-uppercase text-black hover:border-black hover:border p-2 rounded m-5" >Nueva Subasta</a></div>
+	</aside>
 	<main th:each="subasta: ${subastas}" class="m-5">
 	<div th:each="producto: ${subasta.producto}"  class="w-[50%] flex flex-row justify-center items-center content-center text-center bg-sky-100 m-auto shadow">
 		<div

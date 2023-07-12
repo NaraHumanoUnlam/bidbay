@@ -245,6 +245,11 @@ public class ProductoServiceImpl implements IProductoService {
 		return validacionDeStock;
 	}
 
+	@Override
+	public List<Producto> obtenerPorModalidad(Long i) {
+		return productoDao.obtenerPorModalidad(i);
+	}
+
 
 
 

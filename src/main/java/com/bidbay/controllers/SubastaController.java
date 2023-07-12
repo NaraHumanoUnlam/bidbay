@@ -63,7 +63,14 @@ public class SubastaController {
 
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public String listaSubastas(Model model) {
+	public String listaSubastas(HttpSession session, Model model) {
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+    		return "redirect:/login";
+    	}
+		
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
 		List<Subasta> subastas = subastaServ.findAll();
 		model.addAttribute("subastas", subastas);
 		return "views/subastaView";

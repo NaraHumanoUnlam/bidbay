@@ -22,7 +22,7 @@
 			</div>
 			<div>
 				<label for="precioInicial">Precio Inicial:</label> <input
-					type="number" id="precioInicial" th:field="*{precioInicial}" class="h-[35px]" required/>
+					type="number" id="precioInicial" th:field="*{precioInicial}" class="h-[35px]" min="0" required/>
 			</div>
 			<input id="btn-enviar-form" type="submit" th:value="${botonSubmit}"
 				class="bg-yellow-500 hover:bg-yellow-700 mt-4 w-100 p-2 text-xl fond-bold text-white rounded" required/>

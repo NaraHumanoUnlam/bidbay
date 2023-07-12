@@ -33,4 +33,8 @@ public interface IProductoDao extends CrudRepository<Producto, Long>{
 	
 	@Query(value = "select stock from productos where id=?", nativeQuery = true)
 	public Integer traerStockDisponible(Long idProducto);
+	
+	@Modifying
+	@Query(value = "Update productos set stock = 0 where id = ?", nativeQuery = true)
+	public void deleteFromView(Long id);
 }

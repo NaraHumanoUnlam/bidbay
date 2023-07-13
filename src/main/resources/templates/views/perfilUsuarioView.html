@@ -100,7 +100,7 @@
                                     <img th:src="@{'../imagenes/'+${ventas.imagenProducto}}"
                                         th:alt="${ventas.imagenProducto}">
                                     <div>
-                                        <p th:text="${ventas.descripcionProducto}"></p>
+                                        <p th:text="${ventas.nombreProducto}"></p>
                                         <p th:text="'Cantidad: ' +${ventas.cantidad}"></p>
                                         <p th:text="'$' + ${ventas.precioCompra}"></p>
                                        
@@ -161,7 +161,7 @@
                                     <img th:src="@{'../imagenes/'+${compra.imagenProducto}}"
                                     th:alt="${compra.imagenProducto}">
                                     <div>
-                                        <p th:text="${compra.descripcionProducto}"></p>
+                                        <p th:text="${compra.nombreProducto}"></p>
                                         <p th:text="'Cantidad: ' +${compra.cantidad}"></p>
                                         <p th:text="'$' + ${compra.precioCompra}"></p>
                                     </div>

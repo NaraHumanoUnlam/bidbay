@@ -88,7 +88,7 @@ public class CompraServiceImpl implements IComprasService{
 		
 		compras.setDetalles(detalles);
 		descontarStockProductos(compras);
-		compras.setMonto(montoTotal);
+		compras.setMonto(Math.round(montoTotal * 100.0) / 100.0 );
 		compraDao.save(compras);
 	}
 

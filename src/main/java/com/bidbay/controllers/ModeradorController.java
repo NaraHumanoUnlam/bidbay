@@ -217,9 +217,7 @@ public class ModeradorController {
 			return "views/productoForm";
 		}
 
-		if (imagen.isEmpty()) {
-	        producto.setImagen("imagen-placeholder.jpg");
-	    } else {
+		if (!imagen.isEmpty()){
 			Path directorioImagenes = Paths.get("src//main//resources//static//imagenes");
 			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
 			try {

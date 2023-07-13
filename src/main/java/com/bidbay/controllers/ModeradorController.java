@@ -209,7 +209,7 @@ public class ModeradorController {
 		return "redirect:/moderador/review";
 	}
 	
-	@PostMapping("producto/guardar")
+	@PostMapping("/producto/guardar")
 	public String guardar(@Valid @ModelAttribute Producto producto, BindingResult result, Model model,
 			@RequestParam(name = "file", required = false) MultipartFile imagen, RedirectAttributes attibute) {
 		if (result.hasErrors()) {

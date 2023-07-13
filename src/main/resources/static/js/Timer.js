@@ -3,23 +3,33 @@
  */
 
 
-function Timer(fecha, horaFin) {
+function Timer(fecha) {
 	let dias = 0;
 	
-	var partesHora = horaFin.split(":");
+	var fechaHora = new Date(fecha);
 	
+	var year = fechaHora.getFullYear();
+	var month = fechaHora.getMonth() + 1; // Los meses comienzan desde 0, por lo que se agrega 1
+	var day = fechaHora.getDate();
+	var hour = fechaHora.getHours();
+	var minute = fechaHora.getMinutes();
+	var second = fechaHora.getSeconds();
+	
+	console.log("Año: " + year);
+	console.log("Mes: " + month);
+	console.log("Día: " + day);
+	console.log("Hora: " + hour);
+	console.log("Minuto: " + minute);
+	console.log("Segundo: " + second);
 	let pantalla = document.getElementById('reloj');
 	let fechaActual = new Date();
-	var fechaInicio = fechaActual;
-	var fechaFin = fecha;
-	var diff = fechaInicio.getTime() - fechaFin.getTime();
-	dias = Math.round(diff/(1000*60*60*24*30),0) < 0 ? 0 : Math.round(diff/(1000*60*60*24*30),0);
-	var horasActuales = fechaActual.getHours() == 00? 24 :fechaActual.getHours() ;
-	var minutosActuales = fechaActual.getMinutes();
-	var segundosActuales = fechaActual.getSeconds();
-	let segundos=segundosActuales;
-	let horas=horasActuales - (partesHora[0]+24);
-	let minutos=minutosActuales - partesHora[1];
+	var diff = day - fechaActual.getDate();
+	diff < 0 ? 0 : diff;
+	console.log("diferencia: " + diff);
+	dias = diff;
+	var horas = hour -fechaActual.getHours();
+	let segundos=second - fechaActual.getSeconds();
+	let minutos=minute - fechaActual.getMinutes();
 	
 	
 	if (pantalla) {
@@ -39,8 +49,6 @@ function Timer(fecha, horaFin) {
 				
 			}
 			if (horas <= 0) {
-				dias < 0 ? 0 : dias--;
-				console.log("dias: " + dias);
 				horas=23;
 				minutos = 59;
 				segundos = 59;
@@ -52,15 +60,11 @@ function Timer(fecha, horaFin) {
 }
 
 window.addEventListener('load', () => {
-	var fechaHTML = document.getElementById('fecha'); // Aquí debes establecer la fecha objetivo
-	var hora = document.getElementById('hora'); // Aquí debes establecer la hora objetivo
-	
+	var fechaHTML = document.getElementById('fecha');  // Aquí debes establecer la hora objetivo
+	console.log("mi fecha: " + fechaHTML.innerText);
 	let fechaObjetivo = fechaHTML.innerText;
-	let horaObjetivo = hora.innerText;
-	var partesFecha = fechaObjetivo.split('-');
-	var fecha = new Date(partesFecha[0], partesFecha[1], partesFecha[2]);
 
-	Timer(fecha, horaObjetivo);
+	Timer(fechaObjetivo);
 })
 
 

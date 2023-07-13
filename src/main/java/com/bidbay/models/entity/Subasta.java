@@ -1,8 +1,7 @@
 package com.bidbay.models.entity;
 
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.relational.core.mapping.Embedded.Nullable;
@@ -38,8 +37,7 @@ public class Subasta {
     @Column(name = "precio_maximo")
     private Double maximo;
     
-    private String fechaLimite;
-    private String horaLimite;
+    private LocalDateTime fechaLimite;
 
 
 	public Subasta() {
@@ -106,24 +104,16 @@ public class Subasta {
 	}
 
 
-	public String getFechaLimite() {
+	public LocalDateTime getFechaLimite() {
 		return fechaLimite;
 	}
 
 
-	public void setFechaLimite(String fechaLimite) {
+	public void setFechaLimite(LocalDateTime fechaLimite) {
 		this.fechaLimite = fechaLimite;
 	}
 
 
-	public String getHoraLimite() {
-		return horaLimite;
-	}
-
-
-	public void setHoraLimite(String horaLimite) {
-		this.horaLimite = horaLimite;
-	}
     
     
 }

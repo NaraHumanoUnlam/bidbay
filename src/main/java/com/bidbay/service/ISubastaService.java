@@ -1,11 +1,9 @@
 package com.bidbay.service;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.bidbay.models.entity.Ofertante;
-import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Subasta;
 import com.bidbay.models.entity.Usuario;
 
@@ -19,7 +17,7 @@ public interface ISubastaService {
 
 	public void eliminarUna(Long id);
 
-	void crearSubasta(Long id,Double precio_inicial, String fechaSQLString, String string, Usuario usuario);
+	void crearSubasta(Long id,Double precio_inicial, LocalDateTime fechaSQLString, Usuario usuario);
 
 	public void agregarProducto(Long producto, Long id);
 

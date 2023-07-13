@@ -21,4 +21,7 @@ public interface ICompraDao extends CrudRepository<Compras, Long>{
 	
 	@Query(value = "select * from compras where id_usuario=?1 and id_pago is null", nativeQuery = true)
 	public List<Compras> comprasSinPagarDelusuario(Long id);
+	
+	@Query(value = "select * from compras where id_usuario=?1 and monto = ?", nativeQuery = true)
+	public Compras obtenerCompraDeUsuario(Long id, Double monto);
 }

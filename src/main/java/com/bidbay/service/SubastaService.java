@@ -1,7 +1,6 @@
 package com.bidbay.service;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.bidbay.models.dao.ISubastaDao;
 import com.bidbay.models.entity.Ofertante;
-import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Subasta;
 import com.bidbay.models.entity.Usuario;
 
@@ -39,8 +37,8 @@ public class SubastaService implements ISubastaService{
 	}
 
 	@Override
-	public void crearSubasta(Long id,Double precio_inicial,String fecha,String hora, Usuario usuario) {
-		subastaDao.crearSubasta(id,precio_inicial, fecha, hora, usuario,precio_inicial);
+	public void crearSubasta(Long id,Double precio_inicial,LocalDateTime fecha, Usuario usuario) {
+		subastaDao.crearSubasta(id,precio_inicial, fecha, usuario,precio_inicial);
 		
 	}
 

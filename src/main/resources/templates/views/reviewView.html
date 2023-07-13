@@ -19,7 +19,7 @@
 					<p> </p>
 			</div>
 			<div class="p-2 ">
-				<div class="grid grid-cols-6 gap-2 gap-y-3 items-center justify-center text-center" th:if="${review != null}" th:each="review: ${reviews}">
+				<div class="grid grid-cols-6 gap-2 gap-y-3 mb-3 items-center justify-center text-center" th:if="${review != null}" th:each="review: ${reviews}">
 					<p th:text="${review.fecha}"></p>
 					<p th:text="${review.usuario.nick}"></p>
 					<p th:text="${review.producto.nombre}"></p>

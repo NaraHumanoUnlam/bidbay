@@ -71,7 +71,7 @@
                                     <div>
                                         <p th:text="${producto.nombre}"></p>
                                         <p th:text="'$' + ${producto.precio}"></p>
-                                        <p th:text="'Vendedor: ' +${producto.vendedor.nick}" th:if="${rol == 'Moderador'}"></p>
+                                        <p th:text="'Vendedor: ' +${producto.vendedor != null ? producto.vendedor.nick : ''}" th:if="${rol == 'Moderador'}"></p>
                                        
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                                     <div>
                                         <p th:text="${favorito.producto.nombre}"></p>
                                         <p th:text="'$' + ${favorito.producto.precio}"></p>
-                                        <p th:text="'Usuario: ' +${favorito.usuario.nick}" th:if="${rol == 'Moderador'}"></p>
+                                        <p th:text="'Usuario: ' +${favorito.usuario != null ? favorito.usuario.nick : ''}" th:if="${rol == 'Moderador'}"></p>
                                     </div>
                                 </div>
                             </a>

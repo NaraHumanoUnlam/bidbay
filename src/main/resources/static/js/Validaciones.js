@@ -22,9 +22,7 @@
             console.log(idUsuario);
             if(idUsuario == null || idUsuario == undefined){
                 indicacionLogeo();
-            }
-            
-            if (idVendedor != idUsuario) {
+            } else if (idVendedor != idUsuario) {
                 window.location.href = "/carrito/form/" + compra;
             } else {
             Swal.fire({

@@ -22,8 +22,8 @@
 						
 						<p th:text="${ticket.fechaDePago}"></p>
 						<p th:text="${ticket.precio}"></p>
-						<a  class="bg-gray-500 hover:bg-blue-700 m-2 text-white p-2 rounded" th:if="${rol == 'Moderador'}" th:href="@{/moderador/ticketdet/} + ${ticket.idTicket}">View</a>
-						<a class="bg-gray-500 hover:bg-blue-700 m-2 text-white p-2 rounded" th:if="${rol != 'Moderador'}" th:href="@{/tickets/ticketdet/} + ${ticket.idTicket}">View</a>
+						<a  class="bg-gray-500 hover:bg-blue-700 m-2 text-white p-2 rounded" th:if="${rol == 'Moderador'}" th:href="@{/moderador/ticketdet/} + ${ticket.idTicket}">Mostrar</a>
+						<a class="bg-gray-500 hover:bg-blue-700 m-2 text-white p-2 rounded" th:if="${rol != 'Moderador'}" th:href="@{/tickets/ticketdet/} + ${ticket.idTicket}">Mostrar</a>
 					</div>
 			</div>
 		</div>

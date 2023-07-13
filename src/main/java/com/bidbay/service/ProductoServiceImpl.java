@@ -210,7 +210,7 @@ public class ProductoServiceImpl implements IProductoService {
 	
 	@Override
 	public List<OperacionCV> findAllComprasVentas() {
-		   return (List<OperacionCV>)operacionCVDao.findAll();
+		   return (List<OperacionCV>)operacionCVDao.detalleComprasVentas();
 	}
 	
 	@Override

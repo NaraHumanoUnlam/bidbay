@@ -23,15 +23,15 @@
 					<p th:text="${carritoItem.getProducto().getNombre()}"></p>
 					<p th:text="${carritoItem.getStock()}"></p>
 					<p th:text="${carritoItem.getProducto().getPrecio()}"></p>
-					<div class="col-span-1">
-						<form th:action="@{/carrito/editar/{id}(id=${carritoItem.getIdItem()})}" method="post" class="flex flex-row gap-5">
+					<div class="">
+						<form th:action="@{|/carrito/editar/${carritoItem.getIdItem()}|}" method="post" class="flex flex-row">
 							<input type="number" name="cantidadProductos" th:value="${carritoItem.getStock()}" min="1" 	class="border border-gray-400 rounded py-2 px-3">
-							<button class="bg-blue-500 hover:bg-blue-700 m-2 text-white p-2 rounded" type="submit">Guardar</button>
+							<button class="bg-blue-500 hover:bg-blue-700 m-2 text-white p-2 rounded cursor-pointer" type="submit">Guardar</button>
 						</form>
 					</div>
-					<div class="col-span-1">
+					<div class="">
 						<form th:action="@{/carrito/eliminar/{id}(id=${carritoItem.getIdItem()})}" method="post">
-							<button class="bg-red-500 hover:bg-blue-700 m-2 text-white p-2 rounded" type="submit">Eliminar</button>
+							<button class="bg-red-500 hover:bg-red-700 m-2 text-white p-2 rounded" type="submit">Eliminar</button>
 						</form>
 					</div>
 				</div>

@@ -112,28 +112,6 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return null;
 	}
 
-	/*@Override
-	public void puntuarVendedor(Long idUsuario, Double rating) {
-	    Usuario vendedor = usuarioDao.findById(idUsuario).orElse(null);
-	    if (vendedor != null) {
-	        if (rating < 0) {
-	            rating = 0.0;
-	        } else if (rating > 5) {
-	            rating = 5.0;
-	        }
-	        vendedor.setRating(rating);
-	        usuarioDao.save(vendedor);
-	    }
-	}
-
-	@Override
-	public double calcularPromedioRating(Long idUsuario) {
-		Usuario vendedor = usuarioDao.findById(idUsuario).orElse(null);
-		if (vendedor != null) {
-			return vendedor.getRating();
-		}
-		return 0.0;
-	}*/
 	
 	@Override
     public Boolean chequearQueElUsuarioEsteLogeado(HttpSession session) {

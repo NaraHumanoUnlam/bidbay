@@ -18,6 +18,7 @@ public class OperacionCV {
 	private Double precioCompra;
 	private Long producto;
 	private String descripcionProducto;
+	private String nombreProducto;
 	private String imagenProducto;
 	private Long usuarioVende;
 	public Long getCompra() {
@@ -43,6 +44,10 @@ public class OperacionCV {
 	}
 	public String getDescripcionProducto() {
 		return descripcionProducto;
+	}
+	
+	public String getNombreProducto() {
+		return nombreProducto;
 	}
 	public String getImagenProducto() {
 		return imagenProducto;

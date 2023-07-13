@@ -202,7 +202,7 @@ public class CarritoServiceImpl implements ICarritoService{
 
             precioTotal += precio * stock;
         }
-        return precioTotal;
+        return   Math.round(precioTotal * 100.0) / 100.0 ;
 	}
 
 

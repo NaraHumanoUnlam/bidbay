@@ -71,7 +71,7 @@ public class ComprasController {
 		model.addAttribute("titulo", "Listado de Compras");
 		model.addAttribute("compras", comprasService.comprasDelUsuario(usuario.getId()));
 		model.addAttribute("precioTotal", comprasService.calcularMontoTotalDeCompras(usuario.getId()));
-		return "views/misComprasView";
+		return "redirect:/miscompras/listar";
 	}
 	
 	@RequestMapping(value = "/agregar", method = RequestMethod.GET)

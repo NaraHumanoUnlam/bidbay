@@ -146,6 +146,7 @@ public class PagoServiceImpl implements IPagoService {
 			compraDao.save(compra);
 			
 		}
+		precioAcumulado=Math.round(precioAcumulado * 100.0) / 100.0 ;
 		generarTicketParaTodos(idPago, precioAcumulado,fecha, idUsuario);
 		
 		
@@ -201,7 +202,8 @@ public class PagoServiceImpl implements IPagoService {
 		
 		Ticket ticket = new Ticket(pagoARealizar, idUsuario, compraAPagar.getFecha(),compraAPagar.getMonto());
 		ticketDao.save(ticket);
-		pagoARealizar.setPrecio(compraAPagar.getMonto());
+		pagoARealizar.setPrecio(Math.round(compraAPagar.getMonto() * 100.0) / 100.0 );
+		
 		pagoARealizar.setTicket(ticket);
 		pagoDao.save(pagoARealizar);	
 	}
@@ -213,7 +215,7 @@ public class PagoServiceImpl implements IPagoService {
 		Ticket ticket = new Ticket(pagoARealizar, idUsuario, fecha ,monto);
 		ticketDao.save(ticket);
 		pagoARealizar.setTicket(ticket);
-		pagoARealizar.setPrecio(monto);
+		pagoARealizar.setPrecio(Math.round(monto * 100.0) / 100.0);
 		pagoDao.save(pagoARealizar);	
 	}
 

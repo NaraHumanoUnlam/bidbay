@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bidbay.excepciones.ArchivoException;
+import com.bidbay.models.entity.Notificacion;
 import com.bidbay.models.entity.Ofertante;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Subasta;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.ICategoriaService;
+import com.bidbay.service.INotificacionService;
 import com.bidbay.service.IProductoService;
 import com.bidbay.service.ISubastaService;
 import com.bidbay.service.IUsuarioService;
@@ -52,19 +55,27 @@ public class SubastaController {
 	private IProductoService productoService;
 	
 	@Autowired
+	private INotificacionService notificacionService;
+	
+	@Autowired
 	private ModalidadServiceImpl modalidadService;
 
 
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listaSubastas(HttpSession session, Model model) {
-		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
-    		return "redirect:/login";
-    	}
 		
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			return "redirect:/login";
+		}
 		model.addAttribute("logueo",session.getAttribute("logueo"));
 		model.addAttribute("rol",session.getAttribute("rol"));
 		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+    	Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+    	notificaciones = notificacionService.findAllByUser(idUsuario);
+    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
+		
 		List<Subasta> subastas = subastaServ.findAll();
 		model.addAttribute("subastas", subastas);
 		return "views/subastaView";
@@ -72,6 +83,7 @@ public class SubastaController {
 	
 	@RequestMapping(value = "/mostrar/{id}", method = RequestMethod.GET)
 	public String mostrarSubasta(@PathVariable(value = "id") Long id,Model model) {
+		
 		Subasta subasta = subastaServ.obtenerSubasta(id);
 		model.addAttribute("subasta", subasta);
 		return "views/subastaView";
@@ -108,6 +120,11 @@ public class SubastaController {
 			model.put("categorias", categoriaService.findAll());
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
+			model.put("idUsuario",session.getAttribute("idUsuario"));
+	    	Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+	    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+	    	notificaciones = notificacionService.findAllByUser(idUsuario);
+	    	model.put("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
 
 			return "views/subastaFormView";
 		}
@@ -206,12 +223,16 @@ public class SubastaController {
 		model.addAttribute("logueo",session.getAttribute("logueo"));
 		model.addAttribute("rol",session.getAttribute("rol"));
 		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+		
+		List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+    	notificaciones = notificacionService.findAllByUser((Long) session.getAttribute("idUsuario"));
+    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
+		
 		Subasta miSubasta = subastaServ.obtenerSubasta(idSubasta);
 		Producto product = miSubasta.getProducto();
 		Usuario user = usuarioService.getUsuarioActualmenteLogeado(session);
 		Ofertante ofertante = new Ofertante();
 		ofertante.setUsuario(user);
-		System.out.println(ofertante.getUsuario().getId() + " " + miSubasta.getSubastador().getId() );
 		model.addAttribute("ofertante", ofertante );
 		model.addAttribute("producto",product);
 		model.addAttribute("subasta",miSubasta);
@@ -224,6 +245,8 @@ public class SubastaController {
 		Subasta miSubasta = subastaServ.obtenerSubasta(idSubasta);
 		Ofertante ofertante = new Ofertante();
 		ofertante.setUsuario(user);
+		
+    	
 		model.addAttribute("ofertante",ofertante);
 		model.addAttribute("subasta",miSubasta);
 		model.addAttribute("botonSubmit", "Ofertar");

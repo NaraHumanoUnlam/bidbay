@@ -1,6 +1,7 @@
 package com.bidbay.controllers;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.bidbay.models.entity.Carrito;
 import com.bidbay.models.entity.CarritoItem;
+import com.bidbay.models.entity.Notificacion;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.service.ICarritoService;
 import com.bidbay.service.INotificacionService;
@@ -38,59 +40,79 @@ public class CarritoController {
     
     @Autowired
     private INotificacionService notifiacionService;
+    
    
 
     @RequestMapping(value="/listar", method = RequestMethod.GET)
     public String listar(Model model, HttpSession session) {
-    	if(!chequearQueElUsuarioEsteLogeado(session)) {
-    		return "redirect:/login";
-    	}
-    	Long idUsuario = (Long) session.getAttribute("idUsuario");
+    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			return "redirect:/login";
+		}
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+    	Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+    	notificaciones = notifiacionService.findAllByUser(idUsuario);
+    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
+    	
         model.addAttribute("titulo", "Listado de carrito");
         model.addAttribute("carrito", carritoService.findOneByUserID(idUsuario));
         model.addAttribute("precioTotal", carritoService.calcularPrecioTotal(idUsuario));
-        model.addAttribute("logueo",session.getAttribute("logueo"));
-        model.addAttribute("rol",session.getAttribute("rol"));
-        model.addAttribute("notificaciones", notifiacionService.findAll());
         return "views/carritoView";
     }
 
     @RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
-    public String agregarProductoAlCarrito(@PathVariable(value = "id") Long id, HttpSession session, RedirectAttributes redirectAttributes) {
-    	if(!chequearQueElUsuarioEsteLogeado(session)) {
-    		return "redirect:/login";
-    	}
+    public String agregarProductoAlCarrito(@PathVariable(value = "id") Long id, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			return "redirect:/login";
+		}
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+    	Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+    	notificaciones = notifiacionService.findAllByUser(idUsuario);
+    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
+    	
         carritoService.addProductToCarrito((Long) session.getAttribute("idUsuario"), id, redirectAttributes);
         return "redirect:/carrito/listar";
     }
 
     @RequestMapping(value = "/editar/{id}", method = RequestMethod.POST)
     public String editar(@PathVariable(value = "id") Long id, HttpSession session , Model model, @RequestParam("cantidadProductos") int stock, RedirectAttributes redirectAttributes) {
-    	if(!chequearQueElUsuarioEsteLogeado(session)) {
-    		return "redirect:/login";
-    	}
+    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			return "redirect:/login";
+		}
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+    	Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+    	notificaciones = notifiacionService.findAllByUser(idUsuario);
+    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
+    	
         carritoService.editCarritoItem((Long) session.getAttribute("idUsuario"), id, stock, redirectAttributes);
-        model.addAttribute("logueo",session.getAttribute("logueo"));
-        model.addAttribute("rol",session.getAttribute("rol"));
         return "redirect:/carrito/listar";
     }
 
     @RequestMapping(value = "/eliminar/{id}", method = RequestMethod.POST)
-    public String eliminarProductoDeCarrito(@PathVariable(value = "id") Long id, HttpSession session, RedirectAttributes redirectAttributes) {
-    	if(!chequearQueElUsuarioEsteLogeado(session)) {
-    		return "redirect:/login";
-    	}
+    public String eliminarProductoDeCarrito(@PathVariable(value = "id") Long id, HttpSession session, RedirectAttributes redirectAttributes, Model model) {
+    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
+			return "redirect:/login";
+		}
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+    	Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+    	notificaciones = notifiacionService.findAllByUser(idUsuario);
+    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
+    	
         carritoService.deleteCarritoItem((Long) session.getAttribute("idUsuario"), id, redirectAttributes);
         return "redirect:/carrito/listar";
     }
     
-    public Boolean chequearQueElUsuarioEsteLogeado(HttpSession session) {
-    	Long idUsuario = (Long) session.getAttribute("idUsuario");
-        if (idUsuario == null) {
-            return false;
-        }
-        return true;
-    }
         
 
 }

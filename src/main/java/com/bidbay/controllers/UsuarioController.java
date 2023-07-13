@@ -37,6 +37,7 @@ public class UsuarioController {
 		} else {
 			Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 			model.addAttribute("logueo",session.getAttribute("logueo"));
+			model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
 			model.addAttribute("usuario", usuario);
 			model.addAttribute("rol",session.getAttribute("rol"));
 			model.addAttribute("titulo", "Perfil de " + usuario.getNick().toUpperCase());
@@ -71,6 +72,7 @@ public class UsuarioController {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
+			model.put("idUsuario",session.getAttribute("idUsuario"));
 		}
 		
 		model.put("titulo", "Editar Usuario");
@@ -85,8 +87,9 @@ public class UsuarioController {
 	}
 	
 	@RequestMapping(value="/listar", method = RequestMethod.GET)
-	public String listar(Model model) {
+	public String listar(Model model, HttpSession session) {
 		model.addAttribute("titulo", "Listado de usuarios");
+		model.addAttribute("idUsuario", session.getAttribute("idUsuario"));
 		model.addAttribute("usuarios", usuarioService.findAll());
 		return "views/usuariosView";
 	}

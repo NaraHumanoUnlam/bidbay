@@ -55,7 +55,7 @@
     
     <div class="flex flex-col text-center pt-3">
 		<h2 class="font-semibold text-[24px]">Reseñas de este producto</h2>
-		<p class="text-mb">Todas las reseñas son escritas por usuarios reales</p>
+		<p class="text-mb italic">Todas las reseñas son escritas por usuarios reales</p>
 		<div th:if="${reviews != null and !reviews.isEmpty()}" class="flex flex-row gap-3 justify-center p-2">
 			<div th:each="review : ${reviews}" class="grid-cols-3 gap-2 p-2 text-xl text-left bg-gray-200 p-2 rounded-sm">
 				<p>Fecha: <span th:text="${review.fecha}"></span></p>
@@ -66,7 +66,7 @@
 		<div th:if="${reviews == null or reviews.isEmpty()}">
 			<p class="text-mb">Aún no hay reseñas para este producto.</p>
 		</div>
-		<div th:if="${usuarioComproProducto}">
+		<div th:if="${usuarioComproProducto}" class="m-3">
             <a th:href="@{/review/dejarReview/{idProducto}(idProducto=${producto.id},notificacionId=0)}" 
             class="bg-blue-500 hover:bg-blue-700 m-2 text-white p-2 rounded cursor-pointer">Dejar Reseña</a>
         </div>

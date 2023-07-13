@@ -9,26 +9,24 @@
 
 	<main class="flex justify-center items-center flex-col">
 		<h1 th:text="${titulo}" class="text-3xl mb-10"></h1>
-		<table id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-5 rounded w-9/12 mb-10">
-			<thead>
-				<tr>
-					<th>Ticket</th>
-					<th>Fecha de pago</th>
-					<th>Monto</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-					<tr th:if="${tickets != null}" th:each="ticket: ${tickets}">
-						<td th:text="${ticket.idTicket}"></td>
+		<div id="lista" class="text-center bg-white m-auto mt-10 text-blue-600 p-4 rounded w-6/12 mb-10">
+			<div class="grid grid-cols-4 gap-2 p-2 rounded text-white font-semibold text-xlg bg-gray-500">
+					<p>Ticket</p>
+					<p>Fecha de pago</p>
+					<p>Monto</p>
+					<p></p>
+			</div>
+			<div class="p-2 ">
+				<div class="grid grid-cols-4 gap-2 gap-y-3 items-center justify-center text-center" th:if="${tickets != null}" th:each="ticket: ${tickets}">
+						<p th:text="${ticket.idTicket}"></p>
 						
-						<td th:text="${ticket.fechaDePago}"></td>
-						<td th:text="${ticket.precio}"></td>
-						<td class="btn btn-secondary text-light" th:if="${rol == 'Moderador'}"><a th:href="@{/moderador/ticketdet/} + ${ticket.idTicket}">View</a></td>
-						<td class="btn btn-secondary text-light" th:if="${rol != 'Moderador'}"><a th:href="@{/tickets/ticketdet/} + ${ticket.idTicket}">View</a></td>
-					</tr>
-			</tbody>
-		</table>
+						<p th:text="${ticket.fechaDePago}"></p>
+						<p th:text="${ticket.precio}"></p>
+						<a  class="bg-gray-500 hover:bg-blue-700 m-2 text-white p-2 rounded" th:if="${rol == 'Moderador'}" th:href="@{/moderador/ticketdet/} + ${ticket.idTicket}">View</a>
+						<a class="bg-gray-500 hover:bg-blue-700 m-2 text-white p-2 rounded" th:if="${rol != 'Moderador'}" th:href="@{/tickets/ticketdet/} + ${ticket.idTicket}">View</a>
+					</div>
+			</div>
+		</div>
 		
 </body>
 </html>

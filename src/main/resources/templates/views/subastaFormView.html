@@ -14,11 +14,7 @@
 			method="POST" class="shadow bg-white m-auto w-[50%] p-5 font-bold text-xl"
 			enctype="multipart/form-data">
 			<div>
-				<label for="fecha" class="block text-[1.3rem] mb-[5px] ">Fecha fin de la subasta:</label> <input type="date" id="fecha" th:field="*{fechaLimite}" class="h-[45px]" required/>
-			</div>
-			<div>
-				<label for="hora">Hora:</label> <input type="time" id="hora"
-					th:field="*{horaLimite}" class="h-[35px]" required/>
+				<label for="fecha" class="block text-[1.3rem] mb-[5px] ">Fecha fin de la subasta:</label> <input type="datetime-local" id="fecha" th:field="*{fechaLimite}" class="h-[45px]" required/>
 			</div>
 			<div>
 				<label for="precioInicial">Precio Inicial:</label> <input

@@ -95,7 +95,7 @@
 		<div class="flex flex-col">
 			<div class="bg-white  right-0 top-[136px] absolute">
 				<div th:each="item: ${notificaciones}"
-					class="w-[394px] h-[100px] flex flex-col text-center border-red-400 border-solid border">
+					class="w-[394px] h-[120px] flex flex-col text-center border-red-400 border-solid border">
 					<div class="grid grid-flow-row items-center justify-center content-center gap-10">
 						<p class="text-black text-[24px] font-bold m-2 col-start-1 row-start-1"
 							th:text="${item.titulo}"></p>
@@ -103,9 +103,9 @@
 					</div>
 					<p class="text-black text-[16px] font-normal"
 						th:utext="${item.notificacion}"></p>
-					<div th:if="${item.enlace != null and item.enlace != ''}">
+					<div th:if="${item.enlace != null and item.enlace != ''}" class="w-full h-full flex items-center justify-center">
 					    <a th:href="@{${item.enlace + '?notificacionId='} + ${item.id}}">
-					        <p>Dejar reseña</p>
+					        <p class="bg-blue-500 hover:bg-blue-700 text-white rounded cursor-pointer text-center p-1">Dejar reseña</p>
 					    </a>
 					</div>			
 				</div>

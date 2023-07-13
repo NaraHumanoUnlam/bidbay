@@ -18,9 +18,6 @@
                     <i class="fa fa-long-arrow-left"></i>
                     <span class="ml-1">Volver</span>
                 </a>
-                <!-- <a th:href="@{/carrito/form/{id}(id=${producto.id})}">
-                    <i class="fa-sharp fa-solid fa-cart-plus"></i>
-                </a>-->
             </div>
             <div class="row-line"></div>
             <div class="detalle-row">
@@ -56,21 +53,22 @@
         </div>
 	</div>
     
-    <div class="flex flex-col text-center">
-		<h2 class="font-bold text-[24px]">Reseñas de este producto</h2>
-		<p>Todas las reseñas son escritas por usuarios reales</p>
+    <div class="flex flex-col text-center pt-3">
+		<h2 class="font-semibold text-[24px]">Reseñas de este producto</h2>
+		<p class="text-mb">Todas las reseñas son escritas por usuarios reales</p>
 		<div th:if="${reviews != null and !reviews.isEmpty()}" class="flex flex-row gap-3 justify-center p-2">
-			<div th:each="review : ${reviews}" class="flex flex-col gap-2 text-left bg-gray-200 p-2 rounded-sm">
+			<div th:each="review : ${reviews}" class="grid-cols-3 gap-2 p-2 text-xl text-left bg-gray-200 p-2 rounded-sm">
 				<p>Fecha: <span th:text="${review.fecha}"></span></p>
-				<p>"<span th:text="${review.mensaje}"></span>"</p>
-				<p>Puntaje: <span th:text="${review.puntaje}"></span></p>
+				<p>"<span th:text="${review.mensaje != null ? review.mensaje : 'El usuario no escribio un mensaje'}"></span>"</p>
+				<p class="font-semibold">Puntaje: <span th:text="${review.puntaje}"></span></p>
 			</div>
 		</div>
 		<div th:if="${reviews == null or reviews.isEmpty()}">
-			<p>Aún no hay reseñas para este producto.</p>
+			<p class="text-mb">Aún no hay reseñas para este producto.</p>
 		</div>
 		<div th:if="${usuarioComproProducto}">
-            <a th:href="@{/review/dejarReview/{idProducto}(idProducto=${producto.id},notificacionId=0)}" class="">Dejar Reseña</a>
+            <a th:href="@{/review/dejarReview/{idProducto}(idProducto=${producto.id},notificacionId=0)}" 
+            class="bg-blue-500 hover:bg-blue-700 m-2 text-white p-2 rounded cursor-pointer">Dejar Reseña</a>
         </div>
 	</div>
 

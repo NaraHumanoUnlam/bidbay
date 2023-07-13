@@ -153,7 +153,7 @@ a.rainbow-link {
   display: flex;
   flex-direction: row;
   width: 60%;
-  min-height: 50rem;
+  min-height: 10rem;
   margin: auto;
 }
 

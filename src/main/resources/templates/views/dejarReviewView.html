@@ -13,7 +13,7 @@
 	        <h1 class="font-bold m-2 text-[24px]">Dejar Reseña</h1>
 	        <h2>Producto:</h2>
 	        <div class="flex-row flex gap-2">
-	        	<div class="flex flex-col">
+	        	<div class="w-[20%]">
 	        		<img th:src="@{'/imagenes/'+${producto.imagen}}" th:alt="${producto.imagen}">
 		        </div>
 		        <div class="flex flex-col gap-2 text-left">
@@ -23,7 +23,7 @@
 	        </div>
 	        
 	        
-	        <form th:action="@{'/review/dejarReview/' + ${producto.id}}" method="post" class="flex flex-col gap-2">
+	        <form th:action="@{'/review/dejarReview/' + ${producto.id}}" method="post" class="flex flex-col gap-2 text-xl">
 	            <textarea name="mensaje" placeholder="Escribe tu reseña"></textarea>
 	            <input type="hidden" name="notificacionId" th:value="${notificacionId}">
 	            <label for="puntaje">Calificación:</label>
@@ -34,8 +34,8 @@
 	                <option value="4">4 Estrellas</option>
 	                <option value="5">5 Estrellas</option>
 	            </select>
-	            <p>*Tu reseña podrá ser vista por otros usuarios cuando busquen sobre este producto.</p>
-	            <button type="submit"  class="bg-blue-400 p-3 rounded text-white">Enviar Reseña</button>
+	            <p class="text-mb">*Tu reseña podrá ser vista por otros usuarios cuando busquen sobre este producto.</p>
+	            <button type="submit"  class="bg-blue-500 hover:bg-blue-700 m-2 text-white p-2 rounded cursor-pointer">Enviar Reseña</button>
 	        </form>
 	    </div>
 	</main>

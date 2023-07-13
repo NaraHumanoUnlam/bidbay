@@ -50,6 +50,7 @@ public class Usuario implements Serializable{
 		@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 		private List<Review> reviewsDejadas;
 		
+	
 		private Double rating;
 		
 		@Column(nullable = true)

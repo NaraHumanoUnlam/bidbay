@@ -69,10 +69,11 @@
 									<h5 class="card-title" th:text="${producto.nombre}"></h5>
 								</a>
 								<p class="card-text" th:text="'$' + ${producto.precio}"></p>
-								<a class="btn btn-warning btn-sombra mt-4"
+								<a class="btn btn-primary text-uppercase mr-2 px-4 fw-bold text-white" th:if="${producto.modalidad.id == 1}"
 									onClick="validarCompra(this)" th:attr="data-id-vendedor=${producto.vendedor != null ? producto.vendedor.id : ''}, 
-									data-id-compra=${producto.id}, data-id-usuario=${idUsuario}">Agregar Al
-									Carrito</a>
+									data-id-compra=${producto.id}, data-id-usuario=${idUsuario}">Agregar Al Carrito</a>
+								<a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white" th:if="${producto.modalidad.id == 2}"
+								th:href="@{/subasta/buscar/{id}(id=${producto.id})}">Ir a la subasta</a>
 							</div>
 						</div>
 					</div>

@@ -62,4 +62,10 @@ public class SubastaService implements ISubastaService{
 	public void agregarOfertante(Ofertante ofertante, Long idsubasta) {
 		subastaDao.agregarOfertante(ofertante.getOferta(),idsubasta,ofertante.getUsuario().getId());		
 	}
+
+	@Override
+	public Subasta buscarPorProducto(Long idProd) {
+		// TODO Auto-generated method stub
+		return subastaDao.buscarPorProducto(idProd);
+	}
 }

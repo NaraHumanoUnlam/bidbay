@@ -77,6 +77,12 @@ public class SubastaController {
 		return "views/subastaView";
 	}
 	
+	@RequestMapping(value = "/buscar/{id}", method = RequestMethod.GET)
+	public String buscarSubasta(@PathVariable(value = "id") Long idProd,Model model) {
+		Subasta subasta = subastaServ.buscarPorProducto(idProd);
+		return "redirect:/subasta/details/" + subasta.getId();
+	}
+	
 	@RequestMapping(value = "/eliminar/{id}", method = RequestMethod.GET)
 	public String eliminarSubasta(@PathVariable(value = "id") Long id,Model model) {
 		subastaServ.eliminarUna(id);

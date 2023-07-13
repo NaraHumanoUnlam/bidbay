@@ -39,9 +39,12 @@
             </div>
             <div class="row-line"></div>
             <div class="detalle-row">
-                <a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white"
-                   onClick="validarCompra(this)" th:attr="data-id-vendedor=${producto.vendedor.id}, 
-									data-id-compra=${producto.id}, data-id-usuario=${idUsuario}">Agregar Al Carrito</a>
+                <a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white" th:if="${producto.modalidad.id == 1}"
+                   onClick="validarCompra(this)" th:attr="data-id-vendedor=${producto.vendedor.id},data-id-compra=${producto.id}, data-id-usuario=${idUsuario}">Agregar Al Carrito</a>
+									
+				<a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white" th:if="${producto.modalidad.id == 2}"
+				th:href="@{/subasta/buscar/{id}(id=${producto.id})}">
+				Ir a la subasta</a>
                 <div>
                      <a th:href="@{/producto/details/{id}(id=${producto.id},fav=true)}">                   
                         <i class="fa fa-heart text-muted"  th:if="${valheard == false}"></i>

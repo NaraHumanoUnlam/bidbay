@@ -40,5 +40,8 @@ public interface ISubastaDao extends CrudRepository<Subasta, Long>{
 	@Query(value = "SELECT o.* FROM ofertante o WHERE subasta_id = ?1 AND oferta >= ?2", nativeQuery = true)
 	public Ofertante obtenerOfertante(Long idSubasta, Double mayor);
 	
+	@Query(value = "select * from subastas where productos=?", nativeQuery = true)
+	public Subasta buscarPorProducto(Long idProd);
+	
 	
 }

@@ -27,4 +27,6 @@ public interface ISubastaService {
 
 	public void agregarOfertante(Ofertante ofertante, Long idSubasta);
 
+	public Subasta buscarPorProducto(Long idProd);
+
 }

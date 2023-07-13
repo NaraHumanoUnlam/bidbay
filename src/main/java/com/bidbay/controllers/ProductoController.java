@@ -19,10 +19,12 @@ import com.bidbay.excepciones.ArchivoException;
 import com.bidbay.models.dao.IModalidadDao;
 import com.bidbay.models.entity.Categoria;
 import com.bidbay.models.entity.Favoritos;
+import com.bidbay.models.entity.Notificacion;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Review;
 import com.bidbay.models.entity.Usuario;
 import com.bidbay.service.ICategoriaService;
+import com.bidbay.service.INotificacionService;
 import com.bidbay.service.IProductoService;
 import com.bidbay.service.IReviewService;
 import com.bidbay.service.ModalidadServiceImpl;
@@ -58,6 +60,9 @@ public class ProductoController {
 	
 	@Autowired
 	private ModalidadServiceImpl modalidadService;
+	
+	@Autowired
+	private INotificacionService notificacionService;
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam("name") @Nullable String name, @RequestParam("order") @Nullable String order,
@@ -68,6 +73,11 @@ public class ProductoController {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("rol",session.getAttribute("rol"));
 			model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+			
+			Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+	    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+	    	notificaciones = notificacionService.findAllByUser(idUsuario);
+	    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
 		}else {
 			return "redirect:/login";
 		}
@@ -93,6 +103,7 @@ public class ProductoController {
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
 			model.put("idUsuario",session.getAttribute("idUsuario"));
+			
 		}else {
 			return "redirect:/login";
 		}
@@ -142,6 +153,7 @@ public class ProductoController {
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
 			model.put("idUsuario",session.getAttribute("idUsuario"));
+			
 		}else {
 			return "redirect:/login";
 		}
@@ -181,6 +193,11 @@ public class ProductoController {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("rol",session.getAttribute("rol"));
 			model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+			
+			Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+	    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+	    	notificaciones = notificacionService.findAllByUser(idUsuario);
+	    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
 		}
 
 		List<Producto> productos;
@@ -227,6 +244,8 @@ public class ProductoController {
 			model.put("logueo",session.getAttribute("logueo"));
 			model.put("rol",session.getAttribute("rol"));
 			model.put("idUsuario",session.getAttribute("idUsuario"));
+			
+	    	
 			Usuario usuarioBuscado= usuarioService.getUsuarioActualmenteLogeado(session);
 			Favoritos favorito = productoService.buscoFavoritoDelUsuario(usuarioBuscado.getId() ,p.getId());
 			if (favorito != null) {

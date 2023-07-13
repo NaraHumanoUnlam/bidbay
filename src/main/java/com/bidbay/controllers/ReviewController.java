@@ -1,5 +1,8 @@
 package com.bidbay.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.bidbay.models.entity.Notificacion;
 import com.bidbay.models.entity.Producto;
 import com.bidbay.models.entity.Usuario;
+import com.bidbay.service.INotificacionService;
 import com.bidbay.service.IProductoService;
 import com.bidbay.service.IReviewService;
 import com.bidbay.service.IUsuarioService;
@@ -33,15 +38,22 @@ public class ReviewController {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
+	@Autowired
+	private INotificacionService notificacionService;
+	
 	@RequestMapping(value = "/dejarReview/{id}", method = RequestMethod.GET)
 	public String mostrarFormularioReview(@PathVariable("id") Long idProducto, @RequestParam("notificacionId") Long notificacionId, HttpSession session, Model model) {
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
-			model.addAttribute("logueo",session.getAttribute("logueo"));
-			model.addAttribute("rol",session.getAttribute("rol"));
-		}
-		else {
+		
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			return "redirect:/login";
 		}
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+    	Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+    	notificaciones = notificacionService.findAllByUser(idUsuario);
+    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
 		
 		Producto producto = productoService.findOne(idProducto);
 		model.addAttribute("producto", producto);
@@ -52,13 +64,18 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/dejarReview/{id}", method = RequestMethod.POST)
 	public String guardarReview(@PathVariable("id") Long idProducto, @RequestParam("mensaje") String mensaje, @RequestParam("notificacionId") Long notificacionId, @RequestParam("puntaje") int puntaje, HttpSession session , Model model) {
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
-			model.addAttribute("logueo",session.getAttribute("logueo"));
-			model.addAttribute("rol",session.getAttribute("rol"));
-		}
-		else {
+		
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			return "redirect:/login";
 		}
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+    	Long idUsuario = usuarioService.getUsuarioActualmenteLogeado(session).getId();
+    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+    	notificaciones = notificacionService.findAllByUser(idUsuario);
+    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
+    	
 		Usuario usuario = usuarioService.getUsuarioActualmenteLogeado(session);
 	    double puntajeDouble = (double) puntaje;
 		reviewService.dejarReview(idProducto, mensaje, puntajeDouble, usuario.getId(), notificacionId);
@@ -67,13 +84,19 @@ public class ReviewController {
 	
 	@RequestMapping(value = "/verReview/{id}", method = RequestMethod.GET)
 	public String mostrarReviewsDelUser(@PathVariable("id") Long idUsuario, HttpSession session, Model model) {
-		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
-			model.addAttribute("logueo",session.getAttribute("logueo"));
-			model.addAttribute("rol",session.getAttribute("rol"));
-		}
-		else {
+		
+		
+		if(!usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			return "redirect:/login";
 		}
+		model.addAttribute("logueo",session.getAttribute("logueo"));
+		model.addAttribute("rol",session.getAttribute("rol"));
+		model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
+    	
+    	List<Notificacion> notificaciones = new ArrayList<Notificacion>();
+    	notificaciones = notificacionService.findAllByUser(idUsuario);
+    	model.addAttribute("notificaciones", notificaciones == null ? "Sin notificaciones": notificaciones);
+    	
 		model.addAttribute("reviews", reviewService.getReviewsPorUsuario(idUsuario));
 		
 		return "views/misReviewsView";
@@ -89,6 +112,7 @@ public class ReviewController {
 		else {
 			return "redirect:/login";
 		}
+		
 		if (id > 0) {
 			reviewService.borrarReview(id);
 		}

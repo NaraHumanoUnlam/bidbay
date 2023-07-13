@@ -41,6 +41,7 @@ public class TicketController {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("rol",session.getAttribute("rol"));
+			model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
 		}else {
 			return "redirect:/login";
 		} 
@@ -56,6 +57,7 @@ public class TicketController {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.addAttribute("logueo",session.getAttribute("logueo"));
 			model.addAttribute("rol",session.getAttribute("rol"));
+			model.addAttribute("idUsuario",session.getAttribute("idUsuario"));
 		}else {
 			return "redirect:/login";
 		} 

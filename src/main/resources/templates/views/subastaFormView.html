@@ -29,16 +29,17 @@
 	</main>
 
 	<footer th:replace="views/layouts/plantilla.html :: footer"></footer>
-	<script th:replace="views/layouts/plantilla.html :: script"></script>
 <script type="text/javascript">
-var fechaActual = new Date().toISOString().split("T")[0];
+  var fechaActual = new Date();
 
-// Obtener el elemento del campo de fecha
-var campoFecha = document.getElementById("fecha");
+  fechaActual.setHours(23, 0, 0, 0);
 
-// Establecer el atributo 'min' al valor de la fecha actual
-	campoFecha.setAttribute("min", fechaActual);
+  var fechaHoraActual = fechaActual.toISOString().slice(0, 16);
+
+  document.getElementById("fecha").setAttribute("min", fechaHoraActual);
 </script>
+
+	<script th:replace="views/layouts/plantilla.html :: script"></script>
 </body>
 
 </html>

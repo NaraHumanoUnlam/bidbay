@@ -136,7 +136,7 @@ public class ProductoController {
 		return "redirect:/producto/listar";
 	}
 
-	@RequestMapping(value = "/form/{id}")
+	@RequestMapping(value = "/form/{id}", method = RequestMethod.GET)
 	public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, HttpSession session) {
 		if(usuarioService.chequearQueElUsuarioEsteLogeado(session)) {
 			model.put("logueo",session.getAttribute("logueo"));

@@ -39,7 +39,7 @@
             </div>
             <div class="row-line"></div>
             <div class="detalle-row">
-                <a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white" th:if="${producto.modalidad.id == 1}"
+                <a class="btn btn-primary text-uppercase mr-2 px-4 fw-bold text-white" th:if="${producto.modalidad.id == 1}"
                    onClick="validarCompra(this)" th:attr="data-id-vendedor=${producto.vendedor.id},data-id-compra=${producto.id}, data-id-usuario=${idUsuario}">Agregar Al Carrito</a>
 									
 				<a class="btn btn-warning text-uppercase mr-2 px-4 fw-bold text-white" th:if="${producto.modalidad.id == 2}"
